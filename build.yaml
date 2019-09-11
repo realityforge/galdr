@@ -8,3 +8,12 @@ artifacts:
   idea_codestyle: au.com.stocksoftware.idea.codestyle:idea-codestyle:xml:1.14
 
   javax_annotation: org.realityforge.javax.annotation:javax.annotation:jar:1.0.1
+
+  braincheck: org.realityforge.braincheck:braincheck:jar:1.20.0
+
+  gwt_user: com.google.gwt:gwt-user:jar:2.8.2
+  gwt_dev: com.google.gwt:gwt-dev:jar:2.8.2
+
+  jsinterop_annotations: com.google.jsinterop:jsinterop-annotations:jar:1.0.2
+
+  jsinterop_base: org.realityforge.com.google.jsinterop:base:jar:1.0.0-b2-e6d791f

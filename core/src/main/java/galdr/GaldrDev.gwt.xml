@@ -1,0 +1,9 @@
+<module>
+  <inherits name='galdr.Galdr'/>
+
+  <source path='ignored'/>
+
+  <set-property name='galdr.environment' value='development'/>
+  <set-property name='galdr.check_invariants' value='true'/>
+  <set-property name='galdr.check_api_invariants' value='true'/>
+</module>

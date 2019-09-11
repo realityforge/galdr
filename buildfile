@@ -2,6 +2,7 @@ require 'buildr/git_auto_version'
 require 'buildr/gpg'
 require 'buildr/single_intermediate_layout'
 require 'buildr/top_level_generate_dir'
+require 'buildr/gwt'
 
 desc 'galdr: An ECS implementation'
 define 'galdr' do
@@ -18,7 +19,10 @@ define 'galdr' do
 
   desc 'galdr core library'
   define 'core' do
-    compile.with :javax_annotation
+    compile.with :javax_annotation,
+                 :braincheck
+
+    gwt_enhance(project)
 
     package(:jar)
     package(:sources)

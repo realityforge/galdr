@@ -1,0 +1,19 @@
+<module>
+  <inherits name='org.realityforge.braincheck.BrainCheck'/>
+
+  <source path='' includes='*.java'/>
+
+  <!--
+    These properties are all defined in galdr.GaldrConfig
+    See that class for a better understanding of what these properties do.
+  -->
+
+  <define-property name='galdr.environment' values='development,production'/>
+  <set-property name='galdr.environment' value='production'/>
+
+  <define-property name='galdr.check_invariants' values='true,false'/>
+  <set-property name='galdr.check_invariants' value='false'/>
+
+  <define-property name='galdr.check_api_invariants' values='true,false'/>
+  <set-property name='galdr.check_api_invariants' value='false'/>
+</module>
