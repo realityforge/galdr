@@ -9,11 +9,15 @@ complete as there is too much un-said.
 * `World` (a.k.a. a `Context`?)
   * Contain 0 or more `Entity` instances. These are dynamically added and removed over time.
   * Contain 1 or more `ProcessorStage` instances. These are statically defined when the `World` is constructed.
+  * Contain 1 or more `ComponentType` instances. These are statically defined when the `World` is constructed.
 
 * `Entity`
   * A container into which components are added.
   * Has a unique identifier.
   * Contains 0 or more `Component` instances.
+
+* `ComponentType`
+  * Represents a type of a `Component` available in the `World`
 
 * `Component`
   * A passive data container that may be attached to an `Entity` instance.
