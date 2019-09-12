@@ -37,6 +37,7 @@ final class ComponentType
    *
    * @return the type of the component.
    */
+  @Nonnull
   Class<? extends Component> getType()
   {
     return _type;
