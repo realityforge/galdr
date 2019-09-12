@@ -63,3 +63,5 @@ for systems/processors ahead of time.
 
 * Change component into an annotation `@Component`
 * Change `Entity` to be hierarchical. i.e. An `Entity` can have child `Entity` instances.
+* Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
+  `Collections.unmodifiableMap()` if `Galdr.enforceUnmodifiableCOllections()` returns `true`.
