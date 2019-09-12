@@ -43,12 +43,24 @@ final class ComponentType
     return _type;
   }
 
+  /**
+   * Return the human readable name of the ComponentType.
+   * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
+   *
+   * @return the human readable name of the ComponentType.
+   */
+  @Nonnull
+  String getName()
+  {
+    return _type.getSimpleName();
+  }
+
   @Override
   public String toString()
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "ComponentType[" + _index + "=" + _type.getSimpleName() + "]";
+      return "ComponentType[" + getName() + "=" + _index + "]";
     }
     else
     {
