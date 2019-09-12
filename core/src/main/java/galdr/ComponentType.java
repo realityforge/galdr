@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 /**
  * A component type descriptor.
  */
-public final class ComponentType
+final class ComponentType
 {
   @Nonnull
   private final Class<? extends Component> _type;
@@ -27,7 +27,7 @@ public final class ComponentType
    *
    * @return the unique index of type within a {@link World}.
    */
-  public int getIndex()
+  int getIndex()
   {
     return _index;
   }
@@ -37,7 +37,7 @@ public final class ComponentType
    *
    * @return the type of the component.
    */
-  public Class<? extends Component> getType()
+  Class<? extends Component> getType()
   {
     return _type;
   }
