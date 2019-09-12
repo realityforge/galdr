@@ -30,7 +30,9 @@ public final class Galdr
    */
   public static boolean areDebugToStringMethodsEnabled()
   {
-    return GaldrConfig.areDebugToStringMethodsEnabled();
+    // Many of the toString() implementations use names so we need to disable
+    // debug toString implementation if names disabled
+    return areNamesEnabled() && GaldrConfig.areDebugToStringMethodsEnabled();
   }
 
   /**
