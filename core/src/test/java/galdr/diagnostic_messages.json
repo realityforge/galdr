@@ -1,0 +1,15 @@
+[
+  {
+    "code": 53,
+    "type": "API_INVARIANT",
+    "messagePattern": "ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "callers": [
+      {
+        "class": "galdr.ComponentType",
+        "method": "getName",
+        "file": "ComponentType.java",
+        "lineNumber": 58
+      }
+    ]
+  }
+]
