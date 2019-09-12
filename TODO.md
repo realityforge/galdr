@@ -65,3 +65,9 @@ for systems/processors ahead of time.
 * Change `Entity` to be hierarchical. i.e. An `Entity` can have child `Entity` instances.
 * Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
   `Collections.unmodifiableMap()` if `Galdr.enforceUnmodifiableCOllections()` returns `true`.
+* Add different implementations of `ComponentStore` that optimize for different distributions of entities. The
+  current implementation is a java array. We could create a store where there is a dense lookup array that looks
+  into a very sparse component array. Useful when there is a low proportion of components. We could create a
+  implementation based on [FlatBuffers](https://google.github.io/flatbuffers/index.html) for cache friendly
+  access. We could use a `Map` based implementation that is used when there is relative low density component
+  distribution that does not need fast access times.
