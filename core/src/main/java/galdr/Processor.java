@@ -13,10 +13,10 @@ public abstract class Processor
 
   protected Processor( @Nonnull final World world )
   {
-    _world = Objects.requireNonNull(world);
+    _world = Objects.requireNonNull( world );
   }
 
-  public abstract void process(float timeDelta);
+  public abstract void process( float timeDelta );
 
   @Nonnull
   protected final World getWorld()
