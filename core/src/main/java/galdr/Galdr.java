@@ -12,6 +12,17 @@ public final class Galdr
   }
 
   /**
+   * Return true if toString() methods should produce useful debug output, false otherwise.
+   * Removing debug output from toString() methods will significantly reduce the code size when compiled to javascript.
+   *
+   * @return true if toString() methods should produce useful debug output, false otherwise.
+   */
+  public static boolean areDebugToStringMethodsEnabled()
+  {
+    return GaldrConfig.areDebugToStringMethodsEnabled();
+  }
+
+  /**
    * Return true if invariants will be checked.
    *
    * @return true if invariants will be checked.

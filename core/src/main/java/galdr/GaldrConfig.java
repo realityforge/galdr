@@ -7,6 +7,7 @@ final class GaldrConfig
 {
   private static final ConfigProvider PROVIDER = new ConfigProvider();
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
+  private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
 
@@ -22,6 +23,11 @@ final class GaldrConfig
   static boolean isProductionMode()
   {
     return PRODUCTION_MODE;
+  }
+
+  static boolean areDebugToStringMethodsEnabled()
+  {
+    return DEBUG_TO_STRING;
   }
 
   static boolean checkInvariants()
@@ -46,6 +52,13 @@ final class GaldrConfig
 
     @GwtIncompatible
     @Override
+    boolean areDebugToStringMethodsEnabled()
+    {
+      return "true".equals( System.getProperty( "arez.debug_to_string", PRODUCTION_MODE ? "false" : "true" ) );
+    }
+
+    @GwtIncompatible
+    @Override
     boolean checkInvariants()
     {
       return "true".equals( System.getProperty( "arez.check_invariants", PRODUCTION_MODE ? "false" : "true" ) );
@@ -65,6 +78,11 @@ final class GaldrConfig
     boolean isProductionMode()
     {
       return "production" == System.getProperty( "arez.environment" );
+    }
+
+    boolean areDebugToStringMethodsEnabled()
+    {
+      return "true" == System.getProperty( "arez.debug_to_string" );
     }
 
     boolean checkInvariants()
