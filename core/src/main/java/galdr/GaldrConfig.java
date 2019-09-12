@@ -47,28 +47,28 @@ final class GaldrConfig
     @Override
     boolean isProductionMode()
     {
-      return "production".equals( System.getProperty( "arez.environment", "production" ) );
+      return "production".equals( System.getProperty( "galdr.environment", "production" ) );
     }
 
     @GwtIncompatible
     @Override
     boolean areDebugToStringMethodsEnabled()
     {
-      return "true".equals( System.getProperty( "arez.debug_to_string", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.debug_to_string", PRODUCTION_MODE ? "false" : "true" ) );
     }
 
     @GwtIncompatible
     @Override
     boolean checkInvariants()
     {
-      return "true".equals( System.getProperty( "arez.check_invariants", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.check_invariants", PRODUCTION_MODE ? "false" : "true" ) );
     }
 
     @GwtIncompatible
     @Override
     boolean checkApiInvariants()
     {
-      return "true".equals( System.getProperty( "arez.check_api_invariants", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.check_api_invariants", PRODUCTION_MODE ? "false" : "true" ) );
     }
   }
 
@@ -77,22 +77,22 @@ final class GaldrConfig
   {
     boolean isProductionMode()
     {
-      return "production" == System.getProperty( "arez.environment" );
+      return "production" == System.getProperty( "galdr.environment" );
     }
 
     boolean areDebugToStringMethodsEnabled()
     {
-      return "true" == System.getProperty( "arez.debug_to_string" );
+      return "true" == System.getProperty( "galdr.debug_to_string" );
     }
 
     boolean checkInvariants()
     {
-      return "true" == System.getProperty( "arez.check_invariants" );
+      return "true" == System.getProperty( "galdr.check_invariants" );
     }
 
     boolean checkApiInvariants()
     {
-      return "true" == System.getProperty( "arez.check_api_invariants" );
+      return "true" == System.getProperty( "galdr.check_api_invariants" );
     }
   }
 }
