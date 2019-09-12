@@ -36,4 +36,16 @@ public class ComponentTypeTest
     assertNotEquals( componentType2, componentType1 );
     assertEquals( componentType2, componentType2 );
   }
+
+  @Test
+  public void getName()
+  {
+    final ComponentType componentType = new ComponentType( Component1.class, 1 );
+    assertEquals( componentType.getName(), "Component1" );
+
+    GaldrTestUtil.disableNames();
+
+    assertInvariantFailure( componentType::getName,
+                            "Galdr-0053: ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false" );
+  }
 }

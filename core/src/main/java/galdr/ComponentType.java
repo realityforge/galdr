@@ -2,6 +2,7 @@ package galdr;
 
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import static org.realityforge.braincheck.Guards.*;
 
 /**
  * A component type descriptor.
@@ -52,6 +53,11 @@ final class ComponentType
   @Nonnull
   String getName()
   {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( Galdr::areNamesEnabled,
+                    () -> "Galdr-0053: ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false" );
+    }
     return _type.getSimpleName();
   }
 
