@@ -7,6 +7,7 @@ final class GaldrConfig
 {
   private static final ConfigProvider PROVIDER = new ConfigProvider();
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
+  private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
@@ -23,6 +24,11 @@ final class GaldrConfig
   static boolean isProductionMode()
   {
     return PRODUCTION_MODE;
+  }
+
+  static boolean areNamesEnabled()
+  {
+    return ENABLE_NAMES;
   }
 
   static boolean areDebugToStringMethodsEnabled()
@@ -48,6 +54,13 @@ final class GaldrConfig
     boolean isProductionMode()
     {
       return "production".equals( System.getProperty( "galdr.environment", "production" ) );
+    }
+
+    @GwtIncompatible
+    @Override
+    boolean areNamesEnabled()
+    {
+      return "true".equals( System.getProperty( "galdr.enable_names", isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
@@ -78,6 +91,11 @@ final class GaldrConfig
     boolean isProductionMode()
     {
       return "production" == System.getProperty( "galdr.environment" );
+    }
+
+    boolean areNamesEnabled()
+    {
+      return "true" == System.getProperty( "galdr.enable_names" );
     }
 
     boolean areDebugToStringMethodsEnabled()

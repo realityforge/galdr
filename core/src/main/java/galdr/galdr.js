@@ -8,6 +8,9 @@ goog.provide('galdr');
 galdr.environment = goog.define('galdr.environment', 'production');
 
 /** @define {string} */
+galdr.enable_names = goog.define('galdr.enable_names', 'false');
+
+/** @define {string} */
 galdr.debug_to_string = goog.define('galdr.debug_to_string', 'false');
 
 /** @define {string} */

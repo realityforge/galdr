@@ -33,16 +33,44 @@ public final class GaldrTestUtil
 
     if ( productionMode )
     {
+      disableNames();
       disableDebugToString();
       noCheckInvariants();
       noCheckApiInvariants();
     }
     else
     {
+      enableNames();
       enableDebugToString();
       checkInvariants();
       checkApiInvariants();
     }
+  }
+
+  /**
+   * Set `galdr.enable_names` setting to true.
+   */
+  public static void enableNames()
+  {
+    setEnableNames( true );
+  }
+
+  /**
+   * Set `arez.enable_names` setting to false.
+   */
+  public static void disableNames()
+  {
+    setEnableNames( false );
+  }
+
+  /**
+   * Configure the `galdr.enable_names` setting.
+   *
+   * @param value the setting.
+   */
+  private static void setEnableNames( final boolean value )
+  {
+    setConstant( "ENABLE_NAMES", value );
   }
 
   /**
