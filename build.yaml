@@ -17,3 +17,5 @@ artifacts:
   jsinterop_annotations: com.google.jsinterop:jsinterop-annotations:jar:1.0.2
 
   jsinterop_base: org.realityforge.com.google.jsinterop:base:jar:1.0.0-b2-e6d791f
+
+  javax_json: org.glassfish:javax.json:jar:1.1

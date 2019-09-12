@@ -30,6 +30,8 @@ define 'galdr' do
 
     test.using :testng
     test.options[:java_args] = %w(-ea)
+
+    test.compile.with :javax_json # Required to support validating invariant messages in tests
   end
 
   ipr.add_testng_configuration('core',
