@@ -34,7 +34,7 @@ define 'galdr' do
 
   ipr.add_testng_configuration('core',
                                :module => 'core',
-                               :jvm_args => '-ea')
+                               :jvm_args => '-ea -Dbraincheck.environment=development -Dgaldr.environment=development -Dgaldr.check_diagnostic_messages=true -Dgaldr.output_fixture_data=true -Dgaldr.diagnostic_messages_file=core/src/test/java/galdr/diagnostic_messages.json')
 
   iml.excluded_directories << project._('tmp')
 
