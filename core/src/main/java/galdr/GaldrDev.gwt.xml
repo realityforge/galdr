@@ -4,6 +4,7 @@
   <source path='ignored'/>
 
   <set-property name='galdr.environment' value='development'/>
+  <set-property name='galdr.galdr.debug_to_string' value='true'/>
   <set-property name='galdr.check_invariants' value='true'/>
   <set-property name='galdr.check_api_invariants' value='true'/>
 </module>

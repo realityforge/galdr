@@ -11,6 +11,9 @@
   <define-property name='galdr.environment' values='development,production'/>
   <set-property name='galdr.environment' value='production'/>
 
+  <define-property name='galdr.debug_to_string' values='true,false'/>
+  <set-property name='galdr.debug_to_string' value='false'/>
+
   <define-property name='galdr.check_invariants' values='true,false'/>
   <set-property name='galdr.check_invariants' value='false'/>
 
