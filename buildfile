@@ -4,6 +4,13 @@ require 'buildr/single_intermediate_layout'
 require 'buildr/top_level_generate_dir'
 require 'buildr/gwt'
 
+# JDK options passed to test environment. Essentially turns assertions on.
+GALDR_TEST_OPTIONS =
+  {
+    'braincheck.environment' => 'development',
+    'galdr.environment' => 'development'
+  }
+
 desc 'galdr: An ECS implementation'
 define 'galdr' do
   project.group = 'org.realityforge.galdr'
@@ -30,6 +37,8 @@ define 'galdr' do
 
     test.using :testng
     test.options[:java_args] = %w(-ea)
+    test.options[:properties] =
+      GALDR_TEST_OPTIONS.merge('galdr.diagnostic_messages_file' => _('src/test/java/galdr/diagnostic_messages.json'))
 
     test.compile.with :javax_json # Required to support validating invariant messages in tests
   end
