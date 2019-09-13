@@ -1,6 +1,7 @@
 package galdr;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import static org.realityforge.braincheck.Guards.*;
 
@@ -19,10 +20,16 @@ final class ComponentType
    * Used to enable fast lookup and access of component data.
    */
   private final int _index;
+  /**
+   * Function invoked to create an instance of the component.
+   */
+  @Nonnull
+  private final Supplier<?> _createFn;
 
-  ComponentType( @Nonnull final Class<?> type, final int index )
+  <T> ComponentType( @Nonnull final Class<T> type, final int index, @Nonnull final Supplier<T> createFn )
   {
     _type = Objects.requireNonNull( type );
+    _createFn = Objects.requireNonNull( createFn );
     _index = index;
   }
 
@@ -45,6 +52,17 @@ final class ComponentType
   Class<?> getType()
   {
     return _type;
+  }
+
+  /**
+   * Return the function that creates an instance of the component.
+   *
+   * @return the function that creates an instance of the component.
+   */
+  @Nonnull
+  public Supplier<?> getCreateFn()
+  {
+    return _createFn;
   }
 
   /**
