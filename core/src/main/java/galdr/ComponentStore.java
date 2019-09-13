@@ -69,8 +69,9 @@ abstract class ComponentStore
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> null != component,
-                    () -> "Galdr-0033: The get() method on the ComponentStore named '" + getName() + "' expected to " +
-                          "find a component for entityId " + entityId + " but is unable to locate component." );
+                    () -> "Galdr-0033: The ComponentStore.get() method for the component named '" + getName() + "' " +
+                          "expected to find a component for entityId " + entityId + " but is unable to " +
+                          "locate component." );
     }
     assert null != component;
     return component;
@@ -102,7 +103,7 @@ abstract class ComponentStore
     {
       apiInvariant( () -> !has( entityId ),
                     () -> "Galdr-0031: The ComponentStore.create() method invoked but entity " + entityId +
-                          " already has the component " + getName() + "." );
+                          " already has the component named '" + getName() + "'." );
     }
     return performCreate( entityId );
   }
@@ -135,8 +136,8 @@ abstract class ComponentStore
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> has( entityId ),
-                    () -> "Galdr-0032: The remove() method on the ComponentStore named '" + getName() + "' " +
-                          "invoked but entity does not have the component." );
+                    () -> "Galdr-0030: The ComponentStore.remove() method for the component named '" + getName() +
+                          "' was invoked but the entity " + entityId + " does not have the component." );
     }
     performRemove( entityId );
   }
