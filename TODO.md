@@ -63,7 +63,6 @@ for systems/processors ahead of time.
 
 * Add a tool that visualizes `Component` -> `Processor` matrix.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
-* Remove the `Entity` class. It is just a convenience flyweight that offers no real value.
 * Change component into an annotation `@Component`
 * Change `Entity` to be hierarchical. i.e. An `Entity` can have child `Entity` instances.
 * Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
