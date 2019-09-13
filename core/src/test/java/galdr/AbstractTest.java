@@ -1,6 +1,7 @@
 package galdr;
 
 import java.io.File;
+import java.util.Random;
 import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
 import org.realityforge.braincheck.GuardMessageCollector;
@@ -13,6 +14,7 @@ import static org.testng.Assert.*;
 public abstract class AbstractTest
 {
   private static final GuardMessageCollector c_messages = createCollector();
+  private final Random _random = new Random();
 
   @BeforeMethod
   protected void beforeTest()
@@ -58,5 +60,10 @@ public abstract class AbstractTest
   final void assertInvariantFailure( @Nonnull final ThrowingRunnable throwingRunnable, @Nonnull final String message )
   {
     assertEquals( expectThrows( IllegalStateException.class, throwingRunnable ).getMessage(), message );
+  }
+
+  final int randomInt( final int upperBound )
+  {
+    return _random.nextInt( upperBound );
   }
 }
