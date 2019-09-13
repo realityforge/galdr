@@ -57,7 +57,7 @@ public class ComponentTypeTest
   }
 
   @Test
-  public void toString_test()
+  public void debugToString()
   {
     final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
     componentType.initIndex( 42 );
