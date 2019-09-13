@@ -60,7 +60,7 @@ final class ComponentType
    * @return the function that creates an instance of the component.
    */
   @Nonnull
-  public Supplier<?> getCreateFn()
+  Supplier<?> getCreateFn()
   {
     return _createFn;
   }
