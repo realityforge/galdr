@@ -74,3 +74,29 @@ for systems/processors ahead of time.
   implementation based on [FlatBuffers](https://google.github.io/flatbuffers/index.html) for cache friendly
   access. We could use a `Map` based implementation that is used when there is relative low density component
   distribution that does not need fast access times.
+
+### Other ECS Systems
+
+We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
+for web platform where there will be different `World` instances, some of which are turn based and some of which
+are "realtime". Inspiration from other frameworks could help move it forward.
+
+* A [Rust ECS](https://www.youtube.com/watch?v=SofC6c9xQv4) talk. It is very interesting as it explicitly calls
+  out the different `ComponentStore` implementations for different performance characteristics.
+
+* [Artemis](https://code.google.com/archive/p/artemis-framework) was one of the original java based ECS toolkits
+  that inspired a whole line of different ECS implementations in java. The code is no longer maintained and there
+  is ome significant improvements that could be made to it but it still serves as a useful starting point.
+
+* [Artemis-ODB](https://github.com/junkdog/artemis-odb) is a maintained successor to Artemis that includes a
+  lot more features. In particular it includes runtime code generation to improve performance, an injection framework
+  to ease development frameworks, generation of fluid entity API, `Prefab` and `Archetype` classes to help create
+  entities from blueprints, loading and saving entity state to files etc. It also has a reasonably active community
+  with lots of interesting support libraries and tools to [visualize entities at runtime](https://github.com/Namek/artemis-odb-entity-tracker)
+  as well as [kick-starters](https://github.com/DaanVanYperen/artemis-odb-contrib/tree/master/contrib-jam) like
+  needed when at a game jam. All of these tools come at a complexity cost as does the legacy of maintaining
+  compatibility with prior ECS systems (i.e. Artemis and ODB).
+
+* [Ashley](https://github.com/libgdx/ashley/wiki) is another java ECS that took ideas from other ECS implementations
+  (including Artemis above). It is significantly simpler and more explicit than Artemis and Artemis-ODB and it is
+  dependent upon libgdx. It has significantly worse performance.
