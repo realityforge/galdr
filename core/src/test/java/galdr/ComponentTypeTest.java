@@ -55,4 +55,17 @@ public class ComponentTypeTest
     assertInvariantFailure( componentType::getName,
                             "Galdr-0053: ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false" );
   }
+
+  @Test
+  public void toString_test()
+  {
+    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
+    componentType.initIndex( 42 );
+
+    assertEquals( componentType.toString(), "ComponentType[Component1=42]" );
+
+    GaldrTestUtil.disableDebugToString();
+
+    assertEquals( componentType.toString(), "galdr.ComponentType@2a" );
+  }
 }
