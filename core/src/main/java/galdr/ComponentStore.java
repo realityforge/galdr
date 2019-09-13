@@ -96,7 +96,23 @@ abstract class ComponentStore
    * @return the component instance.
    */
   @Nonnull
-  abstract Object create( int entityId );
+  final Object create( final int entityId )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> !has( entityId ),
+                    () -> "Galdr-0031: The ComponentStore.create() method invoked but entity " + entityId +
+                          " already has the component " + getName() + "." );
+    }
+    return performCreate( entityId );
+  }
+
+  /**
+   * Template method implemented by the ComponentStore implementation to perform component creation.
+   *
+   * @param entityId the id of the entity.
+   */
+  abstract Object performCreate( int entityId );
 
   /**
    * Create an instance of the component.
