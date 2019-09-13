@@ -1,5 +1,57 @@
 [
   {
+    "code": 29,
+    "type": "API_INVARIANT",
+    "messagePattern": "The ComponentStore method invoked was with a negative entityId %s.",
+    "callers": [
+      {
+        "class": "galdr.ComponentStore",
+        "method": "ensureEntityIdPositive",
+        "file": "ComponentStore.java",
+        "lineNumber": 194
+      }
+    ]
+  },
+  {
+    "code": 30,
+    "type": "API_INVARIANT",
+    "messagePattern": "The ComponentStore.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
+    "callers": [
+      {
+        "class": "galdr.ComponentStore",
+        "method": "remove",
+        "file": "ComponentStore.java",
+        "lineNumber": 163
+      }
+    ]
+  },
+  {
+    "code": 31,
+    "type": "API_INVARIANT",
+    "messagePattern": "The ComponentStore.create() method invoked but entity %s already has the component named '%s'.",
+    "callers": [
+      {
+        "class": "galdr.ComponentStore",
+        "method": "create",
+        "file": "ComponentStore.java",
+        "lineNumber": 128
+      }
+    ]
+  },
+  {
+    "code": 33,
+    "type": "API_INVARIANT",
+    "messagePattern": "The ComponentStore.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component.",
+    "callers": [
+      {
+        "class": "galdr.ComponentStore",
+        "method": "get",
+        "file": "ComponentStore.java",
+        "lineNumber": 94
+      }
+    ]
+  },
+  {
     "code": 53,
     "type": "API_INVARIANT",
     "messagePattern": "ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false",

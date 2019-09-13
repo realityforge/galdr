@@ -43,7 +43,18 @@ abstract class ComponentStore
    * @param entityId the id of the entity.
    * @return true if the specified entity has a component contained in this store, false otherwise.
    */
-  abstract boolean has( int entityId );
+  final boolean has( final int entityId )
+  {
+    ensureEntityIdPositive( entityId );
+    return performHas( entityId );
+  }
+
+  /**
+   * Template method implemented by the ComponentStore implementation to check whether entity has component.
+   *
+   * @param entityId the id of the entity.
+   */
+  abstract boolean performHas( int entityId );
 
   /**
    * Return the component instance for the specified entity, if the component exists.
@@ -52,7 +63,18 @@ abstract class ComponentStore
    * @return the component instance if it exists.
    */
   @Nullable
-  abstract Object find( int entityId );
+  final Object find( final int entityId )
+  {
+    ensureEntityIdPositive( entityId );
+    return performFind( entityId );
+  }
+
+  /**
+   * Template method implemented by the ComponentStore implementation to find component for entity.
+   *
+   * @param entityId the id of the entity.
+   */
+  abstract Object performFind( int entityId );
 
   /**
    * Return the component instance for the specified entity.
@@ -65,6 +87,7 @@ abstract class ComponentStore
   @Nonnull
   final Object get( final int entityId )
   {
+    ensureEntityIdPositive( entityId );
     final Object component = find( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
@@ -99,6 +122,7 @@ abstract class ComponentStore
   @Nonnull
   final Object create( final int entityId )
   {
+    ensureEntityIdPositive( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> !has( entityId ),
@@ -133,6 +157,7 @@ abstract class ComponentStore
    */
   final void remove( final int entityId )
   {
+    ensureEntityIdPositive( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> has( entityId ),
@@ -159,6 +184,16 @@ abstract class ComponentStore
     else
     {
       return super.toString();
+    }
+  }
+
+  private void ensureEntityIdPositive( final int entityId )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> entityId >= 0,
+                    () -> "Galdr-0029: The ComponentStore method invoked was with a negative " +
+                          "entityId " + entityId + "." );
     }
   }
 }
