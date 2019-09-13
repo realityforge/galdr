@@ -126,7 +126,7 @@ abstract class ComponentStore
   }
 
   /**
-   * Hook method implemented by the ComponentStore to perform removal.
+   * Template method implemented by the ComponentStore implementation to perform removal.
    *
    * @param entityId the id of the entity.
    */
