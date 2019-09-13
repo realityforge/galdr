@@ -9,6 +9,9 @@ import static org.realityforge.braincheck.Guards.*;
  */
 final class ComponentType
 {
+  /**
+   * The java type of the component.
+   */
   @Nonnull
   private final Class<?> _type;
   /**
@@ -34,9 +37,9 @@ final class ComponentType
   }
 
   /**
-   * Return the type of the component.
+   * Return the java type of the component.
    *
-   * @return the type of the component.
+   * @return the java type of the component.
    */
   @Nonnull
   Class<?> getType()
