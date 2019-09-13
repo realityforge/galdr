@@ -99,6 +99,16 @@ abstract class ComponentStore
   abstract Object create( int entityId );
 
   /**
+   * Create an instance of the component.
+   *
+   * @return an instance of the component.
+   */
+  final Object createComponentInstance()
+  {
+    return getComponentType().getCreateFn().get();
+  }
+
+  /**
    * Remove the component for the specified entity.
    * The component MUST exist for the entity.
    *
