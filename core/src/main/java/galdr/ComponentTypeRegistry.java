@@ -15,15 +15,15 @@ final class ComponentTypeRegistry
   @Nonnull
   private final Map<Class<?>, ComponentType> _componentTypeByClass;
 
-  ComponentTypeRegistry( @Nonnull final Class<?>... types )
+  ComponentTypeRegistry( @Nonnull final ComponentType... componentTypes )
   {
-    _componentTypes = new ComponentType[ types.length ];
+    _componentTypes = new ComponentType[ componentTypes.length ];
     final Map<Class<?>, ComponentType> map = new HashMap<>();
-    for ( int i = 0; i < types.length; i++ )
+    for ( int i = 0; i < componentTypes.length; i++ )
     {
-      final Class<?> type = types[ i ];
-      final ComponentType componentType = new ComponentType( type, i );
-      map.put( type, componentType );
+      final ComponentType componentType = componentTypes[ i ];
+      componentType.initIndex( i );
+      map.put( componentType.getType(), componentType );
       _componentTypes[ i ] = componentType;
     }
     _componentTypeByClass = Collections.unmodifiableMap( map );

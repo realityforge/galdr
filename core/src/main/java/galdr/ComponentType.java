@@ -16,20 +16,30 @@ final class ComponentType
   @Nonnull
   private final Class<?> _type;
   /**
-   * Unique index of type within a {@link World}.
-   * Used to enable fast lookup and access of component data.
-   */
-  private final int _index;
-  /**
    * Function invoked to create an instance of the component.
    */
   @Nonnull
   private final Supplier<?> _createFn;
+  /**
+   * Unique index of type within a {@link World}.
+   * Used to enable fast lookup and access of component data.
+   */
+  private int _index;
 
-  <T> ComponentType( @Nonnull final Class<T> type, final int index, @Nonnull final Supplier<T> createFn )
+  <T> ComponentType( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
+  }
+
+  /**
+   * Initialize the index. This occurs when the ComponentType is placed in the registry.
+   *
+   * @param index the index of the component.
+   */
+  void initIndex( final int index )
+  {
+    assert 0 == _index;
     _index = index;
   }
 
