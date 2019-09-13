@@ -13,16 +13,15 @@ final class ComponentTypeRegistry
   @Nonnull
   private final ComponentType[] _componentTypes;
   @Nonnull
-  private final Map<Class<? extends Component>, ComponentType> _componentTypeByClass;
+  private final Map<Class<?>, ComponentType> _componentTypeByClass;
 
-  @SafeVarargs
-  ComponentTypeRegistry( @Nonnull final Class<? extends Component>... types )
+  ComponentTypeRegistry( @Nonnull final Class<?>... types )
   {
     _componentTypes = new ComponentType[ types.length ];
-    final Map<Class<? extends Component>, ComponentType> map = new HashMap<>();
+    final Map<Class<?>, ComponentType> map = new HashMap<>();
     for ( int i = 0; i < types.length; i++ )
     {
-      final Class<? extends Component> type = types[ i ];
+      final Class<?> type = types[ i ];
       final ComponentType componentType = new ComponentType( type, i );
       map.put( type, componentType );
       _componentTypes[ i ] = componentType;
@@ -42,7 +41,7 @@ final class ComponentTypeRegistry
   }
 
   @Nonnull
-  ComponentType getComponentTypeByType( @Nonnull final Class<? extends Component> type )
+  ComponentType getComponentTypeByType( @Nonnull final Class<?> type )
   {
     return _componentTypeByClass.get( type );
   }

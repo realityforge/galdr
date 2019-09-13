@@ -10,14 +10,14 @@ import static org.realityforge.braincheck.Guards.*;
 final class ComponentType
 {
   @Nonnull
-  private final Class<? extends Component> _type;
+  private final Class<?> _type;
   /**
    * Unique index of type within a {@link World}.
    * Used to enable fast lookup and access of component data.
    */
   private final int _index;
 
-  ComponentType( @Nonnull final Class<? extends Component> type, final int index )
+  ComponentType( @Nonnull final Class<?> type, final int index )
   {
     _type = Objects.requireNonNull( type );
     _index = index;
@@ -39,7 +39,7 @@ final class ComponentType
    * @return the type of the component.
    */
   @Nonnull
-  Class<? extends Component> getType()
+  Class<?> getType()
   {
     return _type;
   }

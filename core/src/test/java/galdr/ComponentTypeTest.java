@@ -7,12 +7,10 @@ public class ComponentTypeTest
   extends AbstractTest
 {
   private static class Component1
-    implements Component
   {
   }
 
   private static class Component2
-    implements Component
   {
   }
 

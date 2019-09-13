@@ -8,17 +8,14 @@ public class ComponentTypeRegistryTest
   extends AbstractTest
 {
   private static class Component1
-    implements Component
   {
   }
 
   private static class Component2
-    implements Component
   {
   }
 
   private static class Component3
-    implements Component
   {
   }
 
@@ -34,7 +31,7 @@ public class ComponentTypeRegistryTest
   }
 
   private void assertTypeRegistered( @Nonnull final ComponentTypeRegistry registry,
-                                     @Nonnull final Class<? extends Component> type,
+                                     @Nonnull final Class<?> type,
                                      final int index )
   {
     final ComponentType entry = registry.getComponentTypeByIndex( index );
