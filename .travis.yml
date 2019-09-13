@@ -9,6 +9,8 @@ install:
   - rvm use 2.3.1
   - gem install bundler
   - bundle install
-script: buildr ci
+script: bundle exec buildr ci
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 git:
   depth: 10
