@@ -44,6 +44,17 @@ define 'galdr' do
     test.compile.with :javax_json # Required to support validating invariant messages in tests
   end
 
+
+  doc.from(projects(%w(core))).
+    using(:javadoc,
+          :windowtitle => 'Galdr API Documentation',
+          :linksource => true,
+          :timestamp => false,
+          :link => %w(https://docs.oracle.com/javase/8/docs/api http://www.gwtproject.org/javadoc/latest/)
+    )
+
+  cleanup_javadocs(project, 'galdr')
+
   ipr.add_testng_configuration('core',
                                :module => 'core',
                                :jvm_args => '-ea -Dbraincheck.environment=development -Dgaldr.environment=development -Dgaldr.check_diagnostic_messages=true -Dgaldr.output_fixture_data=true -Dgaldr.diagnostic_messages_file=core/src/test/java/galdr/diagnostic_messages.json')
