@@ -6,43 +6,43 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 /**
- * Registry that maps the component types to indexes and vice versa.
+ * Registry that maps the {@link ComponentManager} to indexes and vice versa.
  */
 final class ComponentRegistry
 {
   @Nonnull
-  private final ComponentManager<?>[] _componentTypes;
+  private final ComponentManager<?>[] _components;
   @Nonnull
-  private final Map<Class<?>, ComponentManager<?>> _componentTypeByClass;
+  private final Map<Class<?>, ComponentManager<?>> _componentByClass;
 
-  ComponentRegistry( @Nonnull final ComponentManager<?>... componentTypes )
+  ComponentRegistry( @Nonnull final ComponentManager<?>... components )
   {
-    _componentTypes = new ComponentManager[ componentTypes.length ];
+    _components = new ComponentManager[ components.length ];
     final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
-    for ( int i = 0; i < componentTypes.length; i++ )
+    for ( int i = 0; i < components.length; i++ )
     {
-      final ComponentManager componentType = componentTypes[ i ];
+      final ComponentManager componentType = components[ i ];
       componentType.initIndex( i );
       map.put( componentType.getType(), componentType );
-      _componentTypes[ i ] = componentType;
+      _components[ i ] = componentType;
     }
-    _componentTypeByClass = Collections.unmodifiableMap( map );
+    _componentByClass = Collections.unmodifiableMap( map );
   }
 
   @Nonnull
   ComponentManager getComponentManagerByIndex( final int index )
   {
-    return _componentTypes[ index ];
+    return _components[ index ];
   }
 
   int size()
   {
-    return _componentTypes.length;
+    return _components.length;
   }
 
   @Nonnull
   ComponentManager getComponentManagerByType( @Nonnull final Class<?> type )
   {
-    return _componentTypeByClass.get( type );
+    return _componentByClass.get( type );
   }
 }
