@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class ComponentTypeRegistryTest
+public class ComponentRegistryTest
   extends AbstractTest
 {
   private static class Component1
@@ -22,17 +22,17 @@ public class ComponentTypeRegistryTest
   @Test
   public void basicOperation()
   {
-    final ComponentTypeRegistry registry =
-      new ComponentTypeRegistry( new FastArrayComponentManager<>( Component1.class, Component1::new ),
-                                 new FastArrayComponentManager<>( Component2.class, Component2::new ),
-                                 new FastArrayComponentManager<>( Component3.class, Component3::new ) );
+    final ComponentRegistry registry =
+      new ComponentRegistry( new FastArrayComponentManager<>( Component1.class, Component1::new ),
+                             new FastArrayComponentManager<>( Component2.class, Component2::new ),
+                             new FastArrayComponentManager<>( Component3.class, Component3::new ) );
     assertEquals( registry.size(), 3 );
     assertTypeRegistered( registry, Component1.class, 0 );
     assertTypeRegistered( registry, Component2.class, 1 );
     assertTypeRegistered( registry, Component3.class, 2 );
   }
 
-  private void assertTypeRegistered( @Nonnull final ComponentTypeRegistry registry,
+  private void assertTypeRegistered( @Nonnull final ComponentRegistry registry,
                                      @Nonnull final Class<?> type,
                                      final int index )
   {
