@@ -23,6 +23,7 @@ public class ComponentManagerTest
     componentManager.initIndex( 23 );
     assertEquals( componentManager.getIndex(), 23 );
 
+    assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getCreateFn(), createFn );
     assertEquals( componentManager.getName(), "Component1" );

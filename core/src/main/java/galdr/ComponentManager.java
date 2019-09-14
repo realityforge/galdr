@@ -22,6 +22,11 @@ abstract class ComponentManager<T>
   @Nonnull
   private final Supplier<T> _createFn;
   /**
+   * The Component API exposed to application code.
+   */
+  @Nonnull
+  private final ComponentAPI<T> _api;
+  /**
    * Unique index of type within a {@link World}.
    * Used to enable fast lookup and access of component data.
    */
@@ -31,11 +36,23 @@ abstract class ComponentManager<T>
   {
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
+    _api = new ComponentAPI<>( this );
     if ( Galdr.shouldCheckInvariants() || Galdr.shouldCheckApiInvariants() )
     {
       // Only need to set it to the sentinel value when checking invariants, otherwise -1 will not be read
       _index = -1;
     }
+  }
+
+  /**
+   * Return the API for component type.
+   *
+   * @return the API for the component type.
+   */
+  @Nonnull
+  ComponentAPI<T> getApi()
+  {
+    return _api;
   }
 
   /**
