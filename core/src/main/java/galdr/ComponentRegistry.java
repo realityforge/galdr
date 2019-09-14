@@ -3,6 +3,7 @@ package galdr;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.Nonnull;
 
 /**
@@ -45,5 +46,11 @@ final class ComponentRegistry
   <T> ComponentManager<T> getComponentManagerByType( @Nonnull final Class<T> type )
   {
     return (ComponentManager<T>) _componentByClass.get( type );
+  }
+
+  @Nonnull
+  Set<Class<?>> getComponentTypes()
+  {
+    return _componentByClass.keySet();
   }
 }
