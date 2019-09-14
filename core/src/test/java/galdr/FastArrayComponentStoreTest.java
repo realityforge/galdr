@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.function.Supplier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -13,12 +14,19 @@ public class FastArrayComponentStoreTest
   @Test
   public void basicOperation()
   {
-    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, Component1::new );
+    final Supplier<Component1> createFn = Component1::new;
+    final FastArrayComponentStore<Component1> componentStore =
+      new FastArrayComponentStore<>( Component1.class, createFn, 5 );
 
-    final FastArrayComponentStore<Component1> componentStore = new FastArrayComponentStore<>( componentType, 5 );
+    assertEquals( componentStore.getIndex(), 0 );
+    componentStore.initIndex( 23 );
+    assertEquals( componentStore.getIndex(), 23 );
 
-    assertEquals( componentStore.getComponentType(), componentType );
-    assertEquals( componentStore.getName(), componentType.getName() );
+    assertEquals( componentStore.getType(), Component1.class );
+    assertEquals( componentStore.getCreateFn(), createFn );
+    assertEquals( componentStore.getName(), "Component1" );
+    assertEquals( componentStore.toString(), "ComponentStore[Component1=23]" );
+    assertEquals( componentStore.hashCode(), 23 );
     assertEquals( componentStore.capacity(), 5 );
 
     final int entityId = 9;

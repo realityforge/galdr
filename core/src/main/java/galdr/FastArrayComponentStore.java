@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 final class FastArrayComponentStore<T>
@@ -8,14 +9,14 @@ final class FastArrayComponentStore<T>
   @Nonnull
   private Object[] _data;
 
-  FastArrayComponentStore( @Nonnull final ComponentType<T> componentType )
+  FastArrayComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
-    this( componentType, 120 );
+    this( type, createFn, 120 );
   }
 
-  FastArrayComponentStore( @Nonnull final ComponentType<T> componentType, final int initialCapacity )
+  FastArrayComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn, final int initialCapacity )
   {
-    super( componentType );
+    super( type, createFn );
     _data = new Object[ initialCapacity ];
   }
 

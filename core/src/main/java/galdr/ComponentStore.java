@@ -1,6 +1,7 @@
 package galdr;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
@@ -10,18 +11,69 @@ import static org.realityforge.braincheck.Guards.*;
  */
 abstract class ComponentStore<T>
 {
+  /**
+   * The java type of the component.
+   */
   @Nonnull
-  private final ComponentType<T> _componentType;
+  private final Class<T> _type;
+  /**
+   * Function invoked to create an instance of the component.
+   */
+  @Nonnull
+  private final Supplier<T> _createFn;
+  /**
+   * Unique index of type within a {@link World}.
+   * Used to enable fast lookup and access of component data.
+   */
+  private int _index;
 
-  ComponentStore( @Nonnull final ComponentType<T> componentType )
+  ComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
-    _componentType = Objects.requireNonNull( componentType );
+    _type = Objects.requireNonNull( type );
+    _createFn = Objects.requireNonNull( createFn );
   }
 
-  @Nonnull
-  final ComponentType<T> getComponentType()
+  /**
+   * Initialize the index. This occurs when the ComponentStore is placed in the registry.
+   *
+   * @param index the index of the component.
+   */
+  void initIndex( final int index )
   {
-    return _componentType;
+    assert 0 == _index;
+    _index = index;
+  }
+
+  /**
+   * Return the unique index of type within a {@link World}.
+   *
+   * @return the unique index of type within a {@link World}.
+   */
+  int getIndex()
+  {
+    return _index;
+  }
+
+  /**
+   * Return the java type of the component.
+   *
+   * @return the java type of the component.
+   */
+  @Nonnull
+  final Class<T> getType()
+  {
+    return _type;
+  }
+
+  /**
+   * Return the function that creates an instance of the component.
+   *
+   * @return the function that creates an instance of the component.
+   */
+  @Nonnull
+  final Supplier<T> getCreateFn()
+  {
+    return _createFn;
   }
 
   /**
@@ -31,9 +83,14 @@ abstract class ComponentStore<T>
    * @return the human readable name of the ComponentStore.
    */
   @Nonnull
-  final String getName()
+  String getName()
   {
-    return getComponentType().getName();
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( Galdr::areNamesEnabled,
+                    () -> "Galdr-0053: ComponentStore.getName() invoked when Galdr.areNamesEnabled() returns false" );
+    }
+    return _type.getSimpleName();
   }
 
   /**
@@ -146,7 +203,7 @@ abstract class ComponentStore<T>
    */
   final T createComponentInstance()
   {
-    return getComponentType().getCreateFn().get();
+    return getCreateFn().get();
   }
 
   /**
@@ -179,12 +236,24 @@ abstract class ComponentStore<T>
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "ComponentStore[" + getName() + "]";
+      return "ComponentStore[" + getName() + "=" + _index + "]";
     }
     else
     {
       return super.toString();
     }
+  }
+
+  @Override
+  public boolean equals( final Object o )
+  {
+    return o instanceof ComponentStore && _index == ( (ComponentStore) o )._index;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return _index;
   }
 
   private void ensureEntityIdPositive( final int entityId )

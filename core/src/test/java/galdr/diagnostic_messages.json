@@ -8,7 +8,7 @@
         "class": "galdr.ComponentStore",
         "method": "ensureEntityIdPositive",
         "file": "ComponentStore.java",
-        "lineNumber": 194
+        "lineNumber": 263
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.ComponentStore",
         "method": "remove",
         "file": "ComponentStore.java",
-        "lineNumber": 163
+        "lineNumber": 220
       }
     ]
   },
@@ -34,7 +34,7 @@
         "class": "galdr.ComponentStore",
         "method": "create",
         "file": "ComponentStore.java",
-        "lineNumber": 128
+        "lineNumber": 185
       }
     ]
   },
@@ -47,20 +47,20 @@
         "class": "galdr.ComponentStore",
         "method": "get",
         "file": "ComponentStore.java",
-        "lineNumber": 94
+        "lineNumber": 151
       }
     ]
   },
   {
     "code": 53,
     "type": "API_INVARIANT",
-    "messagePattern": "ComponentType.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "messagePattern": "ComponentStore.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
-        "class": "galdr.ComponentType",
+        "class": "galdr.ComponentStore",
         "method": "getName",
-        "file": "ComponentType.java",
-        "lineNumber": 89
+        "file": "ComponentStore.java",
+        "lineNumber": 90
       }
     ]
   }
