@@ -18,7 +18,7 @@ public class FastArrayComponentManagerTest
     final FastArrayComponentManager<Component1> componentStore =
       new FastArrayComponentManager<>( Component1.class, createFn, 5 );
 
-    assertEquals( componentStore.getIndex(), 0 );
+    assertEquals( componentStore.toString(), "ComponentManager[Component1=-1]" );
     componentStore.initIndex( 23 );
     assertEquals( componentStore.getIndex(), 23 );
 
