@@ -62,7 +62,7 @@ public abstract class AbstractTest
     assertEquals( expectThrows( IllegalStateException.class, throwingRunnable ).getMessage(), message );
   }
 
-  final int randomInt( final int upperBound )
+  protected final int randomInt( final int upperBound )
   {
     return _random.nextInt( upperBound );
   }
