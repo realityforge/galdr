@@ -1,5 +1,31 @@
 [
   {
+    "code": 1,
+    "type": "INVARIANT",
+    "messagePattern": "ComponentRegistry.getComponentManagerByType() attempted to access Component for type class %s but no such component exists.",
+    "callers": [
+      {
+        "class": "galdr.ComponentRegistry",
+        "method": "getComponentManagerByType",
+        "file": "ComponentRegistry.java",
+        "lineNumber": 58
+      }
+    ]
+  },
+  {
+    "code": 2,
+    "type": "INVARIANT",
+    "messagePattern": "ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index %s but no such component exists.",
+    "callers": [
+      {
+        "class": "galdr.ComponentRegistry",
+        "method": "getComponentManagerByIndex",
+        "file": "ComponentRegistry.java",
+        "lineNumber": 39
+      }
+    ]
+  },
+  {
     "code": 19,
     "type": "INVARIANT",
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
