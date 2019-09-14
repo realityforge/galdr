@@ -36,7 +36,7 @@ public class ComponentRegistryTest
                                      @Nonnull final Class<?> type,
                                      final int index )
   {
-    final ComponentManager entry = registry.getComponentManagerByIndex( index );
+    final ComponentManager<?> entry = registry.getComponentManagerByIndex( index );
     assertEquals( entry.getIndex(), index );
     assertEquals( entry.getType(), type );
     assertEquals( registry.getComponentManagerByType( type ), entry );

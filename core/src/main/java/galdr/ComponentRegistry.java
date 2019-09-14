@@ -30,7 +30,7 @@ final class ComponentRegistry
   }
 
   @Nonnull
-  ComponentManager getComponentManagerByIndex( final int index )
+  ComponentManager<?> getComponentManagerByIndex( final int index )
   {
     return _components[ index ];
   }
@@ -40,9 +40,10 @@ final class ComponentRegistry
     return _components.length;
   }
 
+  @SuppressWarnings( "unchecked" )
   @Nonnull
-  ComponentManager getComponentManagerByType( @Nonnull final Class<?> type )
+  <T> ComponentManager<T> getComponentManagerByType( @Nonnull final Class<T> type )
   {
-    return _componentByClass.get( type );
+    return (ComponentManager<T>) _componentByClass.get( type );
   }
 }
