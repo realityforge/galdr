@@ -19,7 +19,7 @@ public class ComponentTypeTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final ComponentType componentType = new ComponentType( Component1.class, createFn );
+    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, createFn );
 
     assertEquals( componentType.getIndex(), 0 );
     componentType.initIndex( 23 );
@@ -35,9 +35,9 @@ public class ComponentTypeTest
   @Test
   public void equals()
   {
-    final ComponentType componentType1 = new ComponentType( Component1.class, Component1::new );
+    final ComponentType<Component1> componentType1 = new ComponentType<>( Component1.class, Component1::new );
     componentType1.initIndex( 1 );
-    final ComponentType componentType2 = new ComponentType( Component2.class, Component2::new );
+    final ComponentType<Component2> componentType2 = new ComponentType<>( Component2.class, Component2::new );
     componentType2.initIndex( 2 );
     assertEquals( componentType1, componentType1 );
     assertNotEquals( componentType2, componentType1 );
@@ -47,7 +47,7 @@ public class ComponentTypeTest
   @Test
   public void getName()
   {
-    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
+    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, Component1::new );
     assertEquals( componentType.getName(), "Component1" );
 
     GaldrTestUtil.disableNames();
@@ -59,7 +59,7 @@ public class ComponentTypeTest
   @Test
   public void debugToString()
   {
-    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
+    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, Component1::new );
     componentType.initIndex( 42 );
 
     assertEquals( componentType.toString(), "ComponentType[Component1=42]" );

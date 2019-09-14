@@ -8,25 +8,25 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * A component type descriptor.
  */
-final class ComponentType
+final class ComponentType<T>
 {
   /**
    * The java type of the component.
    */
   @Nonnull
-  private final Class<?> _type;
+  private final Class<T> _type;
   /**
    * Function invoked to create an instance of the component.
    */
   @Nonnull
-  private final Supplier<?> _createFn;
+  private final Supplier<T> _createFn;
   /**
    * Unique index of type within a {@link World}.
    * Used to enable fast lookup and access of component data.
    */
   private int _index;
 
-  <T> ComponentType( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  ComponentType( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
@@ -59,7 +59,7 @@ final class ComponentType
    * @return the java type of the component.
    */
   @Nonnull
-  Class<?> getType()
+  Class<T> getType()
   {
     return _type;
   }
@@ -70,7 +70,7 @@ final class ComponentType
    * @return the function that creates an instance of the component.
    */
   @Nonnull
-  Supplier<?> getCreateFn()
+  Supplier<T> getCreateFn()
   {
     return _createFn;
   }

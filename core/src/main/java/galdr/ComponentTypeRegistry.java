@@ -11,14 +11,14 @@ import javax.annotation.Nonnull;
 final class ComponentTypeRegistry
 {
   @Nonnull
-  private final ComponentType[] _componentTypes;
+  private final ComponentType<?>[] _componentTypes;
   @Nonnull
-  private final Map<Class<?>, ComponentType> _componentTypeByClass;
+  private final Map<Class<?>, ComponentType<?>> _componentTypeByClass;
 
-  ComponentTypeRegistry( @Nonnull final ComponentType... componentTypes )
+  ComponentTypeRegistry( @Nonnull final ComponentType<?>... componentTypes )
   {
     _componentTypes = new ComponentType[ componentTypes.length ];
-    final Map<Class<?>, ComponentType> map = new HashMap<>();
+    final Map<Class<?>, ComponentType<?>> map = new HashMap<>();
     for ( int i = 0; i < componentTypes.length; i++ )
     {
       final ComponentType componentType = componentTypes[ i ];

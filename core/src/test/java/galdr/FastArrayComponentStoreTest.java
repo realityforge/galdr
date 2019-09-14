@@ -13,9 +13,9 @@ public class FastArrayComponentStoreTest
   @Test
   public void basicOperation()
   {
-    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
+    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, Component1::new );
 
-    final FastArrayComponentStore componentStore = new FastArrayComponentStore( componentType, 5 );
+    final FastArrayComponentStore<Component1> componentStore = new FastArrayComponentStore<>( componentType, 5 );
 
     assertEquals( componentStore.getComponentType(), componentType );
     assertEquals( componentStore.getName(), componentType.getName() );
@@ -27,7 +27,7 @@ public class FastArrayComponentStoreTest
     assertFalse( componentStore.has( entityId ) );
     assertNull( componentStore.find( entityId ) );
 
-    final Component1 component = (Component1) componentStore.create( entityId );
+    final Component1 component = componentStore.create( entityId );
     assertNotNull( component );
 
     assertEquals( componentStore.capacity(), 13 );

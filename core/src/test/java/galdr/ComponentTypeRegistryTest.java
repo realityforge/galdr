@@ -23,9 +23,9 @@ public class ComponentTypeRegistryTest
   public void basicOperation()
   {
     final ComponentTypeRegistry registry =
-      new ComponentTypeRegistry( new ComponentType( Component1.class, Component1::new ),
-                                 new ComponentType( Component2.class, Component2::new ),
-                                 new ComponentType( Component3.class, Component3::new ) );
+      new ComponentTypeRegistry( new ComponentType<>( Component1.class, Component1::new ),
+                                 new ComponentType<>( Component2.class, Component2::new ),
+                                 new ComponentType<>( Component3.class, Component3::new ) );
     assertEquals( registry.size(), 3 );
     assertTypeRegistered( registry, Component1.class, 0 );
     assertTypeRegistered( registry, Component2.class, 1 );

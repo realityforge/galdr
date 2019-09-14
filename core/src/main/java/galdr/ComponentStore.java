@@ -8,18 +8,18 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * The class responsible for storing components of a particular type.
  */
-abstract class ComponentStore
+abstract class ComponentStore<T>
 {
   @Nonnull
-  private final ComponentType _componentType;
+  private final ComponentType<T> _componentType;
 
-  ComponentStore( @Nonnull final ComponentType componentType )
+  ComponentStore( @Nonnull final ComponentType<T> componentType )
   {
     _componentType = Objects.requireNonNull( componentType );
   }
 
   @Nonnull
-  final ComponentType getComponentType()
+  final ComponentType<T> getComponentType()
   {
     return _componentType;
   }
@@ -63,7 +63,7 @@ abstract class ComponentStore
    * @return the component instance if it exists.
    */
   @Nullable
-  final Object find( final int entityId )
+  final T find( final int entityId )
   {
     ensureEntityIdPositive( entityId );
     return performFind( entityId );
@@ -74,7 +74,7 @@ abstract class ComponentStore
    *
    * @param entityId the id of the entity.
    */
-  abstract Object performFind( int entityId );
+  abstract T performFind( int entityId );
 
   /**
    * Return the component instance for the specified entity.
@@ -85,10 +85,10 @@ abstract class ComponentStore
    * @return the component instance.
    */
   @Nonnull
-  final Object get( final int entityId )
+  final T get( final int entityId )
   {
     ensureEntityIdPositive( entityId );
-    final Object component = find( entityId );
+    final T component = find( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> null != component,
@@ -107,9 +107,9 @@ abstract class ComponentStore
    * @return the component instance.
    */
   @Nonnull
-  final Object findOrCreate( final int entityId )
+  final T findOrCreate( final int entityId )
   {
-    final Object component = find( entityId );
+    final T component = find( entityId );
     return null == component ? create( entityId ) : component;
   }
 
@@ -120,7 +120,7 @@ abstract class ComponentStore
    * @return the component instance.
    */
   @Nonnull
-  final Object create( final int entityId )
+  final T create( final int entityId )
   {
     ensureEntityIdPositive( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
@@ -137,14 +137,14 @@ abstract class ComponentStore
    *
    * @param entityId the id of the entity.
    */
-  abstract Object performCreate( int entityId );
+  abstract T performCreate( int entityId );
 
   /**
    * Create an instance of the component.
    *
    * @return an instance of the component.
    */
-  final Object createComponentInstance()
+  final T createComponentInstance()
   {
     return getComponentType().getCreateFn().get();
   }

@@ -14,9 +14,9 @@ public class ComponentStoreTest
   @Test
   public void basicOperation()
   {
-    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
+    final ComponentType<Component1> componentType = new ComponentType<>( Component1.class, Component1::new );
 
-    final ComponentStore componentStore = new FastArrayComponentStore( componentType );
+    final ComponentStore<Component1> componentStore = new FastArrayComponentStore<>( componentType );
 
     assertEquals( componentStore.getComponentType(), componentType );
     assertEquals( componentStore.getName(), componentType.getName() );
@@ -29,7 +29,7 @@ public class ComponentStoreTest
                             "'Component1' expected to find a component for entityId " + entityId +
                             " but is unable to locate component." );
 
-    final Component1 component = (Component1) componentStore.findOrCreate( entityId );
+    final Component1 component = componentStore.findOrCreate( entityId );
     assertNotNull( component );
 
     final int initialValue = randomInt( 456738 );
@@ -42,7 +42,7 @@ public class ComponentStoreTest
     assertTrue( componentStore.has( entityId ) );
     assertEquals( componentStore.find( entityId ), component );
     assertEquals( componentStore.get( entityId ), component );
-    assertEquals( ( (Component1) componentStore.get( entityId ) ).value, initialValue );
+    assertEquals( componentStore.get( entityId ).value, initialValue );
 
     componentStore.remove( entityId );
 
@@ -57,9 +57,8 @@ public class ComponentStoreTest
   @Test
   public void debugToString()
   {
-    final ComponentType componentType = new ComponentType( Component1.class, Component1::new );
-
-    final ComponentStore componentStore = new FastArrayComponentStore( componentType );
+    final ComponentStore<Component1> componentStore =
+      new FastArrayComponentStore<>( new ComponentType<>( Component1.class, Component1::new ) );
 
     assertEquals( componentStore.toString(), "ComponentStore[Component1]" );
 
@@ -71,8 +70,8 @@ public class ComponentStoreTest
   @Test
   public void errorOnNegativeEntityId()
   {
-    final ComponentStore componentStore =
-      new FastArrayComponentStore( new ComponentType( Component1.class, Component1::new ) );
+    final ComponentStore<Component1> componentStore =
+      new FastArrayComponentStore<>( new ComponentType<>( Component1.class, Component1::new ) );
 
     assertInvariantFailure( () -> componentStore.has( -23 ),
                             "Galdr-0029: The ComponentStore method invoked was with a negative entityId -23." );
