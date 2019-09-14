@@ -31,6 +31,11 @@ abstract class ComponentManager<T>
   {
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
+    if ( Galdr.shouldCheckInvariants() || Galdr.shouldCheckApiInvariants() )
+    {
+      // Only need to set it to the sentinel value when checking invariants, otherwise -1 will not be read
+      _index = -1;
+    }
   }
 
   /**
@@ -40,8 +45,21 @@ abstract class ComponentManager<T>
    */
   void initIndex( final int index )
   {
-    assert 0 == _index;
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> !isIndexInitialized(),
+                 () -> "Galdr-0020: ComponentManager.initIndex() invoked but index is already initialized" );
+    }
     _index = index;
+  }
+
+  /**
+   * Return true if the index has been initialized.
+   */
+  private boolean isIndexInitialized()
+  {
+    assert Galdr.shouldCheckInvariants() || Galdr.shouldCheckApiInvariants();
+    return -1 != _index;
   }
 
   /**
@@ -51,6 +69,11 @@ abstract class ComponentManager<T>
    */
   int getIndex()
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( this::isIndexInitialized,
+                 () -> "Galdr-0021: ComponentManager.getIndex() invoked before index initialized" );
+    }
     return _index;
   }
 

@@ -18,7 +18,8 @@ public class ComponentManagerTest
     final Supplier<Component1> createFn = Component1::new;
     final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( Component1.class, createFn );
 
-    assertEquals( componentManager.getIndex(), 0 );
+    // This is verifying that index is invalid sentinel value
+    assertEquals( componentManager.toString(), "ComponentManager[Component1=-1]" );
     componentManager.initIndex( 23 );
     assertEquals( componentManager.getIndex(), 23 );
 
@@ -73,6 +74,21 @@ public class ComponentManagerTest
     GaldrTestUtil.disableDebugToString();
 
     assertNotEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
+  }
+
+  @Test
+  public void verifyIndexInitializationWillInvariantIfSetTwice()
+  {
+    final Supplier<Component1> createFn = Component1::new;
+    final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( Component1.class, createFn );
+
+    assertInvariantFailure( componentManager::getIndex,
+                            "Galdr-0021: ComponentManager.getIndex() invoked before index initialized" );
+    componentManager.initIndex( 23 );
+    assertEquals( componentManager.getIndex(), 23 );
+
+    assertInvariantFailure( () -> componentManager.initIndex( 77 ),
+                            "Galdr-0020: ComponentManager.initIndex() invoked but index is already initialized" );
   }
 
   @Test

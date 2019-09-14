@@ -1,5 +1,31 @@
 [
   {
+    "code": 20,
+    "type": "INVARIANT",
+    "messagePattern": "ComponentManager.initIndex() invoked but index is already initialized",
+    "callers": [
+      {
+        "class": "galdr.ComponentManager",
+        "method": "initIndex",
+        "file": "ComponentManager.java",
+        "lineNumber": 72
+      }
+    ]
+  },
+  {
+    "code": 21,
+    "type": "INVARIANT",
+    "messagePattern": "ComponentManager.getIndex() invoked before index initialized",
+    "callers": [
+      {
+        "class": "galdr.ComponentManager",
+        "method": "getIndex",
+        "file": "ComponentManager.java",
+        "lineNumber": 98
+      }
+    ]
+  },
+  {
     "code": 29,
     "type": "API_INVARIANT",
     "messagePattern": "The ComponentManager method invoked was with a negative entityId %s.",
@@ -8,7 +34,7 @@
         "class": "galdr.ComponentManager",
         "method": "ensureEntityIdPositive",
         "file": "ComponentManager.java",
-        "lineNumber": 263
+        "lineNumber": 310
       }
     ]
   },
@@ -21,7 +47,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 220
+        "lineNumber": 267
       }
     ]
   },
@@ -34,7 +60,7 @@
         "class": "galdr.ComponentManager",
         "method": "create",
         "file": "ComponentManager.java",
-        "lineNumber": 185
+        "lineNumber": 232
       }
     ]
   },
@@ -47,7 +73,7 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 151
+        "lineNumber": 198
       }
     ]
   },
@@ -60,7 +86,7 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 90
+        "lineNumber": 137
       }
     ]
   }
