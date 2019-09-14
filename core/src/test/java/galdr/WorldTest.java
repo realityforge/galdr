@@ -19,7 +19,7 @@ public class WorldTest
   public void getComponentByType()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
     final World world = new World( componentManager );
 
     final ComponentAPI<Component1> api = world.getComponentByType( Component1.class );
@@ -31,9 +31,9 @@ public class WorldTest
   public void getComponentTypes()
   {
     final ComponentManager<Component1> componentManager1 =
-      new FastArrayComponentManager<>( Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
     final ComponentManager<Component2> componentManager2 =
-      new FastArrayComponentManager<>( Component2.class, Component2::new );
+      new FastArrayComponentManager<>( 1, Component2.class, Component2::new );
     final World world = new World( componentManager1, componentManager2 );
 
     final Set<Class<?>> componentTypes = world.getComponentTypes();

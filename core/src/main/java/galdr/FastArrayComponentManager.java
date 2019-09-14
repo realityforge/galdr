@@ -9,14 +9,17 @@ final class FastArrayComponentManager<T>
   @Nonnull
   private Object[] _data;
 
-  FastArrayComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  FastArrayComponentManager( final int index, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
-    this( type, createFn, 120 );
+    this( index, type, createFn, 120 );
   }
 
-  FastArrayComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn, final int initialCapacity )
+  FastArrayComponentManager( final int index,
+                             @Nonnull final Class<T> type,
+                             @Nonnull final Supplier<T> createFn,
+                             final int initialCapacity )
   {
-    super( type, createFn );
+    super( index, type, createFn );
     _data = new Object[ initialCapacity ];
   }
 

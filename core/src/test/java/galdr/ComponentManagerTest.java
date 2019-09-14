@@ -16,13 +16,9 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( Component1.class, createFn );
+    final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( 23, Component1.class, createFn );
 
-    // This is verifying that index is invalid sentinel value
-    assertEquals( componentManager.toString(), "ComponentManager[Component1=-1]" );
-    componentManager.initIndex( 23 );
     assertEquals( componentManager.getIndex(), 23 );
-
     assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getCreateFn(), createFn );
@@ -67,8 +63,7 @@ public class ComponentManagerTest
   public void debugToString()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( Component1.class, Component1::new );
-    componentManager.initIndex( 42 );
+      new FastArrayComponentManager<>( 42, Component1.class, Component1::new );
 
     assertEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
 
@@ -78,25 +73,10 @@ public class ComponentManagerTest
   }
 
   @Test
-  public void verifyIndexInitializationWillInvariantIfSetTwice()
-  {
-    final Supplier<Component1> createFn = Component1::new;
-    final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( Component1.class, createFn );
-
-    assertInvariantFailure( componentManager::getIndex,
-                            "Galdr-0021: ComponentManager.getIndex() invoked before index initialized" );
-    componentManager.initIndex( 23 );
-    assertEquals( componentManager.getIndex(), 23 );
-
-    assertInvariantFailure( () -> componentManager.initIndex( 77 ),
-                            "Galdr-0020: ComponentManager.initIndex() invoked but index is already initialized" );
-  }
-
-  @Test
   public void errorOnNegativeEntityId()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
                             "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );

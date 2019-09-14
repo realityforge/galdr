@@ -8,7 +8,7 @@
         "class": "galdr.ComponentRegistry",
         "method": "getComponentManagerByType",
         "file": "ComponentRegistry.java",
-        "lineNumber": 58
+        "lineNumber": 65
       }
     ]
   },
@@ -21,7 +21,20 @@
         "class": "galdr.ComponentRegistry",
         "method": "getComponentManagerByIndex",
         "file": "ComponentRegistry.java",
-        "lineNumber": 39
+        "lineNumber": 46
+      }
+    ]
+  },
+  {
+    "code": 3,
+    "type": "INVARIANT",
+    "messagePattern": "Component named '%s' has index %s but was passed as index %s.",
+    "callers": [
+      {
+        "class": "galdr.ComponentRegistry",
+        "method": "<init>",
+        "file": "ComponentRegistry.java",
+        "lineNumber": 31
       }
     ]
   },
@@ -39,19 +52,6 @@
     ]
   },
   {
-    "code": 20,
-    "type": "INVARIANT",
-    "messagePattern": "ComponentManager.initIndex() invoked but index is already initialized",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "initIndex",
-        "file": "ComponentManager.java",
-        "lineNumber": 67
-      }
-    ]
-  },
-  {
     "code": 21,
     "type": "INVARIANT",
     "messagePattern": "ComponentManager.getIndex() invoked before index initialized",
@@ -60,7 +60,7 @@
         "class": "galdr.ComponentManager",
         "method": "getIndex",
         "file": "ComponentManager.java",
-        "lineNumber": 91
+        "lineNumber": 72
       }
     ]
   },
@@ -73,7 +73,7 @@
         "class": "galdr.ComponentManager",
         "method": "ensureEntityIdPositive",
         "file": "ComponentManager.java",
-        "lineNumber": 303
+        "lineNumber": 284
       }
     ]
   },
@@ -86,7 +86,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 260
+        "lineNumber": 241
       }
     ]
   },
@@ -99,7 +99,7 @@
         "class": "galdr.ComponentManager",
         "method": "create",
         "file": "ComponentManager.java",
-        "lineNumber": 225
+        "lineNumber": 206
       }
     ]
   },
@@ -112,7 +112,7 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 191
+        "lineNumber": 172
       }
     ]
   },
@@ -125,7 +125,7 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 130
+        "lineNumber": 111
       }
     ]
   }

@@ -23,10 +23,17 @@ final class ComponentRegistry
     final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
     for ( int i = 0; i < components.length; i++ )
     {
-      final ComponentManager componentType = components[ i ];
-      componentType.initIndex( i );
-      map.put( componentType.getType(), componentType );
-      _components[ i ] = componentType;
+      final ComponentManager component = components[ i ];
+      if ( Galdr.shouldCheckApiInvariants() )
+      {
+        final int index = i;
+        final int suppliedIndex = component.getIndex();
+        invariant( () -> index == suppliedIndex,
+                   () -> "Galdr-0003: Component named '" + component.getName() + "' has index " + suppliedIndex +
+                         " but was passed as index " + index + "." );
+      }
+      map.put( component.getType(), component );
+      _components[ i ] = component;
     }
     _componentByClass = Collections.unmodifiableMap( map );
   }

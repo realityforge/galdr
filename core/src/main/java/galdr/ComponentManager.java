@@ -12,6 +12,11 @@ import static org.realityforge.braincheck.Guards.*;
 abstract class ComponentManager<T>
 {
   /**
+   * Unique index of type within a {@link World}.
+   * Used to enable fast lookup and access of component data.
+   */
+  private final int _index;
+  /**
    * The java type of the component.
    */
   @Nonnull
@@ -26,22 +31,13 @@ abstract class ComponentManager<T>
    */
   @Nonnull
   private final ComponentAPI<T> _api;
-  /**
-   * Unique index of type within a {@link World}.
-   * Used to enable fast lookup and access of component data.
-   */
-  private int _index;
 
-  ComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  ComponentManager( final int index, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
+    _index = index;
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
     _api = new ComponentAPI<>( this );
-    if ( Galdr.shouldCheckInvariants() || Galdr.shouldCheckApiInvariants() )
-    {
-      // Only need to set it to the sentinel value when checking invariants, otherwise -1 will not be read
-      _index = -1;
-    }
   }
 
   /**
@@ -53,21 +49,6 @@ abstract class ComponentManager<T>
   ComponentAPI<T> getApi()
   {
     return _api;
-  }
-
-  /**
-   * Initialize the index. This occurs when the ComponentManager is placed in the registry.
-   *
-   * @param index the index of the component.
-   */
-  void initIndex( final int index )
-  {
-    if ( Galdr.shouldCheckInvariants() )
-    {
-      invariant( () -> !isIndexInitialized(),
-                 () -> "Galdr-0020: ComponentManager.initIndex() invoked but index is already initialized" );
-    }
-    _index = index;
   }
 
   /**

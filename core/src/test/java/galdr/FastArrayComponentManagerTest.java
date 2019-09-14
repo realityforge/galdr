@@ -16,10 +16,8 @@ public class FastArrayComponentManagerTest
   {
     final Supplier<Component1> createFn = Component1::new;
     final FastArrayComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( Component1.class, createFn, 5 );
+      new FastArrayComponentManager<>( 23, Component1.class, createFn, 5 );
 
-    assertEquals( componentManager.toString(), "ComponentManager[Component1=-1]" );
-    componentManager.initIndex( 23 );
     assertEquals( componentManager.getIndex(), 23 );
 
     assertEquals( componentManager.getType(), Component1.class );
