@@ -11,17 +11,17 @@ import javax.annotation.Nonnull;
 final class ComponentTypeRegistry
 {
   @Nonnull
-  private final ComponentStore<?>[] _componentTypes;
+  private final ComponentManager<?>[] _componentTypes;
   @Nonnull
-  private final Map<Class<?>, ComponentStore<?>> _componentTypeByClass;
+  private final Map<Class<?>, ComponentManager<?>> _componentTypeByClass;
 
-  ComponentTypeRegistry( @Nonnull final ComponentStore<?>... componentTypes )
+  ComponentTypeRegistry( @Nonnull final ComponentManager<?>... componentTypes )
   {
-    _componentTypes = new ComponentStore[ componentTypes.length ];
-    final Map<Class<?>, ComponentStore<?>> map = new HashMap<>();
+    _componentTypes = new ComponentManager[ componentTypes.length ];
+    final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
     for ( int i = 0; i < componentTypes.length; i++ )
     {
-      final ComponentStore componentType = componentTypes[ i ];
+      final ComponentManager componentType = componentTypes[ i ];
       componentType.initIndex( i );
       map.put( componentType.getType(), componentType );
       _componentTypes[ i ] = componentType;
@@ -30,7 +30,7 @@ final class ComponentTypeRegistry
   }
 
   @Nonnull
-  ComponentStore getComponentStoreByIndex( final int index )
+  ComponentManager getComponentManagerByIndex( final int index )
   {
     return _componentTypes[ index ];
   }
@@ -41,7 +41,7 @@ final class ComponentTypeRegistry
   }
 
   @Nonnull
-  ComponentStore getComponentStoreByType( @Nonnull final Class<?> type )
+  ComponentManager getComponentManagerByType( @Nonnull final Class<?> type )
   {
     return _componentTypeByClass.get( type );
   }

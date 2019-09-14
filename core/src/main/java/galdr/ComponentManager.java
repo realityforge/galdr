@@ -9,7 +9,7 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * The class responsible for storing components of a particular type.
  */
-abstract class ComponentStore<T>
+abstract class ComponentManager<T>
 {
   /**
    * The java type of the component.
@@ -27,14 +27,14 @@ abstract class ComponentStore<T>
    */
   private int _index;
 
-  ComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  ComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
   }
 
   /**
-   * Initialize the index. This occurs when the ComponentStore is placed in the registry.
+   * Initialize the index. This occurs when the ComponentManager is placed in the registry.
    *
    * @param index the index of the component.
    */
@@ -77,10 +77,10 @@ abstract class ComponentStore<T>
   }
 
   /**
-   * Return the human readable name of the ComponentStore.
+   * Return the human readable name of the ComponentManager.
    * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
    *
-   * @return the human readable name of the ComponentStore.
+   * @return the human readable name of the ComponentManager.
    */
   @Nonnull
   String getName()
@@ -88,7 +88,7 @@ abstract class ComponentStore<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( Galdr::areNamesEnabled,
-                    () -> "Galdr-0053: ComponentStore.getName() invoked when Galdr.areNamesEnabled() returns false" );
+                    () -> "Galdr-0053: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
     }
     return _type.getSimpleName();
   }
@@ -107,7 +107,7 @@ abstract class ComponentStore<T>
   }
 
   /**
-   * Template method implemented by the ComponentStore implementation to check whether entity has component.
+   * Template method implemented by the ComponentManager implementation to check whether entity has component.
    *
    * @param entityId the id of the entity.
    */
@@ -127,7 +127,7 @@ abstract class ComponentStore<T>
   }
 
   /**
-   * Template method implemented by the ComponentStore implementation to find component for entity.
+   * Template method implemented by the ComponentManager implementation to find component for entity.
    *
    * @param entityId the id of the entity.
    */
@@ -149,7 +149,7 @@ abstract class ComponentStore<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> null != component,
-                    () -> "Galdr-0033: The ComponentStore.get() method for the component named '" + getName() + "' " +
+                    () -> "Galdr-0033: The ComponentManager.get() method for the component named '" + getName() + "' " +
                           "expected to find a component for entityId " + entityId + " but is unable to " +
                           "locate component." );
     }
@@ -183,14 +183,14 @@ abstract class ComponentStore<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> !has( entityId ),
-                    () -> "Galdr-0031: The ComponentStore.create() method invoked but entity " + entityId +
+                    () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
     }
     return performCreate( entityId );
   }
 
   /**
-   * Template method implemented by the ComponentStore implementation to perform component creation.
+   * Template method implemented by the ComponentManager implementation to perform component creation.
    *
    * @param entityId the id of the entity.
    */
@@ -218,14 +218,14 @@ abstract class ComponentStore<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> has( entityId ),
-                    () -> "Galdr-0030: The ComponentStore.remove() method for the component named '" + getName() +
+                    () -> "Galdr-0030: The ComponentManager.remove() method for the component named '" + getName() +
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
     performRemove( entityId );
   }
 
   /**
-   * Template method implemented by the ComponentStore implementation to perform removal.
+   * Template method implemented by the ComponentManager implementation to perform removal.
    *
    * @param entityId the id of the entity.
    */
@@ -236,7 +236,7 @@ abstract class ComponentStore<T>
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "ComponentStore[" + getName() + "=" + _index + "]";
+      return "ComponentManager[" + getName() + "=" + _index + "]";
     }
     else
     {
@@ -247,7 +247,7 @@ abstract class ComponentStore<T>
   @Override
   public boolean equals( final Object o )
   {
-    return o instanceof ComponentStore && _index == ( (ComponentStore) o )._index;
+    return o instanceof ComponentManager && _index == ( (ComponentManager) o )._index;
   }
 
   @Override
@@ -261,7 +261,7 @@ abstract class ComponentStore<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> entityId >= 0,
-                    () -> "Galdr-0029: The ComponentStore method invoked was with a negative " +
+                    () -> "Galdr-0029: The ComponentManager method invoked was with a negative " +
                           "entityId " + entityId + "." );
     }
   }

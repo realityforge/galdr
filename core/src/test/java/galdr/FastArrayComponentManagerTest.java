@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class FastArrayComponentStoreTest
+public class FastArrayComponentManagerTest
   extends AbstractTest
 {
   private static class Component1
@@ -15,8 +15,8 @@ public class FastArrayComponentStoreTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final FastArrayComponentStore<Component1> componentStore =
-      new FastArrayComponentStore<>( Component1.class, createFn, 5 );
+    final FastArrayComponentManager<Component1> componentStore =
+      new FastArrayComponentManager<>( Component1.class, createFn, 5 );
 
     assertEquals( componentStore.getIndex(), 0 );
     componentStore.initIndex( 23 );
@@ -25,7 +25,7 @@ public class FastArrayComponentStoreTest
     assertEquals( componentStore.getType(), Component1.class );
     assertEquals( componentStore.getCreateFn(), createFn );
     assertEquals( componentStore.getName(), "Component1" );
-    assertEquals( componentStore.toString(), "ComponentStore[Component1=23]" );
+    assertEquals( componentStore.toString(), "ComponentManager[Component1=23]" );
     assertEquals( componentStore.hashCode(), 23 );
     assertEquals( componentStore.capacity(), 5 );
 

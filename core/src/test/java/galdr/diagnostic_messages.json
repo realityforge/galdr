@@ -2,12 +2,12 @@
   {
     "code": 29,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentStore method invoked was with a negative entityId %s.",
+    "messagePattern": "The ComponentManager method invoked was with a negative entityId %s.",
     "callers": [
       {
-        "class": "galdr.ComponentStore",
+        "class": "galdr.ComponentManager",
         "method": "ensureEntityIdPositive",
-        "file": "ComponentStore.java",
+        "file": "ComponentManager.java",
         "lineNumber": 263
       }
     ]
@@ -15,12 +15,12 @@
   {
     "code": 30,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentStore.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
+    "messagePattern": "The ComponentManager.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
     "callers": [
       {
-        "class": "galdr.ComponentStore",
+        "class": "galdr.ComponentManager",
         "method": "remove",
-        "file": "ComponentStore.java",
+        "file": "ComponentManager.java",
         "lineNumber": 220
       }
     ]
@@ -28,12 +28,12 @@
   {
     "code": 31,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentStore.create() method invoked but entity %s already has the component named '%s'.",
+    "messagePattern": "The ComponentManager.create() method invoked but entity %s already has the component named '%s'.",
     "callers": [
       {
-        "class": "galdr.ComponentStore",
+        "class": "galdr.ComponentManager",
         "method": "create",
-        "file": "ComponentStore.java",
+        "file": "ComponentManager.java",
         "lineNumber": 185
       }
     ]
@@ -41,12 +41,12 @@
   {
     "code": 33,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentStore.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component.",
+    "messagePattern": "The ComponentManager.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component.",
     "callers": [
       {
-        "class": "galdr.ComponentStore",
+        "class": "galdr.ComponentManager",
         "method": "get",
-        "file": "ComponentStore.java",
+        "file": "ComponentManager.java",
         "lineNumber": 151
       }
     ]
@@ -54,12 +54,12 @@
   {
     "code": 53,
     "type": "API_INVARIANT",
-    "messagePattern": "ComponentStore.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "messagePattern": "ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
-        "class": "galdr.ComponentStore",
+        "class": "galdr.ComponentManager",
         "method": "getName",
-        "file": "ComponentStore.java",
+        "file": "ComponentManager.java",
         "lineNumber": 90
       }
     ]

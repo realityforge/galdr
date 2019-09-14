@@ -3,18 +3,18 @@ package galdr;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
-final class FastArrayComponentStore<T>
-  extends ComponentStore<T>
+final class FastArrayComponentManager<T>
+  extends ComponentManager<T>
 {
   @Nonnull
   private Object[] _data;
 
-  FastArrayComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  FastArrayComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     this( type, createFn, 120 );
   }
 
-  FastArrayComponentStore( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn, final int initialCapacity )
+  FastArrayComponentManager( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn, final int initialCapacity )
   {
     super( type, createFn );
     _data = new Object[ initialCapacity ];

@@ -23,9 +23,9 @@ public class ComponentTypeRegistryTest
   public void basicOperation()
   {
     final ComponentTypeRegistry registry =
-      new ComponentTypeRegistry( new FastArrayComponentStore<>( Component1.class, Component1::new ),
-                                 new FastArrayComponentStore<>( Component2.class, Component2::new ),
-                                 new FastArrayComponentStore<>( Component3.class, Component3::new ) );
+      new ComponentTypeRegistry( new FastArrayComponentManager<>( Component1.class, Component1::new ),
+                                 new FastArrayComponentManager<>( Component2.class, Component2::new ),
+                                 new FastArrayComponentManager<>( Component3.class, Component3::new ) );
     assertEquals( registry.size(), 3 );
     assertTypeRegistered( registry, Component1.class, 0 );
     assertTypeRegistered( registry, Component2.class, 1 );
@@ -36,9 +36,9 @@ public class ComponentTypeRegistryTest
                                      @Nonnull final Class<?> type,
                                      final int index )
   {
-    final ComponentStore entry = registry.getComponentStoreByIndex( index );
+    final ComponentManager entry = registry.getComponentManagerByIndex( index );
     assertEquals( entry.getIndex(), index );
     assertEquals( entry.getType(), type );
-    assertEquals( registry.getComponentStoreByType( type ), entry );
+    assertEquals( registry.getComponentManagerByType( type ), entry );
   }
 }
