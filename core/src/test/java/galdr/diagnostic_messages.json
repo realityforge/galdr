@@ -39,6 +39,19 @@
     ]
   },
   {
+    "code": 4,
+    "type": "API_INVARIANT",
+    "messagePattern": "Processor.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "callers": [
+      {
+        "class": "galdr.Processor",
+        "method": "getName",
+        "file": "Processor.java",
+        "lineNumber": 50
+      }
+    ]
+  },
+  {
     "code": 19,
     "type": "INVARIANT",
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
