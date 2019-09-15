@@ -19,7 +19,7 @@ final class ComponentRegistry
 
   ComponentRegistry( @Nonnull final ComponentManager<?>... components )
   {
-    _components = new ComponentManager[ components.length ];
+    _components = Galdr.shouldCopyArraysPassedToConstructors() ? new ComponentManager[ components.length ] : components;
     final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
     for ( int i = 0; i < components.length; i++ )
     {
@@ -33,7 +33,10 @@ final class ComponentRegistry
                          " but was passed as index " + index + "." );
       }
       map.put( component.getType(), component );
-      _components[ i ] = component;
+      if ( Galdr.shouldCopyArraysPassedToConstructors() )
+      {
+        _components[ i ] = component;
+      }
     }
     _componentByClass = Collections.unmodifiableMap( map );
   }

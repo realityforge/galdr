@@ -8,6 +8,7 @@ final class GaldrConfig
   private static final ConfigProvider PROVIDER = new ConfigProvider();
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
   private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
+  private static boolean COPY_ARRAYS_PASSED_TO_CONSTRUCTORS = PROVIDER.shouldCopyArraysPassedToConstructors();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
@@ -29,6 +30,11 @@ final class GaldrConfig
   static boolean areNamesEnabled()
   {
     return ENABLE_NAMES;
+  }
+
+  static boolean shouldCopyArraysPassedToConstructors()
+  {
+    return COPY_ARRAYS_PASSED_TO_CONSTRUCTORS;
   }
 
   static boolean areDebugToStringMethodsEnabled()
@@ -65,6 +71,14 @@ final class GaldrConfig
 
     @GwtIncompatible
     @Override
+    boolean shouldCopyArraysPassedToConstructors()
+    {
+      return "true".equals( System.getProperty( "galdr.copy_arrays_passed_to_constructors",
+                                                PRODUCTION_MODE ? "false" : "true" ) );
+    }
+
+    @GwtIncompatible
+    @Override
     boolean areDebugToStringMethodsEnabled()
     {
       return "true".equals( System.getProperty( "galdr.debug_to_string", PRODUCTION_MODE ? "false" : "true" ) );
@@ -96,6 +110,11 @@ final class GaldrConfig
     boolean areNamesEnabled()
     {
       return "true" == System.getProperty( "galdr.enable_names" );
+    }
+
+    boolean shouldCopyArraysPassedToConstructors()
+    {
+      return "true" == System.getProperty( "galdr.copy_arrays_passed_to_constructors" );
     }
 
     boolean areDebugToStringMethodsEnabled()

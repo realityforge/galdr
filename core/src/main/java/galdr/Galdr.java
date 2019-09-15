@@ -23,6 +23,18 @@ public final class Galdr
   }
 
   /**
+   * Return true if arrays passed when constructing system components should be copied.
+   * In normal operation, the arrays are expected to be "owned" by the target component and thus need not
+   * copied. HOwever in development mode we copy for defensive purposes.
+   *
+   * @return true if arrays passed when constructing system components should be copied.
+   */
+  public static boolean shouldCopyArraysPassedToConstructors()
+  {
+    return GaldrConfig.shouldCopyArraysPassedToConstructors();
+  }
+
+  /**
    * Return true if toString() methods should produce useful debug output, false otherwise.
    * Removing debug output from toString() methods will significantly reduce the code size when compiled to javascript.
    *

@@ -5,6 +5,7 @@
 
   <set-property name='galdr.environment' value='development'/>
   <set-property name='galdr.enable_names' value='true'/>
+  <set-property name='galdr.copy_arrays_passed_to_constructors' value='true'/>
   <set-property name='galdr.debug_to_string' value='true'/>
   <set-property name='galdr.check_invariants' value='true'/>
   <set-property name='galdr.check_api_invariants' value='true'/>

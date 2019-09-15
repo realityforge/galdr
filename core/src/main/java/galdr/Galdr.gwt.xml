@@ -14,6 +14,9 @@
   <define-property name='galdr.enable_names' values='true,false'/>
   <set-property name='galdr.enable_names' value='false'/>
 
+  <define-property name='galdr.copy_arrays_passed_to_constructors' values='true,false'/>
+  <set-property name='galdr.copy_arrays_passed_to_constructors' value='false'/>
+
   <define-property name='galdr.debug_to_string' values='true,false'/>
   <set-property name='galdr.debug_to_string' value='false'/>
 

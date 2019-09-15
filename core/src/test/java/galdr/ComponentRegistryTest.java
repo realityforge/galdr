@@ -37,6 +37,20 @@ public class ComponentRegistryTest
                   new HashSet<>( Arrays.asList( Component1.class, Component2.class, Component3.class ) ) );
   }
 
+  @Test
+  public void disableCopyArrayDuringConstruct()
+  {
+    GaldrTestUtil.disableCopyArraysPassedToConstructors();
+    final ComponentRegistry registry =
+      new ComponentRegistry( new FastArrayComponentManager<>( 0, Component1.class, Component1::new ),
+                             new FastArrayComponentManager<>( 1, Component2.class, Component2::new ),
+                             new FastArrayComponentManager<>( 2, Component3.class, Component3::new ) );
+    assertEquals( registry.size(), 3 );
+    assertTypeRegistered( registry, Component1.class, 0 );
+    assertTypeRegistered( registry, Component2.class, 1 );
+    assertTypeRegistered( registry, Component3.class, 2 );
+  }
+
   private void assertTypeRegistered( @Nonnull final ComponentRegistry registry,
                                      @Nonnull final Class<?> type,
                                      final int index )
