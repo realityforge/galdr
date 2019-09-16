@@ -19,29 +19,42 @@ public final class MessageCollector
   @Override
   public void onTestStart( @Nonnull final ITestResult result )
   {
-    _messages.onTestStart();
+    if ( shouldCheckDiagnosticMessages() )
+    {
+      _messages.onTestStart();
+    }
   }
 
   @Override
   public void onTestSuccess( @Nonnull final ITestResult result )
   {
-    _messages.onTestComplete();
+    if ( shouldCheckDiagnosticMessages() )
+    {
+      _messages.onTestComplete();
+    }
   }
 
   @Override
   public void onStart( @Nonnull final ITestContext context )
   {
-    _messages.onTestSuiteStart();
+    if ( shouldCheckDiagnosticMessages() )
+    {
+      _messages.onTestSuiteStart();
+    }
   }
 
   @Override
   public void onFinish( @Nonnull final ITestContext context )
   {
-    if ( 0 == context.getFailedTests().size() &&
-         !System.getProperty( "galdr.check_diagnostic_messages", "true" ).equals( "false" ) )
+    if ( 0 == context.getFailedTests().size() && shouldCheckDiagnosticMessages() )
     {
       _messages.onTestSuiteComplete();
     }
+  }
+
+  private boolean shouldCheckDiagnosticMessages()
+  {
+    return System.getProperty( "galdr.check_diagnostic_messages", "true" ).equals( "true" );
   }
 
   @Nonnull
