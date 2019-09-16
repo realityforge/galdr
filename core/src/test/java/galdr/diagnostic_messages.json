@@ -8,7 +8,7 @@
         "class": "galdr.ComponentRegistry",
         "method": "getComponentManagerByType",
         "file": "ComponentRegistry.java",
-        "lineNumber": 65
+        "lineNumber": 68
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.ComponentRegistry",
         "method": "getComponentManagerByIndex",
         "file": "ComponentRegistry.java",
-        "lineNumber": 46
+        "lineNumber": 49
       }
     ]
   },
