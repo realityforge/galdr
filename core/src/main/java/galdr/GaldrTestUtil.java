@@ -89,7 +89,7 @@ public final class GaldrTestUtil
   }
 
   /**
-   * Set `arez.enable_names` setting to false.
+   * Set `galdr.enable_names` setting to false.
    */
   public static void disableNames()
   {
@@ -115,7 +115,7 @@ public final class GaldrTestUtil
   }
 
   /**
-   * Set `arez.copy_arrays_passed_to_constructors` setting to false.
+   * Set `galdr.copy_arrays_passed_to_constructors` setting to false.
    */
   public static void disableCopyArraysPassedToConstructors()
   {
