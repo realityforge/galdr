@@ -1,5 +1,7 @@
 package galdr;
 
+import javax.annotation.Nonnull;
+
 /**
  * The location of all compile time configuration settings for framework.
  */
@@ -12,6 +14,8 @@ final class GaldrConfig
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
+  @Nonnull
+  private static final String LOGGER_TYPE = PROVIDER.loggerType();
 
   private GaldrConfig()
   {
@@ -50,6 +54,12 @@ final class GaldrConfig
   static boolean checkApiInvariants()
   {
     return CHECK_API_INVARIANTS;
+  }
+
+  @Nonnull
+  static String loggerType()
+  {
+    return LOGGER_TYPE;
   }
 
   private static final class ConfigProvider
@@ -97,6 +107,14 @@ final class GaldrConfig
     {
       return "true".equals( System.getProperty( "galdr.check_api_invariants", PRODUCTION_MODE ? "false" : "true" ) );
     }
+
+    @GwtIncompatible
+    @Override
+    @Nonnull
+    String loggerType()
+    {
+      return System.getProperty( "galdr.logger", PRODUCTION_MODE ? "basic" : "proxy" );
+    }
   }
 
   @SuppressWarnings( { "unused", "StringEquality" } )
@@ -130,6 +148,15 @@ final class GaldrConfig
     boolean checkApiInvariants()
     {
       return "true" == System.getProperty( "galdr.check_api_invariants" );
+    }
+
+    @Nonnull
+    String loggerType()
+    {
+      /*
+       * Valid values are: "none", "basic", "jul" (java.util.logging) and "proxy" (for testing)
+       */
+      return System.getProperty( "galdr.logger" );
     }
   }
 }

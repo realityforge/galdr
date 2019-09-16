@@ -21,3 +21,6 @@ galdr.check_invariants = goog.define('galdr.check_invariants', 'false');
 
 /** @define {string} */
 galdr.check_api_invariants = goog.define('galdr.check_api_invariants', 'false');
+
+/** @define {string} */
+galdr.logger = goog.define('galdr.logger', 'none');

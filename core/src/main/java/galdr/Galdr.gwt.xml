@@ -25,4 +25,7 @@
 
   <define-property name='galdr.check_api_invariants' values='true,false'/>
   <set-property name='galdr.check_api_invariants' value='false'/>
+
+  <define-property name='galdr.logger' values='console_js,jul,proxy,none'/>
+  <set-property name='galdr.logger' value='console_js'/>
 </module>

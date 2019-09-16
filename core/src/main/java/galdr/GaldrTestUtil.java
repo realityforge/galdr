@@ -2,6 +2,7 @@ package galdr;
 
 import java.lang.reflect.Field;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Utility class for interacting with Galdr config settings in tests.
@@ -12,6 +13,14 @@ public final class GaldrTestUtil
 {
   private GaldrTestUtil()
   {
+  }
+
+  /**
+   * Interface to intercept log messages emitted by the runtime.
+   */
+  public interface Logger
+  {
+    void log( @Nonnull String message, @Nullable Throwable throwable );
   }
 
   /**
@@ -47,6 +56,28 @@ public final class GaldrTestUtil
       checkInvariants();
       checkApiInvariants();
     }
+    setLogger( null );
+  }
+
+  /**
+   * Specify logger to use to capture logging in tests
+   *
+   * @param logger the logger.
+   */
+  public static void setLogger( @Nullable final Logger logger )
+  {
+    if ( GaldrConfig.isProductionMode() )
+    {
+      /*
+       * This should really never happen but if it does add assertion (so code stops in debugger) or
+       * failing that throw an exception.
+       */
+      assert GaldrConfig.isDevelopmentMode();
+      throw new IllegalStateException( "Unable to call GaldrTestUtil.setLogger() as Galdr is in production mode" );
+    }
+
+    final GaldrLogger.ProxyLogger proxyLogger = (GaldrLogger.ProxyLogger) GaldrLogger.getLogger();
+    proxyLogger.setLogger( null == logger ? null : logger::log );
   }
 
   /**

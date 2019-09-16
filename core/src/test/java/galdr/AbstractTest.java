@@ -15,12 +15,15 @@ public abstract class AbstractTest
 {
   private static final GuardMessageCollector c_messages = createCollector();
   private final Random _random = new Random();
+  private final TestLogger _logger = new TestLogger();
 
   @BeforeMethod
   protected void beforeTest()
   {
     BrainCheckTestUtil.resetConfig( false );
     GaldrTestUtil.resetConfig( false );
+    _logger.getEntries().clear();
+    GaldrTestUtil.setLogger( _logger );
     c_messages.onTestStart();
   }
 
@@ -55,6 +58,12 @@ public abstract class AbstractTest
     {
       c_messages.onTestSuiteComplete();
     }
+  }
+
+  @Nonnull
+  final TestLogger getTestLogger()
+  {
+    return _logger;
   }
 
   final void assertInvariantFailure( @Nonnull final ThrowingRunnable throwingRunnable, @Nonnull final String message )
