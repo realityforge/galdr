@@ -10,8 +10,24 @@ import static org.realityforge.braincheck.Guards.*;
  */
 public abstract class Processor
 {
+  /**
+   * A human consumable name for node. It should be non-null if {@link Galdr#areNamesEnabled()} returns
+   * true and <tt>null</tt> otherwise.
+   */
+  @Nullable
+  private final String _name;
   @Nullable
   private World _world;
+
+  Processor( @Nullable final String name )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> Galdr.areNamesEnabled() || null == name,
+                    () -> "Galdr-0052: Processor passed a name '" + name + "' but Galdr.areNamesEnabled() is false" );
+    }
+    _name = Galdr.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
+  }
 
   protected abstract void process( int delta );
 
@@ -50,7 +66,7 @@ public abstract class Processor
       apiInvariant( Galdr::areNamesEnabled,
                     () -> "Galdr-0004: Processor.getName() invoked when Galdr.areNamesEnabled() returns false" );
     }
-    return getClass().getSimpleName();
+    return _name;
   }
 
   @Override

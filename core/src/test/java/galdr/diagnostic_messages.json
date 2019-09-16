@@ -47,7 +47,7 @@
         "class": "galdr.Processor",
         "method": "getName",
         "file": "Processor.java",
-        "lineNumber": 50
+        "lineNumber": 66
       }
     ]
   },
@@ -126,6 +126,19 @@
         "method": "get",
         "file": "ComponentManager.java",
         "lineNumber": 172
+      }
+    ]
+  },
+  {
+    "code": 52,
+    "type": "API_INVARIANT",
+    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
+    "callers": [
+      {
+        "class": "galdr.Processor",
+        "method": "<init>",
+        "file": "Processor.java",
+        "lineNumber": 26
       }
     ]
   },

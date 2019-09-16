@@ -1,5 +1,6 @@
 package galdr;
 
+import javax.annotation.Nullable;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -11,6 +12,11 @@ public class ProcessorTest
   {
     private int _lastDelta;
 
+    MyProcessor()
+    {
+      super( "MyProcessor" );
+    }
+
     @Override
     protected void process( final int delta )
     {
@@ -21,6 +27,11 @@ public class ProcessorTest
   public static class MyOtherProcessor
     extends Processor
   {
+    MyOtherProcessor()
+    {
+      super( "MyOtherProcessor" );
+    }
+
     @Override
     protected void process( final int delta )
     {
