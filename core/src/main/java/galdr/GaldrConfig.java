@@ -90,14 +90,14 @@ final class GaldrConfig
     boolean shouldCopyArraysPassedToConstructors()
     {
       return "true".equals( System.getProperty( "galdr.copy_arrays_passed_to_constructors",
-                                                PRODUCTION_MODE ? "false" : "true" ) );
+                                                isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
     @Override
     boolean areDebugToStringMethodsEnabled()
     {
-      return "true".equals( System.getProperty( "galdr.debug_to_string", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.debug_to_string", isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
@@ -111,14 +111,14 @@ final class GaldrConfig
     @Override
     boolean checkInvariants()
     {
-      return "true".equals( System.getProperty( "galdr.check_invariants", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.check_invariants", isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
     @Override
     boolean checkApiInvariants()
     {
-      return "true".equals( System.getProperty( "galdr.check_api_invariants", PRODUCTION_MODE ? "false" : "true" ) );
+      return "true".equals( System.getProperty( "galdr.check_api_invariants", isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
@@ -126,7 +126,7 @@ final class GaldrConfig
     @Nonnull
     String loggerType()
     {
-      return System.getProperty( "galdr.logger", PRODUCTION_MODE ? "basic" : "proxy" );
+      return System.getProperty( "galdr.logger", isProductionMode() ? "basic" : "proxy" );
     }
   }
 
