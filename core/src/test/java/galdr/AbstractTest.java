@@ -66,4 +66,23 @@ public abstract class AbstractTest
   {
     return _random.nextInt( upperBound );
   }
+
+  @Nonnull
+  final String randomString()
+  {
+    return randomString( 8 );
+  }
+
+  @SuppressWarnings( "SameParameterValue" )
+  @Nonnull
+  private String randomString( final int length )
+  {
+    final String stringCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    final StringBuilder sb = new StringBuilder( length );
+    for ( int i = 0; i < length; i++ )
+    {
+      sb.append( stringCharacters.charAt( _random.nextInt( length ) ) );
+    }
+    return sb.toString();
+  }
 }
