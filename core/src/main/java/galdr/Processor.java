@@ -66,6 +66,7 @@ public abstract class Processor
       apiInvariant( Galdr::areNamesEnabled,
                     () -> "Galdr-0004: Processor.getName() invoked when Galdr.areNamesEnabled() returns false" );
     }
+    assert null != _name;
     return _name;
   }
 
