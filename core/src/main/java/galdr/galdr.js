@@ -17,6 +17,9 @@ galdr.enable_names = goog.define('galdr.copy_arrays_passed_to_constructors', 'fa
 galdr.debug_to_string = goog.define('galdr.debug_to_string', 'false');
 
 /** @define {string} */
+galdr.debug_to_string = goog.define('galdr.enable_error_handlers', 'true');
+
+/** @define {string} */
 galdr.check_invariants = goog.define('galdr.check_invariants', 'false');
 
 /** @define {string} */

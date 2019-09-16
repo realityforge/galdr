@@ -48,6 +48,16 @@ public final class Galdr
   }
 
   /**
+   * Return true if error handlers are enabled.
+   *
+   * @return true if error handlers are enabled, false otherwise.
+   */
+  public static boolean areErrorHandlersEnabled()
+  {
+    return GaldrConfig.areErrorHandlersEnabled();
+  }
+
+  /**
    * Return true if invariants will be checked.
    *
    * @return true if invariants will be checked.

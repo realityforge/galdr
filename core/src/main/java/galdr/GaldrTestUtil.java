@@ -56,6 +56,7 @@ public final class GaldrTestUtil
       checkInvariants();
       checkApiInvariants();
     }
+    enableErrorHandlers();
     setLogger( null );
   }
 
@@ -156,6 +157,32 @@ public final class GaldrTestUtil
   private static void setDebugToString( final boolean value )
   {
     setConstant( "DEBUG_TO_STRING", value );
+  }
+
+  /**
+   * Set `galdr.enable_error_handlers` setting to true.
+   */
+  public static void enableErrorHandlers()
+  {
+    setEnableErrorHandlers( true );
+  }
+
+  /**
+   * Set `galdr.enable_error_handlers` setting to false.
+   */
+  public static void disableErrorHandlers()
+  {
+    setEnableErrorHandlers( false );
+  }
+
+  /**
+   * Configure the `galdr.enable_error_handlers` setting.
+   *
+   * @param value the setting.
+   */
+  private static void setEnableErrorHandlers( final boolean value )
+  {
+    setConstant( "ENABLE_ERROR_HANDLERS", value );
   }
 
   /**

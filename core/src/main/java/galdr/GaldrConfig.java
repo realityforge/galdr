@@ -12,6 +12,7 @@ final class GaldrConfig
   private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
   private static boolean COPY_ARRAYS_PASSED_TO_CONSTRUCTORS = PROVIDER.shouldCopyArraysPassedToConstructors();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
+  private static boolean ENABLE_ERROR_HANDLERS = PROVIDER.areErrorHandlersEnabled();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
   @Nonnull
@@ -44,6 +45,11 @@ final class GaldrConfig
   static boolean areDebugToStringMethodsEnabled()
   {
     return DEBUG_TO_STRING;
+  }
+
+  static boolean areErrorHandlersEnabled()
+  {
+    return ENABLE_ERROR_HANDLERS;
   }
 
   static boolean checkInvariants()
@@ -96,6 +102,13 @@ final class GaldrConfig
 
     @GwtIncompatible
     @Override
+    boolean areErrorHandlersEnabled()
+    {
+      return "true".equals( System.getProperty( "galdr.enable_error_handlers", "true" ) );
+    }
+
+    @GwtIncompatible
+    @Override
     boolean checkInvariants()
     {
       return "true".equals( System.getProperty( "galdr.check_invariants", PRODUCTION_MODE ? "false" : "true" ) );
@@ -138,6 +151,11 @@ final class GaldrConfig
     boolean areDebugToStringMethodsEnabled()
     {
       return "true" == System.getProperty( "galdr.debug_to_string" );
+    }
+
+    boolean areErrorHandlersEnabled()
+    {
+      return "true" == System.getProperty( "galdr.enable_error_handlers" );
     }
 
     boolean checkInvariants()
