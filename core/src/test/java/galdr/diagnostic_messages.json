@@ -52,6 +52,19 @@
     ]
   },
   {
+    "code": 5,
+    "type": "API_INVARIANT",
+    "messagePattern": "ProcessorStage.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "callers": [
+      {
+        "class": "galdr.ProcessorStage",
+        "method": "getName",
+        "file": "ProcessorStage.java",
+        "lineNumber": 71
+      }
+    ]
+  },
+  {
     "code": 19,
     "type": "INVARIANT",
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
@@ -130,6 +143,19 @@
     ]
   },
   {
+    "code": 43,
+    "type": "API_INVARIANT",
+    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
+    "callers": [
+      {
+        "class": "galdr.ProcessorStage",
+        "method": "<init>",
+        "file": "ProcessorStage.java",
+        "lineNumber": 26
+      }
+    ]
+  },
+  {
     "code": 52,
     "type": "API_INVARIANT",
     "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
@@ -152,6 +178,32 @@
         "method": "getName",
         "file": "ComponentManager.java",
         "lineNumber": 111
+      }
+    ]
+  },
+  {
+    "code": 96,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to add handler %s that is already in the list of error handlers.",
+    "callers": [
+      {
+        "class": "galdr.ErrorHandlerSupport",
+        "method": "addErrorHandler",
+        "file": "ErrorHandlerSupport.java",
+        "lineNumber": 32
+      }
+    ]
+  },
+  {
+    "code": 97,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to remove handler %s that is not in the list of error handlers.",
+    "callers": [
+      {
+        "class": "galdr.ErrorHandlerSupport",
+        "method": "removeErrorHandler",
+        "file": "ErrorHandlerSupport.java",
+        "lineNumber": 49
       }
     ]
   }
