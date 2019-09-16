@@ -13,7 +13,7 @@ public abstract class Processor
   @Nullable
   private World _world;
 
-  public abstract void process( float timeDelta );
+  public abstract void process( int delta );
 
   /**
    * Initialize World.

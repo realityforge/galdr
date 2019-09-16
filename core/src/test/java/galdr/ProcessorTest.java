@@ -9,12 +9,12 @@ public class ProcessorTest
   public static class MyProcessor
     extends Processor
   {
-    private float _lastTimeDelta;
+    private int _lastDelta;
 
     @Override
-    public void process( final float timeDelta )
+    public void process( final int delta )
     {
-      _lastTimeDelta = timeDelta;
+      _lastDelta = delta;
     }
   }
 
@@ -22,7 +22,7 @@ public class ProcessorTest
     extends Processor
   {
     @Override
-    public void process( final float timeDelta )
+    public void process( final int delta )
     {
     }
   }
@@ -49,9 +49,9 @@ public class ProcessorTest
     final World world = WorldBuilder.create().build();
     processor.setWorld( world );
 
-    processor.process( 23F );
+    processor.process( 23 );
 
-    assertEquals( processor._lastTimeDelta, 23F );
+    assertEquals( processor._lastDelta, 23 );
   }
 
   @Test
