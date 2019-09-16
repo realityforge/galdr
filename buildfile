@@ -27,6 +27,8 @@ define 'galdr' do
 
   desc 'galdr core library'
   define 'core' do
+    pom.include_transitive_dependencies << artifact(:javax_annotation)
+    pom.include_transitive_dependencies << artifact(:braincheck)
     compile.with :javax_annotation,
                  :braincheck
 
