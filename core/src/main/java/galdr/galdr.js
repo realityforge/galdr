@@ -11,6 +11,9 @@ galdr.environment = goog.define('galdr.environment', 'production');
 galdr.enable_names = goog.define('galdr.enable_names', 'false');
 
 /** @define {string} */
+galdr.enable_multiple_worlds = goog.define('galdr.enable_multiple_worlds', 'true');
+
+/** @define {string} */
 galdr.enable_names = goog.define('galdr.copy_arrays_passed_to_constructors', 'false');
 
 /** @define {string} */

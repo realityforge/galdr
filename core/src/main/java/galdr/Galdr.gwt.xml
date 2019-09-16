@@ -14,6 +14,9 @@
   <define-property name='galdr.enable_names' values='true,false'/>
   <set-property name='galdr.enable_names' value='false'/>
 
+  <define-property name='galdr.enable_multiple_worlds' values='true,false'/>
+  <set-property name='galdr.enable_multiple_worlds' value='true'/>
+
   <define-property name='galdr.copy_arrays_passed_to_constructors' values='true,false'/>
   <set-property name='galdr.copy_arrays_passed_to_constructors' value='false'/>
 
