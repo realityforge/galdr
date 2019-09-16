@@ -12,7 +12,7 @@ public class ProcessorTest
     private int _lastDelta;
 
     @Override
-    public void process( final int delta )
+    protected void process( final int delta )
     {
       _lastDelta = delta;
     }
@@ -22,7 +22,7 @@ public class ProcessorTest
     extends Processor
   {
     @Override
-    public void process( final int delta )
+    protected void process( final int delta )
     {
     }
   }
