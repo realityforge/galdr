@@ -1,19 +1,16 @@
 package galdr;
 
-import java.io.File;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
-import org.realityforge.braincheck.GuardMessageCollector;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 import static org.testng.Assert.*;
 
+@Listeners( MessageCollector.class )
 public abstract class AbstractTest
 {
-  private static final GuardMessageCollector c_messages = createCollector();
   private final Random _random = new Random();
   private final TestLogger _logger = new TestLogger();
 
@@ -24,40 +21,13 @@ public abstract class AbstractTest
     GaldrTestUtil.resetConfig( false );
     _logger.getEntries().clear();
     GaldrTestUtil.setLogger( _logger );
-    c_messages.onTestStart();
   }
 
   @AfterMethod
   protected void afterTest()
   {
-    c_messages.onTestComplete();
     GaldrTestUtil.resetConfig( true );
     BrainCheckTestUtil.resetConfig( true );
-  }
-
-  @BeforeSuite
-  protected void beforeSuite()
-  {
-    c_messages.onTestSuiteStart();
-  }
-
-  @Nonnull
-  private static GuardMessageCollector createCollector()
-  {
-    final boolean saveIfChanged = "true".equals( System.getProperty( "galdr.output_fixture_data", "false" ) );
-    final String fixtureDir = System.getProperty( "galdr.diagnostic_messages_file" );
-    assertNotNull( fixtureDir,
-                   "Expected System.getProperty( \"galdr.diagnostic_messages_file\" ) to return location of diagnostic messages file" );
-    return new GuardMessageCollector( "Galdr", new File( fixtureDir ), saveIfChanged );
-  }
-
-  @AfterSuite
-  protected void afterSuite()
-  {
-    if ( !System.getProperty( "galdr.check_diagnostic_messages", "true" ).equals( "false" ) )
-    {
-      c_messages.onTestSuiteComplete();
-    }
   }
 
   @Nonnull
