@@ -56,7 +56,6 @@ public final class GaldrTestUtil
       checkInvariants();
       checkApiInvariants();
     }
-    enableMultipleWorlds();
     enableErrorHandlers();
     setLogger( null );
   }
@@ -106,32 +105,6 @@ public final class GaldrTestUtil
   private static void setEnableNames( final boolean value )
   {
     setConstant( "ENABLE_NAMES", value );
-  }
-
-  /**
-   * Set `galdr.enable_multiple_worlds` setting to true.
-   */
-  public static void enableMultipleWorlds()
-  {
-    setEnableMultipleWorlds( true );
-  }
-
-  /**
-   * Set `galdr.enable_multiple_worlds` setting to false.
-   */
-  public static void disableMultipleWorlds()
-  {
-    setEnableMultipleWorlds( false );
-  }
-
-  /**
-   * Configure the `galdr.enable_multiple_worlds` setting.
-   *
-   * @param value the setting.
-   */
-  private static void setEnableMultipleWorlds( final boolean value )
-  {
-    setConstant( "ENABLE_MULTIPLE_WORLDS", value );
   }
 
   /**

@@ -10,7 +10,6 @@ final class GaldrConfig
   private static final ConfigProvider PROVIDER = new ConfigProvider();
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
   private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
-  private static boolean ENABLE_MULTIPLE_WORLDS = PROVIDER.areMultipleWorldsEnabled();
   private static boolean COPY_ARRAYS_PASSED_TO_CONSTRUCTORS = PROVIDER.shouldCopyArraysPassedToConstructors();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean ENABLE_ERROR_HANDLERS = PROVIDER.areErrorHandlersEnabled();
@@ -36,11 +35,6 @@ final class GaldrConfig
   static boolean areNamesEnabled()
   {
     return ENABLE_NAMES;
-  }
-
-  static boolean areMultipleWorldsEnabled()
-  {
-    return ENABLE_MULTIPLE_WORLDS;
   }
 
   static boolean shouldCopyArraysPassedToConstructors()
@@ -89,13 +83,6 @@ final class GaldrConfig
     boolean areNamesEnabled()
     {
       return "true".equals( System.getProperty( "galdr.enable_names", isProductionMode() ? "false" : "true" ) );
-    }
-
-    @GwtIncompatible
-    @Override
-    boolean areMultipleWorldsEnabled()
-    {
-      return "true".equals( System.getProperty( "galdr.enable_multiple_worlds", "true" ) );
     }
 
     @GwtIncompatible
@@ -154,11 +141,6 @@ final class GaldrConfig
     boolean areNamesEnabled()
     {
       return "true" == System.getProperty( "galdr.enable_names" );
-    }
-
-    boolean areMultipleWorldsEnabled()
-    {
-      return "true" == System.getProperty( "galdr.enable_multiple_worlds" );
     }
 
     boolean shouldCopyArraysPassedToConstructors()

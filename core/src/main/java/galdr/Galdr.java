@@ -12,16 +12,6 @@ public final class Galdr
   }
 
   /**
-   * Return true if multiple worlds are enabled, false otherwise.
-   *
-   * @return true if multiple worlds are enabled, false otherwise.
-   */
-  public static boolean areMultipleWorldsEnabled()
-  {
-    return GaldrConfig.areMultipleWorldsEnabled();
-  }
-
-  /**
    * Return true if elements are expected to be named.
    * Names are primarily used for debugging and runtime inspection.
    *
