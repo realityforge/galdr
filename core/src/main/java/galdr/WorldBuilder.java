@@ -8,6 +8,9 @@ import static org.realityforge.braincheck.Guards.*;
 
 public final class WorldBuilder
 {
+  /**
+   * The set of components that will be defined in the world.
+   */
   @Nonnull
   private final List<ComponentManager<?>> _components = new ArrayList<>();
   private boolean _worldConstructed;
