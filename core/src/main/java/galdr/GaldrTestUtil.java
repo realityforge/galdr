@@ -58,6 +58,18 @@ public final class GaldrTestUtil
     }
     enableErrorHandlers();
     setLogger( null );
+    resetState();
+  }
+
+  /**
+   * Clear out any lingering state.
+   */
+  private static void resetState()
+  {
+    if ( WorldHolder.isActive() )
+    {
+      WorldHolder.deactivateWorld( WorldHolder.world() );
+    }
   }
 
   /**
