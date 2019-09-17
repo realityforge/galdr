@@ -29,11 +29,6 @@ public class ProcessorTest
   {
     final Processor processor = new MyProcessor();
 
-    final World world = WorldBuilder.create().build();
-
-    processor.setWorld( world );
-
-    assertEquals( processor.getWorld(), world );
     assertEquals( processor.getName(), "MyProcessor" );
     assertEquals( processor.toString(), "Processor[MyProcessor]" );
   }
@@ -42,9 +37,6 @@ public class ProcessorTest
   public void process()
   {
     final MyProcessor processor = new MyProcessor();
-
-    final World world = WorldBuilder.create().build();
-    processor.setWorld( world );
 
     processor.process( 23 );
 
