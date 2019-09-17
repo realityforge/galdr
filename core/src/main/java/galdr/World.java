@@ -1,27 +1,62 @@
 package galdr;
 
-import java.util.Set;
+import java.util.Objects;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import static org.realityforge.braincheck.Guards.*;
 
 public final class World
+  extends Element
 {
-  @Nonnull
-  private final ComponentRegistry _componentRegistry;
+  /**
+   * A synthetic id used to construct te worlds name if not explicitly supplied.
+   */
+  private static int c_nextId = 1;
+  @Nullable
+  private ComponentRegistry _componentRegistry;
 
-  World( @Nonnull final ComponentManager<?>... components )
+  World( @Nullable final String name )
   {
-    _componentRegistry = new ComponentRegistry( components );
-  }
-
-  @Nonnull
-  Set<Class<?>> getComponentTypes()
-  {
-    return _componentRegistry.getComponentTypes();
+    super( Galdr.areNamesEnabled() && null == name ? "World@" + c_nextId++ : name );
   }
 
   @Nonnull
   public <T> ComponentAPI<T> getComponentByType( @Nonnull final Class<T> type )
   {
-    return _componentRegistry.getComponentManagerByType( type ).getApi();
+    return getComponentRegistry().getComponentManagerByType( type ).getApi();
+  }
+
+  @Nonnull
+  ComponentRegistry getComponentRegistry()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> null != _componentRegistry,
+                    () -> "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
+                          getName() + "' prior to World completing construction" );
+    }
+    assert null != _componentRegistry;
+    return _componentRegistry;
+  }
+
+  @Nonnull
+  @Override
+  protected final String getBaseTypeName()
+  {
+    return "World";
+  }
+
+  void completeConstruction( @Nonnull final ComponentRegistry componentRegistry )
+  {
+    _componentRegistry = Objects.requireNonNull( componentRegistry );
+  }
+
+  /**
+   * Reset id used when constructing names for anonymous worlds.
+   * This is only invoked from tests.
+   */
+  static void resetId()
+  {
+    c_nextId = 1;
   }
 }
