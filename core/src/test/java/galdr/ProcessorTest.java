@@ -24,20 +24,6 @@ public class ProcessorTest
     }
   }
 
-  public static class MyOtherProcessor
-    extends Processor
-  {
-    MyOtherProcessor()
-    {
-      super( "MyOtherProcessor" );
-    }
-
-    @Override
-    protected void process( final int delta )
-    {
-    }
-  }
-
   @Test
   public void construct()
   {
