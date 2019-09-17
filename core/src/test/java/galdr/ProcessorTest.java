@@ -64,29 +64,4 @@ public class ProcessorTest
 
     assertEquals( processor._lastDelta, 23 );
   }
-
-  @Test
-  public void toString_test()
-  {
-    final Processor processor = new MyProcessor();
-
-    assertEquals( processor.toString(), "Processor[MyProcessor]" );
-
-    GaldrTestUtil.disableDebugToString();
-
-    assertNotEquals( processor.toString(), "Processor[MyProcessor]" );
-  }
-
-  @Test
-  public void getName()
-  {
-    final Processor processor = new MyOtherProcessor();
-
-    assertEquals( processor.getName(), "MyOtherProcessor" );
-
-    GaldrTestUtil.disableNames();
-
-    assertInvariantFailure( processor::getName,
-                            "Galdr-0004: Processor.getName() invoked when Galdr.areNamesEnabled() returns false" );
-  }
 }
