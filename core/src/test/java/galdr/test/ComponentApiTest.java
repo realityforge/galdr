@@ -2,8 +2,8 @@ package galdr.test;
 
 import galdr.AbstractTest;
 import galdr.ComponentAPI;
+import galdr.Galdr;
 import galdr.World;
-import galdr.WorldBuilder;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -18,7 +18,7 @@ public class ComponentApiTest
   @Test
   public void basicOperation()
   {
-    final World world = WorldBuilder.create().component( Health.class, Health::new ).build();
+    final World world = Galdr.world().component( Health.class, Health::new ).build();
 
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 

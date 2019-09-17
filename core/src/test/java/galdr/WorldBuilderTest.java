@@ -20,9 +20,25 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void component()
+  {
+    final String name = randomString();
+    final World world =
+      Galdr.world( name )
+        .component( Armour.class, Armour::new )
+        .component( Health.class, Health::new )
+        .build();
+
+    final Set<Class<?>> componentTypes = world.getComponentRegistry().getComponentTypes();
+    assertEquals( componentTypes.size(), 2 );
+    assertTrue( componentTypes.contains( Armour.class ) );
+    assertTrue( componentTypes.contains( Health.class ) );
+  }
+
+  @Test
   public void build_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = WorldBuilder.create();
+    final WorldBuilder builder = Galdr.world();
     builder.build();
 
     assertInvariantFailure( builder::build,
@@ -30,24 +46,9 @@ public class WorldBuilderTest
   }
 
   @Test
-  public void component()
-  {
-    final WorldBuilder builder = WorldBuilder.create();
-    final World world = builder
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
-      .build();
-
-    final Set<Class<?>> componentTypes = world.getComponentTypes();
-    assertEquals( componentTypes.size(), 2 );
-    assertTrue( componentTypes.contains( Armour.class ) );
-    assertTrue( componentTypes.contains( Health.class ) );
-  }
-
-  @Test
   public void component_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = WorldBuilder.create();
+    final WorldBuilder builder = Galdr.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.component( Attack.class, Attack::new ),

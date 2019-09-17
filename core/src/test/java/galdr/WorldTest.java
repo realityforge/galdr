@@ -18,25 +18,20 @@ public class WorldTest
   @Test
   public void getComponentByType()
   {
-    final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
-    final World world = new World( componentManager );
+    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
 
-    final ComponentAPI<Component1> api = world.getComponentByType( Component1.class );
-    assertNotNull( api );
-    assertEquals( api, componentManager.getApi() );
+    assertNotNull( world.getComponentByType( Component1.class ) );
   }
 
   @Test
   public void getComponentTypes()
   {
-    final ComponentManager<Component1> componentManager1 =
-      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
-    final ComponentManager<Component2> componentManager2 =
-      new FastArrayComponentManager<>( 1, Component2.class, Component2::new );
-    final World world = new World( componentManager1, componentManager2 );
+    final World world = Galdr.world()
+      .component( Component1.class, Component1::new )
+      .component( Component2.class, Component2::new )
+      .build();
 
-    final Set<Class<?>> componentTypes = world.getComponentTypes();
+    final Set<Class<?>> componentTypes = world.getComponentRegistry().getComponentTypes();
     assertEquals( componentTypes.size(), 2 );
     assertTrue( componentTypes.contains( Component1.class ) );
     assertTrue( componentTypes.contains( Component2.class ) );
