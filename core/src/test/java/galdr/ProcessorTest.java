@@ -11,11 +11,6 @@ public class ProcessorTest
   {
     private int _lastDelta;
 
-    MyProcessor()
-    {
-      super( "MyProcessor" );
-    }
-
     @Override
     protected void process( final int delta )
     {
