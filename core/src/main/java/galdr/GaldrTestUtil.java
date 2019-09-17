@@ -70,6 +70,7 @@ public final class GaldrTestUtil
     {
       WorldHolder.deactivateWorld( WorldHolder.world() );
     }
+    World.resetId();
   }
 
   /**
