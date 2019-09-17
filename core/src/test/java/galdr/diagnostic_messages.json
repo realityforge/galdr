@@ -41,7 +41,7 @@
   {
     "code": 4,
     "type": "API_INVARIANT",
-    "messagePattern": "Processor.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "messagePattern": "Element.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
         "class": "galdr.Processor",
@@ -158,7 +158,7 @@
   {
     "code": 52,
     "type": "API_INVARIANT",
-    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
+    "messagePattern": "Element passed a name '%s' but Galdr.areNamesEnabled() is false",
     "callers": [
       {
         "class": "galdr.Processor",
