@@ -4,25 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 public final class WorldBuilder
 {
   /**
+   * The world that is being setup by the builder.
+   */
+  @Nonnull
+  private final World _world;
+  /**
    * The set of components that will be defined in the world.
    */
   @Nonnull
   private final List<ComponentManager<?>> _components = new ArrayList<>();
+  /**
+   * A flag set to true after build is invoked. After the world is constructed it is invalid to invoke construction methods.
+   */
   private boolean _worldConstructed;
 
-  @Nonnull
-  public static WorldBuilder create()
+  WorldBuilder( @Nullable final String name )
   {
-    return new WorldBuilder();
-  }
-
-  private WorldBuilder()
-  {
+    _world = new World( name );
+    WorldHolder.activateWorld( _world );
   }
 
   @Nonnull
@@ -38,7 +43,10 @@ public final class WorldBuilder
   {
     ensureWorldNotConstructed();
     _worldConstructed = true;
-    return new World( _components.toArray( new ComponentManager[ 0 ] ) );
+    WorldHolder.deactivateWorld( _world );
+    final ComponentRegistry registry = new ComponentRegistry( _components.toArray( new ComponentManager[ 0 ] ) );
+    _world.completeConstruction( registry );
+    return _world;
   }
 
   private void ensureWorldNotConstructed()
