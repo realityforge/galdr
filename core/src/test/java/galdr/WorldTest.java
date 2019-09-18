@@ -47,6 +47,16 @@ public class WorldTest
   }
 
   @Test
+  public void getStages_PreConstruct()
+  {
+    final String name = randomString();
+    final World world = new World( name );
+    assertInvariantFailure( world::getStages,
+                            "Galdr-0045: Attempted to invoke World.getStages() on World named '" + name +
+                            "' prior to World completing construction" );
+  }
+
+  @Test
   public void getStageByName()
   {
     final String name1 = "ABCDEF";
@@ -86,5 +96,15 @@ public class WorldTest
     assertEquals( componentTypes.size(), 2 );
     assertTrue( componentTypes.contains( Component1.class ) );
     assertTrue( componentTypes.contains( Component2.class ) );
+  }
+
+  @Test
+  public void getComponentRegistry_PreConstruct()
+  {
+    final String name = randomString();
+    final World world = new World( name );
+    assertInvariantFailure( world::getComponentRegistry,
+                            "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
+                            name + "' prior to World completing construction" );
   }
 }
