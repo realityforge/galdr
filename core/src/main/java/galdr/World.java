@@ -14,6 +14,8 @@ public final class World
   private static int c_nextId = 1;
   @Nullable
   private ComponentRegistry _componentRegistry;
+  @Nullable
+  private ProcessorStage[] _stages;
 
   World( @Nullable final String name )
   {
@@ -46,9 +48,11 @@ public final class World
     return "World";
   }
 
-  void completeConstruction( @Nonnull final ComponentRegistry componentRegistry )
+  void completeConstruction( @Nonnull final ComponentRegistry componentRegistry,
+                             @Nonnull final ProcessorStage[] stages )
   {
     _componentRegistry = Objects.requireNonNull( componentRegistry );
+    _stages = Objects.requireNonNull( stages );
   }
 
   /**

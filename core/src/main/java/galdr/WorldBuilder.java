@@ -20,6 +20,11 @@ public final class WorldBuilder
   @Nonnull
   private final List<ComponentManager<?>> _components = new ArrayList<>();
   /**
+   * The set of components that will be defined in the world.
+   */
+  @Nonnull
+  private final List<ProcessorStage> _stages = new ArrayList<>();
+  /**
    * A flag set to true after build is invoked. After the world is constructed it is invalid to invoke construction methods.
    */
   private boolean _worldConstructed;
@@ -39,13 +44,27 @@ public final class WorldBuilder
   }
 
   @Nonnull
+  public <T> WorldBuilder stage( @Nonnull final Processor... processors )
+  {
+    return stage( null, processors );
+  }
+
+  @Nonnull
+  public <T> WorldBuilder stage( @Nullable final String name, @Nonnull final Processor... processors )
+  {
+    ensureWorldNotConstructed();
+    _stages.add( new ProcessorStage( name, processors ) );
+    return this;
+  }
+
+  @Nonnull
   public World build()
   {
     ensureWorldNotConstructed();
     _worldConstructed = true;
     WorldHolder.deactivateWorld( _world );
     final ComponentRegistry registry = new ComponentRegistry( _components.toArray( new ComponentManager[ 0 ] ) );
-    _world.completeConstruction( registry );
+    _world.completeConstruction( registry, _stages.toArray( new ProcessorStage[ 0 ] ) );
     return _world;
   }
 

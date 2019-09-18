@@ -21,7 +21,10 @@ public class ProcessorTest
   @Test
   public void construct()
   {
+    final WorldBuilder builder = Galdr.world();
+    // Cache the processor in var
     final Processor processor = new MyProcessor();
+    builder.stage( processor ).build();
 
     assertEquals( processor.getName(), "MyProcessor" );
     assertEquals( processor.toString(), "Processor[MyProcessor]" );
