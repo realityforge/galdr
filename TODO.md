@@ -75,6 +75,19 @@ for systems/processors ahead of time.
   access. We could use a `Map` based implementation that is used when there is relative low density component
   distribution that does not need fast access times.
 
+* Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
+  picked up by a processor later in the stage which applies the work items. The later processor could also filter,
+  drop, reorder or modify the work items as it sees fit, potentially spreading the work over several invocations
+  of the stage. The example in one talk was impact effects being accumulated during stage and applied a the end
+  which overlapping effects omitted and the effects spread over multiple frames if they exceed a stage budget.
+  We could provide some sort of built in mechanisms to do this, whether it be work queues or a method that exposes
+  how much time the current stage has left in it's budget.
+
+* Should processors expect to run at a fixed frequency (i.e. simulate at 30 frames per second) and thus delta
+  parameter for the processor is ignored. They only care that the next frame has occurred. Some processors will
+  run when they are able time (i.e. idleTime processors like in browsers) while others care about the delta between
+  the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
