@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.Map;
 import java.util.Set;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -25,6 +26,24 @@ public class WorldTest
     assertEquals( world1.toString(), "World[Foo]" );
     assertEquals( world2.getName(), "World@1" );
     assertEquals( world2.toString(), "World[World@1]" );
+  }
+
+  @Test
+  public void getStages()
+  {
+    final String name1 = "ABCDEF";
+    final String name2 = "GHIJK";
+    final String name3 = randomString();
+    final World world = Galdr.world()
+      .stage( name1, new BasicNoopProcessor() )
+      .stage( name2, new BasicNoopProcessor() )
+      .build();
+
+    final Map<String, ProcessorStage> stages = world.getStages();
+    assertEquals( stages.size(), 2 );
+    assertTrue( stages.containsKey( name1 ) );
+    assertTrue( stages.containsKey( name2 ) );
+    assertFalse( stages.containsKey( name3 ) );
   }
 
   @Test
