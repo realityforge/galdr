@@ -8,14 +8,27 @@ import javax.annotation.Nullable;
  * An ordered list of {@link Processor} instances that are explicitly invoked by application code.
  */
 public final class ProcessorStage
-  extends Element
 {
+  /**
+   * The name of the stage.
+   */
+  @Nonnull
+  private final String _name;
+  /**
+   * The world in which the stage was created.
+   */
+  @Nonnull
+  private final World _world;
+  /**
+   * The ordered set of processors through which the stage steps.
+   */
   @Nonnull
   private final Processor[] _processors;
 
-  ProcessorStage( @Nullable final String name, @Nonnull final Processor... processors )
+  ProcessorStage( @Nullable final String name, @Nonnull final World world, @Nonnull final Processor... processors )
   {
-    super( name );
+    _name = Objects.requireNonNull( name );
+    _world = Objects.requireNonNull( world );
     if ( Galdr.shouldCopyArraysPassedToConstructors() )
     {
       _processors = new Processor[ processors.length ];
@@ -32,23 +45,48 @@ public final class ProcessorStage
 
   public void process( final int delta )
   {
-    for ( final Processor processor : _processors )
+    WorldHolder.activateWorld( _world );
+    try
     {
-      try
+      for ( final Processor processor : _processors )
       {
-        processor.process( delta );
+        try
+        {
+          processor.process( delta );
+        }
+        catch ( final Throwable e )
+        {
+          //TODO: Deliver error to per stage or world-global error handler?
+        }
       }
-      catch ( final Throwable e )
-      {
-        //TODO: Deliver error to per stage or world-global error handler?
-      }
+    }
+    finally
+    {
+      WorldHolder.deactivateWorld( _world );
     }
   }
 
+  /**
+   * Return the name of the Stage.
+   *
+   * @return the name of the Stage.
+   */
   @Nonnull
-  @Override
-  protected final String getBaseTypeName()
+  protected final String getName()
   {
-    return "ProcessorStage";
+    return _name;
+  }
+
+  @Override
+  public String toString()
+  {
+    if ( Galdr.areDebugToStringMethodsEnabled() )
+    {
+      return "ProcessorStage[" + getName() + "]";
+    }
+    else
+    {
+      return super.toString();
+    }
   }
 }

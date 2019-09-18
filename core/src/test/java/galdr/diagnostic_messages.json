@@ -60,7 +60,7 @@
         "class": "galdr.WorldBuilder",
         "method": "ensureWorldNotConstructed",
         "file": "WorldBuilder.java",
-        "lineNumber": 75
+        "lineNumber": 80
       }
     ]
   },
@@ -190,7 +190,33 @@
         "class": "galdr.World",
         "method": "getComponentRegistry",
         "file": "World.java",
-        "lineNumber": 36
+        "lineNumber": 62
+      }
+    ]
+  },
+  {
+    "code": 45,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempted to invoke World.getStages() on World named '%s' prior to World completing construction",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "getStages",
+        "file": "World.java",
+        "lineNumber": 75
+      }
+    ]
+  },
+  {
+    "code": 46,
+    "type": "API_INVARIANT",
+    "messagePattern": "Invoked World.getStageByName() on World named '%s' with stage name '%s' but no such stage exists. Known stages include: [%s]",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "getStageByName",
+        "file": "World.java",
+        "lineNumber": 48
       }
     ]
   },
@@ -217,6 +243,19 @@
         "method": "getName",
         "file": "ComponentManager.java",
         "lineNumber": 111
+      }
+    ]
+  },
+  {
+    "code": 87,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempted to create stage named named '%s' but a stage already exists with the specified name. Existing stages include: [%s]",
+    "callers": [
+      {
+        "class": "galdr.WorldBuilder",
+        "method": "stage",
+        "file": "WorldBuilder.java",
+        "lineNumber": 55
       }
     ]
   },

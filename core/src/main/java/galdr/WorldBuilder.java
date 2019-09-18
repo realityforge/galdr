@@ -1,8 +1,11 @@
 package galdr;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
@@ -23,7 +26,7 @@ public final class WorldBuilder
    * The set of components that will be defined in the world.
    */
   @Nonnull
-  private final List<ProcessorStage> _stages = new ArrayList<>();
+  private final Map<String, ProcessorStage> _stages = new HashMap<>();
   /**
    * A flag set to true after build is invoked. After the world is constructed it is invalid to invoke construction methods.
    */
@@ -44,16 +47,18 @@ public final class WorldBuilder
   }
 
   @Nonnull
-  public <T> WorldBuilder stage( @Nonnull final Processor... processors )
-  {
-    return stage( null, processors );
-  }
-
-  @Nonnull
-  public <T> WorldBuilder stage( @Nullable final String name, @Nonnull final Processor... processors )
+  public <T> WorldBuilder stage( @Nonnull final String name, @Nonnull final Processor... processors )
   {
     ensureWorldNotConstructed();
-    _stages.add( new ProcessorStage( name, processors ) );
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> !_stages.containsKey( name ),
+                    () -> "Galdr-0087: Attempted to create stage named named '" +
+                          name + "' but a stage already exists with the specified name. Existing stages include: " +
+                          _stages.keySet().stream().sorted().collect( Collectors.toList() ) );
+    }
+    assert !_stages.containsKey( name );
+    _stages.put( name, new ProcessorStage( name, _world, processors ) );
     return this;
   }
 
@@ -64,7 +69,7 @@ public final class WorldBuilder
     _worldConstructed = true;
     WorldHolder.deactivateWorld( _world );
     final ComponentRegistry registry = new ComponentRegistry( _components.toArray( new ComponentManager[ 0 ] ) );
-    _world.completeConstruction( registry, _stages.toArray( new ProcessorStage[ 0 ] ) );
+    _world.completeConstruction( registry, _stages );
     return _world;
   }
 

@@ -2,6 +2,7 @@ package galdr;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -16,7 +17,7 @@ public class ErrorHandlerSupportTest
     final Throwable throwable = null;
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = new ProcessorStage( randomString(), new Processor[]{ processor } );
+    final ProcessorStage stage = createStage( processor );
 
     final AtomicInteger callCount = new AtomicInteger();
 
@@ -80,7 +81,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = new ProcessorStage( randomString(), new Processor[]{ processor } );
+    final ProcessorStage stage = createStage( processor );
     final Throwable throwable = null;
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -115,7 +116,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = new ProcessorStage( randomString(), new Processor[]{ processor } );
+    final ProcessorStage stage = createStage( processor );
     final Throwable throwable = null;
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -161,8 +162,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage =
-      new ProcessorStage( Galdr.areNamesEnabled() ? randomString() : null, new Processor[]{ processor } );
+    final ProcessorStage stage = createStage( processor );
     final Throwable throwable = null;
 
     final RuntimeException exception = new RuntimeException( "X" );
@@ -183,5 +183,13 @@ public class ErrorHandlerSupportTest
     support.onError( stage, processor, throwable );
 
     assertEquals( getTestLogger().getEntries().size(), 2 );
+  }
+
+  @Nonnull
+  private ProcessorStage createStage( @Nonnull final Processor processor )
+  {
+    final String name = randomString();
+    final World world = Galdr.world().stage( name, processor ).build();
+    return world.getStageByName( name );
   }
 }
