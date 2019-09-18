@@ -74,14 +74,15 @@ public class WorldTest
   }
 
   @Test
-  public void getComponentTypes()
+  public void getComponentRegistry()
   {
     final World world = Galdr.world()
       .component( Component1.class, Component1::new )
       .component( Component2.class, Component2::new )
       .build();
 
-    final Set<Class<?>> componentTypes = world.getComponentRegistry().getComponentTypes();
+    final ComponentRegistry componentRegistry = world.getComponentRegistry();
+    final Set<Class<?>> componentTypes = componentRegistry.getComponentTypes();
     assertEquals( componentTypes.size(), 2 );
     assertTrue( componentTypes.contains( Component1.class ) );
     assertTrue( componentTypes.contains( Component2.class ) );
