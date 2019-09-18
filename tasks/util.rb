@@ -9,4 +9,3 @@ def in_dir(dir)
     Dir.chdir(current)
   end
 end
-
