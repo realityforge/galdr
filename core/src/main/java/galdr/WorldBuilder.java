@@ -10,6 +10,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
+/**
+ * A builder class used to create World instances.
+ * An instance of the builder should be created via {@link Galdr#world()} or {@link Galdr#world(String)}.
+ */
 public final class WorldBuilder
 {
   /**
