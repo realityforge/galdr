@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.Map;
 import java.util.Set;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -36,6 +37,22 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void stage()
+  {
+    final String name = randomString();
+    final World world =
+      Galdr.world( name )
+        .stage( "ABC" )
+        .stage( "DEF" )
+        .build();
+
+    final Map<String, ProcessorStage> stages = world.getStages();
+    assertEquals( stages.size(), 2 );
+    assertTrue( stages.containsKey( "ABC" ) );
+    assertTrue( stages.containsKey( "DEF" ) );
+  }
+
+  @Test
   public void build_invokedAfterWorldBuild()
   {
     final WorldBuilder builder = Galdr.world();
@@ -47,6 +64,16 @@ public class WorldBuilderTest
 
   @Test
   public void component_invokedAfterWorldBuild()
+  {
+    final WorldBuilder builder = Galdr.world();
+    builder.build();
+
+    assertInvariantFailure( () -> builder.stage( randomString() ),
+                            "Galdr-0019: Attempted to invoke method on WorldBuilder but world has already been constructed" );
+  }
+
+  @Test
+  public void stage_invokedAfterWorldBuild()
   {
     final WorldBuilder builder = Galdr.world();
     builder.build();
