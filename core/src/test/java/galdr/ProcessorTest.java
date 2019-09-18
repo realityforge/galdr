@@ -45,8 +45,6 @@ public class ProcessorTest
   {
     final MyProcessor processor = new MyProcessor();
 
-    assertEquals( processor.getName(), "MyElement" );
-
     assertInvariantFailure( processor::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
 
     final World world = Galdr.world().build();
