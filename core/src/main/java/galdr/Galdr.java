@@ -93,7 +93,7 @@ public final class Galdr
   /**
    * Create a world.
    *
-   * @param name the human consumable name of the world. MUST be <code>null</code> if {@link Galdr#areNamesEnabled()} returns <code>false</code>> otherwise may be non-null.
+   * @param name the human consumable name of the world. MUST be <code>null</code> if {@link Galdr#areNamesEnabled()} returns <code>false</code> otherwise may be non-null.
    * @return the builder object to create the world.
    */
   @Nonnull
