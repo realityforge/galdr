@@ -44,23 +44,10 @@
     "messagePattern": "Element.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
-        "class": "galdr.Processor",
+        "class": "galdr.Element",
         "method": "getName",
-        "file": "Processor.java",
-        "lineNumber": 66
-      }
-    ]
-  },
-  {
-    "code": 5,
-    "type": "API_INVARIANT",
-    "messagePattern": "ProcessorStage.getName() invoked when Galdr.areNamesEnabled() returns false",
-    "callers": [
-      {
-        "class": "galdr.ProcessorStage",
-        "method": "getName",
-        "file": "ProcessorStage.java",
-        "lineNumber": 71
+        "file": "Element.java",
+        "lineNumber": 45
       }
     ]
   },
@@ -73,7 +60,7 @@
         "class": "galdr.WorldBuilder",
         "method": "ensureWorldNotConstructed",
         "file": "WorldBuilder.java",
-        "lineNumber": 45
+        "lineNumber": 75
       }
     ]
   },
@@ -87,6 +74,58 @@
         "method": "getIndex",
         "file": "ComponentManager.java",
         "lineNumber": 72
+      }
+    ]
+  },
+  {
+    "code": 23,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked WorldHolder.activateWorld() with null world.",
+    "callers": [
+      {
+        "class": "galdr.WorldHolder",
+        "method": "activateWorld",
+        "file": "WorldHolder.java",
+        "lineNumber": 60
+      }
+    ]
+  },
+  {
+    "code": 24,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked WorldHolder.activateWorld() with world named 'World@2' but an existing world named 'World@1' is active.",
+    "callers": [
+      {
+        "class": "galdr.WorldHolder",
+        "method": "activateWorld",
+        "file": "WorldHolder.java",
+        "lineNumber": 61
+      }
+    ]
+  },
+  {
+    "code": 26,
+    "type": "API_INVARIANT",
+    "messagePattern": "Invoked WorldHolder.world() when no world was active.",
+    "callers": [
+      {
+        "class": "galdr.WorldHolder",
+        "method": "world",
+        "file": "WorldHolder.java",
+        "lineNumber": 35
+      }
+    ]
+  },
+  {
+    "code": 28,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempted to deactivate world named '%s' that is not active.",
+    "callers": [
+      {
+        "class": "galdr.WorldHolder",
+        "method": "deactivateWorld",
+        "file": "WorldHolder.java",
+        "lineNumber": 77
       }
     ]
   },
@@ -143,15 +182,15 @@
     ]
   },
   {
-    "code": 43,
+    "code": 44,
     "type": "API_INVARIANT",
-    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
+    "messagePattern": "Attempted to invoke World.getComponentRegistry() on World named '%s' prior to World completing construction",
     "callers": [
       {
-        "class": "galdr.ProcessorStage",
-        "method": "<init>",
-        "file": "ProcessorStage.java",
-        "lineNumber": 26
+        "class": "galdr.World",
+        "method": "getComponentRegistry",
+        "file": "World.java",
+        "lineNumber": 36
       }
     ]
   },
@@ -161,10 +200,10 @@
     "messagePattern": "Element passed a name '%s' but Galdr.areNamesEnabled() is false",
     "callers": [
       {
-        "class": "galdr.Processor",
+        "class": "galdr.Element",
         "method": "<init>",
-        "file": "Processor.java",
-        "lineNumber": 26
+        "file": "Element.java",
+        "lineNumber": 28
       }
     ]
   },
