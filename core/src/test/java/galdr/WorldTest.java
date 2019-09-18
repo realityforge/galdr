@@ -28,6 +28,25 @@ public class WorldTest
   }
 
   @Test
+  public void getStageByName()
+  {
+    final String name1 = "ABCDEF";
+    final String name2 = "GHIJK";
+    final String name3 = randomString();
+    final World world = Galdr.world()
+      .stage( name1, new BasicNoopProcessor() )
+      .stage( name2, new BasicNoopProcessor() )
+      .build();
+
+    assertNotNull( world.getStageByName( name1 ) );
+    assertNotNull( world.getStageByName( name2 ) );
+    assertInvariantFailure( () -> world.getStageByName( name3 ),
+                            "Galdr-0046: Invoked World.getStageByName() on World named 'World@1' with " +
+                            "stage name '" + name3 + "' but no such stage exists. Known stages include: [" +
+                            "ABCDEF, GHIJK]" );
+  }
+
+  @Test
   public void getComponentByType()
   {
     final World world = Galdr.world().component( Component1.class, Component1::new ).build();
