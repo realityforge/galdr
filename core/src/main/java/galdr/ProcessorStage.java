@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
  * An ordered list of {@link Processor} instances that are explicitly invoked by application code.
  */
 public final class ProcessorStage
-  extends WorldElement
+  extends Element
 {
   @Nonnull
   private final Processor[] _processors;
