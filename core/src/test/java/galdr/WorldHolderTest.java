@@ -82,11 +82,11 @@ public class WorldHolderTest
     assertTrue( WorldHolder.isActive() );
 
     assertInvariantFailure( () -> WorldHolder.deactivateWorld( world2 ),
-                            "Galdr-0026: Attempted to deactivate world named 'World@2' that is not active." );
+                            "Galdr-0028: Attempted to deactivate world named 'World@2' that is not active." );
 
     WorldHolder.deactivateWorld( world1 );
 
     assertInvariantFailure( () -> WorldHolder.deactivateWorld( world1 ),
-                            "Galdr-0026: Attempted to deactivate world named 'World@1' that is not active." );
+                            "Galdr-0028: Attempted to deactivate world named 'World@1' that is not active." );
   }
 }

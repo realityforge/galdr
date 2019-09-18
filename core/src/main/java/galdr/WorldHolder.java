@@ -74,7 +74,7 @@ final class WorldHolder
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> c_world == world, () -> "Galdr-0026: Attempted to deactivate world named '" +
+      apiInvariant( () -> c_world == world, () -> "Galdr-0028: Attempted to deactivate world named '" +
                                                   world.getName() + "' that is not active." );
     }
     c_world = null;
