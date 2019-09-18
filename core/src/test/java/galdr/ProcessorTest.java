@@ -39,4 +39,18 @@ public class ProcessorTest
 
     assertEquals( processor._lastDelta, 23 );
   }
+
+  @Test
+  public void world()
+  {
+    final MyProcessor processor = new MyProcessor();
+
+    assertEquals( processor.getName(), "MyElement" );
+
+    assertInvariantFailure( processor::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+
+    final World world = Galdr.world().build();
+    WorldHolder.activateWorld( world );
+    assertEquals( processor.world(), world );
+  }
 }
