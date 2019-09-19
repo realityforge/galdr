@@ -41,7 +41,8 @@ complete as there is too much un-said.
   * Each rule declares that an `Entity` MUST or MUST NOT have a `Component` of a particular type.
   * A rule can indicate that it may access a `Component` type if it is available.
   * Each rule will declare how a `Processor` interacts with `Component` type. A `Processor` may only
-    require read-only view or may be supplied a read-write value.
+    require read-only view or may be supplied a read-write value. Read-write also indicates creating and
+    disposing components.
 
 * `Processor` (a.k.a. Systems in other ECS frameworks)
   * A processor may receive 0 or more event types and applies changes to entities. See the "event" design for
