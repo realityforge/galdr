@@ -16,7 +16,8 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final ComponentManager<Component1> componentManager = new FastArrayComponentManager<>( 23, Component1.class, createFn );
+    final ComponentManager<Component1> componentManager =
+      new FastArrayComponentManager<>( 23, Component1.class, createFn );
 
     assertEquals( componentManager.getIndex(), 23 );
     assertNotNull( componentManager.getApi() );
