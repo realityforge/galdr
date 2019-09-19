@@ -61,6 +61,7 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Optionally validate EntityIds event in `FastArrayComponentManager`
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
