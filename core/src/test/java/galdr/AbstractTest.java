@@ -11,7 +11,9 @@ import static org.testng.Assert.*;
 @Listeners( MessageCollector.class )
 public abstract class AbstractTest
 {
+  @Nonnull
   private final Random _random = new Random();
+  @Nonnull
   private final TestLogger _logger = new TestLogger();
 
   @BeforeMethod
