@@ -26,6 +26,12 @@ public final class World
    */
   @Nullable
   private Map<String, ProcessorStage> _stages;
+  /**
+   * Support infrastructure for propagating processor errors.
+   */
+  @Nullable
+  private final ErrorHandlerSupport _errorHandlerSupport =
+    Galdr.areErrorHandlersEnabled() ? new ErrorHandlerSupport() : null;
 
   World( @Nullable final String name )
   {
@@ -92,6 +98,64 @@ public final class World
   {
     _componentRegistry = Objects.requireNonNull( componentRegistry );
     _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
+  }
+
+  /**
+   * Add error handler to the list of error handlers called.
+   * The handler should not already be in the list. This method should NOT be called if
+   * {@link Galdr#areErrorHandlersEnabled()} returns false.
+   *
+   * @param handler the error handler.
+   */
+  public void addErrorHandler( @Nonnull final ErrorHandler handler )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areErrorHandlersEnabled,
+                 () -> "Galdr-0182: World.addErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
+    }
+    getErrorHandlerSupport().addErrorHandler( handler );
+  }
+
+  /**
+   * Remove error handler from list of existing error handlers.
+   * The handler should already be in the list. This method should NOT be called if
+   * {@link Galdr#areErrorHandlersEnabled()} returns false.
+   *
+   * @param handler the error handler.
+   */
+  public void removeErrorHandler( @Nonnull final ErrorHandler handler )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areErrorHandlersEnabled,
+                 () -> "Galdr-0181: World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
+    }
+    getErrorHandlerSupport().removeErrorHandler( handler );
+  }
+
+  /**
+   * Report an error in processor.
+   *
+   * @param stage     the stage that contained the processor that generated the error.
+   * @param processor the processor that generated error.
+   * @param throwable the exception that caused error if any.
+   */
+  void reportError( @Nonnull final ProcessorStage stage,
+                    @Nonnull final Processor processor,
+                    @Nullable final Throwable throwable )
+  {
+    if ( Galdr.areErrorHandlersEnabled() )
+    {
+      getErrorHandlerSupport().onError( stage, processor, throwable );
+    }
+  }
+
+  @Nonnull
+  ErrorHandlerSupport getErrorHandlerSupport()
+  {
+    assert null != _errorHandlerSupport;
+    return _errorHandlerSupport;
   }
 
   /**

@@ -56,7 +56,7 @@ public final class ProcessorStage
         }
         catch ( final Throwable e )
         {
-          //TODO: Deliver error to per stage or world-global error handler?
+          _world.reportError( this, processor, e );
         }
       }
     }

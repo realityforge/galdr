@@ -2,6 +2,7 @@ package galdr;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -106,5 +107,73 @@ public class WorldTest
     assertInvariantFailure( world::getComponentRegistry,
                             "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
                             name + "' prior to World completing construction" );
+  }
+
+  @Test
+  public void errorHandlerLifecycle()
+  {
+    final String name = randomString();
+    final WorldBuilder builder = Galdr.world();
+    final Processor processor = new BasicNoopProcessor();
+    builder.stage( name, processor );
+    final World world = builder.build();
+
+    final ProcessorStage stage = world.getStageByName( name );
+    final Throwable throwable = new Throwable();
+
+    final AtomicInteger callCount = new AtomicInteger();
+
+    final ErrorHandler handler = ( s, p, t ) -> {
+      callCount.incrementAndGet();
+      assertEquals( s, stage );
+      assertEquals( p, processor );
+      assertEquals( t, throwable );
+    };
+
+    world.addErrorHandler( handler );
+
+    assertEquals( world.getErrorHandlerSupport().getHandlers().size(), 1 );
+    assertTrue( world.getErrorHandlerSupport().getHandlers().contains( handler ) );
+
+    assertEquals( callCount.get(), 0 );
+
+    world.reportError( stage, processor, throwable );
+
+    assertEquals( callCount.get(), 1 );
+
+    world.removeErrorHandler( handler );
+
+    assertEquals( world.getErrorHandlerSupport().getHandlers().size(), 0 );
+
+    world.reportError( stage, processor, throwable );
+
+    assertEquals( callCount.get(), 1 );
+  }
+
+  @Test
+  public void addErrorHandler_whenDisabled()
+  {
+    GaldrTestUtil.disableErrorHandlers();
+
+    final World world = Galdr.world().build();
+
+    final ErrorHandler errorHandler = ( stage, processor, throwable ) -> {
+    };
+
+    assertInvariantFailure( () -> world.addErrorHandler( errorHandler ),
+                            "Galdr-0182: World.addErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
+  }
+
+  @Test
+  public void removeErrorHandler_whenDisabled()
+  {
+    GaldrTestUtil.disableErrorHandlers();
+
+    final World world = Galdr.world().build();
+
+    final ErrorHandler errorHandler = ( stage, processor, throwable ) -> {
+    };
+    assertInvariantFailure( () -> world.removeErrorHandler( errorHandler ),
+                            "Galdr-0181: World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
   }
 }
