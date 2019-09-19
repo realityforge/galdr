@@ -74,6 +74,19 @@ public class ComponentManagerTest
   }
 
   @Test
+  public void getName()
+  {
+    final ComponentManager<Component1> componentManager =
+      new FastArrayComponentManager<>( 42, Component1.class, Component1::new );
+
+    assertEquals( componentManager.getName(), "Component1" );
+
+    GaldrTestUtil.disableNames();
+
+    assertInvariantFailure( componentManager::getName, "Galdr-0053: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
+  }
+
+  @Test
   public void errorOnNegativeEntityId()
   {
     final ComponentManager<Component1> componentManager =
