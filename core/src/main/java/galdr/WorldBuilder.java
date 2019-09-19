@@ -51,7 +51,7 @@ public final class WorldBuilder
   }
 
   @Nonnull
-  public <T> WorldBuilder stage( @Nonnull final String name, @Nonnull final Processor... processors )
+  public WorldBuilder stage( @Nonnull final String name, @Nonnull final Processor... processors )
   {
     ensureWorldNotConstructed();
     if ( Galdr.shouldCheckApiInvariants() )
