@@ -14,7 +14,7 @@ public class ErrorHandlerSupportTest
   {
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
-    final Throwable throwable = null;
+    final Throwable throwable = new Throwable();
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
     final ProcessorStage stage = createStage( processor );
@@ -82,7 +82,7 @@ public class ErrorHandlerSupportTest
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
     final ProcessorStage stage = createStage( processor );
-    final Throwable throwable = null;
+    final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
     final AtomicInteger callCount2 = new AtomicInteger();
@@ -117,7 +117,7 @@ public class ErrorHandlerSupportTest
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
     final ProcessorStage stage = createStage( processor );
-    final Throwable throwable = null;
+    final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
     final AtomicInteger callCount3 = new AtomicInteger();
@@ -163,7 +163,7 @@ public class ErrorHandlerSupportTest
 
     final BasicNoopProcessor processor = new BasicNoopProcessor();
     final ProcessorStage stage = createStage( processor );
-    final Throwable throwable = null;
+    final Throwable throwable = new Throwable();
 
     final RuntimeException exception = new RuntimeException( "X" );
 

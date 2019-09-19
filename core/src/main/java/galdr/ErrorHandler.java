@@ -14,7 +14,7 @@ public interface ErrorHandler
    *
    * @param stage     the stage that contained the processor that generated the error.
    * @param processor the processor that generated error.
-   * @param throwable the exception that caused error if any.
+   * @param throwable the exception that caused the error.
    */
-  void onError( @Nonnull ProcessorStage stage, @Nonnull Processor processor, @Nullable Throwable throwable );
+  void onError( @Nonnull ProcessorStage stage, @Nonnull Processor processor, @Nonnull Throwable throwable );
 }
