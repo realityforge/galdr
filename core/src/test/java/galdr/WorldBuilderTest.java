@@ -53,6 +53,18 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void stage_with_DuplicateName()
+  {
+    final String name = randomString();
+    final WorldBuilder builder = Galdr.world( name );
+    builder.stage( "DEF" );
+    builder.stage( "ABC" );
+
+    assertInvariantFailure( () -> builder.stage( "DEF" ),
+                            "Galdr-0087: Attempted to create stage named named 'DEF' but a stage already exists with the specified name. Existing stages include: [ABC, DEF]" );
+  }
+
+  @Test
   public void build_invokedAfterWorldBuild()
   {
     final WorldBuilder builder = Galdr.world();
