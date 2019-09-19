@@ -41,6 +41,8 @@ final class FastArrayComponentManager<T>
   {
     if ( entityId >= _data.length )
     {
+      // Growth size is based on heuristic present in a few different ECS implementations
+      // This newCapacity value may need to be re-assessed in the future
       grow( Math.max( 2 * _data.length, ( 3 * entityId ) / 2 ) );
     }
     final T component = createComponentInstance();
