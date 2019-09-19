@@ -62,6 +62,11 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Add a suite of "integration" tests that operate at the public API level.
+* Add `EntityManager` for managing allocatom pf ids for entities and deallocation of components on dispose
+* Add `MapComponentManager` that stores components in a HashMap
+* Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
+  component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations.
 * Optionally validate EntityIds event in `FastArrayComponentManager`
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
