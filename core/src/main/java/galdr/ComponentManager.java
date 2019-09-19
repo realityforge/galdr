@@ -52,26 +52,12 @@ abstract class ComponentManager<T>
   }
 
   /**
-   * Return true if the index has been initialized.
-   */
-  private boolean isIndexInitialized()
-  {
-    assert Galdr.shouldCheckInvariants() || Galdr.shouldCheckApiInvariants();
-    return -1 != _index;
-  }
-
-  /**
    * Return the unique index of type within a {@link World}.
    *
    * @return the unique index of type within a {@link World}.
    */
   int getIndex()
   {
-    if ( Galdr.shouldCheckInvariants() )
-    {
-      invariant( this::isIndexInitialized,
-                 () -> "Galdr-0021: ComponentManager.getIndex() invoked before index initialized" );
-    }
     return _index;
   }
 
