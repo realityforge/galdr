@@ -143,7 +143,7 @@ public final class World
    */
   void reportError( @Nonnull final ProcessorStage stage,
                     @Nonnull final Processor processor,
-                    @Nullable final Throwable throwable )
+                    @Nonnull final Throwable throwable )
   {
     if ( Galdr.areErrorHandlersEnabled() )
     {
