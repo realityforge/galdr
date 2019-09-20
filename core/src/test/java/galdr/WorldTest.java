@@ -176,4 +176,14 @@ public class WorldTest
     assertInvariantFailure( () -> world.removeErrorHandler( errorHandler ),
                             "Galdr-0181: World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
   }
+
+  @Test
+  public void getSpy_whenSpiesDisabled()
+  {
+    GaldrTestUtil.disableSpies();
+
+    final World world = Galdr.world().build();
+
+    assertInvariantFailure( world::getSpy, "Galdr-0021: Attempting to get Spy but spies are not enabled." );
+  }
 }

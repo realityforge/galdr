@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.Spy;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,11 @@ public final class World
   @Nullable
   private final ErrorHandlerSupport _errorHandlerSupport =
     Galdr.areErrorHandlersEnabled() ? new ErrorHandlerSupport() : null;
+  /**
+   * Support infrastructure for spy events.
+   */
+  @Nullable
+  private final SpyImpl _spy = Galdr.areSpiesEnabled() ? new SpyImpl() : null;
 
   World( @Nullable final String name )
   {
@@ -132,6 +138,34 @@ public final class World
                  () -> "Galdr-0181: World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false." );
     }
     getErrorHandlerSupport().removeErrorHandler( handler );
+  }
+
+  /**
+   * Return true if spy events will be propagated.
+   * This means spies are enabled and there is at least one spy event handler present.
+   *
+   * @return true if spy events will be propagated, false otherwise.
+   */
+  boolean willPropagateSpyEvents()
+  {
+    return Galdr.areSpiesEnabled() && getSpy().willPropagateSpyEvents();
+  }
+
+  /**
+   * Return the spy associated with context.
+   * This method should not be invoked unless {@link Galdr#areSpiesEnabled()} returns true.
+   *
+   * @return the spy associated with context.
+   */
+  @Nonnull
+  public Spy getSpy()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( Galdr::areSpiesEnabled, () -> "Galdr-0021: Attempting to get Spy but spies are not enabled." );
+    }
+    assert null != _spy;
+    return _spy;
   }
 
   /**
