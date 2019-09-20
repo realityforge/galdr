@@ -11,6 +11,9 @@ galdr.environment = goog.define('galdr.environment', 'production');
 galdr.enable_names = goog.define('galdr.enable_names', 'false');
 
 /** @define {string} */
+galdr.enable_spies = goog.define('galdr.enable_spies', 'false');
+
+/** @define {string} */
 galdr.enable_names = goog.define('galdr.copy_arrays_passed_to_constructors', 'false');
 
 /** @define {string} */

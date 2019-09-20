@@ -43,6 +43,7 @@ public final class GaldrTestUtil
     if ( productionMode )
     {
       disableNames();
+      disableSpies();
       disableCopyArraysPassedToConstructors();
       disableDebugToString();
       noCheckInvariants();
@@ -51,6 +52,7 @@ public final class GaldrTestUtil
     else
     {
       enableNames();
+      enableSpies();
       enableCopyArraysPassedToConstructors();
       enableDebugToString();
       checkInvariants();
@@ -118,6 +120,32 @@ public final class GaldrTestUtil
   private static void setEnableNames( final boolean value )
   {
     setConstant( "ENABLE_NAMES", value );
+  }
+
+  /**
+   * Set `galdr.enable_spies` setting to true.
+   */
+  public static void enableSpies()
+  {
+    setEnableSpies( true );
+  }
+
+  /**
+   * Set `galdr.enable_spies` setting to false.
+   */
+  public static void disableSpies()
+  {
+    setEnableSpies( false );
+  }
+
+  /**
+   * Configure the "galdr.enable_spies" setting.
+   *
+   * @param value the setting.
+   */
+  private static void setEnableSpies( final boolean value )
+  {
+    setConstant( "ENABLE_SPIES", value );
   }
 
   /**

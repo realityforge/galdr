@@ -25,6 +25,19 @@ public final class Galdr
   }
 
   /**
+   * Return true if spies are enabled.
+   *
+   * @return true if spies are enabled, false otherwise.
+   */
+  public static boolean areSpiesEnabled()
+  {
+    /*
+     * Spy's use debug names so we can not enable spies without names.
+     */
+    return areNamesEnabled() && GaldrConfig.areSpiesEnabled();
+  }
+
+  /**
    * Return true if arrays passed when constructing system components should be copied.
    * In normal operation, the arrays are expected to be "owned" by the target component and thus need not
    * copied. HOwever in development mode we copy for defensive purposes.
