@@ -38,7 +38,7 @@ public abstract class Element
    * @return the human readable name of the Element.
    */
   @Nonnull
-  protected final String getName()
+  public final String getName()
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
