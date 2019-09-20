@@ -2,6 +2,7 @@
   <inherits name='org.realityforge.braincheck.BrainCheck'/>
 
   <source path='' includes='*.java'/>
+  <source path='spy' includes='*.java'/>
 
   <!--
     These properties are all defined in galdr.GaldrConfig
