@@ -26,6 +26,14 @@ public final class TestSpyEventHandler
     _world = Objects.requireNonNull( world );
   }
 
+  @Nonnull
+  public static TestSpyEventHandler subscribe( @Nonnull final World world )
+  {
+    final TestSpyEventHandler handler = new TestSpyEventHandler( world );
+    world.getSpy().addSpyEventHandler( handler );
+    return handler;
+  }
+
   public void unsubscribe()
   {
     _world.getSpy().removeSpyEventHandler( this );
