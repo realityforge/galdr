@@ -18,7 +18,7 @@ public class FastArrayComponentManagerTest
     final FastArrayComponentManager<Component1> componentManager =
       new FastArrayComponentManager<>( 23, Component1.class, createFn, 5 );
 
-    assertEquals( componentManager.getIndex(), 23 );
+    assertEquals( componentManager.getId(), 23 );
 
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getCreateFn(), createFn );

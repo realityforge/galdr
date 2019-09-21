@@ -12,10 +12,11 @@ import static org.realityforge.braincheck.Guards.*;
 abstract class ComponentManager<T>
 {
   /**
-   * Unique index of type within a {@link World}.
+   * Unique id of type within a {@link World}.
+   * The id also serves as the index into the underlying array and the bit used to mark entity as containing component.
    * Used to enable fast lookup and access of component data.
    */
-  private final int _index;
+  private final int _id;
   /**
    * The java type of the component.
    */
@@ -32,9 +33,9 @@ abstract class ComponentManager<T>
   @Nonnull
   private final ComponentAPI<T> _api;
 
-  ComponentManager( final int index, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  ComponentManager( final int id, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
-    _index = index;
+    _id = id;
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
     _api = new ComponentAPI<>( this );
@@ -56,9 +57,9 @@ abstract class ComponentManager<T>
    *
    * @return the unique id of the component within the containing {@link World}.
    */
-  int getIndex()
+  int getId()
   {
-    return _index;
+    return _id;
   }
 
   /**
@@ -243,7 +244,7 @@ abstract class ComponentManager<T>
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "ComponentManager[" + getName() + "=" + _index + "]";
+      return "ComponentManager[" + getName() + "=" + _id + "]";
     }
     else
     {
@@ -254,13 +255,13 @@ abstract class ComponentManager<T>
   @Override
   public boolean equals( final Object o )
   {
-    return o instanceof ComponentManager && _index == ( (ComponentManager) o )._index;
+    return o instanceof ComponentManager && _id == ( (ComponentManager) o )._id;
   }
 
   @Override
   public int hashCode()
   {
-    return _index;
+    return _id;
   }
 
   private void ensureEntityIdPositive( final int entityId )

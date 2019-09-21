@@ -27,9 +27,9 @@ final class ComponentRegistry
       if ( Galdr.shouldCheckApiInvariants() )
       {
         final int index = i;
-        final int suppliedIndex = component.getIndex();
-        invariant( () -> index == suppliedIndex,
-                   () -> "Galdr-0003: Component named '" + component.getName() + "' has index " + suppliedIndex +
+        final int id = component.getId();
+        invariant( () -> index == id,
+                   () -> "Galdr-0003: Component named '" + component.getName() + "' has id " + id +
                          " but was passed as index " + index + "." );
       }
       map.put( component.getType(), component );

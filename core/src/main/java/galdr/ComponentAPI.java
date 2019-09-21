@@ -26,7 +26,7 @@ public final class ComponentAPI<T>
    */
   public int getId()
   {
-    return _store.getIndex();
+    return _store.getId();
   }
 
   /**

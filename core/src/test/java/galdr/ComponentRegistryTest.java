@@ -56,7 +56,7 @@ public class ComponentRegistryTest
                                      final int index )
   {
     final ComponentManager<?> entry = registry.getComponentManagerByIndex( index );
-    assertEquals( entry.getIndex(), index );
+    assertEquals( entry.getId(), index );
     assertEquals( entry.getType(), type );
     assertEquals( registry.getComponentManagerByType( type ), entry );
   }
@@ -73,7 +73,7 @@ public class ComponentRegistryTest
                                                          new FastArrayComponentManager<>( 3,
                                                                                           Component3.class,
                                                                                           Component3::new, 120 ) ),
-                            "Galdr-0003: Component named 'Component3' has index 3 but was passed as index 2." );
+                            "Galdr-0003: Component named 'Component3' has id 3 but was passed as index 2." );
   }
 
   @Test
