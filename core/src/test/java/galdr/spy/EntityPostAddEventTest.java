@@ -15,7 +15,7 @@ public class EntityPostAddEventTest
   public void basicOperation()
   {
     final World world = Galdr.world().build();
-    final int entityId = world.getEntityAPI().newEntity( new BitSet() );
+    final int entityId = world.newEntity( new BitSet() );
     final EntityPostAddEvent event = new EntityPostAddEvent( world, entityId );
 
     assertEquals( event.getWorld(), world );
