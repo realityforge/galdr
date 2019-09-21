@@ -95,6 +95,16 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void initialEntityCount_invokedAfterWorldBuild()
+  {
+    final WorldBuilder builder = Galdr.world();
+    builder.build();
+
+    assertInvariantFailure( () -> builder.initialEntityCount( 22 ),
+                            "Galdr-0019: Attempted to invoke method on WorldBuilder but world has already been constructed" );
+  }
+
+  @Test
   public void component_invokedAfterWorldBuild()
   {
     final WorldBuilder builder = Galdr.world();
