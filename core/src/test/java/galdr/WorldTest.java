@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.BitSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -106,6 +107,38 @@ public class WorldTest
     final World world = new World( name );
     assertInvariantFailure( world::getComponentRegistry,
                             "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
+                            name + "' prior to World completing construction" );
+  }
+
+  @Test
+  public void basicEntityAPIInteractions()
+  {
+    final World world = Galdr.world().build();
+
+    final int entityId1 = world.createEntity( new BitSet() );
+    final int entityId2 = world.createEntity( new BitSet() );
+
+    assertTrue( world.isEntity( entityId1 ) );
+    assertTrue( world.isEntity( entityId2 ) );
+
+    world.disposeEntity( entityId1 );
+
+    assertFalse( world.isEntity( entityId1 ) );
+    assertTrue( world.isEntity( entityId2 ) );
+
+    final int entityId3 = world.createEntity( new BitSet() );
+
+    assertTrue( world.isEntity( entityId2 ) );
+    assertTrue( world.isEntity( entityId3 ) );
+  }
+
+  @Test
+  public void getEntityManager_PreConstruct()
+  {
+    final String name = randomString();
+    final World world = new World( name );
+    assertInvariantFailure( world::getEntityManager,
+                            "Galdr-0005: Attempted to invoke World.getEntityManager() on World named '" +
                             name + "' prior to World completing construction" );
   }
 

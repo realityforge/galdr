@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.Spy;
+import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,8 @@ public final class World
    * A synthetic id used to construct te worlds name if not explicitly supplied.
    */
   private static int c_nextId = 1;
+  @Nullable
+  private EntityManager _entityManager;
   /**
    * The container of ComponentManager available in the world.
    */
@@ -42,6 +45,51 @@ public final class World
   World( @Nullable final String name )
   {
     super( Galdr.areNamesEnabled() && null == name ? "World@" + c_nextId++ : name );
+  }
+
+  /**
+   * Create a new entity with the specified components.
+   *
+   * @param initialComponentIds the ids of the components to create.
+   * @return the id of the entity.
+   */
+  public int createEntity( @Nonnull final BitSet initialComponentIds )
+  {
+    return getEntityManager().createEntity( initialComponentIds ).getId();
+  }
+
+  /**
+   * Dispose the entity with the specified id.
+   *
+   * @param entityId the entity id.
+   */
+  public void disposeEntity( final int entityId )
+  {
+    getEntityManager().disposeEntity( entityId );
+  }
+
+  /**
+   * Return true if the specified id designates a valid entity.
+   *
+   * @param entityId the entity id.
+   * @return true if the entityId represents a valid entity.
+   */
+  public boolean isEntity( final int entityId )
+  {
+    return getEntityManager().isAlive( entityId );
+  }
+
+  @Nonnull
+  EntityManager getEntityManager()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> null != _entityManager,
+                    () -> "Galdr-0005: Attempted to invoke World.getEntityManager() on World named '" +
+                          getName() + "' prior to World completing construction" );
+    }
+    assert null != _entityManager;
+    return _entityManager;
   }
 
   @Nonnull
