@@ -21,6 +21,18 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void initialEntityCount()
+  {
+    final String name = randomString();
+    final World world =
+      Galdr.world( name )
+        .initialEntityCount( 233 )
+        .build();
+
+    assertEquals( world.getEntityManager().capacity(), 233 );
+  }
+
+  @Test
   public void component()
   {
     final String name = randomString();

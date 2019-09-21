@@ -16,6 +16,7 @@ import static org.realityforge.braincheck.Guards.*;
  */
 public final class WorldBuilder
 {
+  private static final int DEFAULT_INITIAL_ENTITY_COUNT = 1024;
   /**
    * The world that is being setup by the builder.
    */
@@ -31,6 +32,7 @@ public final class WorldBuilder
    */
   @Nonnull
   private final Map<String, ProcessorStage> _stages = new HashMap<>();
+  private int _initialEntityCount = DEFAULT_INITIAL_ENTITY_COUNT;
   /**
    * A flag set to true after build is invoked. After the world is constructed it is invalid to invoke construction methods.
    */
@@ -43,10 +45,18 @@ public final class WorldBuilder
   }
 
   @Nonnull
+  public <T> WorldBuilder initialEntityCount( final int initialEntityCount )
+  {
+    ensureWorldNotConstructed();
+    _initialEntityCount = initialEntityCount;
+    return this;
+  }
+
+  @Nonnull
   public <T> WorldBuilder component( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     ensureWorldNotConstructed();
-    _components.add( new FastArrayComponentManager<>( _components.size(), type, createFn ) );
+    _components.add( new FastArrayComponentManager<>( _components.size(), type, createFn, _initialEntityCount ) );
     return this;
   }
 
@@ -73,7 +83,7 @@ public final class WorldBuilder
     _worldConstructed = true;
     WorldHolder.deactivateWorld( _world );
     final ComponentRegistry registry = new ComponentRegistry( _components.toArray( new ComponentManager[ 0 ] ) );
-    _world.completeConstruction( registry, _stages );
+    _world.completeConstruction( _initialEntityCount, registry, _stages );
     return _world;
   }
 
