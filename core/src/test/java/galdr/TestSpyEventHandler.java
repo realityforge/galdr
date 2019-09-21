@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.SpyEventHandler;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,11 +13,23 @@ public final class TestSpyEventHandler
   implements SpyEventHandler
 {
   @Nonnull
+  private final World _world;
+  @Nonnull
   private final List<Object> _events = new ArrayList<>();
   /**
    * When using assertNextEvent this tracks the index that we are up to.
    */
   private int _currentAssertIndex;
+
+  TestSpyEventHandler( @Nonnull final World world )
+  {
+    _world = Objects.requireNonNull( world );
+  }
+
+  public void unsubscribe()
+  {
+    _world.getSpy().removeSpyEventHandler( this );
+  }
 
   @Override
   public void onSpyEvent( @Nonnull final Object event )
