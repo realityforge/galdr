@@ -22,6 +22,8 @@ public class ComponentApiTest
 
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 
+    assertEquals( api.getId(), 0 );
+
     assertFalse( api.has( 23 ) );
     assertNull( api.find( 23 ) );
 

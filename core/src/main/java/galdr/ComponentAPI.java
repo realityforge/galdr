@@ -20,6 +20,16 @@ public final class ComponentAPI<T>
   }
 
   /**
+   * Return the unique id of the component within the containing {@link World}.
+   *
+   * @return the unique id of the component within the containing {@link World}.
+   */
+  public int getId()
+  {
+    return _store.getIndex();
+  }
+
+  /**
    * Create the component instance for the specified entity.
    *
    * @param entityId the id of the entity.
