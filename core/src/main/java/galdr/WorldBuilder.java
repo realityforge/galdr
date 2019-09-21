@@ -48,6 +48,12 @@ public final class WorldBuilder
   public <T> WorldBuilder initialEntityCount( final int initialEntityCount )
   {
     ensureWorldNotConstructed();
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> initialEntityCount > 0,
+                    () -> "Galdr-007: Attempted to set initialEntityCount to " + initialEntityCount + " for world " +
+                          "named '" + _world.getName() + "' but initialEntityCount must be a positive value." );
+    }
     _initialEntityCount = initialEntityCount;
     return this;
   }

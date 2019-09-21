@@ -41,6 +41,15 @@ public class WorldBuilderTest
   }
 
   @Test
+  public void initialEntityCount_invalid()
+  {
+    final WorldBuilder builder = Galdr.world();
+
+    assertInvariantFailure( () -> builder.initialEntityCount( -2 ),
+                            "Galdr-007: Attempted to set initialEntityCount to -2 for world named 'World@1' but initialEntityCount must be a positive value." );
+  }
+
+  @Test
   public void component()
   {
     final String name = randomString();
