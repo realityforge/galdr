@@ -52,9 +52,9 @@ abstract class ComponentManager<T>
   }
 
   /**
-   * Return the unique index of type within a {@link World}.
+   * Return the unique id of the component within the containing {@link World}.
    *
-   * @return the unique index of type within a {@link World}.
+   * @return the unique id of the component within the containing {@link World}.
    */
   int getIndex()
   {
