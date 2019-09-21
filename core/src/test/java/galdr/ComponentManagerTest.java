@@ -17,7 +17,7 @@ public class ComponentManagerTest
   {
     final Supplier<Component1> createFn = Component1::new;
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 23, Component1.class, createFn );
+      new FastArrayComponentManager<>( 23, Component1.class, createFn, 120 );
 
     assertEquals( componentManager.getIndex(), 23 );
     assertNotNull( componentManager.getApi() );
@@ -64,7 +64,7 @@ public class ComponentManagerTest
   public void debugToString()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 42, Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 42, Component1.class, Component1::new, 120 );
 
     assertEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
 
@@ -77,7 +77,7 @@ public class ComponentManagerTest
   public void getName()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 42, Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 42, Component1.class, Component1::new, 120 );
 
     assertEquals( componentManager.getName(), "Component1" );
 
@@ -90,7 +90,7 @@ public class ComponentManagerTest
   public void errorOnNegativeEntityId()
   {
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 0, Component1.class, Component1::new );
+      new FastArrayComponentManager<>( 0, Component1.class, Component1::new, 120 );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
                             "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );

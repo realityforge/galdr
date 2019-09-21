@@ -9,11 +9,6 @@ final class FastArrayComponentManager<T>
   @Nonnull
   private Object[] _data;
 
-  FastArrayComponentManager( final int index, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
-  {
-    this( index, type, createFn, 120 );
-  }
-
   FastArrayComponentManager( final int index,
                              @Nonnull final Class<T> type,
                              @Nonnull final Supplier<T> createFn,

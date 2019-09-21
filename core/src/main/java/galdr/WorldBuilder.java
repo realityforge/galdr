@@ -16,7 +16,7 @@ import static org.realityforge.braincheck.Guards.*;
  */
 public final class WorldBuilder
 {
-  private static final int DEFAULT_INITIAL_ENTITY_COUNT = 1024;
+  static final int DEFAULT_INITIAL_ENTITY_COUNT = 1024;
   /**
    * The world that is being setup by the builder.
    */

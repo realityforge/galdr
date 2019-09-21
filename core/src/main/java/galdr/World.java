@@ -99,9 +99,11 @@ public final class World
     return "World";
   }
 
-  void completeConstruction( @Nonnull final ComponentRegistry componentRegistry,
+  void completeConstruction( final int initialEntityCount,
+                             @Nonnull final ComponentRegistry componentRegistry,
                              @Nonnull final Map<String, ProcessorStage> stages )
   {
+    _entityManager = new EntityManager( this, initialEntityCount );
     _componentRegistry = Objects.requireNonNull( componentRegistry );
     _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
   }

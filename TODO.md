@@ -62,7 +62,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add spy infrastructure and make sure it can be compiled away in production.
 * `ComponentManager` should generate a event/message when a component is added/removed outside of entity creation
   and there is some party that has registered interest in listening to that component.
 * Rename `Component.index` to `Component.id` and update references.
