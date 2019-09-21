@@ -15,7 +15,7 @@ public class EntityPreRemoveEventTest
   public void basicOperation()
   {
     final World world = Galdr.world().build();
-    final int entityId = world.newEntity( new BitSet( 0 ) );
+    final int entityId = world.createEntity( new BitSet( 0 ) );
     final EntityPreRemoveEvent event = new EntityPreRemoveEvent( world, entityId );
 
     assertEquals( event.getWorld(), world );
