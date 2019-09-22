@@ -30,9 +30,9 @@ final class EntityManager
    *
    * @return true if the entity is "alive".
    */
-  boolean isAlive( final int index )
+  boolean isAlive( final int entityId )
   {
-    return index < _nextIndex && !_free.get( index ) && _entities[ index ].isAlive();
+    return entityId < _nextIndex && !_free.get( entityId ) && _entities[ entityId ].isAlive();
   }
 
   @Nonnull
@@ -58,7 +58,7 @@ final class EntityManager
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
       //TODO: Use a different create that does not generate spy/other messages
-      registry.getComponentManagerByIndex( current ).create( entityId );
+      registry.getComponentManagerById( current ).create( entityId );
       entity.getComponentIds().set( current );
     }
   }
@@ -119,7 +119,7 @@ final class EntityManager
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
       //TODO: Use a different remove that does not generate spy/other messages
-      registry.getComponentManagerByIndex( current ).remove( entityId );
+      registry.getComponentManagerById( current ).remove( entityId );
     }
   }
 
