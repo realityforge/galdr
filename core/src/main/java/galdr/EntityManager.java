@@ -61,7 +61,6 @@ final class EntityManager
     {
       //TODO: Use a different create that does not generate spy/other messages
       registry.getComponentManagerById( current ).create( entityId );
-      entity.getComponentIds().set( current );
     }
   }
 

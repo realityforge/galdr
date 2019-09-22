@@ -217,7 +217,7 @@ abstract class ComponentManager<T>
                     () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
     }
-    //TODO: Flip bit in Entity object for component
+    componentIds.set( _id );
     //TODO: Generate spy message for component creation unless ADDING flag set
     //TODO: Generate application message for component creation unless ADDING flag set
     return performCreate( entityId );
@@ -255,7 +255,7 @@ abstract class ComponentManager<T>
                     () -> "Galdr-0030: The ComponentManager.remove() method for the component named '" + getName() +
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
-    //TODO: Flip bit in Entity object for component
+    componentIds.clear( _id );
     //TODO: Generate spy message for component removal unless REMOVING flag set on entity
     //TODO: Generate application message for component removal unless REMOVING flag set on entity
     performRemove( entityId );
