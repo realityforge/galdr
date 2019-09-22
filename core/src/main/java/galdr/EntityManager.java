@@ -94,7 +94,7 @@ final class EntityManager
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> entityId <= _entities.length && !_free.get( entityId ) && null != _entities[ entityId ],
+      apiInvariant( () -> isAllocated( entityId ),
                     () -> "Galdr-0009: Attempting to dispose entity " + entityId + " but entity is not allocated." );
     }
     final Entity entity = _entities[ entityId ];
@@ -107,6 +107,17 @@ final class EntityManager
     removeComponents( entity );
     entity.reset();
     _free.set( entityId );
+  }
+
+  /**
+   * Return true if the specified entityId has been allocated.
+   *
+   * @param entityId the entity id.
+   * @return true if the specified entityId has been allocated.
+   */
+  private boolean isAllocated( final int entityId )
+  {
+    return entityId >= 0 && entityId <= _entities.length && !_free.get( entityId ) && null != _entities[ entityId ];
   }
 
   private void removeComponents( @Nonnull final Entity entity )
