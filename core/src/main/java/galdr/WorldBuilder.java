@@ -45,7 +45,7 @@ public final class WorldBuilder
   }
 
   @Nonnull
-  public <T> WorldBuilder initialEntityCount( final int initialEntityCount )
+  public WorldBuilder initialEntityCount( final int initialEntityCount )
   {
     ensureWorldNotConstructed();
     if ( Galdr.shouldCheckApiInvariants() )
