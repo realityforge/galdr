@@ -42,15 +42,15 @@ final class ComponentRegistry
   }
 
   @Nonnull
-  ComponentManager<?> getComponentManagerByIndex( final int index )
+  ComponentManager<?> getComponentManagerById( final int id )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      invariant( () -> index >= 0 && index < _components.length,
+      invariant( () -> id >= 0 && id < _components.length,
                  () -> "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component " +
-                       "at index " + index + " but no such component exists." );
+                       "with id " + id + " but no such component exists." );
     }
-    return _components[ index ];
+    return _components[ id ];
   }
 
   int size()

@@ -57,7 +57,7 @@ public class ComponentRegistryTest
                                      @Nonnull final Class<?> type,
                                      final int id )
   {
-    final ComponentManager<?> entry = registry.getComponentManagerByIndex( id );
+    final ComponentManager<?> entry = registry.getComponentManagerById( id );
     assertEquals( entry.getId(), id );
     assertEquals( entry.getType(), type );
     assertEquals( registry.getComponentManagerByType( type ), entry );
@@ -88,9 +88,9 @@ public class ComponentRegistryTest
     final World world = Galdr.world().build();
     final ComponentRegistry registry =
       new ComponentRegistry( new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ) );
-    assertInvariantFailure( () -> registry.getComponentManagerByIndex( -1 ),
+    assertInvariantFailure( () -> registry.getComponentManagerById( -1 ),
                             "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index -1 but no such component exists." );
-    assertInvariantFailure( () -> registry.getComponentManagerByIndex( 1 ),
+    assertInvariantFailure( () -> registry.getComponentManagerById( 1 ),
                             "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index 1 but no such component exists." );
   }
 
