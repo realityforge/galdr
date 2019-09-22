@@ -24,11 +24,13 @@ public class ComponentRegistryTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().build();
-    final ComponentRegistry registry =
-      new ComponentRegistry( new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ),
-                             new FastArrayComponentManager<>( world, 1, Component2.class, Component2::new, 120 ),
-                             new FastArrayComponentManager<>( world, 2, Component3.class, Component3::new, 120 ) );
+    final World world = Galdr.world()
+      .component( Component1.class, Component1::new )
+      .component( Component2.class, Component2::new )
+      .component( Component3.class, Component3::new )
+      .build();
+    final ComponentRegistry registry = world.getComponentRegistry();
+
     assertEquals( registry.size(), 3 );
     assertTypeRegistered( registry, Component1.class, 0 );
     assertTypeRegistered( registry, Component2.class, 1 );
@@ -42,11 +44,13 @@ public class ComponentRegistryTest
   public void disableCopyArrayDuringConstruct()
   {
     GaldrTestUtil.disableCopyArraysPassedToConstructors();
-    final World world = Galdr.world().build();
-    final ComponentRegistry registry =
-      new ComponentRegistry( new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ),
-                             new FastArrayComponentManager<>( world, 1, Component2.class, Component2::new, 120 ),
-                             new FastArrayComponentManager<>( world, 2, Component3.class, Component3::new, 120 ) );
+    final World world = Galdr.world()
+      .component( Component1.class, Component1::new )
+      .component( Component2.class, Component2::new )
+      .component( Component3.class, Component3::new )
+      .build();
+    final ComponentRegistry registry = world.getComponentRegistry();
+
     assertEquals( registry.size(), 3 );
     assertTypeRegistered( registry, Component1.class, 0 );
     assertTypeRegistered( registry, Component2.class, 1 );
