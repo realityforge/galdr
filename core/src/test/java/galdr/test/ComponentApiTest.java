@@ -4,6 +4,7 @@ import galdr.AbstractTest;
 import galdr.ComponentAPI;
 import galdr.Galdr;
 import galdr.World;
+import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -20,26 +21,28 @@ public class ComponentApiTest
   {
     final World world = Galdr.world().component( Health.class, Health::new ).build();
 
+    final int entityId = world.createEntity( new BitSet() );
+
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 
     assertEquals( api.getId(), 0 );
 
-    assertFalse( api.has( 23 ) );
-    assertNull( api.find( 23 ) );
+    assertFalse( api.has( entityId ) );
+    assertNull( api.find( entityId ) );
 
-    final Health health = api.create( 23 );
+    final Health health = api.create( entityId );
 
     final int healthPoints = randomInt( 100 );
     health.healthPoints = healthPoints;
 
-    assertTrue( api.has( 23 ) );
-    assertEquals( api.find( 23 ), health );
-    assertEquals( api.findOrCreate( 23 ), health );
-    assertEquals( api.get( 23 ).healthPoints, healthPoints );
+    assertTrue( api.has( entityId ) );
+    assertEquals( api.find( entityId ), health );
+    assertEquals( api.findOrCreate( entityId ), health );
+    assertEquals( api.get( entityId ).healthPoints, healthPoints );
 
-    api.remove( 23 );
+    api.remove( entityId );
 
-    assertFalse( api.has( 23 ) );
-    assertNull( api.find( 23 ) );
+    assertFalse( api.has( entityId ) );
+    assertNull( api.find( entityId ) );
   }
 }
