@@ -97,6 +97,12 @@ final class EntityManager
       apiInvariant( () -> isAllocated( entityId ),
                     () -> "Galdr-0009: Attempting to dispose entity " + entityId + " but entity is not allocated." );
     }
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> _entities[ entityId ].isAlive(),
+                 () -> "Galdr-0059: Attempting to dispose entity " + entityId +
+                       " and entity is allocated but not alive." );
+    }
     final Entity entity = _entities[ entityId ];
     entity.setRemoving();
     if ( _world.willPropagateSpyEvents() )

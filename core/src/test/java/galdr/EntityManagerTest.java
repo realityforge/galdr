@@ -261,6 +261,22 @@ public class EntityManagerTest
   }
 
   @Test
+  public void disposeEntity_entityNotAllocated()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager entityManager = world.getEntityManager();
+    final Entity entity = entityManager.createEntity( new BitSet() );
+
+    assertEquals( entityManager.getEntityById( entity.getId() ), entity );
+
+    entityManager.disposeEntity( entity.getId() );
+
+    assertInvariantFailure( () -> entityManager.disposeEntity( entity.getId() ),
+                            "Galdr-0009: Attempting to dispose entity 0 but entity is not allocated." );
+  }
+
+  @Test
   public void verifyReuseOfFreedEntities()
   {
     final World world = Galdr.world().initialEntityCount( 4 ).build();
