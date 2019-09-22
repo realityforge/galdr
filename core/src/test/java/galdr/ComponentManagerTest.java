@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.BitSet;
 import java.util.function.Supplier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -29,7 +30,7 @@ public class ComponentManagerTest
     assertEquals( componentManager.toString(), "ComponentManager[Component1=23]" );
     assertEquals( componentManager.hashCode(), 23 );
 
-    final int entityId = randomInt( 42 );
+    final int entityId = world.createEntity( new BitSet() );
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
     assertInvariantFailure( () -> componentManager.get( entityId ),
