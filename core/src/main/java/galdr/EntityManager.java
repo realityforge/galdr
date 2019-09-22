@@ -38,6 +38,7 @@ final class EntityManager
   @Nonnull
   Entity createEntity( @Nonnull final BitSet componentIds )
   {
+    //TODO: Ensure componentIds are valid
     final Entity entity = allocateEntity();
     createComponents( entity, componentIds );
     entity.setAlive();
@@ -56,6 +57,7 @@ final class EntityManager
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
+      //TODO: Use a different create that does not generate spy/other messages
       registry.getComponentManagerByIndex( current ).create( entityId );
       entity.getComponentIds().set( current );
     }
@@ -116,6 +118,7 @@ final class EntityManager
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
+      //TODO: Use a different remove that does not generate spy/other messages
       registry.getComponentManagerByIndex( current ).remove( entityId );
     }
   }

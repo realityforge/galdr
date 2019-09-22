@@ -130,6 +130,8 @@ abstract class ComponentManager<T>
    */
   final boolean has( final int entityId )
   {
+
+    //TODO: Consider just checking Entity object directly
     ensureEntityIdPositive( entityId );
     return performHas( entityId );
   }
@@ -173,6 +175,7 @@ abstract class ComponentManager<T>
   final T get( final int entityId )
   {
     ensureEntityIdPositive( entityId );
+    //TODO: Assert Entity object has bit set
     final T component = find( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
@@ -214,6 +217,9 @@ abstract class ComponentManager<T>
                     () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
     }
+    //TODO: Flip bit in Entity object for component
+    //TODO: Generate spy message for component creation
+    //TODO: Generate application message for component creation
     return performCreate( entityId );
   }
 
@@ -249,6 +255,9 @@ abstract class ComponentManager<T>
                     () -> "Galdr-0030: The ComponentManager.remove() method for the component named '" + getName() +
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
+    //TODO: Flip bit in Entity object for component
+    //TODO: Generate spy message for component removal
+    //TODO: Generate application message for component removal
     performRemove( entityId );
   }
 
@@ -286,6 +295,7 @@ abstract class ComponentManager<T>
 
   private void ensureEntityIdPositive( final int entityId )
   {
+    //TODO: Change this to verify Entity is valid entity
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> entityId >= 0,
