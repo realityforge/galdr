@@ -53,10 +53,10 @@ public class ComponentRegistryTest
 
   private void assertTypeRegistered( @Nonnull final ComponentRegistry registry,
                                      @Nonnull final Class<?> type,
-                                     final int index )
+                                     final int id )
   {
-    final ComponentManager<?> entry = registry.getComponentManagerByIndex( index );
-    assertEquals( entry.getId(), index );
+    final ComponentManager<?> entry = registry.getComponentManagerByIndex( id );
+    assertEquals( entry.getId(), id );
     assertEquals( entry.getType(), type );
     assertEquals( registry.getComponentManagerByType( type ), entry );
   }
