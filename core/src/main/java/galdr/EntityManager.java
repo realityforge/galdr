@@ -59,7 +59,6 @@ final class EntityManager
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      //TODO: Use a different create that does not generate spy/other messages
       registry.getComponentManagerById( current ).create( entityId );
     }
   }
@@ -129,7 +128,6 @@ final class EntityManager
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      //TODO: Use a different remove that does not generate spy/other messages
       registry.getComponentManagerById( current ).remove( entityId );
     }
   }
