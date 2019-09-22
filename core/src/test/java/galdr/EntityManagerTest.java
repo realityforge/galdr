@@ -419,4 +419,31 @@ public class EntityManagerTest
     assertInvariantFailure( () -> entityManager.getEntityById( 37 ),
                             "Galdr-0079: Attempting to get entity 37 but entity is not allocated." );
   }
+
+  @Test
+  public void createEntity_badComponentId()
+  {
+    final World world = Galdr.world()
+      .component( Armour.class, Armour::new )
+      .component( Health.class, Health::new )
+      .build();
+
+    final EntityManager entityManager = world.getEntityManager();
+
+    final BitSet componentIds1 = new BitSet();
+    // invalid
+    componentIds1.set( 33 );
+
+    assertInvariantFailure( () -> entityManager.createEntity( componentIds1 ),
+                            "Galdr-0006: Attempting to create entity with invalid componentId 33" );
+
+    final BitSet componentIds2 = new BitSet();
+    componentIds2.set( 0 );
+    componentIds2.set( 1 );
+    // 2 is invalid
+    componentIds2.set( 2 );
+
+    assertInvariantFailure( () -> entityManager.createEntity( componentIds2 ),
+                            "Galdr-0006: Attempting to create entity with invalid componentId 2" );
+  }
 }

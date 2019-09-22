@@ -52,7 +52,17 @@ final class EntityManager
   @Nonnull
   Entity createEntity( @Nonnull final BitSet componentIds )
   {
-    //TODO: Ensure componentIds are valid
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final ComponentRegistry registry = _world.getComponentRegistry();
+      int current = -1;
+      while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+      {
+        final int id = current;
+        apiInvariant( () -> registry.isComponentIdValid( id ),
+                      () -> "Galdr-0006: Attempting to create entity with invalid componentId " + id );
+      }
+    }
     final Entity entity = allocateEntity();
     entity.setAlive();
     entity.setAdding();
