@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * Registry that maps the {@link ComponentManager} to indexes and vice versa.
+ * Registry that maps ids and types to {@link ComponentManager} instances and vice versa.
  */
 final class ComponentRegistry
 {
