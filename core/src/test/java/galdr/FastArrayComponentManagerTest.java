@@ -14,12 +14,13 @@ public class FastArrayComponentManagerTest
   @Test
   public void basicOperation()
   {
+    final World world = Galdr.world().build();
     final Supplier<Component1> createFn = Component1::new;
     final FastArrayComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 23, Component1.class, createFn, 5 );
+      new FastArrayComponentManager<>( world, 23, Component1.class, createFn, 5 );
 
+    assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 23 );
-
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getCreateFn(), createFn );
     assertEquals( componentManager.getName(), "Component1" );

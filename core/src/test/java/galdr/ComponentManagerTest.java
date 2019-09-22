@@ -16,9 +16,11 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
+    final World world = Galdr.world().build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 23, Component1.class, createFn, 120 );
+      new FastArrayComponentManager<>( world, 23, Component1.class, createFn, 120 );
 
+    assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 23 );
     assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
@@ -63,8 +65,9 @@ public class ComponentManagerTest
   @Test
   public void debugToString()
   {
+    final World world = Galdr.world().build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 42, Component1.class, Component1::new, 120 );
+      new FastArrayComponentManager<>( world, 42, Component1.class, Component1::new, 120 );
 
     assertEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
 
@@ -76,8 +79,9 @@ public class ComponentManagerTest
   @Test
   public void getName()
   {
+    final World world = Galdr.world().build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 42, Component1.class, Component1::new, 120 );
+      new FastArrayComponentManager<>( world, 42, Component1.class, Component1::new, 120 );
 
     assertEquals( componentManager.getName(), "Component1" );
 
@@ -89,8 +93,9 @@ public class ComponentManagerTest
   @Test
   public void errorOnNegativeEntityId()
   {
+    final World world = Galdr.world().build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( 0, Component1.class, Component1::new, 120 );
+      new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
                             "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );

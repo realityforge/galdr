@@ -62,7 +62,7 @@ public final class WorldBuilder
   public <T> WorldBuilder component( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
     ensureWorldNotConstructed();
-    _components.add( new FastArrayComponentManager<>( _components.size(), type, createFn, _initialEntityCount ) );
+    _components.add( new FastArrayComponentManager<>( _world, _components.size(), type, createFn, _initialEntityCount ) );
     return this;
   }
 

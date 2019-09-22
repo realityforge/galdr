@@ -9,12 +9,13 @@ final class FastArrayComponentManager<T>
   @Nonnull
   private Object[] _data;
 
-  FastArrayComponentManager( final int index,
+  FastArrayComponentManager( @Nonnull final World world,
+                             final int index,
                              @Nonnull final Class<T> type,
                              @Nonnull final Supplier<T> createFn,
                              final int initialCapacity )
   {
-    super( index, type, createFn );
+    super( world, index, type, createFn );
     _data = new Object[ initialCapacity ];
   }
 

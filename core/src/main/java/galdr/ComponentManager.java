@@ -12,6 +12,11 @@ import static org.realityforge.braincheck.Guards.*;
 abstract class ComponentManager<T>
 {
   /**
+   * The world containing the component.
+   */
+  @Nonnull
+  private final World _world;
+  /**
    * Unique id of type within a {@link World}.
    * The id also serves as the index into the underlying array and the bit used to mark entity as containing component.
    * Used to enable fast lookup and access of component data.
@@ -33,12 +38,27 @@ abstract class ComponentManager<T>
   @Nonnull
   private final ComponentAPI<T> _api;
 
-  ComponentManager( final int id, @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
+  ComponentManager( @Nonnull final World world,
+                    final int id,
+                    @Nonnull final Class<T> type,
+                    @Nonnull final Supplier<T> createFn )
   {
+    _world = Objects.requireNonNull( world );
     _id = id;
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
     _api = new ComponentAPI<>( this );
+  }
+
+  /**
+   * Return the world containing the component.
+   *
+   * @return the world containing the component.
+   */
+  @Nonnull
+  World getWorld()
+  {
+    return _world;
   }
 
   /**
