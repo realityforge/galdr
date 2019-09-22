@@ -40,8 +40,8 @@ final class EntityManager
   {
     //TODO: Ensure componentIds are valid
     final Entity entity = allocateEntity();
-    createComponents( entity, componentIds );
     entity.setAlive();
+    createComponents( entity, componentIds );
     if ( _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new EntityPostAddEvent( _world, entity.getId() ) );
@@ -103,7 +103,6 @@ final class EntityManager
     {
       _world.getSpy().reportSpyEvent( new EntityPreRemoveEvent( _world, entity.getId() ) );
     }
-    entity.clearAlive();
     removeComponents( entity );
     entity.reset();
     _free.set( entityId );
