@@ -85,21 +85,21 @@ public class ComponentRegistryTest
   @Test
   public void getComponentManagerByIndex_badIndex()
   {
-    final World world = Galdr.world().build();
-    final ComponentRegistry registry =
-      new ComponentRegistry( new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ) );
+    final World world = Galdr.world()
+      .component( Component1.class, Component1::new )
+      .build();
+    final ComponentRegistry registry = world.getComponentRegistry();
     assertInvariantFailure( () -> registry.getComponentManagerById( -1 ),
-                            "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index -1 but no such component exists." );
+                            "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component with id -1 but no such component exists." );
     assertInvariantFailure( () -> registry.getComponentManagerById( 1 ),
-                            "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index 1 but no such component exists." );
+                            "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component with id 1 but no such component exists." );
   }
 
   @Test
   public void getComponentManagerByType_badType()
   {
     final World world = Galdr.world().build();
-    final ComponentRegistry registry =
-      new ComponentRegistry( new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ) );
+    final ComponentRegistry registry = world.getComponentRegistry();
     assertInvariantFailure( () -> registry.getComponentManagerByType( Component2.class ),
                             "Galdr-0001: ComponentRegistry.getComponentManagerByType() attempted to access Component for type class galdr.ComponentRegistryTest$Component2 but no such component exists." );
   }
