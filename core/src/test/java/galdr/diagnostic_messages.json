@@ -15,11 +15,11 @@
   {
     "code": 2,
     "type": "INVARIANT",
-    "messagePattern": "ComponentRegistry.getComponentManagerByIndex() attempted to access Component at index %s but no such component exists.",
+    "messagePattern": "ComponentRegistry.getComponentManagerByIndex() attempted to access Component with id %s but no such component exists.",
     "callers": [
       {
         "class": "galdr.ComponentRegistry",
-        "method": "getComponentManagerByIndex",
+        "method": "getComponentManagerById",
         "file": "ComponentRegistry.java",
         "lineNumber": 49
       }
@@ -28,7 +28,7 @@
   {
     "code": 3,
     "type": "INVARIANT",
-    "messagePattern": "Component named '%s' has index %s but was passed as index %s.",
+    "messagePattern": "Component named '%s' has id %s but was passed as index %s.",
     "callers": [
       {
         "class": "galdr.ComponentRegistry",
@@ -52,6 +52,32 @@
     ]
   },
   {
+    "code": 5,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempted to invoke World.getEntityManager() on World named '%s' prior to World completing construction",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "getEntityManager",
+        "file": "World.java",
+        "lineNumber": 87
+      }
+    ]
+  },
+  {
+    "code": 9,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to dispose entity %s but entity is not allocated.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "disposeEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 111
+      }
+    ]
+  },
+  {
     "code": 19,
     "type": "INVARIANT",
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
@@ -60,20 +86,20 @@
         "class": "galdr.WorldBuilder",
         "method": "ensureWorldNotConstructed",
         "file": "WorldBuilder.java",
-        "lineNumber": 84
+        "lineNumber": 100
       }
     ]
   },
   {
     "code": 21,
-    "type": "INVARIANT",
-    "messagePattern": "ComponentManager.getIndex() invoked before index initialized",
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to get Spy but spies are not enabled.",
     "callers": [
       {
-        "class": "galdr.ComponentManager",
-        "method": "getIndex",
-        "file": "ComponentManager.java",
-        "lineNumber": 72
+        "class": "galdr.World",
+        "method": "getSpy",
+        "file": "World.java",
+        "lineNumber": 215
       }
     ]
   },
@@ -93,7 +119,7 @@
   {
     "code": 24,
     "type": "INVARIANT",
-    "messagePattern": "Invoked WorldHolder.activateWorld() with world named 'World@2' but an existing world named 'World@1' is active.",
+    "messagePattern": "Invoked WorldHolder.activateWorld() with world named '%s' but an existing world named '%s' is active.",
     "callers": [
       {
         "class": "galdr.WorldHolder",
@@ -130,19 +156,6 @@
     ]
   },
   {
-    "code": 29,
-    "type": "API_INVARIANT",
-    "messagePattern": "The ComponentManager method invoked was with a negative entityId %s.",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "ensureEntityIdPositive",
-        "file": "ComponentManager.java",
-        "lineNumber": 284
-      }
-    ]
-  },
-  {
     "code": 30,
     "type": "API_INVARIANT",
     "messagePattern": "The ComponentManager.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
@@ -151,7 +164,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 241
+        "lineNumber": 251
       }
     ]
   },
@@ -164,7 +177,7 @@
         "class": "galdr.ComponentManager",
         "method": "create",
         "file": "ComponentManager.java",
-        "lineNumber": 206
+        "lineNumber": 211
       }
     ]
   },
@@ -177,7 +190,7 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 172
+        "lineNumber": 177
       }
     ]
   },
@@ -190,7 +203,7 @@
         "class": "galdr.World",
         "method": "getComponentRegistry",
         "file": "World.java",
-        "lineNumber": 62
+        "lineNumber": 122
       }
     ]
   },
@@ -203,7 +216,7 @@
         "class": "galdr.World",
         "method": "getStages",
         "file": "World.java",
-        "lineNumber": 75
+        "lineNumber": 135
       }
     ]
   },
@@ -216,7 +229,7 @@
         "class": "galdr.World",
         "method": "getStageByName",
         "file": "World.java",
-        "lineNumber": 48
+        "lineNumber": 108
       }
     ]
   },
@@ -242,7 +255,46 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 111
+        "lineNumber": 119
+      }
+    ]
+  },
+  {
+    "code": 59,
+    "type": "INVARIANT",
+    "messagePattern": "Attempting to dispose entity %s and entity is allocated but not alive.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "disposeEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 116
+      }
+    ]
+  },
+  {
+    "code": 78,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to get entity %s but entity is allocated but not alive.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "getEntityById",
+        "file": "EntityManager.java",
+        "lineNumber": 45
+      }
+    ]
+  },
+  {
+    "code": 79,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to get entity %s but entity is not allocated.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "getEntityById",
+        "file": "EntityManager.java",
+        "lineNumber": 43
       }
     ]
   },
@@ -255,7 +307,7 @@
         "class": "galdr.WorldBuilder",
         "method": "stage",
         "file": "WorldBuilder.java",
-        "lineNumber": 59
+        "lineNumber": 75
       }
     ]
   },
@@ -282,6 +334,71 @@
         "method": "removeErrorHandler",
         "file": "ErrorHandlerSupport.java",
         "lineNumber": 49
+      }
+    ]
+  },
+  {
+    "code": 102,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to add handler %s that is already in the list of spy handlers.",
+    "callers": [
+      {
+        "class": "galdr.SpyEventHandlerSupport",
+        "method": "addSpyEventHandler",
+        "file": "SpyEventHandlerSupport.java",
+        "lineNumber": 25
+      }
+    ]
+  },
+  {
+    "code": 103,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to remove handler %s that is not in the list of spy handlers.",
+    "callers": [
+      {
+        "class": "galdr.SpyEventHandlerSupport",
+        "method": "removeSpyEventHandler",
+        "file": "SpyEventHandlerSupport.java",
+        "lineNumber": 36
+      }
+    ]
+  },
+  {
+    "code": 104,
+    "type": "INVARIANT",
+    "messagePattern": "Attempting to report SpyEvent '%s' but willPropagateSpyEvents() returns false.",
+    "callers": [
+      {
+        "class": "galdr.SpyEventHandlerSupport",
+        "method": "reportSpyEvent",
+        "file": "SpyEventHandlerSupport.java",
+        "lineNumber": 47
+      }
+    ]
+  },
+  {
+    "code": 181,
+    "type": "INVARIANT",
+    "messagePattern": "World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false.",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "removeErrorHandler",
+        "file": "World.java",
+        "lineNumber": 187
+      }
+    ]
+  },
+  {
+    "code": 182,
+    "type": "INVARIANT",
+    "messagePattern": "World.addErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false.",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "addErrorHandler",
+        "file": "World.java",
+        "lineNumber": 170
       }
     ]
   }
