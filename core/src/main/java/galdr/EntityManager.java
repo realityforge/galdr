@@ -15,7 +15,7 @@ final class EntityManager
   private final BitSet _free = new BitSet();
   @Nonnull
   private Entity[] _entities;
-  private int _nextIndex;
+  private int _nextEntityId;
 
   EntityManager( @Nonnull final World world, final int entityCount )
   {
@@ -32,7 +32,7 @@ final class EntityManager
    */
   boolean isAlive( final int entityId )
   {
-    return entityId < _nextIndex && !_free.get( entityId ) && _entities[ entityId ].isAlive();
+    return entityId < _nextEntityId && !_free.get( entityId ) && _entities[ entityId ].isAlive();
   }
 
   @Nonnull
@@ -66,26 +66,26 @@ final class EntityManager
   @Nonnull
   private Entity allocateEntity()
   {
-    final int nextFreeIndex = _free.nextSetBit( 0 );
-    if ( -1 != nextFreeIndex )
+    final int nextFreeEntityId = _free.nextSetBit( 0 );
+    if ( -1 != nextFreeEntityId )
     {
-      final Entity entity = _entities[ nextFreeIndex ];
+      final Entity entity = _entities[ nextFreeEntityId ];
       // If it has been free-ed then it must have been already allocated
       assert null != entity;
-      _free.clear( nextFreeIndex );
+      _free.clear( nextFreeEntityId );
       return entity;
     }
     else
     {
-      final int index = _nextIndex++;
-      final boolean mustGrow = index >= _entities.length;
-      assert mustGrow || null == _entities[ index ];
-      final Entity entity = new Entity( index, _world.getComponentRegistry().size() );
+      final int entityId = _nextEntityId++;
+      final boolean mustGrow = entityId >= _entities.length;
+      assert mustGrow || null == _entities[ entityId ];
+      final Entity entity = new Entity( entityId, _world.getComponentRegistry().size() );
       if ( mustGrow )
       {
         grow( Math.max( 2 * _entities.length, ( 3 * ( _entities.length + 1 ) ) / 2 ) );
       }
-      _entities[ index ] = entity;
+      _entities[ entityId ] = entity;
       return entity;
     }
   }
