@@ -48,7 +48,7 @@ public class FastArrayComponentManagerTest
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
 
-    // Capacity is not dminished after remove
+    // Capacity is not diminished after remove
     assertEquals( componentManager.capacity(), 13 );
   }
 }
