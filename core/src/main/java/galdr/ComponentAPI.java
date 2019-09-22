@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 /**
  * The Component API exposed to application code.
+ * A non-obvious aspect of the API is that the entityId parameter passed into the methods MUST
+ * refer to an allocated and alive Entity instance.
  *
  * @param <T> the type of the component.
  */
