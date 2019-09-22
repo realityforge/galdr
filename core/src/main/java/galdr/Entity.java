@@ -49,6 +49,21 @@ final class Entity
     _flags &= ~Flags.ALIVE;
   }
 
+  boolean isAdding()
+  {
+    return isFlag( Flags.ADDING );
+  }
+
+  void setAdding()
+  {
+    _flags |= Flags.ADDING;
+  }
+
+  void clearAdding()
+  {
+    _flags &= ~Flags.ADDING;
+  }
+
   boolean isRemoving()
   {
     return isFlag( Flags.REMOVING );
@@ -67,6 +82,7 @@ final class Entity
   static final class Flags
   {
     static final int ALIVE = 1 << 1;
+    static final int ADDING = 1 << 2;
     static final int REMOVING = 1 << 3;
 
     private Flags()

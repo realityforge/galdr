@@ -41,7 +41,9 @@ final class EntityManager
     //TODO: Ensure componentIds are valid
     final Entity entity = allocateEntity();
     entity.setAlive();
+    entity.setAdding();
     createComponents( entity, componentIds );
+    entity.clearAdding();
     if ( _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new EntityPostAddEvent( _world, entity.getId() ) );
