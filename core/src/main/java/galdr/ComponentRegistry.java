@@ -46,11 +46,16 @@ final class ComponentRegistry
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      invariant( () -> id >= 0 && id < _components.length,
+      invariant( () -> isComponentIdValid( id ),
                  () -> "Galdr-0002: ComponentRegistry.getComponentManagerByIndex() attempted to access Component " +
                        "with id " + id + " but no such component exists." );
     }
     return _components[ id ];
+  }
+
+  boolean isComponentIdValid( final int id )
+  {
+    return id >= 0 && id < _components.length;
   }
 
   int size()

@@ -83,6 +83,18 @@ public class ComponentRegistryTest
   }
 
   @Test
+  public void isComponentIdValid()
+  {
+    final World world = Galdr.world()
+      .component( Component1.class, Component1::new )
+      .build();
+    final ComponentRegistry registry = world.getComponentRegistry();
+    assertFalse( registry.isComponentIdValid( -1 ) );
+    assertTrue( registry.isComponentIdValid( 0 ) );
+    assertFalse( registry.isComponentIdValid( 1 ) );
+  }
+
+  @Test
   public void getComponentManagerByIndex_badIndex()
   {
     final World world = Galdr.world()
