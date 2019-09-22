@@ -69,6 +69,9 @@ public class EntityManagerTest
     final Entity entity1 = entityManager.createEntity( componentIds1 );
     final Entity entity2 = entityManager.createEntity( componentIds2 );
 
+    assertEquals( entityManager.getEntityById( entity1.getId() ), entity1 );
+    assertEquals( entityManager.getEntityById( entity2.getId() ), entity2 );
+
     // entities should be marked as alive
     assertTrue( entity1.isAlive() );
     assertTrue( entity2.isAlive() );
@@ -122,6 +125,9 @@ public class EntityManagerTest
 
     final Entity entity1 = entityManager.createEntity( componentIds1 );
     final Entity entity2 = entityManager.createEntity( componentIds2 );
+
+    assertEquals( entityManager.getEntityById( entity1.getId() ), entity1 );
+    assertEquals( entityManager.getEntityById( entity2.getId() ), entity2 );
 
     // entities should be marked as alive
     assertTrue( entity1.isAlive() );
@@ -386,5 +392,31 @@ public class EntityManagerTest
     assertTrue( entityManager.isAlive( 6 ) );
     assertTrue( entityManager.isAlive( 7 ) );
     assertTrue( entityManager.isAlive( 8 ) );
+  }
+
+  @Test
+  public void getEntityById_entityNotAlive()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager entityManager = world.getEntityManager();
+
+    final Entity entity = entityManager.createEntity( new BitSet() );
+
+    assertEquals( entityManager.getEntityById( entity.getId() ), entity );
+    entity.clearAlive();
+    assertInvariantFailure( () -> entityManager.getEntityById( entity.getId() ),
+                            "Galdr-0078: Attempting to get entity 0 but entity is allocated but not alive." );
+  }
+
+  @Test
+  public void getEntityById_entityNotAllocated()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager entityManager = world.getEntityManager();
+
+    assertInvariantFailure( () -> entityManager.getEntityById( 37 ),
+                            "Galdr-0079: Attempting to get entity 37 but entity is not allocated." );
   }
 }

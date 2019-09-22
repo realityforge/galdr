@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
@@ -130,18 +131,14 @@ abstract class ComponentManager<T>
    */
   final boolean has( final int entityId )
   {
-
-    //TODO: Consider just checking Entity object directly
-    ensureEntityIdPositive( entityId );
-    return performHas( entityId );
+    return getEntityById( entityId ).getComponentIds().get( _id );
   }
 
-  /**
-   * Template method implemented by the ComponentManager implementation to check whether entity has component.
-   *
-   * @param entityId the id of the entity.
-   */
-  abstract boolean performHas( int entityId );
+  @Nonnull
+  private Entity getEntityById( final int entityId )
+  {
+    return _world.getEntityManager().getEntityById( entityId );
+  }
 
   /**
    * Return the component instance for the specified entity, if the component exists.
@@ -152,16 +149,16 @@ abstract class ComponentManager<T>
   @Nullable
   final T find( final int entityId )
   {
-    ensureEntityIdPositive( entityId );
-    return performFind( entityId );
+    return has( entityId ) ? performGet( entityId ) : null;
   }
 
   /**
-   * Template method implemented by the ComponentManager implementation to find component for entity.
+   * Template method implemented by the ComponentManager implementation to get the component for entity.
    *
    * @param entityId the id of the entity.
    */
-  abstract T performFind( int entityId );
+  @Nonnull
+  abstract T performGet( int entityId );
 
   /**
    * Return the component instance for the specified entity.
@@ -174,18 +171,15 @@ abstract class ComponentManager<T>
   @Nonnull
   final T get( final int entityId )
   {
-    ensureEntityIdPositive( entityId );
-    //TODO: Assert Entity object has bit set
-    final T component = find( entityId );
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> null != component,
+      final boolean isPresent = has( entityId );
+      apiInvariant( () -> isPresent,
                     () -> "Galdr-0033: The ComponentManager.get() method for the component named '" + getName() + "' " +
                           "expected to find a component for entityId " + entityId + " but is unable to " +
                           "locate component." );
     }
-    assert null != component;
-    return component;
+    return performGet( entityId );
   }
 
   /**
@@ -210,10 +204,11 @@ abstract class ComponentManager<T>
   @Nonnull
   final T create( final int entityId )
   {
-    ensureEntityIdPositive( entityId );
+    final Entity entity = getEntityById( entityId );
+    final BitSet componentIds = entity.getComponentIds();
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> !has( entityId ),
+      apiInvariant( () -> !componentIds.get( _id ),
                     () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
     }
@@ -249,10 +244,11 @@ abstract class ComponentManager<T>
    */
   final void remove( final int entityId )
   {
-    ensureEntityIdPositive( entityId );
+    final Entity entity = getEntityById( entityId );
+    final BitSet componentIds = entity.getComponentIds();
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> has( entityId ),
+      apiInvariant( () -> componentIds.get( _id ),
                     () -> "Galdr-0030: The ComponentManager.remove() method for the component named '" + getName() +
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
@@ -293,16 +289,5 @@ abstract class ComponentManager<T>
   public int hashCode()
   {
     return _id;
-  }
-
-  private void ensureEntityIdPositive( final int entityId )
-  {
-    //TODO: Change this to verify Entity is valid entity
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> entityId >= 0,
-                    () -> "Galdr-0029: The ComponentManager method invoked was with a negative " +
-                          "entityId " + entityId + "." );
-    }
   }
 }

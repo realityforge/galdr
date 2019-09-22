@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
@@ -19,17 +20,12 @@ final class FastArrayComponentManager<T>
     _data = new Object[ initialCapacity ];
   }
 
-  @Override
-  boolean performHas( final int entityId )
-  {
-    return entityId < _data.length && null != _data[ entityId ];
-  }
-
   @SuppressWarnings( "unchecked" )
+  @Nonnull
   @Override
-  T performFind( final int entityId )
+  T performGet( final int entityId )
   {
-    return entityId < _data.length ? (T) _data[ entityId ] : null;
+    return Objects.requireNonNull( (T) _data[ entityId ] );
   }
 
   @Override

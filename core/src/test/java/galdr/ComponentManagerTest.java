@@ -93,21 +93,21 @@ public class ComponentManagerTest
   }
 
   @Test
-  public void errorOnNegativeEntityId()
+  public void errorOnUnAllocatedEntity()
   {
     final World world = Galdr.world().build();
     final ComponentManager<Component1> componentManager =
       new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
-                            "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );
+                            "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
     assertInvariantFailure( () -> componentManager.find( -23 ),
-                            "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );
+                            "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
     assertInvariantFailure( () -> componentManager.get( -23 ),
-                            "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );
+                            "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
     assertInvariantFailure( () -> componentManager.create( -23 ),
-                            "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );
+                            "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
     assertInvariantFailure( () -> componentManager.remove( -23 ),
-                            "Galdr-0029: The ComponentManager method invoked was with a negative entityId -23." );
+                            "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
   }
 }

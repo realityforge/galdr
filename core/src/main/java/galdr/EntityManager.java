@@ -36,6 +36,20 @@ final class EntityManager
   }
 
   @Nonnull
+  Entity getEntityById( final int entityId )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> isAllocated( entityId ),
+                    () -> "Galdr-0079: Attempting to get entity " + entityId + " but entity is not allocated." );
+      apiInvariant( () -> _entities[ entityId ].isAlive(),
+                    () -> "Galdr-0078: Attempting to get entity " + entityId +
+                          " but entity is allocated but not alive." );
+    }
+    return _entities[ entityId ];
+  }
+
+  @Nonnull
   Entity createEntity( @Nonnull final BitSet componentIds )
   {
     //TODO: Ensure componentIds are valid
