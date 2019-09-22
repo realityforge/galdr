@@ -270,10 +270,10 @@ public class EntityManagerTest
 
     assertEquals( entityManager.getEntityById( entity.getId() ), entity );
 
-    entityManager.disposeEntity( entity.getId() );
+    entity.clearAlive();
 
     assertInvariantFailure( () -> entityManager.disposeEntity( entity.getId() ),
-                            "Galdr-0009: Attempting to dispose entity 0 but entity is not allocated." );
+                            "Galdr-0059: Attempting to dispose entity 0 and entity is allocated but not alive." );
   }
 
   @Test
