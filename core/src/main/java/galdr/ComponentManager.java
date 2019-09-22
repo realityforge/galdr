@@ -220,6 +220,7 @@ abstract class ComponentManager<T>
     componentIds.set( _id );
     //TODO: Generate spy message for component creation unless ADDING flag set
     //TODO: Generate application message for component creation unless ADDING flag set
+    //TODO: Update AreaOfInterest elements based on component addition
     return performCreate( entityId );
   }
 
@@ -258,6 +259,7 @@ abstract class ComponentManager<T>
     componentIds.clear( _id );
     //TODO: Generate spy message for component removal unless REMOVING flag set on entity
     //TODO: Generate application message for component removal unless REMOVING flag set on entity
+    //TODO: Update AreaOfInterest elements based on component removal
     performRemove( entityId );
   }
 
