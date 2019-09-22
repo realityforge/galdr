@@ -218,8 +218,8 @@ abstract class ComponentManager<T>
                           " already has the component named '" + getName() + "'." );
     }
     //TODO: Flip bit in Entity object for component
-    //TODO: Generate spy message for component creation
-    //TODO: Generate application message for component creation
+    //TODO: Generate spy message for component creation unless ADDING flag set
+    //TODO: Generate application message for component creation unless ADDING flag set
     return performCreate( entityId );
   }
 
@@ -256,8 +256,8 @@ abstract class ComponentManager<T>
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
     //TODO: Flip bit in Entity object for component
-    //TODO: Generate spy message for component removal
-    //TODO: Generate application message for component removal
+    //TODO: Generate spy message for component removal unless REMOVING flag set on entity
+    //TODO: Generate application message for component removal unless REMOVING flag set on entity
     performRemove( entityId );
   }
 
