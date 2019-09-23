@@ -73,8 +73,6 @@ for systems/processors ahead of time.
   problematic when a component wants to maintain a reference to another entity. Of course it also means
   a lookup every time you want to interact with entity to retrieve ref or the creation of a new ref, neither
   of which is efficient. Perhaps a mechanism for managing links to Entity is better suited for this purpose.
-* `ComponentManager` should generate a event/message when a component is added/removed outside of entity creation
-  and there is some party that has registered interest in listening to that component.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add `MapComponentManager` that stores components in a HashMap
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
