@@ -17,18 +17,18 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final World world = Galdr.world().build();
+    final World world = Galdr.world().component( Component1.class, createFn ).build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( world, 23, Component1.class, createFn, 120 );
+      world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getWorld(), world );
-    assertEquals( componentManager.getId(), 23 );
+    assertEquals( componentManager.getId(), 0 );
     assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getCreateFn(), createFn );
     assertEquals( componentManager.getName(), "Component1" );
-    assertEquals( componentManager.toString(), "ComponentManager[Component1=23]" );
-    assertEquals( componentManager.hashCode(), 23 );
+    assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
+    assertEquals( componentManager.hashCode(), 0 );
 
     final int entityId = world.createEntity( new BitSet() );
     assertFalse( componentManager.has( entityId ) );
@@ -66,23 +66,23 @@ public class ComponentManagerTest
   @Test
   public void debugToString()
   {
-    final World world = Galdr.world().build();
+    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( world, 42, Component1.class, Component1::new, 120 );
+      world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
-    assertEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
+    assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
 
     GaldrTestUtil.disableDebugToString();
 
-    assertNotEquals( componentManager.toString(), "ComponentManager[Component1=42]" );
+    assertNotEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
   }
 
   @Test
   public void getName()
   {
-    final World world = Galdr.world().build();
+    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( world, 42, Component1.class, Component1::new, 120 );
+      world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getName(), "Component1" );
 
@@ -95,9 +95,9 @@ public class ComponentManagerTest
   @Test
   public void errorOnUnAllocatedEntity()
   {
-    final World world = Galdr.world().build();
+    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
-      new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 );
+      world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
