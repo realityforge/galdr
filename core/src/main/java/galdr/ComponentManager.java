@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.ComponentAddedEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -214,9 +215,15 @@ abstract class ComponentManager<T>
     }
     componentIds.set( _id );
     final T component = performCreate( entityId );
-    //TODO: Generate spy message for component creation unless ADDING flag set
-    //TODO: Generate application message for component creation unless ADDING flag set
     //TODO: Update AreaOfInterest elements based on component addition
+    if ( !entity.isAdding() )
+    {
+      //TODO: Generate application message for component creation?
+      if ( _world.willPropagateSpyEvents() )
+      {
+        _world.getSpy().reportSpyEvent( new ComponentAddedEvent( _world, entity.getId(), getId() ) );
+      }
+    }
     return component;
   }
 

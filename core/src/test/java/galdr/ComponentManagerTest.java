@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.ComponentAddedEvent;
 import java.util.BitSet;
 import java.util.function.Supplier;
 import org.testng.annotations.Test;
@@ -38,6 +39,8 @@ public class ComponentManagerTest
                             "'Component1' expected to find a component for entityId " + entityId +
                             " but is unable to locate component." );
 
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+
     final Component1 component = componentManager.findOrCreate( entityId );
     assertNotNull( component );
 
@@ -61,6 +64,12 @@ public class ComponentManagerTest
     assertInvariantFailure( () -> componentManager.remove( entityId ),
                             "Galdr-0030: The ComponentManager.remove() method for the component named " +
                             "'Component1' was invoked but the entity " + entityId + " does not have the component." );
+    handler.assertEventCount( 1 );
+    handler.assertNextEvent( ComponentAddedEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), entityId );
+      assertEquals( e.getComponentId(), componentManager.getId() );
+    } );
   }
 
   @Test
