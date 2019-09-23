@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddedEvent;
+import galdr.spy.ComponentWillRemoveEvent;
 import java.util.BitSet;
 import java.util.function.Supplier;
 import org.testng.annotations.Test;
@@ -39,8 +40,6 @@ public class ComponentManagerTest
                             "'Component1' expected to find a component for entityId " + entityId +
                             " but is unable to locate component." );
 
-    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-
     final Component1 component = componentManager.findOrCreate( entityId );
     assertNotNull( component );
 
@@ -64,8 +63,42 @@ public class ComponentManagerTest
     assertInvariantFailure( () -> componentManager.remove( entityId ),
                             "Galdr-0030: The ComponentManager.remove() method for the component named " +
                             "'Component1' was invoked but the entity " + entityId + " does not have the component." );
-    handler.assertEventCount( 1 );
+  }
+
+  @Test
+  public void basicComponentLifecycle_spyEnabled()
+  {
+    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final ComponentManager<Component1> componentManager =
+      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+
+    final int entityId = world.createEntity( new BitSet() );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+
+    final Component1 component = componentManager.findOrCreate( entityId );
+    assertNotNull( component );
+
+    final int initialValue = randomInt( 44 );
+    component.value = initialValue;
+
+    assertTrue( componentManager.has( entityId ) );
+    assertEquals( componentManager.find( entityId ), component );
+    assertEquals( componentManager.get( entityId ), component );
+    assertEquals( componentManager.get( entityId ).value, initialValue );
+
+    componentManager.remove( entityId );
+
+    assertFalse( componentManager.has( entityId ) );
+    assertNull( componentManager.find( entityId ) );
+
+    handler.assertEventCount( 2 );
     handler.assertNextEvent( ComponentAddedEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), entityId );
+      assertEquals( e.getComponentId(), componentManager.getId() );
+    } );
+    handler.assertNextEvent( ComponentWillRemoveEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
       assertEquals( e.getComponentId(), componentManager.getId() );

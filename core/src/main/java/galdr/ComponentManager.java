@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddedEvent;
+import galdr.spy.ComponentWillRemoveEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -261,8 +262,14 @@ abstract class ComponentManager<T>
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
     componentIds.clear( _id );
-    //TODO: Generate spy message for component removal unless REMOVING flag set on entity
-    //TODO: Generate application message for component removal unless REMOVING flag set on entity
+    if ( !entity.isRemoving() )
+    {
+      if ( _world.willPropagateSpyEvents() )
+      {
+        _world.getSpy().reportSpyEvent( new ComponentWillRemoveEvent( _world, entity.getId(), getId() ) );
+      }
+      //TODO: Generate application message for component removal?
+    }
     //TODO: Update AreaOfInterest elements based on component removal
     performRemove( entityId );
   }
