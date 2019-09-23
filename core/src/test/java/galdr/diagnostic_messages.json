@@ -8,7 +8,7 @@
         "class": "galdr.ComponentRegistry",
         "method": "getComponentManagerByType",
         "file": "ComponentRegistry.java",
-        "lineNumber": 68
+        "lineNumber": 73
       }
     ]
   },
@@ -65,6 +65,19 @@
     ]
   },
   {
+    "code": 6,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to create entity with invalid componentId %s",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "createEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 62
+      }
+    ]
+  },
+  {
     "code": 9,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to dispose entity %s but entity is not allocated.",
@@ -73,7 +86,7 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 111
+        "lineNumber": 121
       }
     ]
   },
@@ -268,7 +281,7 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 116
+        "lineNumber": 126
       }
     ]
   },
