@@ -74,15 +74,18 @@ public class ComponentRegistryTest
     assertInvariantFailure( () -> new ComponentRegistry( new FastArrayComponentManager<>( world,
                                                                                           0,
                                                                                           Component1.class,
-                                                                                          Component1::new, 120 ),
+                                                                                          Component1::new,
+                                                                                          120 ),
                                                          new FastArrayComponentManager<>( world,
                                                                                           1,
                                                                                           Component2.class,
-                                                                                          Component2::new, 120 ),
+                                                                                          Component2::new,
+                                                                                          120 ),
                                                          new FastArrayComponentManager<>( world,
                                                                                           3,
                                                                                           Component3.class,
-                                                                                          Component3::new, 120 ) ),
+                                                                                          Component3::new,
+                                                                                          120 ) ),
                             "Galdr-0003: Component named 'Component3' has id 3 but was passed as index 2." );
   }
 
