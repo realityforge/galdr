@@ -213,10 +213,11 @@ abstract class ComponentManager<T>
                           " already has the component named '" + getName() + "'." );
     }
     componentIds.set( _id );
+    final T component = performCreate( entityId );
     //TODO: Generate spy message for component creation unless ADDING flag set
     //TODO: Generate application message for component creation unless ADDING flag set
     //TODO: Update AreaOfInterest elements based on component addition
-    return performCreate( entityId );
+    return component;
   }
 
   /**
