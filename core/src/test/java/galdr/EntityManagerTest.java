@@ -1,7 +1,7 @@
 package galdr;
 
 import galdr.spy.EntityAddedEvent;
-import galdr.spy.EntityPreRemoveEvent;
+import galdr.spy.EntityWillRemoveEvent;
 import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -239,7 +239,7 @@ public class EntityManagerTest
     assertFalse( entity.isAlive() );
 
     handler.assertEventCount( 1 );
-    handler.assertNextEvent( EntityPreRemoveEvent.class, e -> {
+    handler.assertNextEvent( EntityWillRemoveEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
     } );
