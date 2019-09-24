@@ -62,6 +62,8 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Rename `EntityWillRemoveEvent` to `EntityRemoveStartEvent` and add a compliment `EntityRemoveCompleteEvent`.
+  Perform similar pattern with `EntityAdded`, `ComponentAdded`, and `ComponentWillRemove` events.
 * Consider using a pattern where the factory/builder class is the name of the factory pluralized and is filled
   with static methods. i.e. The class that creates World instances is `Worlds`. We could move `WorldBuilder`
   as inner class and `Galdr.world(*)` methods to this class.
