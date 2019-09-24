@@ -121,13 +121,17 @@ final class EntityManager
       apiInvariant( () -> isAllocated( entityId ),
                     () -> "Galdr-0009: Attempting to dispose entity " + entityId + " but entity is not allocated." );
     }
+    doDisposeEntity( _entities[ entityId ] );
+  }
+
+  private void doDisposeEntity( @Nonnull final Entity entity )
+  {
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> _entities[ entityId ].isAlive(),
-                 () -> "Galdr-0059: Attempting to dispose entity " + entityId +
+      invariant( entity::isAlive,
+                 () -> "Galdr-0059: Attempting to dispose entity " + entity.getId() +
                        " and entity is allocated but not alive." );
     }
-    final Entity entity = _entities[ entityId ];
     entity.setRemoving();
     if ( _world.willPropagateSpyEvents() )
     {
@@ -135,7 +139,7 @@ final class EntityManager
     }
     removeComponents( entity );
     entity.reset();
-    _free.set( entityId );
+    _free.set( entity.getId() );
   }
 
   /**
