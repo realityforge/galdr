@@ -118,7 +118,7 @@ public class ProcessorStageTest
 
     GaldrTestUtil.disableDebugToString();
 
-    assertNotEquals( stage.toString(), "ProcessorStage[MyStage]" );
+    assertDefaultToString( stage );
   }
 
   @Test

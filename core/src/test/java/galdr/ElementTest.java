@@ -44,7 +44,7 @@ public class ElementTest
 
     GaldrTestUtil.disableDebugToString();
 
-    assertNotEquals( element.toString(), "TestElement[MyElement]" );
+    assertDefaultToString( element );
   }
 
   @Test

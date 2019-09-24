@@ -116,7 +116,7 @@ public class ComponentManagerTest
 
     GaldrTestUtil.disableDebugToString();
 
-    assertNotEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
+    assertDefaultToString( componentManager );
   }
 
   @Test
