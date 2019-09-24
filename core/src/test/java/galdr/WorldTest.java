@@ -219,4 +219,14 @@ public class WorldTest
 
     assertInvariantFailure( world::getSpy, "Galdr-0021: Attempting to get Spy but spies are not enabled." );
   }
+
+  @Test
+  public void run()
+  {
+    final World world = Galdr.world().build();
+
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    world.run( () -> assertEquals( WorldHolder.world(), world ) );
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+  }
 }

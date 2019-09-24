@@ -15,6 +15,15 @@ public final class World
   extends Element
 {
   /**
+   * Interface used to define actions that can be run in the context of a world.
+   */
+  @FunctionalInterface
+  interface WorldAction
+  {
+    void call();
+  }
+
+  /**
    * A synthetic id used to construct te worlds name if not explicitly supplied.
    */
   private static int c_nextId = 1;
@@ -216,6 +225,19 @@ public final class World
     }
     assert null != _spy;
     return _spy;
+  }
+
+  void run( @Nonnull final WorldAction action )
+  {
+    WorldHolder.activateWorld( this );
+    try
+    {
+      action.call();
+    }
+    finally
+    {
+      WorldHolder.deactivateWorld( this );
+    }
   }
 
   /**
