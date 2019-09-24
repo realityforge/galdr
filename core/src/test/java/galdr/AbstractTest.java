@@ -72,7 +72,7 @@ public abstract class AbstractTest
   }
 
   @Nonnull
-  protected final String randomString()
+  final String randomString()
   {
     return randomString( 8 );
   }
