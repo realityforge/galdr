@@ -203,6 +203,35 @@ public class EntityManagerTest
   }
 
   @Test
+  public void disposeEntity_passingEntity()
+  {
+    final int initialEntityCount = 5;
+    final World world = Galdr.world()
+      .initialEntityCount( initialEntityCount )
+      .component( Armour.class, Armour::new )
+      .build();
+
+    final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
+
+    final EntityManager entityManager = world.getEntityManager();
+
+    final BitSet componentIds1 = new BitSet();
+    componentIds1.set( armour.getId() );
+
+    final Entity entity = entityManager.createEntity( componentIds1 );
+
+    assertTrue( entity.isAlive() );
+
+    assertEquals( entity.getComponentIds(), componentIds1 );
+    assertTrue( armour.has( entity.getId() ) );
+
+    entityManager.disposeEntity( entity );
+
+    assertTrue( entity.getComponentIds().isEmpty() );
+    assertFalse( entity.isAlive() );
+  }
+
+  @Test
   public void disposeEntity_WithSpyEnabled()
   {
     final int initialEntityCount = 5;
@@ -264,6 +293,29 @@ public class EntityManagerTest
     // Past the end of the capacity
     assertInvariantFailure( () -> entityManager.disposeEntity( entityManager.capacity() + 1 ),
                             "Galdr-0009: Attempting to dispose entity 5 but entity is not allocated." );
+  }
+
+  @Test
+  public void disposeEntity_disposeErrors_whenPassingEntity()
+  {
+    final World world1 = Galdr.world().initialEntityCount( 4 ).build();
+    final World world2 = Galdr.world().initialEntityCount( 4 ).build();
+
+    final EntityManager entityManager1 = world1.getEntityManager();
+    final EntityManager entityManager2 = world2.getEntityManager();
+
+    final Entity entity1 = entityManager1.createEntity( new BitSet() );
+    final Entity entity2 = entityManager2.createEntity( new BitSet() );
+
+    // Entity from wrong world
+    assertInvariantFailure( () -> entityManager1.disposeEntity( entity2 ),
+                            "Galdr-0019: Attempting to dispose entity 0 in world 'World@1' but entity was created in a different world." );
+
+    entityManager1.disposeEntity( entity1 );
+
+    // In Free list
+    assertInvariantFailure( () -> entityManager1.disposeEntity( entity1 ),
+                            "Galdr-0009: Attempting to dispose entity 0 but entity is not allocated." );
   }
 
   @Test

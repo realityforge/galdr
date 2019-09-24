@@ -124,6 +124,23 @@ final class EntityManager
     doDisposeEntity( _entities[ entityId ] );
   }
 
+  void disposeEntity( @Nonnull final Entity entity )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> isAllocated( entity.getId() ),
+                    () -> "Galdr-0009: Attempting to dispose entity " + entity.getId() + " but entity " +
+                          "is not allocated." );
+    }
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      apiInvariant( () -> _entities[ entity.getId() ] == entity,
+                    () -> "Galdr-0019: Attempting to dispose entity " + entity.getId() + " in world '" +
+                          _world.getName() + "' but entity was created in a different world." );
+    }
+    doDisposeEntity( entity );
+  }
+
   private void doDisposeEntity( @Nonnull final Entity entity )
   {
     if ( Galdr.shouldCheckInvariants() )
