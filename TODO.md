@@ -112,6 +112,8 @@ for systems/processors ahead of time.
   run when they are able time (i.e. idleTime processors like in browsers) while others care about the delta between
   the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
 
+* Replace `BitSet` with equivalent variant that is more optimized for our use-case?
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
