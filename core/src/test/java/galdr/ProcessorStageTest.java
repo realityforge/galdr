@@ -143,6 +143,7 @@ public class ProcessorStageTest
 
     stage.process( 2 );
 
-    assertEquals( String.join( ",", trace ), "A:2,B:!!Error!!:2,Stage: MyStage, Processor: MyFaultyProcessor, Error: java.lang.IllegalStateException: Blah!,C:2" );
+    assertEquals( String.join( ",", trace ),
+                  "A:2,B:!!Error!!:2,Stage: MyStage, Processor: MyFaultyProcessor, Error: java.lang.IllegalStateException: Blah!,C:2" );
   }
 }
