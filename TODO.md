@@ -69,7 +69,7 @@ for systems/processors ahead of time.
   as inner class and `Galdr.world(*)` methods to this class.
 * Add support for Components that have no state. They are effectively flags/markers. Potentially the
   ComponentManager implementation just keeps bitset for free/notfree and generates an error if component
-  is accessed (or returns a singleton).
+  is accessed (or returns a singleton). Potentially these can be typed by java annotations or similar
 * We should consider changing Entity so that they have a unique id that maps to a index in the entity
   array. The API would change to pass around a `EntityRef` or `Designator` or similar that contains the
   unique id as well as entity index. This would mean that after an entity is disposed it would never come
