@@ -134,3 +134,14 @@ are "realtime". Inspiration from other frameworks could help move it forward.
 * [Ashley](https://github.com/libgdx/ashley/wiki) is another java ECS that took ideas from other ECS implementations
   (including Artemis above). It is significantly simpler and more explicit than Artemis and Artemis-ODB and it is
   dependent upon libgdx. It has significantly worse performance.
+
+* [Amethyst](https://github.com/Hexworks/amethyst) describes itself as "Simple multiplatform SEA (Systems,
+  Entities, Attributes) library written in multiplatform Kotlin". It's most interesting concept is that it
+  explicitly represents `Commands` that can be sent to either entities or systems. This is versy similar to the
+  proposed eventing framework without the sophistication. It is not a strict ECS system with entities declaring
+  the associated systems that process them. The entities also can directly handle commands or apss it through
+  systems until a system consumes the command. The framework also distinguishes between two types of systems;
+  A `Behaviour` is a system which performs actions autonomously on entities whenever they are updated while a
+  `Facet` is a system that performs actions based on the`Command`s they receive. An `Actor` is a system combining
+  the aspects of a `Behaviour` and a `Facet`. Each tick an Entity will process all received events either directly
+  or via facets and then process all other state updates via behaviours.
