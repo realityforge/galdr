@@ -196,7 +196,7 @@ public class EntityManagerTest
     assertTrue( armour.has( entityId ) );
     assertTrue( health.has( entityId ) );
 
-    entityManager.disposeEntity( entityId );
+    world.run( () -> entityManager.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -225,7 +225,7 @@ public class EntityManagerTest
     assertEquals( entity.getComponentIds(), componentIds1 );
     assertTrue( armour.has( entity.getId() ) );
 
-    entityManager.disposeEntity( entity );
+    world.run( () -> entityManager.disposeEntity( entity ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -262,7 +262,7 @@ public class EntityManagerTest
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
-    entityManager.disposeEntity( entityId );
+    world.run( () -> entityManager.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -277,21 +277,31 @@ public class EntityManagerTest
   @Test
   public void disposeEntity_disposeErrors()
   {
-    final World world = Galdr.world().initialEntityCount( 4 ).build();
+    final World world1 = Galdr.world().initialEntityCount( 4 ).build();
+    final World world2 = Galdr.world().initialEntityCount( 4 ).build();
 
-    final EntityManager entityManager = world.getEntityManager();
+    final EntityManager entityManager = world1.getEntityManager();
 
     final int entityId = entityManager.createEntity( new BitSet() ).getId();
-    entityManager.disposeEntity( entityId );
+
+    // entity part of different world
+    assertInvariantFailure( () -> world2.run( () -> entityManager.disposeEntity( entityId ) ),
+                            "Galdr-0159: Attempting to dispose entity 0 which is not contained by the active world." );
+
+    // No current world
+    assertInvariantFailure( () -> entityManager.disposeEntity( entityId ),
+                            "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+
+    world1.run( () -> entityManager.disposeEntity( entityId ) );
 
     // In Free list
-    assertInvariantFailure( () -> entityManager.disposeEntity( entityId ),
+    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityId ) ),
                             "Galdr-0009: Attempting to dispose entity 0 but entity is not allocated." );
     // Not yet allocated
-    assertInvariantFailure( () -> entityManager.disposeEntity( entityId + 1 ),
+    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityId + 1 ) ),
                             "Galdr-0009: Attempting to dispose entity 1 but entity is not allocated." );
     // Past the end of the capacity
-    assertInvariantFailure( () -> entityManager.disposeEntity( entityManager.capacity() + 1 ),
+    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityManager.capacity() + 1 ) ),
                             "Galdr-0009: Attempting to dispose entity 5 but entity is not allocated." );
   }
 
@@ -311,7 +321,7 @@ public class EntityManagerTest
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity2 ),
                             "Galdr-0019: Attempting to dispose entity 0 in world 'World@1' but entity was created in a different world." );
 
-    entityManager1.disposeEntity( entity1 );
+    world1.run( () -> entityManager1.disposeEntity( entity1 ) );
 
     // In Free list
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity1 ),
@@ -330,7 +340,7 @@ public class EntityManagerTest
 
     entity.clearAlive();
 
-    assertInvariantFailure( () -> entityManager.disposeEntity( entity.getId() ),
+    assertInvariantFailure( () -> world.run( () -> entityManager.disposeEntity( entity.getId() ) ),
                             "Galdr-0059: Attempting to dispose entity 0 and entity is allocated but not alive." );
   }
 
@@ -350,7 +360,7 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.disposeEntity( entityId1 );
+    world.run( () -> entityManager.disposeEntity( entityId1 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -358,9 +368,9 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.disposeEntity( entityId2 );
-    entityManager.disposeEntity( entityId3 );
-    entityManager.disposeEntity( entityId4 );
+    world.run( () -> entityManager.disposeEntity( entityId2 ) );
+    world.run( () -> entityManager.disposeEntity( entityId3 ) );
+    world.run( () -> entityManager.disposeEntity( entityId4 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -390,7 +400,7 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.disposeEntity( entityId1 );
+    world.run( () -> entityManager.disposeEntity( entityId1 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -399,9 +409,9 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 8 );
 
-    entityManager.disposeEntity( entityId2 );
-    entityManager.disposeEntity( entityId3 );
-    entityManager.disposeEntity( entityId4 );
+    world.run( () -> entityManager.disposeEntity( entityId2 ) );
+    world.run( () -> entityManager.disposeEntity( entityId3 ) );
+    world.run( () -> entityManager.disposeEntity( entityId4 ) );
 
     assertEquals( entityManager.capacity(), 8 );
 

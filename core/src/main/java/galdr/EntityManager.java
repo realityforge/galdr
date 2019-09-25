@@ -148,6 +148,10 @@ final class EntityManager
       invariant( entity::isAlive,
                  () -> "Galdr-0059: Attempting to dispose entity " + entity.getId() +
                        " and entity is allocated but not alive." );
+      final World currentWorld = WorldHolder.world();
+      invariant( () -> currentWorld == _world,
+                 () -> "Galdr-0159: Attempting to dispose entity " + entity.getId() + " which is not contained " +
+                       "by the active world." );
     }
     entity.setRemoving();
     if ( _world.willPropagateSpyEvents() )
