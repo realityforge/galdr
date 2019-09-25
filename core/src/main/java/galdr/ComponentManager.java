@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddCompleteEvent;
+import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
@@ -213,6 +214,10 @@ abstract class ComponentManager<T>
       apiInvariant( () -> !componentIds.get( _id ),
                     () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
+    }
+    if ( !entity.isAdding() && _world.willPropagateSpyEvents() )
+    {
+      _world.getSpy().reportSpyEvent( new ComponentAddStartEvent( _world, entity.getId(), getId() ) );
     }
     componentIds.set( _id );
     final T component = performCreate( entityId );

@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddCompleteEvent;
+import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.function.Supplier;
@@ -92,7 +93,12 @@ public class ComponentManagerTest
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
 
-    handler.assertEventCount( 2 );
+    handler.assertEventCount( 3 );
+    handler.assertNextEvent( ComponentAddStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), entityId );
+      assertEquals( e.getComponentId(), componentManager.getId() );
+    } );
     handler.assertNextEvent( ComponentAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
