@@ -1,5 +1,9 @@
 package galdr;
 
+import galdr.spy.EntityRemoveCompleteEvent;
+import galdr.spy.EntityRemoveStartEvent;
+import galdr.spy.LinkRemoveCompleteEvent;
+import galdr.spy.LinkRemoveStartEvent;
 import java.util.BitSet;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
@@ -62,6 +66,58 @@ public class LinkTest
   }
 
   @Test
+  public void createLinkWithNoCascadeAndDisposeSource_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, false, false ) );
+
+    assertLinkShape( link, source, target, false, false );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( source.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertFalse( em.isAlive( source.getId() ) );
+    assertTrue( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 4 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+  }
+
+  @Test
   public void createLinkWithNoCascadeAndDisposeTarget()
   {
     final World world = Galdr.world().build();
@@ -90,6 +146,59 @@ public class LinkTest
 
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
+  }
+
+  @Test
+  public void createLinkWithNoCascadeAndDisposeTarget_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, false, false ) );
+
+    assertLinkShape( link, source, target, false, false );
+
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( target.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertTrue( em.isAlive( source.getId() ) );
+    assertFalse( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 4 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
   }
 
   @Test
@@ -123,6 +232,66 @@ public class LinkTest
   }
 
   @Test
+  public void createLinkWithCascadeSourceRemoveAndDisposeSource_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, true, false ) );
+
+    assertLinkShape( link, source, target, true, false );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( source.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertFalse( em.isAlive( source.getId() ) );
+    assertFalse( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 6 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+  }
+
+  @Test
   public void createLinkWithCascadeSourceRemoveAndDisposeTarget()
   {
     final World world = Galdr.world().build();
@@ -141,15 +310,67 @@ public class LinkTest
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    world.run( () -> em.disposeEntity( target.getId() ) );
 
     assertFalse( link.isValid() );
 
-    assertFalse( em.isAlive( source.getId() ) );
+    assertTrue( em.isAlive( source.getId() ) );
     assertFalse( em.isAlive( target.getId() ) );
 
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
+  }
+
+  @Test
+  public void createLinkWithCascadeSourceRemoveAndDisposeTarget_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, true, false ) );
+
+    assertLinkShape( link, source, target, true, false );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( target.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertTrue( em.isAlive( source.getId() ) );
+    assertFalse( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 4 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
   }
 
   @Test
@@ -183,6 +404,58 @@ public class LinkTest
   }
 
   @Test
+  public void createLinkWithCascadeTargetRemoveAndDisposeSource_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, false, true ) );
+
+    assertLinkShape( link, source, target, false, true );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( source.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertFalse( em.isAlive( source.getId() ) );
+    assertTrue( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 4 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+  }
+
+  @Test
   public void createLinkWithCascadeTargetRemoveAndDisposeTarget()
   {
     final World world = Galdr.world().build();
@@ -213,6 +486,66 @@ public class LinkTest
   }
 
   @Test
+  public void createLinkWithCascadeTargetRemoveAndDisposeTarget_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, false, true ) );
+
+    assertLinkShape( link, source, target, false, true );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( () -> em.disposeEntity( target.getId() ) );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertFalse( em.isAlive( source.getId() ) );
+    assertFalse( em.isAlive( target.getId() ) );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    handler.assertEventCount( 6 );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), source.getId() );
+    } );
+    handler.assertNextEvent( LinkRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
+    handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getEntityId(), target.getId() );
+    } );
+  }
+
+  @Test
   public void dispose()
   {
     final World world = Galdr.world().build();
@@ -240,6 +573,45 @@ public class LinkTest
 
     assertTrue( em.isAlive( source.getId() ) );
     assertTrue( em.isAlive( target.getId() ) );
+  }
+
+  @Test
+  public void dispose_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity source = em.createEntity( new BitSet() );
+    final Entity target = em.createEntity( new BitSet() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    final Link link = world.run( () -> em.link( source, target, false, true ) );
+
+    assertLinkShape( link, source, target, false, true );
+    assertLinkCount( source, 0, 1 );
+    assertLinkCount( target, 1, 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    world.run( link::dispose );
+    handler.unsubscribe();
+
+    assertFalse( link.isValid() );
+
+    assertLinkCount( source, 0, 0 );
+    assertLinkCount( target, 0, 0 );
+
+    assertTrue( em.isAlive( source.getId() ) );
+    assertTrue( em.isAlive( target.getId() ) );
+
+    handler.assertEventCount( 2 );
+    handler.assertNextEvent( LinkRemoveStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), source.getId() );
+      assertEquals( e.getTargetEntityId(), target.getId() );
+    } );
   }
 
   @Test

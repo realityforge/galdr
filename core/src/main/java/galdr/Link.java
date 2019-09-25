@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.LinkRemoveCompleteEvent;
+import galdr.spy.LinkRemoveStartEvent;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -94,6 +96,7 @@ public final class Link
     }
     assert null != _sourceEntity;
     assert null != _targetEntity;
+    reportLinkRemoveStartEvent( _sourceEntity.getId(), _targetEntity.getId() );
     if ( sourceRemove )
     {
       if ( _targetEntity.isNotRemoving() )
@@ -116,8 +119,11 @@ public final class Link
         WorldHolder.world().getEntityManager().disposeEntity( _sourceEntity );
       }
     }
+    final int sourceEntityId = _sourceEntity.getId();
+    final int targetEntityId = _targetEntity.getId();
     _sourceEntity = null;
     _targetEntity = null;
+    reportLinkRemoveCompleteEvent( sourceEntityId, targetEntityId );
   }
 
   void dispose()
@@ -128,10 +134,14 @@ public final class Link
     }
     assert null != _sourceEntity;
     assert null != _targetEntity;
+    final int sourceEntityId = _sourceEntity.getId();
+    final int targetEntityId = _targetEntity.getId();
+    reportLinkRemoveStartEvent( sourceEntityId, targetEntityId );
     _sourceEntity.unlinkOutgoing( this );
     _targetEntity.unlinkIncoming( this );
     _sourceEntity = null;
     _targetEntity = null;
+    reportLinkRemoveCompleteEvent( sourceEntityId, targetEntityId );
   }
 
   @Override
@@ -148,6 +158,26 @@ public final class Link
     else
     {
       return super.toString();
+    }
+  }
+
+  private void reportLinkRemoveCompleteEvent( final int sourceEntityId, final int targetEntityId )
+  {
+    final World world = WorldHolder.world();
+    if ( world.willPropagateSpyEvents() )
+    {
+      world.getSpy().reportSpyEvent( new LinkRemoveCompleteEvent( world, sourceEntityId, targetEntityId ) );
+    }
+  }
+
+  private void reportLinkRemoveStartEvent( final int sourceEntityId, final int targetEntityId )
+  {
+    assert null != _sourceEntity;
+    assert null != _targetEntity;
+    final World world = WorldHolder.world();
+    if ( world.willPropagateSpyEvents() )
+    {
+      world.getSpy().reportSpyEvent( new LinkRemoveStartEvent( world, sourceEntityId, targetEntityId ) );
     }
   }
 }
