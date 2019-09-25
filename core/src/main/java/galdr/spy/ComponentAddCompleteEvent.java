@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
- * Notification emitted after component is added to an entity.
+ * Notification emitted after a component is added to an entity.
  */
 public final class ComponentAddCompleteEvent
   implements SerializableEvent
