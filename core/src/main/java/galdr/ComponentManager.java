@@ -1,6 +1,6 @@
 package galdr;
 
-import galdr.spy.ComponentAddedEvent;
+import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
@@ -222,7 +222,7 @@ abstract class ComponentManager<T>
       //TODO: Generate application message for component creation?
       if ( _world.willPropagateSpyEvents() )
       {
-        _world.getSpy().reportSpyEvent( new ComponentAddedEvent( _world, entity.getId(), getId() ) );
+        _world.getSpy().reportSpyEvent( new ComponentAddCompleteEvent( _world, entity.getId(), getId() ) );
       }
     }
     return component;
