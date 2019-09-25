@@ -128,6 +128,13 @@ final class Entity
 
   void linkOutgoing( @Nonnull final Link link )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      final int sourceId = link.getSourceEntity().getId();
+      invariant( () -> _id == sourceId,
+                 () -> "Galdr-0809: Entity.linkOutgoing() on entity " + _id +  " but entity is not the source " +
+                       "of the link." );
+    }
     if ( null == _outwardLinks )
     {
       _outwardLinks = new ArrayList<>();
@@ -137,6 +144,13 @@ final class Entity
 
   void linkIncoming( @Nonnull final Link link )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      final int targetId = link.getTargetEntity().getId();
+      invariant( () -> _id == targetId,
+                 () -> "Galdr-0808: Entity.linkIncoming() on entity " + _id +  " but entity is not the target " +
+                       "of the link." );
+    }
     if ( null == _inwardLinks )
     {
       _inwardLinks = new ArrayList<>();
@@ -146,14 +160,38 @@ final class Entity
 
   void unlinkIncoming( @Nonnull final Link link )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> null != _inwardLinks,
+                 () -> "Galdr-0008: Attempted to unlink incoming link " + link + " but entity " + _id +
+                       " has no incoming links." );
+    }
     assert null != _inwardLinks;
     final boolean removed = _inwardLinks.remove( link );
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> removed,
+                 () -> "Galdr-0009: Invoked Entity.unlinkIncoming with link " + link + " but entity " + _id +
+                       " has no such incoming link." );
+    }
   }
 
   void unlinkOutgoing( @Nonnull final Link link )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> null != _outwardLinks,
+                 () -> "Galdr-0038: Attempted to unlink outgoing link " + link + " but entity " + _id +
+                       " has no outgoing links." );
+    }
     assert null != _outwardLinks;
     final boolean removed = _outwardLinks.remove( link );
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> removed,
+                 () -> "Galdr-0039: Invoked Entity.unlinkOutgoing with link " + link + " but entity " + _id +
+                       " has no such outgoing link." );
+    }
   }
 
   @Nonnull
