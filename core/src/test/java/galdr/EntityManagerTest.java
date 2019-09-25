@@ -538,4 +538,102 @@ public class EntityManagerTest
     assertEquals( entity2.getInwardLinks().size(), 1 );
     assertEquals( entity2.getOutwardLinks().size(), 0 );
   }
+
+  @Test
+  public void link_butSourceEntityNotAlive()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity entity1 = em.createEntity( new BitSet() );
+    final Entity entity2 = em.createEntity( new BitSet() );
+
+    world.run( () -> em.disposeEntity( entity1 ) );
+
+    assertInvariantFailure( () -> world.run( () -> em.link( entity1, entity2, false, false ) ),
+                            "Galdr-0011: Attempted to link from entity 0 to entity 1 but the source entity is not alive." );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
+
+  @Test
+  public void link_butTargetEntityNotAlive()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity entity1 = em.createEntity( new BitSet() );
+    final Entity entity2 = em.createEntity( new BitSet() );
+
+    world.run( () -> em.disposeEntity( entity2 ) );
+
+    assertInvariantFailure( () -> world.run( () -> em.link( entity1, entity2, false, false ) ),
+                            "Galdr-0010: Attempted to link from entity 0 to entity 1 but the target entity is not alive." );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
+
+  @Test
+  public void link_self()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity entity = em.createEntity( new BitSet() );
+
+    assertInvariantFailure( () -> world.run( () -> em.link( entity, entity, false, false ) ),
+                            "Galdr-0110: Attempted to link entity 0 to itself." );
+
+    assertEquals( entity.getInwardLinks().size(), 0 );
+    assertEquals( entity.getOutwardLinks().size(), 0 );
+  }
+
+  @Test
+  public void link_butSourceFromDifferentWorld()
+  {
+    final World world1 = Galdr.world().build();
+    final EntityManager em1 = world1.getEntityManager();
+    final Entity entity1 = em1.createEntity( new BitSet() );
+
+    final World world2 = Galdr.world().build();
+    final EntityManager em2 = world2.getEntityManager();
+    final Entity entity2 = em2.createEntity( new BitSet() );
+
+    assertInvariantFailure( () -> world2.run( () -> em1.link( entity1, entity2, false, false ) ),
+                            "Galdr-0911: Attempted to link from entity 0 to entity 0 in world named 'World@2' but world does not contain source entity." );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
+
+  @Test
+  public void link_butTargetFromDifferentWorld()
+  {
+    final World world1 = Galdr.world().build();
+    final EntityManager em1 = world1.getEntityManager();
+    final Entity entity1 = em1.createEntity( new BitSet() );
+
+    final World world2 = Galdr.world().build();
+    final EntityManager em2 = world2.getEntityManager();
+    final Entity entity2 = em2.createEntity( new BitSet() );
+
+    assertInvariantFailure( () -> world1.run( () -> em1.link( entity1, entity2, false, false ) ),
+                            "Galdr-0912: Attempted to link from entity 0 to entity 0 in world named 'World@1' but world does not contain target entity." );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
 }
