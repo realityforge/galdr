@@ -62,7 +62,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add spy events for delinking entities.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent`.
