@@ -132,7 +132,7 @@ final class Entity
     {
       final int sourceId = link.getSourceEntity().getId();
       invariant( () -> _id == sourceId,
-                 () -> "Galdr-0809: Entity.linkOutgoing() on entity " + _id +  " but entity is not the source " +
+                 () -> "Galdr-0809: Entity.linkOutgoing() on entity " + _id + " but entity is not the source " +
                        "of the link." );
     }
     if ( null == _outwardLinks )
@@ -148,7 +148,7 @@ final class Entity
     {
       final int targetId = link.getTargetEntity().getId();
       invariant( () -> _id == targetId,
-                 () -> "Galdr-0808: Entity.linkIncoming() on entity " + _id +  " but entity is not the target " +
+                 () -> "Galdr-0808: Entity.linkIncoming() on entity " + _id + " but entity is not the target " +
                        "of the link." );
     }
     if ( null == _inwardLinks )
