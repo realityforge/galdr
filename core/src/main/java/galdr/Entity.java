@@ -111,9 +111,9 @@ final class Entity
     _flags &= ~Flags.ADDING;
   }
 
-  boolean isRemoving()
+  boolean isNotRemoving()
   {
-    return isFlag( Flags.REMOVING );
+    return !isFlag( Flags.REMOVING );
   }
 
   void setRemoving()

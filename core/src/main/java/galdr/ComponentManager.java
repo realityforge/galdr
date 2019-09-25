@@ -262,7 +262,7 @@ abstract class ComponentManager<T>
                           "' was invoked but the entity " + entityId + " does not have the component." );
     }
     componentIds.clear( _id );
-    if ( !entity.isRemoving() )
+    if ( entity.isNotRemoving() )
     {
       if ( _world.willPropagateSpyEvents() )
       {

@@ -92,7 +92,7 @@ public final class Link
     assert null != _targetEntity;
     if ( sourceRemove )
     {
-      if ( !_targetEntity.isRemoving() )
+      if ( _targetEntity.isNotRemoving() )
       {
         _targetEntity.unlinkIncoming( this );
       }
@@ -103,7 +103,7 @@ public final class Link
     }
     else
     {
-      if ( !_sourceEntity.isRemoving() )
+      if ( _sourceEntity.isNotRemoving() )
       {
         _sourceEntity.unlinkOutgoing( this );
       }
