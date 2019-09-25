@@ -71,14 +71,6 @@ for systems/processors ahead of time.
 * Add support for Components that have no state. They are effectively flags/markers. Potentially the
   ComponentManager implementation just keeps bitset for free/notfree and generates an error if component
   is accessed (or returns a singleton). Potentially these can be typed by java annotations or similar
-* We should consider changing Entity so that they have a unique id that maps to a index in the entity
-  array. The API would change to pass around a `EntityRef` or `Designator` or similar that contains the
-  unique id as well as entity index. This would mean that after an entity is disposed it would never come
-  back to life at the expense of some minimal overhead. However it is unclear if this is really a problem
-  that we are likely to run into in an ECS system where systems process entities. It is is only really
-  problematic when a component wants to maintain a reference to another entity. Of course it also means
-  a lookup every time you want to interact with entity to retrieve ref or the creation of a new ref, neither
-  of which is efficient. Perhaps a mechanism for managing links to Entity is better suited for this purpose.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add `MapComponentManager` that stores components in a HashMap
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
