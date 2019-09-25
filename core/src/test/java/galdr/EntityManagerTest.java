@@ -514,17 +514,17 @@ public class EntityManagerTest
   {
     final World world = Galdr.world().build();
 
-    final EntityManager entityManager = world.getEntityManager();
+    final EntityManager em = world.getEntityManager();
 
-    final Entity entity1 = entityManager.createEntity( new BitSet() );
-    final Entity entity2 = entityManager.createEntity( new BitSet() );
+    final Entity entity1 = em.createEntity( new BitSet() );
+    final Entity entity2 = em.createEntity( new BitSet() );
 
     assertEquals( entity1.getInwardLinks().size(), 0 );
     assertEquals( entity1.getOutwardLinks().size(), 0 );
     assertEquals( entity2.getInwardLinks().size(), 0 );
     assertEquals( entity2.getOutwardLinks().size(), 0 );
 
-    final Link link = entityManager.link( entity1, entity2, false, false );
+    final Link link = world.run( () -> em.link( entity1, entity2, false, false ) );
 
     assertEquals( link.getSourceEntity(), entity1 );
     assertEquals( link.getTargetEntity(), entity2 );
