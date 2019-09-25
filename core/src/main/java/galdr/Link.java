@@ -84,6 +84,10 @@ public final class Link
    */
   void invalidate( final boolean sourceRemove )
   {
+    // The use of WorldHolder.world() in this scenario seems wrong. Is there a better way?
+    // We do not want to add World instance to Link as that will significantly increase memory
+    // pressure and World is not cached on related Entity instances so maybe WorldHolder is the only way.
+
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( this::isValid, () -> "Galdr-0017: Link.invalidate() method invoked on invalid link." );
