@@ -508,4 +508,34 @@ public class EntityManagerTest
     assertInvariantFailure( () -> entityManager.createEntity( componentIds2 ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 2" );
   }
+
+  @Test
+  public void link()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager entityManager = world.getEntityManager();
+
+    final Entity entity1 = entityManager.createEntity( new BitSet() );
+    final Entity entity2 = entityManager.createEntity( new BitSet() );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+
+    final Link link = entityManager.link( entity1, entity2, false, false );
+
+    assertEquals( link.getSourceEntity(), entity1 );
+    assertEquals( link.getTargetEntity(), entity2 );
+    assertFalse( link.shouldCascadeSourceRemoveToTarget() );
+    assertFalse( link.shouldCascadeTargetRemoveToSource() );
+    assertTrue( link.isValid() );
+    assertEquals( link.toString(), "Link[0->1]" );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 1 );
+    assertEquals( entity2.getInwardLinks().size(), 1 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
 }

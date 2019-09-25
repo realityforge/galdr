@@ -114,6 +114,18 @@ final class EntityManager
     }
   }
 
+  @Nonnull
+  Link link( @Nonnull final Entity source,
+             @Nonnull final Entity target,
+             final boolean cascadeSourceRemoveToTarget,
+             final boolean cascadeTargetRemoveToSource )
+  {
+    final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
+    source.linkOutgoing( link );
+    target.linkIncoming( link );
+    return link;
+  }
+
   void disposeEntity( final int entityId )
   {
     if ( Galdr.shouldCheckApiInvariants() )
