@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
- * Notification emitted before entity is removed from the world.
+ * Notification emitted before an entity is removed from the world.
  */
 public final class EntityRemoveStartEvent
   implements SerializableEvent
