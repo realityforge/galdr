@@ -80,7 +80,6 @@ for systems/processors ahead of time.
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
 * Change component into an annotation `@Component`
-* Change `Entity` to be hierarchical. i.e. An `Entity` can have child `Entity` instances.
 * Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
   `Collections.unmodifiableMap()` if `Galdr.enforceUnmodifiableCOllections()` returns `true`.
 * Add different implementations of `ComponentStore` that optimize for different distributions of entities. The
