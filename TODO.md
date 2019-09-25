@@ -64,8 +64,7 @@ for systems/processors ahead of time.
 
 * Add spy events for delinking entities.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
-* Build application facting `EntityReferece` that is the public API for `EntityLink`. Actually we should just
-  expose a subset of EntityLink for application.
+* Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider using a pattern where the factory/builder class is the name of the factory pluralized and is filled
   with static methods. i.e. The class that creates World instances is `Worlds`. We could move `WorldBuilder`
   as inner class and `Galdr.world(*)` methods to this class.
