@@ -1,7 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddedEvent;
-import galdr.spy.ComponentWillRemoveEvent;
+import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.function.Supplier;
 import org.testng.annotations.Test;
@@ -98,7 +98,7 @@ public class ComponentManagerTest
       assertEquals( e.getEntityId(), entityId );
       assertEquals( e.getComponentId(), componentManager.getId() );
     } );
-    handler.assertNextEvent( ComponentWillRemoveEvent.class, e -> {
+    handler.assertNextEvent( ComponentRemoveStartEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
       assertEquals( e.getComponentId(), componentManager.getId() );

@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  * Notification emitted before a component is removed from an entity.
  */
-public final class ComponentWillRemoveEvent
+public final class ComponentRemoveStartEvent
   implements SerializableEvent
 {
   /**
@@ -25,7 +25,7 @@ public final class ComponentWillRemoveEvent
    */
   private final int _componentId;
 
-  public ComponentWillRemoveEvent( @Nonnull final World world, final int entityId, final int componentId )
+  public ComponentRemoveStartEvent( @Nonnull final World world, final int entityId, final int componentId )
   {
     _world = Objects.requireNonNull( world );
     _entityId = entityId;
@@ -51,7 +51,7 @@ public final class ComponentWillRemoveEvent
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
-    map.put( "type", "ComponentWillRemove" );
+    map.put( "type", "ComponentRemoveStart" );
     map.put( "world", _world.getName() );
     map.put( "entityId", _entityId );
     map.put( "componentId", _componentId );

@@ -1,7 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentAddedEvent;
-import galdr.spy.ComponentWillRemoveEvent;
+import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -266,7 +266,7 @@ abstract class ComponentManager<T>
     {
       if ( _world.willPropagateSpyEvents() )
       {
-        _world.getSpy().reportSpyEvent( new ComponentWillRemoveEvent( _world, entity.getId(), getId() ) );
+        _world.getSpy().reportSpyEvent( new ComponentRemoveStartEvent( _world, entity.getId(), getId() ) );
       }
       //TODO: Generate application message for component removal?
     }
