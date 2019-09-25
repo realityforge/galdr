@@ -149,4 +149,5 @@ are "realtime". Inspiration from other frameworks could help move it forward.
   A `Behaviour` is a system which performs actions autonomously on entities whenever they are updated while a
   `Facet` is a system that performs actions based on the`Command`s they receive. An `Actor` is a system combining
   the aspects of a `Behaviour` and a `Facet`. Each tick an Entity will process all received events either directly
-  or via facets and then process all other state updates via behaviours.
+  or via facets and then process all other state updates via behaviours. (FWIW it is useful to think of `Behaviour`
+  as letting entity interact with the world and the `Facet` which lets whe world interact with our entity.)
