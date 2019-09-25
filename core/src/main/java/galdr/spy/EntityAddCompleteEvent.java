@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  * Notification emitted after entity is added to the world.
  */
-public final class EntityAddedEvent
+public final class EntityAddCompleteEvent
   implements SerializableEvent
 {
   /**
@@ -21,7 +21,7 @@ public final class EntityAddedEvent
    */
   private final int _entityId;
 
-  public EntityAddedEvent( @Nonnull final World world, final int entityId )
+  public EntityAddCompleteEvent( @Nonnull final World world, final int entityId )
   {
     _world = Objects.requireNonNull( world );
     _entityId = entityId;
@@ -41,7 +41,7 @@ public final class EntityAddedEvent
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
-    map.put( "type", "EntityAdded" );
+    map.put( "type", "EntityAddComplete" );
     map.put( "world", _world.getName() );
     map.put( "entityId", _entityId );
   }

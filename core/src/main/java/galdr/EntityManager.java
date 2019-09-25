@@ -1,6 +1,6 @@
 package galdr;
 
-import galdr.spy.EntityAddedEvent;
+import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
@@ -70,7 +70,7 @@ final class EntityManager
     entity.clearAdding();
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityAddedEvent( _world, entity.getId() ) );
+      _world.getSpy().reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId() ) );
     }
     return entity;
   }
