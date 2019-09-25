@@ -1,7 +1,7 @@
 package galdr;
 
 import galdr.spy.EntityAddedEvent;
-import galdr.spy.EntityWillRemoveEvent;
+import galdr.spy.EntityRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -188,7 +188,7 @@ final class EntityManager
     entity.setRemoving();
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityWillRemoveEvent( _world, entity.getId() ) );
+      _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId() ) );
     }
     removeComponents( entity );
     entity.reset();

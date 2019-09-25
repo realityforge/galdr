@@ -8,7 +8,7 @@ import java.util.HashMap;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class EntityWillRemoveEventTest
+public class EntityRemoveStartEventTest
   extends AbstractTest
 {
   @Test
@@ -16,7 +16,7 @@ public class EntityWillRemoveEventTest
   {
     final World world = Galdr.world().build();
     final int entityId = world.createEntity( new BitSet( 0 ) );
-    final EntityWillRemoveEvent event = new EntityWillRemoveEvent( world, entityId );
+    final EntityRemoveStartEvent event = new EntityRemoveStartEvent( world, entityId );
 
     assertEquals( event.getWorld(), world );
     assertEquals( event.getEntityId(), entityId );
@@ -24,7 +24,7 @@ public class EntityWillRemoveEventTest
     final HashMap<String, Object> data = new HashMap<>();
     event.toMap( data );
 
-    assertEquals( data.get( "type" ), "EntityWillRemove" );
+    assertEquals( data.get( "type" ), "EntityRemoveStart" );
     assertEquals( data.get( "world" ), world.getName() );
     assertEquals( data.get( "entityId" ), entityId );
     assertEquals( data.size(), 3 );

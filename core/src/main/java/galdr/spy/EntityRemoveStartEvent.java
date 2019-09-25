@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  * Notification emitted before entity is removed from the world.
  */
-public final class EntityWillRemoveEvent
+public final class EntityRemoveStartEvent
   implements SerializableEvent
 {
   /**
@@ -21,7 +21,7 @@ public final class EntityWillRemoveEvent
    */
   private final int _entityId;
 
-  public EntityWillRemoveEvent( @Nonnull final World world, final int entityId )
+  public EntityRemoveStartEvent( @Nonnull final World world, final int entityId )
   {
     _world = Objects.requireNonNull( world );
     _entityId = entityId;
@@ -41,7 +41,7 @@ public final class EntityWillRemoveEvent
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
-    map.put( "type", "EntityWillRemove" );
+    map.put( "type", "EntityRemoveStart" );
     map.put( "world", _world.getName() );
     map.put( "entityId", _entityId );
   }
