@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.EntityAddCompleteEvent;
+import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
@@ -193,6 +194,10 @@ final class EntityManager
     removeComponents( entity );
     entity.reset();
     _free.set( entity.getId() );
+    if ( _world.willPropagateSpyEvents() )
+    {
+      _world.getSpy().reportSpyEvent( new EntityRemoveCompleteEvent( _world, entity.getId() ) );
+    }
   }
 
   /**
