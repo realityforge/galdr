@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
+import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -542,6 +543,45 @@ public class EntityManagerTest
     assertEquals( entity1.getOutwardLinks().size(), 1 );
     assertEquals( entity2.getInwardLinks().size(), 1 );
     assertEquals( entity2.getOutwardLinks().size(), 0 );
+  }
+
+  @Test
+  public void link_withSpyEnabled()
+  {
+    final World world = Galdr.world().build();
+
+    final EntityManager em = world.getEntityManager();
+
+    final Entity entity1 = em.createEntity( new BitSet() );
+    final Entity entity2 = em.createEntity( new BitSet() );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 0 );
+    assertEquals( entity2.getInwardLinks().size(), 0 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    final Link link = world.run( () -> em.link( entity1, entity2, false, false ) );
+    handler.unsubscribe();
+
+    assertEquals( link.getSourceEntity(), entity1 );
+    assertEquals( link.getTargetEntity(), entity2 );
+    assertFalse( link.shouldCascadeSourceRemoveToTarget() );
+    assertFalse( link.shouldCascadeTargetRemoveToSource() );
+    assertTrue( link.isValid() );
+    assertEquals( link.toString(), "Link[0->1]" );
+
+    assertEquals( entity1.getInwardLinks().size(), 0 );
+    assertEquals( entity1.getOutwardLinks().size(), 1 );
+    assertEquals( entity2.getInwardLinks().size(), 1 );
+    assertEquals( entity2.getOutwardLinks().size(), 0 );
+
+    handler.assertEventCount( 1 );
+    handler.assertNextEvent( LinkAddStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), entity1.getId() );
+      assertEquals( e.getTargetEntityId(), entity2.getId() );
+    } );
   }
 
   @Test

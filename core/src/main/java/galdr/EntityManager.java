@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
+import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -140,6 +141,10 @@ final class EntityManager
       invariant( () -> targetInWorld == target,
                  () -> "Galdr-0912: Attempted to link from entity " + source.getId() + " to entity " + target.getId() +
                        " in world named '" + world.getName() + "' but world does not contain target entity." );
+    }
+    if ( _world.willPropagateSpyEvents() )
+    {
+      _world.getSpy().reportSpyEvent( new LinkAddStartEvent( _world, source.getId(), target.getId() ) );
     }
     final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
     source.linkOutgoing( link );
