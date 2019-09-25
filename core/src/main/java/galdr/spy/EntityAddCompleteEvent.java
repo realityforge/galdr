@@ -6,7 +6,7 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
- * Notification emitted after entity is added to the world.
+ * Notification emitted after an entity is added to the world.
  */
 public final class EntityAddCompleteEvent
   implements SerializableEvent
