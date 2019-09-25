@@ -22,7 +22,7 @@ public class LinkTest
 
     assertEquals( link.toString(), "Link[0->1]" );
 
-    link.dispose();
+    world.run( link::dispose );
 
     assertEquals( link.toString(), "Link[(disposed)]" );
 
@@ -231,7 +231,7 @@ public class LinkTest
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    link.dispose();
+    world.run( link::dispose );
 
     assertFalse( link.isValid() );
 
@@ -253,7 +253,7 @@ public class LinkTest
     final Entity target = em.createEntity( new BitSet() );
 
     final Link link = world.run( () -> em.link( source, target, false, false ) );
-    link.dispose();
+    world.run( link::dispose );
 
     assertInvariantFailure( link::dispose, "Galdr-0117: Link.dispose() method invoked on invalid link." );
   }
@@ -269,7 +269,7 @@ public class LinkTest
     final Entity target = em.createEntity( new BitSet() );
 
     final Link link = world.run( () -> em.link( source, target, false, false ) );
-    link.dispose();
+    world.run( link::dispose );
 
     assertInvariantFailure( link::getSourceEntity,
                             "Galdr-0007: The Link.getSourceEntity() method invoked on invalid link." );
@@ -286,7 +286,7 @@ public class LinkTest
     final Entity target = em.createEntity( new BitSet() );
 
     final Link link = world.run( () -> em.link( source, target, false, false ) );
-    link.dispose();
+    world.run( link::dispose );
 
     assertInvariantFailure( link::getTargetEntity,
                             "Galdr-0016: The Link.getTargetEntity() method invoked on invalid link." );
