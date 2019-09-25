@@ -24,6 +24,15 @@ public final class World
   }
 
   /**
+   * Interface used to define functions that can be run in the context of a world.
+   */
+  @FunctionalInterface
+  interface WorldFunction<T>
+  {
+    T call();
+  }
+
+  /**
    * A synthetic id used to construct te worlds name if not explicitly supplied.
    */
   private static int c_nextId = 1;
@@ -233,6 +242,19 @@ public final class World
     try
     {
       action.call();
+    }
+    finally
+    {
+      WorldHolder.deactivateWorld( this );
+    }
+  }
+
+  <T> T run( @Nonnull final WorldFunction<T> action )
+  {
+    WorldHolder.activateWorld( this );
+    try
+    {
+      return action.call();
     }
     finally
     {

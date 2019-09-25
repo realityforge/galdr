@@ -221,12 +221,26 @@ public class WorldTest
   }
 
   @Test
-  public void run()
+  public void run_action()
   {
     final World world = Galdr.world().build();
 
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     world.run( () -> assertEquals( WorldHolder.world(), world ) );
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+  }
+
+  @Test
+  public void run_function()
+  {
+    final World world = Galdr.world().build();
+
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    final int value = world.run( () -> {
+      assertEquals( WorldHolder.world(), world );
+      return 111;
+    } );
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    assertEquals( value, 111 );
   }
 }
