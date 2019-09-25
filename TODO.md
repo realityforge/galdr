@@ -62,7 +62,7 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add spy events for linking and delinking entities.
+* Add spy events for delinking entities.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Build application facting `EntityReferece` that is the public API for `EntityLink`. Actually we should just
   expose a subset of EntityLink for application.
