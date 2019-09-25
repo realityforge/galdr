@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
+import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
@@ -149,6 +150,10 @@ final class EntityManager
     final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
     source.linkOutgoing( link );
     target.linkIncoming( link );
+    if ( _world.willPropagateSpyEvents() )
+    {
+      _world.getSpy().reportSpyEvent( new LinkAddCompleteEvent( _world, source.getId(), target.getId() ) );
+    }
     return link;
   }
 

@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
+import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import org.testng.annotations.Test;
@@ -576,8 +577,13 @@ public class EntityManagerTest
     assertEquals( entity2.getInwardLinks().size(), 1 );
     assertEquals( entity2.getOutwardLinks().size(), 0 );
 
-    handler.assertEventCount( 1 );
+    handler.assertEventCount( 2 );
     handler.assertNextEvent( LinkAddStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getSourceEntityId(), entity1.getId() );
+      assertEquals( e.getTargetEntityId(), entity2.getId() );
+    } );
+    handler.assertNextEvent( LinkAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getSourceEntityId(), entity1.getId() );
       assertEquals( e.getTargetEntityId(), entity2.getId() );
