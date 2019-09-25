@@ -65,8 +65,6 @@ for systems/processors ahead of time.
 * Add spy events for linking and delinking entities.
 * Build application facting `EntityReferece` that is the public API for `EntityLink`. Actually we should just
   expose a subset of EntityLink for application.
-* Rename `EntityWillRemoveEvent` to `EntityRemoveStartEvent` and add a compliment `EntityRemoveCompleteEvent`.
-  Perform similar pattern with `EntityAdded`, `ComponentAdded`, and `ComponentWillRemove` events.
 * Consider using a pattern where the factory/builder class is the name of the factory pluralized and is filled
   with static methods. i.e. The class that creates World instances is `Worlds`. We could move `WorldBuilder`
   as inner class and `Galdr.world(*)` methods to this class.
