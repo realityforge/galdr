@@ -171,7 +171,7 @@ final class Entity
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> removed,
-                 () -> "Galdr-0009: Invoked Entity.unlinkIncoming with link " + link + " but entity " + _id +
+                 () -> "Galdr-0012: Invoked Entity.unlinkIncoming with link " + link + " but entity " + _id +
                        " has no such incoming link." );
     }
   }

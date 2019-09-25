@@ -60,7 +60,7 @@
         "class": "galdr.World",
         "method": "getEntityManager",
         "file": "World.java",
-        "lineNumber": 87
+        "lineNumber": 105
       }
     ]
   },
@@ -78,6 +78,32 @@
     ]
   },
   {
+    "code": 7,
+    "type": "API_INVARIANT",
+    "messagePattern": "The Link.getSourceEntity() method invoked on invalid link.",
+    "callers": [
+      {
+        "class": "galdr.Link",
+        "method": "getSourceEntity",
+        "file": "Link.java",
+        "lineNumber": 55
+      }
+    ]
+  },
+  {
+    "code": 8,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to unlink incoming link Link[%s] but entity %s has no incoming links.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "unlinkIncoming",
+        "file": "Entity.java",
+        "lineNumber": 165
+      }
+    ]
+  },
+  {
     "code": 9,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to dispose entity %s but entity is not allocated.",
@@ -86,7 +112,78 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 121
+        "lineNumber": 153
+      },
+      {
+        "class": "galdr.EntityManager",
+        "method": "disposeEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 163
+      }
+    ]
+  },
+  {
+    "code": 10,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to link from entity %s to entity %s but the target entity is not alive.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "link",
+        "file": "EntityManager.java",
+        "lineNumber": 128
+      }
+    ]
+  },
+  {
+    "code": 11,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to link from entity %s to entity %s but the source entity is not alive.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "link",
+        "file": "EntityManager.java",
+        "lineNumber": 125
+      }
+    ]
+  },
+  {
+    "code": 12,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked Entity.unlinkIncoming with link Link[%s] but entity %s has no such incoming link.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "unlinkIncoming",
+        "file": "Entity.java",
+        "lineNumber": 173
+      }
+    ]
+  },
+  {
+    "code": 16,
+    "type": "API_INVARIANT",
+    "messagePattern": "The Link.getTargetEntity() method invoked on invalid link.",
+    "callers": [
+      {
+        "class": "galdr.Link",
+        "method": "getTargetEntity",
+        "file": "Link.java",
+        "lineNumber": 66
+      }
+    ]
+  },
+  {
+    "code": 17,
+    "type": "INVARIANT",
+    "messagePattern": "Link.invalidate() method invoked on invalid link.",
+    "callers": [
+      {
+        "class": "galdr.Link",
+        "method": "invalidate",
+        "file": "Link.java",
+        "lineNumber": 89
       }
     ]
   },
@@ -104,6 +201,19 @@
     ]
   },
   {
+    "code": 20,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempting to dispose entity %s in world '%s' but entity was created in a different world.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "disposeEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 169
+      }
+    ]
+  },
+  {
     "code": 21,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to get Spy but spies are not enabled.",
@@ -112,7 +222,7 @@
         "class": "galdr.World",
         "method": "getSpy",
         "file": "World.java",
-        "lineNumber": 215
+        "lineNumber": 233
       }
     ]
   },
@@ -177,7 +287,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 251
+        "lineNumber": 260
       }
     ]
   },
@@ -190,7 +300,7 @@
         "class": "galdr.ComponentManager",
         "method": "create",
         "file": "ComponentManager.java",
-        "lineNumber": 211
+        "lineNumber": 213
       }
     ]
   },
@@ -203,7 +313,33 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 177
+        "lineNumber": 179
+      }
+    ]
+  },
+  {
+    "code": 38,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to unlink outgoing link Link[%s] but entity %s has no outgoing links.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "unlinkOutgoing",
+        "file": "Entity.java",
+        "lineNumber": 183
+      }
+    ]
+  },
+  {
+    "code": 39,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked Entity.unlinkOutgoing with link Link[%s] but entity %s has no such outgoing link.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "unlinkOutgoing",
+        "file": "Entity.java",
+        "lineNumber": 191
       }
     ]
   },
@@ -216,7 +352,7 @@
         "class": "galdr.World",
         "method": "getComponentRegistry",
         "file": "World.java",
-        "lineNumber": 122
+        "lineNumber": 140
       }
     ]
   },
@@ -229,7 +365,7 @@
         "class": "galdr.World",
         "method": "getStages",
         "file": "World.java",
-        "lineNumber": 135
+        "lineNumber": 153
       }
     ]
   },
@@ -242,7 +378,7 @@
         "class": "galdr.World",
         "method": "getStageByName",
         "file": "World.java",
-        "lineNumber": 108
+        "lineNumber": 126
       }
     ]
   },
@@ -268,7 +404,7 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 119
+        "lineNumber": 121
       }
     ]
   },
@@ -279,9 +415,9 @@
     "callers": [
       {
         "class": "galdr.EntityManager",
-        "method": "disposeEntity",
+        "method": "doDisposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 126
+        "lineNumber": 180
       }
     ]
   },
@@ -390,6 +526,45 @@
     ]
   },
   {
+    "code": 110,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to link entity %s to itself.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "link",
+        "file": "EntityManager.java",
+        "lineNumber": 131
+      }
+    ]
+  },
+  {
+    "code": 117,
+    "type": "INVARIANT",
+    "messagePattern": "Link.dispose() method invoked on invalid link.",
+    "callers": [
+      {
+        "class": "galdr.Link",
+        "method": "dispose",
+        "file": "Link.java",
+        "lineNumber": 123
+      }
+    ]
+  },
+  {
+    "code": 159,
+    "type": "INVARIANT",
+    "messagePattern": "Attempting to dispose entity %s which is not contained by the active world.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "doDisposeEntity",
+        "file": "EntityManager.java",
+        "lineNumber": 184
+      }
+    ]
+  },
+  {
     "code": 181,
     "type": "INVARIANT",
     "messagePattern": "World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false.",
@@ -398,7 +573,7 @@
         "class": "galdr.World",
         "method": "removeErrorHandler",
         "file": "World.java",
-        "lineNumber": 187
+        "lineNumber": 205
       }
     ]
   },
@@ -411,7 +586,59 @@
         "class": "galdr.World",
         "method": "addErrorHandler",
         "file": "World.java",
-        "lineNumber": 170
+        "lineNumber": 188
+      }
+    ]
+  },
+  {
+    "code": 808,
+    "type": "INVARIANT",
+    "messagePattern": "Entity.linkIncoming() on entity %s but entity is not the target of the link.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "linkIncoming",
+        "file": "Entity.java",
+        "lineNumber": 150
+      }
+    ]
+  },
+  {
+    "code": 809,
+    "type": "INVARIANT",
+    "messagePattern": "Entity.linkOutgoing() on entity %s but entity is not the source of the link.",
+    "callers": [
+      {
+        "class": "galdr.Entity",
+        "method": "linkOutgoing",
+        "file": "Entity.java",
+        "lineNumber": 134
+      }
+    ]
+  },
+  {
+    "code": 911,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain source entity.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "link",
+        "file": "EntityManager.java",
+        "lineNumber": 135
+      }
+    ]
+  },
+  {
+    "code": 912,
+    "type": "INVARIANT",
+    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain target entity.",
+    "callers": [
+      {
+        "class": "galdr.EntityManager",
+        "method": "link",
+        "file": "EntityManager.java",
+        "lineNumber": 139
       }
     ]
   }

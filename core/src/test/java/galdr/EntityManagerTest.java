@@ -319,7 +319,7 @@ public class EntityManagerTest
 
     // Entity from wrong world
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity2 ),
-                            "Galdr-0019: Attempting to dispose entity 0 in world 'World@1' but entity was created in a different world." );
+                            "Galdr-0020: Attempting to dispose entity 0 in world 'World@1' but entity was created in a different world." );
 
     world1.run( () -> entityManager1.disposeEntity( entity1 ) );
 

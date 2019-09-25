@@ -167,7 +167,7 @@ final class EntityManager
     if ( Galdr.shouldCheckInvariants() )
     {
       apiInvariant( () -> _entities[ entity.getId() ] == entity,
-                    () -> "Galdr-0019: Attempting to dispose entity " + entity.getId() + " in world '" +
+                    () -> "Galdr-0020: Attempting to dispose entity " + entity.getId() + " in world '" +
                           _world.getName() + "' but entity was created in a different world." );
     }
     doDisposeEntity( entity );

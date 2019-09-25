@@ -72,7 +72,7 @@ public class EntityTest
     world.run( () -> em.link( entity1, entity3, false, false ) );
 
     assertInvariantFailure( () -> world.run( () -> entity3.unlinkIncoming( link1 ) ),
-                            "Galdr-0009: Invoked Entity.unlinkIncoming with link Link[0->1] but entity 2 has no such incoming link." );
+                            "Galdr-0012: Invoked Entity.unlinkIncoming with link Link[0->1] but entity 2 has no such incoming link." );
   }
 
   @Test
