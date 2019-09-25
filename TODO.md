@@ -66,6 +66,7 @@ for systems/processors ahead of time.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent`.
+* Add a `EntityAddStartEvent` that just refers to `World` and `componentIds`.
 * Consider using a pattern where the factory/builder class is the name of the factory pluralized and is filled
   with static methods. i.e. The class that creates World instances is `Worlds`. We could move `WorldBuilder`
   as inner class and `Galdr.world(*)` methods to this class.
