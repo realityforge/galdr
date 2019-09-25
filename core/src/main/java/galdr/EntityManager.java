@@ -191,11 +191,11 @@ final class EntityManager
                  () -> "Galdr-0159: Attempting to dispose entity " + entity.getId() + " which is not contained " +
                        "by the active world." );
     }
-    entity.setRemoving();
     if ( _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId() ) );
     }
+    entity.setRemoving();
     removeComponents( entity );
     entity.reset();
     _free.set( entity.getId() );
