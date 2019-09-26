@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.EntityAddCompleteEvent;
+import galdr.spy.EntityAddStartEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
 import galdr.spy.LinkAddCompleteEvent;
@@ -154,13 +155,15 @@ public class EntityManagerTest
 
     handler.unsubscribe();
 
-    handler.assertEventCount( 2 );
+    handler.assertEventCount( 4 );
+    handler.assertNextEvent( EntityAddStartEvent.class, e -> assertEquals( e.getWorld(), world ) );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entity1.getId() );
       assertTrue( entity1.isAlive() );
 
     } );
+    handler.assertNextEvent( EntityAddStartEvent.class, e -> assertEquals( e.getWorld(), world ) );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entity2.getId() );

@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.EntityAddCompleteEvent;
+import galdr.spy.EntityAddStartEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
 import galdr.spy.LinkAddCompleteEvent;
@@ -65,6 +66,10 @@ final class EntityManager
         apiInvariant( () -> registry.isComponentIdValid( id ),
                       () -> "Galdr-0006: Attempting to create entity with invalid componentId " + id );
       }
+    }
+    if ( _world.willPropagateSpyEvents() )
+    {
+      _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world ) );
     }
     final Entity entity = allocateEntity();
     entity.setAlive();
