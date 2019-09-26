@@ -110,6 +110,9 @@ for systems/processors ahead of time.
 * Replace `BitSet` with equivalent variant that is more optimized for our use-case?
 * Add a `ReadOnlyBitSet` implementation.
 
+* Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
+  with a noop in JRE code.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
