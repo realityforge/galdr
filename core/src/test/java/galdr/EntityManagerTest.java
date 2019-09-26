@@ -30,7 +30,7 @@ public class EntityManagerTest
   {
     final int initialEntityCount = 10;
     final EntityManager entityManager =
-      Galdr.world().initialEntityCount( initialEntityCount ).build().getEntityManager();
+      Worlds.world().initialEntityCount( initialEntityCount ).build().getEntityManager();
     final Entity entity1 = entityManager.createEntity( new BitSet() );
     final Entity entity2 = entityManager.createEntity( new BitSet() );
 
@@ -45,7 +45,7 @@ public class EntityManagerTest
   public void createEntity()
   {
     final int initialEntityCount = 5;
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( initialEntityCount )
       .component( Armour.class, Armour::new )
       .component( Health.class, Health::new )
@@ -100,7 +100,7 @@ public class EntityManagerTest
   @Test
   public void createEntity_withSpyEventsEnabled()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( 3 )
       .component( Armour.class, Armour::new )
       .component( Health.class, Health::new )
@@ -172,7 +172,7 @@ public class EntityManagerTest
   public void disposeEntity()
   {
     final int initialEntityCount = 5;
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( initialEntityCount )
       .component( Armour.class, Armour::new )
       .component( Health.class, Health::new )
@@ -209,7 +209,7 @@ public class EntityManagerTest
   public void disposeEntity_passingEntity()
   {
     final int initialEntityCount = 5;
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( initialEntityCount )
       .component( Armour.class, Armour::new )
       .build();
@@ -238,7 +238,7 @@ public class EntityManagerTest
   public void disposeEntity_WithSpyEnabled()
   {
     final int initialEntityCount = 5;
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( initialEntityCount )
       .component( Armour.class, Armour::new )
       .component( Health.class, Health::new )
@@ -284,8 +284,8 @@ public class EntityManagerTest
   @Test
   public void disposeEntity_disposeErrors()
   {
-    final World world1 = Galdr.world().initialEntityCount( 4 ).build();
-    final World world2 = Galdr.world().initialEntityCount( 4 ).build();
+    final World world1 = Worlds.world().initialEntityCount( 4 ).build();
+    final World world2 = Worlds.world().initialEntityCount( 4 ).build();
 
     final EntityManager entityManager = world1.getEntityManager();
 
@@ -315,8 +315,8 @@ public class EntityManagerTest
   @Test
   public void disposeEntity_disposeErrors_whenPassingEntity()
   {
-    final World world1 = Galdr.world().initialEntityCount( 4 ).build();
-    final World world2 = Galdr.world().initialEntityCount( 4 ).build();
+    final World world1 = Worlds.world().initialEntityCount( 4 ).build();
+    final World world2 = Worlds.world().initialEntityCount( 4 ).build();
 
     final EntityManager entityManager1 = world1.getEntityManager();
     final EntityManager entityManager2 = world2.getEntityManager();
@@ -338,7 +338,7 @@ public class EntityManagerTest
   @Test
   public void disposeEntity_entityNotAllocated()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager entityManager = world.getEntityManager();
     final Entity entity = entityManager.createEntity( new BitSet() );
@@ -354,7 +354,7 @@ public class EntityManagerTest
   @Test
   public void verifyReuseOfFreedEntities()
   {
-    final World world = Galdr.world().initialEntityCount( 4 ).build();
+    final World world = Worlds.world().initialEntityCount( 4 ).build();
 
     final EntityManager entityManager = world.getEntityManager();
 
@@ -391,7 +391,7 @@ public class EntityManagerTest
   @Test
   public void capacityGrowsOnDemand()
   {
-    final World world = Galdr.world().initialEntityCount( 2 ).build();
+    final World world = Worlds.world().initialEntityCount( 2 ).build();
 
     final EntityManager entityManager = world.getEntityManager();
 
@@ -466,7 +466,7 @@ public class EntityManagerTest
   @Test
   public void getEntityById_entityNotAlive()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager entityManager = world.getEntityManager();
 
@@ -481,7 +481,7 @@ public class EntityManagerTest
   @Test
   public void getEntityById_entityNotAllocated()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager entityManager = world.getEntityManager();
 
@@ -492,7 +492,7 @@ public class EntityManagerTest
   @Test
   public void createEntity_badComponentId()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Armour.class, Armour::new )
       .component( Health.class, Health::new )
       .build();
@@ -519,7 +519,7 @@ public class EntityManagerTest
   @Test
   public void link()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -549,7 +549,7 @@ public class EntityManagerTest
   @Test
   public void link_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -593,7 +593,7 @@ public class EntityManagerTest
   @Test
   public void link_butSourceEntityNotAlive()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -614,7 +614,7 @@ public class EntityManagerTest
   @Test
   public void link_butTargetEntityNotAlive()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -635,7 +635,7 @@ public class EntityManagerTest
   @Test
   public void link_self()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -651,11 +651,11 @@ public class EntityManagerTest
   @Test
   public void link_butSourceFromDifferentWorld()
   {
-    final World world1 = Galdr.world().build();
+    final World world1 = Worlds.world().build();
     final EntityManager em1 = world1.getEntityManager();
     final Entity entity1 = em1.createEntity( new BitSet() );
 
-    final World world2 = Galdr.world().build();
+    final World world2 = Worlds.world().build();
     final EntityManager em2 = world2.getEntityManager();
     final Entity entity2 = em2.createEntity( new BitSet() );
 
@@ -671,11 +671,11 @@ public class EntityManagerTest
   @Test
   public void link_butTargetFromDifferentWorld()
   {
-    final World world1 = Galdr.world().build();
+    final World world1 = Worlds.world().build();
     final EntityManager em1 = world1.getEntityManager();
     final Entity entity1 = em1.createEntity( new BitSet() );
 
-    final World world2 = Galdr.world().build();
+    final World world2 = Worlds.world().build();
     final EntityManager em2 = world2.getEntityManager();
     final Entity entity2 = em2.createEntity( new BitSet() );
 

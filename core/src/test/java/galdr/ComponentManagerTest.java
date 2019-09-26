@@ -20,7 +20,7 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final World world = Galdr.world().component( Component1.class, createFn ).build();
+    final World world = Worlds.world().component( Component1.class, createFn ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
@@ -69,7 +69,7 @@ public class ComponentManagerTest
   @Test
   public void basicComponentLifecycle_spyEnabled()
   {
-    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
@@ -114,7 +114,7 @@ public class ComponentManagerTest
   @Test
   public void debugToString()
   {
-    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
@@ -128,7 +128,7 @@ public class ComponentManagerTest
   @Test
   public void getName()
   {
-    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
@@ -143,7 +143,7 @@ public class ComponentManagerTest
   @Test
   public void errorOnUnAllocatedEntity()
   {
-    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 

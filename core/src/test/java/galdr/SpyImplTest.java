@@ -12,7 +12,7 @@ public class SpyImplTest
   @Test
   public void spyEventLifecycle()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final Spy spy = world.getSpy();
 

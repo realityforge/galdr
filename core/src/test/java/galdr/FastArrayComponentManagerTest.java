@@ -16,7 +16,7 @@ public class FastArrayComponentManagerTest
   public void basicOperation()
   {
     final Supplier<Component1> createFn = Component1::new;
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .initialEntityCount( 5 )
       .component( Component1.class, createFn )
       .build();

@@ -1,8 +1,8 @@
 package galdr.spy;
 
 import galdr.AbstractTest;
-import galdr.Galdr;
 import galdr.World;
+import galdr.Worlds;
 import java.util.HashMap;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -13,7 +13,7 @@ public class EntityAddStartEventTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     final EntityAddStartEvent event = new EntityAddStartEvent( world );
 
     assertEquals( event.getWorld(), world );

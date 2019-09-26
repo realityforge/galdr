@@ -1,8 +1,8 @@
 package galdr.spy;
 
 import galdr.AbstractTest;
-import galdr.Galdr;
 import galdr.World;
+import galdr.Worlds;
 import java.util.BitSet;
 import java.util.HashMap;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class LinkRemoveCompleteEventTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     final int entity1Id = world.createEntity( new BitSet() );
     final int entity2Id = world.createEntity( new BitSet() );
     final LinkRemoveCompleteEvent event = new LinkRemoveCompleteEvent( world, entity1Id, entity2Id );

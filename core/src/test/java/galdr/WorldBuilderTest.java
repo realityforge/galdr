@@ -25,7 +25,7 @@ public class WorldBuilderTest
   {
     final String name = randomString();
     final World world =
-      Galdr.world( name )
+      Worlds.world( name )
         .initialEntityCount( 233 )
         .build();
 
@@ -36,14 +36,14 @@ public class WorldBuilderTest
   public void initialEntityCount_default()
   {
     final String name = randomString();
-    final World world = Galdr.world( name ).build();
+    final World world = Worlds.world( name ).build();
     assertEquals( world.getEntityManager().capacity(), WorldBuilder.DEFAULT_INITIAL_ENTITY_COUNT );
   }
 
   @Test
   public void initialEntityCount_invalid()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
 
     assertInvariantFailure( () -> builder.initialEntityCount( -2 ),
                             "Galdr-007: Attempted to set initialEntityCount to -2 for world named 'World@1' but initialEntityCount must be a positive value." );
@@ -54,7 +54,7 @@ public class WorldBuilderTest
   {
     final String name = randomString();
     final World world =
-      Galdr.world( name )
+      Worlds.world( name )
         .component( Armour.class, Armour::new )
         .component( Health.class, Health::new )
         .build();
@@ -70,7 +70,7 @@ public class WorldBuilderTest
   {
     final String name = randomString();
     final World world =
-      Galdr.world( name )
+      Worlds.world( name )
         .stage( "ABC" )
         .stage( "DEF" )
         .build();
@@ -85,7 +85,7 @@ public class WorldBuilderTest
   public void stage_with_DuplicateName()
   {
     final String name = randomString();
-    final WorldBuilder builder = Galdr.world( name );
+    final WorldBuilder builder = Worlds.world( name );
     builder.stage( "DEF" );
     builder.stage( "ABC" );
 
@@ -96,7 +96,7 @@ public class WorldBuilderTest
   @Test
   public void build_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( builder::build,
@@ -106,7 +106,7 @@ public class WorldBuilderTest
   @Test
   public void initialEntityCount_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.initialEntityCount( 22 ),
@@ -116,7 +116,7 @@ public class WorldBuilderTest
   @Test
   public void component_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.stage( randomString() ),
@@ -126,7 +126,7 @@ public class WorldBuilderTest
   @Test
   public void stage_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.component( Attack.class, Attack::new ),

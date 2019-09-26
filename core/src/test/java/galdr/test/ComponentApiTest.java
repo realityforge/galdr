@@ -2,8 +2,8 @@ package galdr.test;
 
 import galdr.AbstractTest;
 import galdr.ComponentAPI;
-import galdr.Galdr;
 import galdr.World;
+import galdr.Worlds;
 import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -19,7 +19,7 @@ public class ComponentApiTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().component( Health.class, Health::new ).build();
+    final World world = Worlds.world().component( Health.class, Health::new ).build();
 
     final int entityId = world.createEntity( new BitSet() );
 

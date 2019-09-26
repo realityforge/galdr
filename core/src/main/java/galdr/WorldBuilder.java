@@ -12,7 +12,7 @@ import static org.realityforge.braincheck.Guards.*;
 
 /**
  * A builder class used to create World instances.
- * An instance of the builder should be created via {@link Galdr#world()} or {@link Galdr#world(String)}.
+ * An instance of the builder should be created via {@link Worlds#world()} or {@link Worlds#world(String)}.
  */
 public final class WorldBuilder
 {

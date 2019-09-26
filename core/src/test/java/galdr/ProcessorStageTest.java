@@ -52,7 +52,7 @@ public class ProcessorStageTest
   public void basicOperation()
   {
     final List<String> trace = new ArrayList<>();
-    final World world = Galdr.world( "MyWorld" )
+    final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage",
               new MyProcessor( "A", trace ),
               new MyProcessor( "B", trace ),
@@ -80,7 +80,7 @@ public class ProcessorStageTest
     GaldrTestUtil.disableCopyArraysPassedToConstructors();
 
     final List<String> trace = new ArrayList<>();
-    final World world = Galdr.world( "MyWorld" )
+    final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage",
               new MyProcessor( "A", trace ),
               new MyProcessor( "B", trace ),
@@ -106,7 +106,7 @@ public class ProcessorStageTest
   public void toString_test()
   {
     final List<String> trace = new ArrayList<>();
-    final World world = Galdr.world( "MyWorld" )
+    final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage",
               new MyProcessor( "A", trace ),
               new MyProcessor( "B", trace ),
@@ -125,7 +125,7 @@ public class ProcessorStageTest
   public void processorGeneratesError()
   {
     final List<String> trace = new ArrayList<>();
-    final World world = Galdr.world( "MyWorld" )
+    final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage",
               new MyProcessor( "A", trace ),
               new MyFaultyProcessor( "B", trace ),

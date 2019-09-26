@@ -1,8 +1,8 @@
 package galdr.spy;
 
 import galdr.AbstractTest;
-import galdr.Galdr;
 import galdr.World;
+import galdr.Worlds;
 import java.util.BitSet;
 import java.util.HashMap;
 import org.testng.annotations.Test;
@@ -18,7 +18,7 @@ public class ComponentAddCompleteEventTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().component( Health.class, Health::new ).build();
+    final World world = Worlds.world().component( Health.class, Health::new ).build();
     final int entityId = world.createEntity( new BitSet() );
     final int componentId = world.getComponentByType( Health.class ).getId();
     final ComponentAddCompleteEvent event = new ComponentAddCompleteEvent( world, entityId, componentId );

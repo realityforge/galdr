@@ -74,9 +74,6 @@ for systems/processors ahead of time.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider caching Link objects in world ... at least for spy infrastructure.
 * Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent` and `EntityAddStartEvent`.
-* Consider using a pattern where the factory/builder class is the name of the factory pluralized and is filled
-  with static methods. i.e. The class that creates World instances is `Worlds`. We could move `WorldBuilder`
-  as inner class and `Galdr.world(*)` methods to this class.
 * Add support for Components that have no state. They are effectively flags/markers. Potentially the
   ComponentManager implementation just keeps bitset for free/notfree and generates an error if component
   is accessed (or returns a singleton). Potentially these can be typed by java annotations or similar

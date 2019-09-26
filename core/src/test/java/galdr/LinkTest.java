@@ -15,7 +15,7 @@ public class LinkTest
   @Test
   public void toString_test()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -38,7 +38,7 @@ public class LinkTest
   @Test
   public void createLinkWithNoCascadeAndDisposeSource()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -68,7 +68,7 @@ public class LinkTest
   @Test
   public void createLinkWithNoCascadeAndDisposeSource_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -120,7 +120,7 @@ public class LinkTest
   @Test
   public void createLinkWithNoCascadeAndDisposeTarget()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -151,7 +151,7 @@ public class LinkTest
   @Test
   public void createLinkWithNoCascadeAndDisposeTarget_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -204,7 +204,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeSourceRemoveAndDisposeSource()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -234,7 +234,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeSourceRemoveAndDisposeSource_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -294,7 +294,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeSourceRemoveAndDisposeTarget()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -324,7 +324,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeSourceRemoveAndDisposeTarget_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -376,7 +376,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeTargetRemoveAndDisposeSource()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -406,7 +406,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeTargetRemoveAndDisposeSource_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -458,7 +458,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeTargetRemoveAndDisposeTarget()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -488,7 +488,7 @@ public class LinkTest
   @Test
   public void createLinkWithCascadeTargetRemoveAndDisposeTarget_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -548,7 +548,7 @@ public class LinkTest
   @Test
   public void dispose()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -578,7 +578,7 @@ public class LinkTest
   @Test
   public void dispose_withSpyEnabled()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -617,7 +617,7 @@ public class LinkTest
   @Test
   public void dispose_disposedLink()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -633,7 +633,7 @@ public class LinkTest
   @Test
   public void getSourceEntity_disposedLink()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -650,7 +650,7 @@ public class LinkTest
   @Test
   public void getTargetEntity_disposedLink()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 

@@ -24,7 +24,7 @@ public class ComponentRegistryTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .component( Component2.class, Component2::new )
       .component( Component3.class, Component3::new )
@@ -44,7 +44,7 @@ public class ComponentRegistryTest
   public void disableCopyArrayDuringConstruct()
   {
     GaldrTestUtil.disableCopyArraysPassedToConstructors();
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .component( Component2.class, Component2::new )
       .component( Component3.class, Component3::new )
@@ -70,7 +70,7 @@ public class ComponentRegistryTest
   @Test
   public void constructContainingComponentsWithInvalidIndex()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     assertInvariantFailure( () -> new ComponentRegistry( new FastArrayComponentManager<>( world,
                                                                                           0,
                                                                                           Component1.class,
@@ -92,7 +92,7 @@ public class ComponentRegistryTest
   @Test
   public void isComponentIdValid()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .build();
     final ComponentRegistry registry = world.getComponentRegistry();
@@ -104,7 +104,7 @@ public class ComponentRegistryTest
   @Test
   public void getComponentManagerByIndex_badIndex()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .build();
     final ComponentRegistry registry = world.getComponentRegistry();
@@ -117,7 +117,7 @@ public class ComponentRegistryTest
   @Test
   public void getComponentManagerByType_badType()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     final ComponentRegistry registry = world.getComponentRegistry();
     assertInvariantFailure( () -> registry.getComponentManagerByType( Component2.class ),
                             "Galdr-0001: ComponentRegistry.getComponentManagerByType() attempted to access Component for type class galdr.ComponentRegistryTest$Component2 but no such component exists." );

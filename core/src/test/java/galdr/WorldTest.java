@@ -21,8 +21,8 @@ public class WorldTest
   @Test
   public void basicConstruct()
   {
-    final World world1 = Galdr.world( "Foo" ).build();
-    final World world2 = Galdr.world().build();
+    final World world1 = Worlds.world( "Foo" ).build();
+    final World world2 = Worlds.world().build();
 
     assertEquals( world1.getName(), "Foo" );
     assertEquals( world1.toString(), "World[Foo]" );
@@ -36,7 +36,7 @@ public class WorldTest
     final String name1 = "ABCDEF";
     final String name2 = "GHIJK";
     final String name3 = randomString();
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .stage( name1, new BasicNoopProcessor() )
       .stage( name2, new BasicNoopProcessor() )
       .build();
@@ -64,7 +64,7 @@ public class WorldTest
     final String name1 = "ABCDEF";
     final String name2 = "GHIJK";
     final String name3 = randomString();
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .stage( name1, new BasicNoopProcessor() )
       .stage( name2, new BasicNoopProcessor() )
       .build();
@@ -80,7 +80,7 @@ public class WorldTest
   @Test
   public void getComponentByType()
   {
-    final World world = Galdr.world().component( Component1.class, Component1::new ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
 
     assertNotNull( world.getComponentByType( Component1.class ) );
   }
@@ -88,7 +88,7 @@ public class WorldTest
   @Test
   public void getComponentRegistry()
   {
-    final World world = Galdr.world()
+    final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .component( Component2.class, Component2::new )
       .build();
@@ -113,7 +113,7 @@ public class WorldTest
   @Test
   public void basicEntityAPIInteractions()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final int entityId1 = world.createEntity( new BitSet() );
     final int entityId2 = world.createEntity( new BitSet() );
@@ -146,7 +146,7 @@ public class WorldTest
   public void errorHandlerLifecycle()
   {
     final String name = randomString();
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     final Processor processor = new BasicNoopProcessor();
     builder.stage( name, processor );
     final World world = builder.build();
@@ -188,7 +188,7 @@ public class WorldTest
   {
     GaldrTestUtil.disableErrorHandlers();
 
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final ErrorHandler errorHandler = ( stage, processor, throwable ) -> {
     };
@@ -202,7 +202,7 @@ public class WorldTest
   {
     GaldrTestUtil.disableErrorHandlers();
 
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final ErrorHandler errorHandler = ( stage, processor, throwable ) -> {
     };
@@ -215,7 +215,7 @@ public class WorldTest
   {
     GaldrTestUtil.disableSpies();
 
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     assertInvariantFailure( world::getSpy, "Galdr-0021: Attempting to get Spy but spies are not enabled." );
   }
@@ -223,7 +223,7 @@ public class WorldTest
   @Test
   public void run_action()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     world.run( () -> assertEquals( WorldHolder.world(), world ) );
@@ -233,7 +233,7 @@ public class WorldTest
   @Test
   public void run_function()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     final int value = world.run( () -> {

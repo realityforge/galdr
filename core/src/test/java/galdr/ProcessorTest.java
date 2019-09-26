@@ -21,7 +21,7 @@ public class ProcessorTest
   @Test
   public void construct()
   {
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     // Cache the processor in var
     final Processor processor = new MyProcessor();
     builder.stage( "MyStage", processor ).build();
@@ -47,7 +47,7 @@ public class ProcessorTest
 
     assertInvariantFailure( processor::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
 
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     WorldHolder.activateWorld( world );
     assertEquals( processor.world(), world );
   }

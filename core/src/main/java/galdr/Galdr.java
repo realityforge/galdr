@@ -91,27 +91,4 @@ public final class Galdr
   {
     return GaldrConfig.checkApiInvariants() && BrainCheckConfig.checkApiInvariants();
   }
-
-  /**
-   * Create a world.
-   *
-   * @return the builder object to create the world.
-   */
-  @Nonnull
-  public static WorldBuilder world()
-  {
-    return world( null );
-  }
-
-  /**
-   * Create a world.
-   *
-   * @param name the human consumable name of the world. MUST be <code>null</code> if {@link Galdr#areNamesEnabled()} returns <code>false</code> otherwise may be non-null.
-   * @return the builder object to create the world.
-   */
-  @Nonnull
-  public static WorldBuilder world( @Nullable final String name )
-  {
-    return new WorldBuilder( name );
-  }
 }

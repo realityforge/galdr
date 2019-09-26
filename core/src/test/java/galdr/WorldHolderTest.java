@@ -11,7 +11,7 @@ public class WorldHolderTest
   {
     assertFalse( WorldHolder.isActive() );
 
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
     assertTrue( WorldHolder.isActive() );
 
     // Complete build of world and thus deactivate
@@ -25,7 +25,7 @@ public class WorldHolderTest
   {
     assertFalse( WorldHolder.isActive() );
 
-    final WorldBuilder builder = Galdr.world();
+    final WorldBuilder builder = Worlds.world();
 
     final World world = WorldHolder.world();
     assertNotNull( world );
@@ -44,7 +44,7 @@ public class WorldHolderTest
   @Test
   public void activateAndDeactivateWorld()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     assertFalse( WorldHolder.isActive() );
     WorldHolder.activateWorld( world );
@@ -60,8 +60,8 @@ public class WorldHolderTest
   @Test
   public void activateWorld_whenWorldActive()
   {
-    final World world1 = Galdr.world().build();
-    final World world2 = Galdr.world().build();
+    final World world1 = Worlds.world().build();
+    final World world2 = Worlds.world().build();
 
     assertFalse( WorldHolder.isActive() );
     WorldHolder.activateWorld( world1 );
@@ -74,8 +74,8 @@ public class WorldHolderTest
   @Test
   public void deactivateWorld_whenWorldNotActive()
   {
-    final World world1 = Galdr.world().build();
-    final World world2 = Galdr.world().build();
+    final World world1 = Worlds.world().build();
+    final World world2 = Worlds.world().build();
 
     assertFalse( WorldHolder.isActive() );
     WorldHolder.activateWorld( world1 );

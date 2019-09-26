@@ -1,8 +1,8 @@
 package galdr.spy;
 
 import galdr.AbstractTest;
-import galdr.Galdr;
 import galdr.World;
+import galdr.Worlds;
 import java.util.BitSet;
 import java.util.HashMap;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class EntityAddCompleteEventTest
   @Test
   public void basicOperation()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
     final int entityId = world.createEntity( new BitSet() );
     final EntityAddCompleteEvent event = new EntityAddCompleteEvent( world, entityId );
 

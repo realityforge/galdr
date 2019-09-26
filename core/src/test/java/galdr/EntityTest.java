@@ -9,7 +9,7 @@ public class EntityTest
   @Test
   public void linkOutgoing_entityNotSource()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -26,7 +26,7 @@ public class EntityTest
   @Test
   public void linkIncoming_entityNotTarget()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -43,7 +43,7 @@ public class EntityTest
   @Test
   public void unlinkIncoming_noLinks()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -60,7 +60,7 @@ public class EntityTest
   @Test
   public void unlinkIncoming_noMatchingLink()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -78,7 +78,7 @@ public class EntityTest
   @Test
   public void unlinkOutgoing_noLinks()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
@@ -95,7 +95,7 @@ public class EntityTest
   @Test
   public void unlinkOutgoing_noMatchingLink()
   {
-    final World world = Galdr.world().build();
+    final World world = Worlds.world().build();
 
     final EntityManager em = world.getEntityManager();
 
