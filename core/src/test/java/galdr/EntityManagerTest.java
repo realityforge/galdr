@@ -161,7 +161,6 @@ public class EntityManagerTest
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entity1.getId() );
       assertTrue( entity1.isAlive() );
-
     } );
     handler.assertNextEvent( EntityAddStartEvent.class, e -> assertEquals( e.getWorld(), world ) );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
