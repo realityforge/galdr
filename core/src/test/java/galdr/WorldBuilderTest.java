@@ -55,14 +55,19 @@ public class WorldBuilderTest
     final String name = randomString();
     final World world =
       Worlds.world( name )
-        .component( Armour.class, Armour::new )
+        .component( Armour.class )
         .component( Health.class, Health::new )
+        .component( Attack.class, Attack::new, ComponentStorage.MAP )
         .build();
 
     final Set<Class<?>> componentTypes = world.getComponentRegistry().getComponentTypes();
-    assertEquals( componentTypes.size(), 2 );
+    assertEquals( componentTypes.size(), 3 );
     assertTrue( componentTypes.contains( Armour.class ) );
     assertTrue( componentTypes.contains( Health.class ) );
+
+    assertEquals( world.getComponentByType( Armour.class ).getStorage(), ComponentStorage.NONE );
+    assertEquals( world.getComponentByType( Health.class ).getStorage(), ComponentStorage.ARRAY );
+    assertEquals( world.getComponentByType( Attack.class ).getStorage(), ComponentStorage.MAP );
   }
 
   @Test

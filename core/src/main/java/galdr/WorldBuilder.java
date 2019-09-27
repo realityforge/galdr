@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -59,11 +60,56 @@ public final class WorldBuilder
   }
 
   @Nonnull
+  public <T> WorldBuilder component( @Nonnull final Class<T> type )
+  {
+    return _component( type, null, ComponentStorage.NONE );
+  }
+
+  @Nonnull
   public <T> WorldBuilder component( @Nonnull final Class<T> type, @Nonnull final Supplier<T> createFn )
   {
+    return _component( type, createFn, ComponentStorage.ARRAY );
+  }
+
+  @Nonnull
+  public <T> WorldBuilder component( @Nonnull final Class<T> type,
+                                     @Nonnull final Supplier<T> createFn,
+                                     @Nonnull final ComponentStorage storage )
+  {
+    return _component( type, Objects.requireNonNull( createFn ), storage );
+  }
+
+  @Nonnull
+  private <T> WorldBuilder _component( @Nonnull final Class<T> type,
+                                       @Nullable final Supplier<T> createFn,
+                                       @Nonnull final ComponentStorage storage )
+  {
     ensureWorldNotConstructed();
-    _components.add( new FastArrayComponentManager<>( _world, _components.size(), type, createFn, _initialEntityCount ) );
+    _components.add( createComponentManager( _components.size(), type, createFn, storage ) );
     return this;
+  }
+
+  @Nonnull
+  private <T> ComponentManager<T> createComponentManager( final int componentId,
+                                                          @Nonnull final Class<T> type,
+                                                          @Nullable final Supplier<T> createFn,
+                                                          @Nonnull final ComponentStorage storage )
+  {
+    if ( ComponentStorage.ARRAY == storage )
+    {
+      assert null != createFn;
+      return new FastArrayComponentManager<>( _world, componentId, type, createFn, _initialEntityCount );
+    }
+    else if ( ComponentStorage.MAP == storage )
+    {
+      assert null != createFn;
+      return new MapComponentManager<>( _world, componentId, type, createFn );
+    }
+    else
+    {
+      assert ComponentStorage.NONE == storage;
+      return new NoStorageComponentManager<>( _world, componentId, type );
+    }
   }
 
   @Nonnull
