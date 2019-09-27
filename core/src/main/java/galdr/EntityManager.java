@@ -69,7 +69,7 @@ final class EntityManager
     }
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world ) );
+      _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world, componentIds ) );
     }
     final Entity entity = allocateEntity();
     entity.setAlive();
@@ -78,7 +78,7 @@ final class EntityManager
     entity.clearAdding();
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId() ) );
+      _world.getSpy().reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId(), componentIds ) );
     }
     return entity;
   }

@@ -80,7 +80,6 @@ for systems/processors ahead of time.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider caching Link objects in world ... at least for spy infrastructure.
-* Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent` and `EntityAddStartEvent`.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
   component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations. Possibly
@@ -113,7 +112,7 @@ for systems/processors ahead of time.
   the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
 
 * Replace `BitSet` with equivalent variant that is more optimized for our use-case?
-* Add a `ReadOnlyBitSet` implementation.
+* Add a `ReadOnlyBitSet` implementation and make sure the `componentIds` field in `EntityAddCompleteEvent` and `EntityAddStartEvent` use this implementation.
 
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.

@@ -156,15 +156,23 @@ public class EntityManagerTest
     handler.unsubscribe();
 
     handler.assertEventCount( 4 );
-    handler.assertNextEvent( EntityAddStartEvent.class, e -> assertEquals( e.getWorld(), world ) );
+    handler.assertNextEvent( EntityAddStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getComponentIds(), componentIds1 );
+    } );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entity1.getId() );
+      assertEquals( e.getComponentIds(), componentIds1 );
     } );
-    handler.assertNextEvent( EntityAddStartEvent.class, e -> assertEquals( e.getWorld(), world ) );
+    handler.assertNextEvent( EntityAddStartEvent.class, e -> {
+      assertEquals( e.getWorld(), world );
+      assertEquals( e.getComponentIds(), componentIds2 );
+    } );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entity2.getId() );
+      assertEquals( e.getComponentIds(), componentIds2 );
     } );
   }
 

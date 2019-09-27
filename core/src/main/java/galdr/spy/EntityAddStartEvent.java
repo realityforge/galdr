@@ -1,6 +1,7 @@
 package galdr.spy;
 
 import galdr.World;
+import java.util.BitSet;
 import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -16,10 +17,16 @@ public final class EntityAddStartEvent
    */
   @Nonnull
   private final World _world;
+  /**
+   * The component ids.
+   */
+  @Nonnull
+  private final BitSet _componentIds;
 
-  public EntityAddStartEvent( @Nonnull final World world )
+  public EntityAddStartEvent( @Nonnull final World world, @Nonnull final BitSet componentIds )
   {
     _world = Objects.requireNonNull( world );
+    _componentIds = Objects.requireNonNull( componentIds );
   }
 
   @Nonnull
@@ -28,10 +35,17 @@ public final class EntityAddStartEvent
     return _world;
   }
 
+  @Nonnull
+  public BitSet getComponentIds()
+  {
+    return _componentIds;
+  }
+
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
     map.put( "type", "EntityAddStart" );
     map.put( "world", _world.getName() );
+    map.put( "componentIds", _componentIds );
   }
 }
