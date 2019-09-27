@@ -73,7 +73,7 @@
         "class": "galdr.EntityManager",
         "method": "createEntity",
         "file": "EntityManager.java",
-        "lineNumber": 65
+        "lineNumber": 66
       }
     ]
   },
@@ -112,13 +112,13 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 164
+        "lineNumber": 169
       },
       {
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 174
+        "lineNumber": 179
       }
     ]
   },
@@ -131,7 +131,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 131
+        "lineNumber": 136
       }
     ]
   },
@@ -144,7 +144,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 128
+        "lineNumber": 133
       }
     ]
   },
@@ -196,7 +196,7 @@
         "class": "galdr.WorldBuilder",
         "method": "ensureWorldNotConstructed",
         "file": "WorldBuilder.java",
-        "lineNumber": 100
+        "lineNumber": 146
       }
     ]
   },
@@ -209,7 +209,7 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 180
+        "lineNumber": 185
       }
     ]
   },
@@ -287,7 +287,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 265
+        "lineNumber": 272
       }
     ]
   },
@@ -298,9 +298,9 @@
     "callers": [
       {
         "class": "galdr.ComponentManager",
-        "method": "create",
+        "method": "newComponent",
         "file": "ComponentManager.java",
-        "lineNumber": 214
+        "lineNumber": 229
       }
     ]
   },
@@ -313,7 +313,7 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 180
+        "lineNumber": 175
       }
     ]
   },
@@ -404,7 +404,7 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 122
+        "lineNumber": 117
       }
     ]
   },
@@ -417,7 +417,7 @@
         "class": "galdr.EntityManager",
         "method": "doDisposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 191
+        "lineNumber": 196
       }
     ]
   },
@@ -430,7 +430,7 @@
         "class": "galdr.EntityManager",
         "method": "getEntityById",
         "file": "EntityManager.java",
-        "lineNumber": 48
+        "lineNumber": 49
       }
     ]
   },
@@ -443,7 +443,7 @@
         "class": "galdr.EntityManager",
         "method": "getEntityById",
         "file": "EntityManager.java",
-        "lineNumber": 46
+        "lineNumber": 47
       }
     ]
   },
@@ -456,7 +456,7 @@
         "class": "galdr.WorldBuilder",
         "method": "stage",
         "file": "WorldBuilder.java",
-        "lineNumber": 75
+        "lineNumber": 121
       }
     ]
   },
@@ -534,7 +534,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 134
+        "lineNumber": 139
       }
     ]
   },
@@ -560,7 +560,7 @@
         "class": "galdr.EntityManager",
         "method": "doDisposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 195
+        "lineNumber": 200
       }
     ]
   },
@@ -625,7 +625,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 138
+        "lineNumber": 143
       }
     ]
   },
@@ -638,7 +638,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 142
+        "lineNumber": 147
       }
     ]
   }
