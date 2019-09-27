@@ -31,6 +31,7 @@ public class FastArrayComponentManagerTest
     assertEquals( componentManager.getName(), "Component1" );
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
+    assertEquals( componentManager.getStorage(), ComponentStorage.ARRAY );
     assertEquals( componentManager.capacity(), 5 );
 
     world.createEntity( new BitSet() );

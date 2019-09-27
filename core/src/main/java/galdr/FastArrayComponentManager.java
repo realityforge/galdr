@@ -20,6 +20,13 @@ final class FastArrayComponentManager<T>
     _data = new Object[ initialCapacity ];
   }
 
+  @Nonnull
+  @Override
+  ComponentStorage getStorage()
+  {
+    return ComponentStorage.ARRAY;
+  }
+
   @SuppressWarnings( "unchecked" )
   @Nonnull
   @Override

@@ -75,6 +75,14 @@ abstract class ComponentManager<T>
   }
 
   /**
+   * Return the storage strategy used by the component.
+   *
+   * @return the storage strategy used by the component.
+   */
+  @Nonnull
+  abstract ComponentStorage getStorage();
+
+  /**
    * Return the unique id of the component within the containing {@link World}.
    *
    * @return the unique id of the component within the containing {@link World}.

@@ -15,6 +15,13 @@ final class NoStorageComponentManager<T>
 
   @Nonnull
   @Override
+  ComponentStorage getStorage()
+  {
+    return ComponentStorage.NONE;
+  }
+
+  @Nonnull
+  @Override
   T performGet( final int entityId )
   {
     if ( Galdr.shouldCheckApiInvariants() )

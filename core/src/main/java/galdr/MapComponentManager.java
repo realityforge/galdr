@@ -23,6 +23,13 @@ final class MapComponentManager<T>
 
   @Nonnull
   @Override
+  ComponentStorage getStorage()
+  {
+    return ComponentStorage.MAP;
+  }
+
+  @Nonnull
+  @Override
   T performGet( final int entityId )
   {
     return Objects.requireNonNull( getComponents().get( entityId ) );

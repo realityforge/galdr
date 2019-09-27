@@ -31,6 +31,7 @@ public class MapComponentManagerTest
     assertEquals( componentManager.getName(), "Component1" );
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
+    assertEquals( componentManager.getStorage(), ComponentStorage.MAP );
 
     assertEquals( componentManager.getComponents().size(), 0 );
 

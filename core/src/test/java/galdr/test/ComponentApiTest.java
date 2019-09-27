@@ -2,6 +2,7 @@ package galdr.test;
 
 import galdr.AbstractTest;
 import galdr.ComponentAPI;
+import galdr.ComponentStorage;
 import galdr.World;
 import galdr.Worlds;
 import java.util.BitSet;
@@ -16,6 +17,10 @@ public class ComponentApiTest
     int healthPoints;
   }
 
+  private static class MyFlag
+  {
+  }
+
   @Test
   public void basicOperation()
   {
@@ -26,6 +31,7 @@ public class ComponentApiTest
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 
     assertEquals( api.getId(), 0 );
+    assertEquals( api.getStorage(), ComponentStorage.ARRAY );
 
     assertFalse( api.has( entityId ) );
     assertNull( api.find( entityId ) );
@@ -79,5 +85,29 @@ public class ComponentApiTest
 
     assertFalse( api.has( entityId ) );
     assertNull( api.find( entityId ) );
+  }
+
+  @Test
+  public void basicOperationUsingFlagComponent()
+  {
+    final World world = Worlds.world().component( MyFlag.class ).build();
+
+    final ComponentAPI<MyFlag> api = world.getComponentByType( MyFlag.class );
+    assertEquals( api.getId(), 0 );
+
+    final int entityId = world.createEntity( new BitSet() );
+
+    assertFalse( api.has( entityId ) );
+    assertEquals( api.getStorage(), ComponentStorage.NONE );
+
+    api.allocate( entityId );
+
+    assertTrue( api.has( entityId ) );
+
+    assertTrue( api.has( entityId ) );
+
+    api.remove( entityId );
+
+    assertFalse( api.has( entityId ) );
   }
 }

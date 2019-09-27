@@ -32,6 +32,17 @@ public final class ComponentAPI<T>
   }
 
   /**
+   * Return the storage strategy used by the component.
+   *
+   * @return the storage strategy used by the component.
+   */
+  @Nonnull
+  public ComponentStorage getStorage()
+  {
+    return _store.getStorage();
+  }
+
+  /**
    * Create the component instance for the specified entity.
    *
    * @param entityId the id of the entity.

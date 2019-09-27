@@ -25,6 +25,7 @@ public class NoStorageComponentManagerTest
     assertEquals( componentManager.getName(), "Component1" );
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
+    assertEquals( componentManager.getStorage(), ComponentStorage.NONE );
 
     final int entityId = world.createEntity( new BitSet() );
 
