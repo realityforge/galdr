@@ -78,7 +78,6 @@ for systems/processors ahead of time.
   ComponentManager implementation just keeps bitset for free/notfree and generates an error if component
   is accessed (or returns a singleton). Potentially these can be typed by java annotations or similar
 * Add a suite of "integration" tests that operate at the public API level.
-* Add `MapComponentManager` that stores components in a HashMap
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
   component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations.
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
