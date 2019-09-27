@@ -21,7 +21,7 @@ public class ProcessorTest
   @Test
   public void construct()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     // Cache the processor in var
     final Processor processor = new MyProcessor();
     builder.stage( "MyStage", processor ).build();

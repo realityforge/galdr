@@ -11,7 +11,7 @@ public class WorldHolderTest
   {
     assertFalse( WorldHolder.isActive() );
 
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     assertTrue( WorldHolder.isActive() );
 
     // Complete build of world and thus deactivate
@@ -25,7 +25,7 @@ public class WorldHolderTest
   {
     assertFalse( WorldHolder.isActive() );
 
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
 
     final World world = WorldHolder.world();
     assertNotNull( world );

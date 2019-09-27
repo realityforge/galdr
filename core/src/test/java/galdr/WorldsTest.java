@@ -5,7 +5,7 @@ import java.util.Set;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class WorldBuilderTest
+public class WorldsTest
   extends AbstractTest
 {
   private static class Armour
@@ -37,13 +37,13 @@ public class WorldBuilderTest
   {
     final String name = randomString();
     final World world = Worlds.world( name ).build();
-    assertEquals( world.getEntityManager().capacity(), WorldBuilder.DEFAULT_INITIAL_ENTITY_COUNT );
+    assertEquals( world.getEntityManager().capacity(), Worlds.Builder.DEFAULT_INITIAL_ENTITY_COUNT );
   }
 
   @Test
   public void initialEntityCount_invalid()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
 
     assertInvariantFailure( () -> builder.initialEntityCount( -2 ),
                             "Galdr-007: Attempted to set initialEntityCount to -2 for world named 'World@1' but initialEntityCount must be a positive value." );
@@ -90,7 +90,7 @@ public class WorldBuilderTest
   public void stage_with_DuplicateName()
   {
     final String name = randomString();
-    final WorldBuilder builder = Worlds.world( name );
+    final Worlds.Builder builder = Worlds.world( name );
     builder.stage( "DEF" );
     builder.stage( "ABC" );
 
@@ -101,7 +101,7 @@ public class WorldBuilderTest
   @Test
   public void build_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( builder::build,
@@ -111,7 +111,7 @@ public class WorldBuilderTest
   @Test
   public void initialEntityCount_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.initialEntityCount( 22 ),
@@ -121,7 +121,7 @@ public class WorldBuilderTest
   @Test
   public void component_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.stage( randomString() ),
@@ -131,7 +131,7 @@ public class WorldBuilderTest
   @Test
   public void stage_invokedAfterWorldBuild()
   {
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     builder.build();
 
     assertInvariantFailure( () -> builder.component( Attack.class, Attack::new ),

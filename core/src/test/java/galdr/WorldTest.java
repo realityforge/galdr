@@ -146,7 +146,7 @@ public class WorldTest
   public void errorHandlerLifecycle()
   {
     final String name = randomString();
-    final WorldBuilder builder = Worlds.world();
+    final Worlds.Builder builder = Worlds.world();
     final Processor processor = new BasicNoopProcessor();
     builder.stage( name, processor );
     final World world = builder.build();

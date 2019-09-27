@@ -193,10 +193,10 @@
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
     "callers": [
       {
-        "class": "galdr.WorldBuilder",
+        "class": "galdr.Worlds$Builder",
         "method": "ensureWorldNotConstructed",
-        "file": "WorldBuilder.java",
-        "lineNumber": 146
+        "file": "Worlds.java",
+        "lineNumber": 178
       }
     ]
   },
@@ -453,10 +453,10 @@
     "messagePattern": "Attempted to create stage named named '%s' but a stage already exists with the specified name. Existing stages include: [%s]",
     "callers": [
       {
-        "class": "galdr.WorldBuilder",
+        "class": "galdr.Worlds$Builder",
         "method": "stage",
-        "file": "WorldBuilder.java",
-        "lineNumber": 121
+        "file": "Worlds.java",
+        "lineNumber": 153
       }
     ]
   },
