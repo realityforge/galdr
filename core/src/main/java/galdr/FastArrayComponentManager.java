@@ -16,7 +16,7 @@ final class FastArrayComponentManager<T>
                              @Nonnull final Supplier<T> createFn,
                              final int initialCapacity )
   {
-    super( world, id, type, createFn );
+    super( world, id, Flags.ALLOCATE, type, createFn );
     _data = new Object[ initialCapacity ];
   }
 
@@ -28,6 +28,7 @@ final class FastArrayComponentManager<T>
     return Objects.requireNonNull( (T) _data[ entityId ] );
   }
 
+  @Nonnull
   @Override
   T performCreate( final int entityId )
   {

@@ -44,6 +44,18 @@ public final class ComponentAPI<T>
   }
 
   /**
+   * Allocate a component instance for the specified entity.
+   * Unlike the {@link #create(int)} and {@link #findOrCreate(int)}, this method does not return the component.
+   * It is expected that this method will be used for components that have no state.
+   *
+   * @param entityId the id of the entity.
+   */
+  public void allocate( final int entityId )
+  {
+     _store.allocate( entityId );
+  }
+
+  /**
    * Find the component instance or create a new one if it does not exist.
    *
    * @param entityId the id of the entity.

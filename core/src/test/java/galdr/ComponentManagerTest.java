@@ -112,6 +112,22 @@ public class ComponentManagerTest
   }
 
   @Test
+  public void allocate()
+  {
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
+    final ComponentManager<Component1> cm = world.getComponentRegistry().getComponentManagerByType( Component1.class );
+
+    final int entityId = world.createEntity( new BitSet() );
+    assertFalse( cm.has( entityId ) );
+    assertNull( cm.find( entityId ) );
+
+    cm.allocate( entityId );
+
+    assertTrue( cm.has( entityId ) );
+    assertNotNull( cm.find( entityId ) );
+  }
+
+  @Test
   public void debugToString()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();

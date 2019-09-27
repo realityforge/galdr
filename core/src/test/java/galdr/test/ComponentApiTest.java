@@ -45,4 +45,39 @@ public class ComponentApiTest
     assertFalse( api.has( entityId ) );
     assertNull( api.find( entityId ) );
   }
+
+  @Test
+  public void basicOperationUsingAllocate()
+  {
+    final World world = Worlds.world().component( Health.class, Health::new ).build();
+
+    final int entityId = world.createEntity( new BitSet() );
+
+    final ComponentAPI<Health> api = world.getComponentByType( Health.class );
+
+    assertEquals( api.getId(), 0 );
+
+    assertFalse( api.has( entityId ) );
+    assertNull( api.find( entityId ) );
+
+    api.allocate( entityId );
+
+    assertTrue( api.has( entityId ) );
+    assertNotNull( api.find( entityId ) );
+
+    final Health health = api.get( entityId );
+
+    final int healthPoints = randomInt( 100 );
+    health.healthPoints = healthPoints;
+
+    assertTrue( api.has( entityId ) );
+    assertEquals( api.find( entityId ), health );
+    assertEquals( api.findOrCreate( entityId ), health );
+    assertEquals( api.get( entityId ).healthPoints, healthPoints );
+
+    api.remove( entityId );
+
+    assertFalse( api.has( entityId ) );
+    assertNull( api.find( entityId ) );
+  }
 }

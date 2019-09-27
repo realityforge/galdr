@@ -27,6 +27,10 @@ abstract class ComponentManager<T>
    */
   private final int _id;
   /**
+   * Flags used to control the behaviour of the component manager.
+   */
+  private final int _flags;
+  /**
    * The java type of the component.
    */
   @Nonnull
@@ -44,11 +48,13 @@ abstract class ComponentManager<T>
 
   ComponentManager( @Nonnull final World world,
                     final int id,
+                    final int flags,
                     @Nonnull final Class<T> type,
                     @Nonnull final Supplier<T> createFn )
   {
     _world = Objects.requireNonNull( world );
     _id = id;
+    _flags = flags;
     _type = Objects.requireNonNull( type );
     _createFn = Objects.requireNonNull( createFn );
     _api = new ComponentAPI<>( this );
@@ -207,6 +213,26 @@ abstract class ComponentManager<T>
   @Nonnull
   final T create( final int entityId )
   {
+    final T component = newComponent( entityId, true );
+    assert null != component;
+    return component;
+  }
+
+  /**
+   * Allocate a component to the specified entity.
+   * Unlike the {@link #create(int)} and {@link #findOrCreate(int)}, this method does not return the component.
+   * It is expected that this method will be used for components that have no state.
+   *
+   * @param entityId the id of the entity.
+   */
+  final void allocate( final int entityId )
+  {
+    newComponent( entityId, false );
+  }
+
+  @Nullable
+  private T newComponent( final int entityId, final boolean shouldReturnComponent )
+  {
     final Entity entity = getEntityById( entityId );
     final BitSet componentIds = entity.getComponentIds();
     if ( Galdr.shouldCheckApiInvariants() )
@@ -220,7 +246,8 @@ abstract class ComponentManager<T>
       _world.getSpy().reportSpyEvent( new ComponentAddStartEvent( _world, entity.getId(), getId() ) );
     }
     componentIds.set( _id );
-    final T component = performCreate( entityId );
+    final boolean mustPerformCreate = Flags.ALLOCATE == ( _flags & Flags.ALLOCATE );
+    final T component = mustPerformCreate ? performCreate( entityId ) : null;
     //TODO: Update AreaOfInterest elements based on component addition
     if ( !entity.isAdding() )
     {
@@ -230,7 +257,7 @@ abstract class ComponentManager<T>
         _world.getSpy().reportSpyEvent( new ComponentAddCompleteEvent( _world, entity.getId(), getId() ) );
       }
     }
-    return component;
+    return shouldReturnComponent && !mustPerformCreate ? get( entityId ) : component;
   }
 
   /**
@@ -238,6 +265,7 @@ abstract class ComponentManager<T>
    *
    * @param entityId the id of the entity.
    */
+  @Nonnull
   abstract T performCreate( int entityId );
 
   /**
@@ -309,5 +337,17 @@ abstract class ComponentManager<T>
   public int hashCode()
   {
     return _id;
+  }
+
+  static final class Flags
+  {
+    // Flag indicating whether ComponentManager must explicitly allocate a Component
+    // If not present then the component manager assumes that it is pre-allocated nor
+    // not allocateable and just accesses component
+    static final int ALLOCATE = 1 << 1;
+
+    private Flags()
+    {
+    }
   }
 }
