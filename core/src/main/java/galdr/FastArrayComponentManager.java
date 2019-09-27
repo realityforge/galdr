@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 final class FastArrayComponentManager<T>
-  extends ComponentManager<T>
+  extends AllocatingComponentManager<T>
 {
   @Nonnull
   private Object[] _data;

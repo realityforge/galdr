@@ -5,7 +5,6 @@ import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
-import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
@@ -36,11 +35,6 @@ abstract class ComponentManager<T>
   @Nonnull
   private final Class<T> _type;
   /**
-   * Function invoked to create an instance of the component.
-   */
-  @Nonnull
-  private final Supplier<T> _createFn;
-  /**
    * The Component API exposed to application code.
    */
   @Nonnull
@@ -49,14 +43,12 @@ abstract class ComponentManager<T>
   ComponentManager( @Nonnull final World world,
                     final int id,
                     final int flags,
-                    @Nonnull final Class<T> type,
-                    @Nonnull final Supplier<T> createFn )
+                    @Nonnull final Class<T> type )
   {
     _world = Objects.requireNonNull( world );
     _id = id;
     _flags = flags;
     _type = Objects.requireNonNull( type );
-    _createFn = Objects.requireNonNull( createFn );
     _api = new ComponentAPI<>( this );
   }
 
@@ -101,17 +93,6 @@ abstract class ComponentManager<T>
   final Class<T> getType()
   {
     return _type;
-  }
-
-  /**
-   * Return the function that creates an instance of the component.
-   *
-   * @return the function that creates an instance of the component.
-   */
-  @Nonnull
-  final Supplier<T> getCreateFn()
-  {
-    return _createFn;
   }
 
   /**
@@ -267,16 +248,6 @@ abstract class ComponentManager<T>
    */
   @Nonnull
   abstract T performCreate( int entityId );
-
-  /**
-   * Create an instance of the component.
-   *
-   * @return an instance of the component.
-   */
-  final T createComponentInstance()
-  {
-    return getCreateFn().get();
-  }
 
   /**
    * Remove the component for the specified entity.

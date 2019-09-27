@@ -4,7 +4,6 @@ import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
 import java.util.BitSet;
-import java.util.function.Supplier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -19,8 +18,7 @@ public class ComponentManagerTest
   @Test
   public void basicOperation()
   {
-    final Supplier<Component1> createFn = Component1::new;
-    final World world = Worlds.world().component( Component1.class, createFn ).build();
+    final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager =
       world.getComponentRegistry().getComponentManagerByType( Component1.class );
 
@@ -28,7 +26,6 @@ public class ComponentManagerTest
     assertEquals( componentManager.getId(), 0 );
     assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
-    assertEquals( componentManager.getCreateFn(), createFn );
     assertEquals( componentManager.getName(), "Component1" );
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
