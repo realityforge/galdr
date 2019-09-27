@@ -74,9 +74,6 @@ for systems/processors ahead of time.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider caching Link objects in world ... at least for spy infrastructure.
 * Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent` and `EntityAddStartEvent`.
-* Add support for Components that have no state. They are effectively flags/markers. Potentially the
-  ComponentManager implementation just keeps bitset for free/notfree and generates an error if component
-  is accessed (or returns a singleton). Potentially these can be typed by java annotations or similar
 * Add a suite of "integration" tests that operate at the public API level.
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
   component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations.
