@@ -10,12 +10,21 @@ import javax.annotation.Nonnull;
  */
 public final class AreaOfInterest
 {
+  /**
+   * Components that an entity MUST have to be matched.
+   */
   @Nonnull
-  private final BitSet _and = new BitSet();
+  private final BitSet _all = new BitSet();
+  /**
+   * Components that an entity MUST have at least one of to be matched.
+   */
   @Nonnull
-  private final BitSet _or = new BitSet();
+  private final BitSet _one = new BitSet();
+  /**
+   * Components that an entity MUST NOT have to be matched.
+   */
   @Nonnull
-  private final BitSet _not = new BitSet();
+  private final BitSet _exclude = new BitSet();
 
   /**
    * Return true if the specified componentIds matches the area of interest requirements.
@@ -27,7 +36,7 @@ public final class AreaOfInterest
     // This can be implemented MUCH more efficiently by manipulating the underlying words.
     // We should add a containsAll() method to out BitSet implementation
     int current = -1;
-    while ( -1 != ( current = _and.nextSetBit( current + 1 ) ) )
+    while ( -1 != ( current = _all.nextSetBit( current + 1 ) ) )
     {
       if ( !componentIds.get( current ) )
       {
@@ -35,7 +44,7 @@ public final class AreaOfInterest
       }
     }
 
-    return ( _or.isEmpty() || _or.intersects( componentIds ) ) &&
-           ( _not.isEmpty() || !_not.intersects( componentIds ) );
+    return ( _one.isEmpty() || _one.intersects( componentIds ) ) &&
+           ( _exclude.isEmpty() || !_exclude.intersects( componentIds ) );
   }
 }
