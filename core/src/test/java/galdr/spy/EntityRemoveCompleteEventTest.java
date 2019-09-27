@@ -15,11 +15,13 @@ public class EntityRemoveCompleteEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entityId = world.createEntity( new BitSet( 0 ) );
-    final EntityRemoveCompleteEvent event = new EntityRemoveCompleteEvent( world, entityId );
+    final int entityId = world.createEntity( new BitSet(  ) );
+    final BitSet componentIds = new BitSet();
+    final EntityRemoveCompleteEvent event = new EntityRemoveCompleteEvent( world, entityId, componentIds );
 
     assertEquals( event.getWorld(), world );
     assertEquals( event.getEntityId(), entityId );
+    assertEquals( event.getComponentIds(), componentIds );
 
     final HashMap<String, Object> data = new HashMap<>();
     event.toMap( data );
@@ -27,6 +29,7 @@ public class EntityRemoveCompleteEventTest
     assertEquals( data.get( "type" ), "EntityRemoveComplete" );
     assertEquals( data.get( "world" ), world.getName() );
     assertEquals( data.get( "entityId" ), entityId );
-    assertEquals( data.size(), 3 );
+    assertEquals( data.get( "componentIds" ), componentIds );
+    assertEquals( data.size(), 4 );
   }
 }

@@ -282,10 +282,12 @@ public class EntityManagerTest
     handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
+      assertEquals( e.getComponentIds(), componentIds1 );
     } );
     handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
+      assertEquals( e.getComponentIds(), componentIds1 );
     } );
   }
 

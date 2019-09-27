@@ -201,9 +201,11 @@ final class EntityManager
                  () -> "Galdr-0159: Attempting to dispose entity " + entity.getId() + " which is not contained " +
                        "by the active world." );
     }
+    BitSet componentIds = null;
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId() ) );
+      componentIds = BitSet.valueOf( entity.getComponentIds().toLongArray() );
+      _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId(), componentIds ) );
     }
     entity.setRemoving();
     removeComponents( entity );
@@ -211,7 +213,8 @@ final class EntityManager
     _free.set( entity.getId() );
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityRemoveCompleteEvent( _world, entity.getId() ) );
+      assert null != componentIds;
+      _world.getSpy().reportSpyEvent( new EntityRemoveCompleteEvent( _world, entity.getId(), componentIds ) );
     }
   }
 
