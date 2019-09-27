@@ -76,7 +76,9 @@ for systems/processors ahead of time.
 * Add a `ReadOnlyBitSet` `componentIds` field to `EntityAddCompleteEvent` and `EntityAddStartEvent`.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
-  component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations.
+  component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations. Possibly
+  only useful when the component is a primary component in an `AreaOfInterest` and can handle the relative slowness
+  of lookups in other scenarios.
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
