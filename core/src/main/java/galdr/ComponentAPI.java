@@ -63,7 +63,7 @@ public final class ComponentAPI<T>
    */
   public void allocate( final int entityId )
   {
-     _store.allocate( entityId );
+    _store.allocate( entityId );
   }
 
   /**
