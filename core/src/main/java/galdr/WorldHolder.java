@@ -32,7 +32,8 @@ final class WorldHolder
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> null != c_world, () -> "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+      apiInvariant( () -> null != c_world,
+                    () -> "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     }
     assert null != c_world;
     return c_world;
@@ -57,7 +58,8 @@ final class WorldHolder
   {
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> null != world, () -> "Galdr-0023: Invoked WorldHolder.activateWorld() with null world." );
+      invariant( () -> null != world,
+                 () -> "Galdr-0023: Invoked WorldHolder.activateWorld() with null world." );
       invariant( () -> null == c_world,
                  () -> "Galdr-0024: Invoked WorldHolder.activateWorld() with world named '" + world.getName() +
                        "' but an existing world named '" + c_world.getName() + "' is active." );
@@ -74,8 +76,9 @@ final class WorldHolder
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      apiInvariant( () -> c_world == world, () -> "Galdr-0028: Attempted to deactivate world named '" +
-                                                  world.getName() + "' that is not active." );
+      apiInvariant( () -> c_world == world,
+                    () -> "Galdr-0028: Attempted to deactivate world named '" + world.getName() +
+                          "' that is not active." );
     }
     c_world = null;
   }
