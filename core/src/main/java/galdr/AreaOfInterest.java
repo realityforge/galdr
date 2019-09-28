@@ -49,6 +49,24 @@ public final class AreaOfInterest
            ( _exclude.isEmpty() || !_exclude.intersects( componentIds ) );
   }
 
+  @Nonnull
+  BitSet getAll()
+  {
+    return _all;
+  }
+
+  @Nonnull
+  BitSet getOne()
+  {
+    return _one;
+  }
+
+  @Nonnull
+  BitSet getExclude()
+  {
+    return _exclude;
+  }
+
   @Override
   public boolean equals( final Object obj )
   {
