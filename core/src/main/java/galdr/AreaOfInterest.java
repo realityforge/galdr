@@ -1,6 +1,7 @@
 package galdr;
 
 import java.util.BitSet;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
@@ -46,5 +47,25 @@ public final class AreaOfInterest
 
     return ( _one.isEmpty() || _one.intersects( componentIds ) ) &&
            ( _exclude.isEmpty() || !_exclude.intersects( componentIds ) );
+  }
+
+  @Override
+  public boolean equals( final Object obj )
+  {
+    if ( obj instanceof AreaOfInterest )
+    {
+      final AreaOfInterest other = (AreaOfInterest) obj;
+      return other._all.equals( _all ) && other._one.equals( _one ) && other._exclude.equals( _exclude );
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash( _all.hashCode(), _one.hashCode(), _exclude.hashCode() );
   }
 }
