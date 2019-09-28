@@ -76,6 +76,10 @@ final class EntityManager
     entity.setAdding();
     createComponents( entity, componentIds );
     entity.clearAdding();
+    for ( final Subscription subscription : _world.getSubscriptions().values() )
+    {
+      subscription.entityAdd( entity );
+    }
     if ( _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId(), componentIds ) );
@@ -206,6 +210,10 @@ final class EntityManager
     {
       componentIds = BitSet.valueOf( entity.getComponentIds().toLongArray() );
       _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId(), componentIds ) );
+    }
+    for ( final Subscription subscription : _world.getSubscriptions().values() )
+    {
+      subscription.entityRemove( entity );
     }
     entity.setRemoving();
     removeComponents( entity );

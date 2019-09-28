@@ -3,7 +3,9 @@ package galdr;
 import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,6 +41,11 @@ abstract class ComponentManager<T>
    */
   @Nonnull
   private final ComponentAPI<T> _api;
+  /**
+   * The subscriptions that have an {@link AreaOfInterest} that overlaps this subscription.
+   */
+  @Nonnull
+  private final List<Subscription> _subscriptions = new ArrayList<>();
 
   ComponentManager( @Nonnull final World world,
                     final int id,
@@ -237,9 +244,12 @@ abstract class ComponentManager<T>
     componentIds.set( _id );
     final boolean mustPerformCreate = Flags.ALLOCATE == ( _flags & Flags.ALLOCATE );
     final T component = mustPerformCreate ? performCreate( entityId ) : null;
-    //TODO: Update AreaOfInterest elements based on component addition
     if ( !entity.isAdding() )
     {
+      for ( final Subscription subscription : _subscriptions )
+      {
+        subscription.componentChange( entity );
+      }
       //TODO: Generate application message for component creation?
       if ( _world.willPropagateSpyEvents() )
       {
@@ -281,8 +291,11 @@ abstract class ComponentManager<T>
         _world.getSpy().reportSpyEvent( new ComponentRemoveStartEvent( _world, entity.getId(), getId() ) );
       }
       //TODO: Generate application message for component removal?
+      for ( final Subscription subscription : _subscriptions )
+      {
+        subscription.componentChange( entity );
+      }
     }
-    //TODO: Update AreaOfInterest elements based on component removal
     performRemove( entityId );
   }
 
@@ -316,6 +329,28 @@ abstract class ComponentManager<T>
   public int hashCode()
   {
     return _id;
+  }
+
+  void addSubscription( @Nonnull final Subscription subscription )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> !_subscriptions.contains( subscription ),
+                 () -> "Galdr-0029: The ComponentManager.addSubscription() method for the component named '" +
+                       getName() + "' was invoked but subscription is already registered with ComponentManager." );
+    }
+    _subscriptions.add( subscription );
+  }
+
+  void removeSubscription( @Nonnull final Subscription subscription )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> _subscriptions.contains( subscription ),
+                 () -> "Galdr-0027: The ComponentManager.removeSubscription() method for the component named '" +
+                       getName() + "' was invoked but subscription is not registered with ComponentManager." );
+    }
+    _subscriptions.remove( subscription );
   }
 
   static final class Flags

@@ -49,6 +49,11 @@ public final class World
   @Nullable
   private Map<String, ProcessorStage> _stages;
   /**
+   * The collection of subscriptions in the world.
+   */
+  @Nullable
+  private Map<AreaOfInterest, Subscription> _subscriptions;
+  /**
    * Support infrastructure for propagating processor errors.
    */
   @Nullable
@@ -172,6 +177,7 @@ public final class World
     _entityManager = new EntityManager( this, initialEntityCount );
     _componentRegistry = Objects.requireNonNull( componentRegistry );
     _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
+    _subscriptions = new HashMap<>();
   }
 
   /**
@@ -234,6 +240,48 @@ public final class World
     }
     assert null != _spy;
     return _spy;
+  }
+
+  @Nonnull
+  Map<AreaOfInterest, Subscription> getSubscriptions()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> null != _subscriptions,
+                    () -> "Galdr-0043: Attempted to invoke World.getSubscriptions() on World named '" +
+                          getName() + "' prior to World completing construction" );
+    }
+    assert null != _subscriptions;
+    return _subscriptions;
+  }
+
+  @Nonnull
+  Subscription findOrCreateSubscription( @Nonnull final AreaOfInterest areaOfInterest )
+  {
+    final Map<AreaOfInterest, Subscription> subscriptions = getSubscriptions();
+    final Subscription subscription = subscriptions.get( areaOfInterest );
+    if ( null != subscription )
+    {
+      return subscription;
+    }
+    else
+    {
+      final Subscription newSubscription = new Subscription( areaOfInterest, getEntityManager().capacity() );
+      subscriptions.put( areaOfInterest, newSubscription );
+      linkSubscription( newSubscription, areaOfInterest.getAll() );
+      linkSubscription( newSubscription, areaOfInterest.getOne() );
+      linkSubscription( newSubscription, areaOfInterest.getExclude() );
+      return newSubscription;
+    }
+  }
+
+  private void linkSubscription( @Nonnull final Subscription subscription, @Nonnull final BitSet componentIds )
+  {
+    int current = -1;
+    while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+    {
+      getComponentRegistry().getComponentManagerById( current ).addSubscription( subscription );
+    }
   }
 
   void run( @Nonnull final WorldAction action )
