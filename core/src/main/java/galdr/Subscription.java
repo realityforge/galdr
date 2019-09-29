@@ -199,6 +199,28 @@ final class Subscription
     return Flags.DISPOSED == ( _flags & Flags.DISPOSED );
   }
 
+  @Nonnull
+  BitSet getEntities()
+  {
+    return _entities;
+  }
+
+  @Nonnull
+  BitSet getNewEntities()
+  {
+    return _newEntities;
+  }
+
+  int getCurrentEntityId()
+  {
+    return _currentEntityId;
+  }
+
+  int getFlags()
+  {
+    return _flags;
+  }
+
   static final class Flags
   {
     /**
