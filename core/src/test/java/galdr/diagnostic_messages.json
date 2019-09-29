@@ -2,26 +2,26 @@
   {
     "code": 1,
     "type": "INVARIANT",
-    "messagePattern": "ComponentRegistry.getComponentManagerByType() attempted to access Component for type class %s but no such component exists.",
+    "messagePattern": "World.getComponentManagerByType() attempted to access Component for type class %s but no such component exists.",
     "callers": [
       {
-        "class": "galdr.ComponentRegistry",
+        "class": "galdr.World",
         "method": "getComponentManagerByType",
-        "file": "ComponentRegistry.java",
-        "lineNumber": 73
+        "file": "World.java",
+        "lineNumber": 380
       }
     ]
   },
   {
     "code": 2,
     "type": "INVARIANT",
-    "messagePattern": "ComponentRegistry.getComponentManagerByIndex() attempted to access Component with id %s but no such component exists.",
+    "messagePattern": "World.getComponentManagerByIndex() attempted to access Component with id %s but no such component exists.",
     "callers": [
       {
-        "class": "galdr.ComponentRegistry",
+        "class": "galdr.World",
         "method": "getComponentManagerById",
-        "file": "ComponentRegistry.java",
-        "lineNumber": 49
+        "file": "World.java",
+        "lineNumber": 350
       }
     ]
   },
@@ -31,10 +31,10 @@
     "messagePattern": "Component named '%s' has id %s but was passed as index %s.",
     "callers": [
       {
-        "class": "galdr.ComponentRegistry",
-        "method": "<init>",
-        "file": "ComponentRegistry.java",
-        "lineNumber": 31
+        "class": "galdr.World",
+        "method": "buildComponentMap",
+        "file": "World.java",
+        "lineNumber": 180
       }
     ]
   },
@@ -52,19 +52,6 @@
     ]
   },
   {
-    "code": 5,
-    "type": "API_INVARIANT",
-    "messagePattern": "Attempted to invoke World.getEntityManager() on World named '%s' prior to World completing construction",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getEntityManager",
-        "file": "World.java",
-        "lineNumber": 105
-      }
-    ]
-  },
-  {
     "code": 6,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to create entity with invalid componentId %s",
@@ -73,7 +60,7 @@
         "class": "galdr.EntityManager",
         "method": "createEntity",
         "file": "EntityManager.java",
-        "lineNumber": 66
+        "lineNumber": 65
       }
     ]
   },
@@ -112,13 +99,13 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 169
+        "lineNumber": 171
       },
       {
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 179
+        "lineNumber": 181
       }
     ]
   },
@@ -131,7 +118,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 136
+        "lineNumber": 138
       }
     ]
   },
@@ -144,7 +131,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 133
+        "lineNumber": 135
       }
     ]
   },
@@ -196,7 +183,7 @@
         "class": "galdr.Worlds$Builder",
         "method": "ensureWorldNotConstructed",
         "file": "Worlds.java",
-        "lineNumber": 178
+        "lineNumber": 177
       }
     ]
   },
@@ -209,7 +196,7 @@
         "class": "galdr.EntityManager",
         "method": "disposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 185
+        "lineNumber": 187
       }
     ]
   },
@@ -222,7 +209,7 @@
         "class": "galdr.World",
         "method": "getSpy",
         "file": "World.java",
-        "lineNumber": 233
+        "lineNumber": 245
       }
     ]
   },
@@ -235,7 +222,7 @@
         "class": "galdr.WorldHolder",
         "method": "activateWorld",
         "file": "WorldHolder.java",
-        "lineNumber": 60
+        "lineNumber": 61
       }
     ]
   },
@@ -248,7 +235,7 @@
         "class": "galdr.WorldHolder",
         "method": "activateWorld",
         "file": "WorldHolder.java",
-        "lineNumber": 61
+        "lineNumber": 63
       }
     ]
   },
@@ -274,7 +261,7 @@
         "class": "galdr.WorldHolder",
         "method": "deactivateWorld",
         "file": "WorldHolder.java",
-        "lineNumber": 77
+        "lineNumber": 79
       }
     ]
   },
@@ -287,7 +274,7 @@
         "class": "galdr.ComponentManager",
         "method": "remove",
         "file": "ComponentManager.java",
-        "lineNumber": 272
+        "lineNumber": 282
       }
     ]
   },
@@ -300,7 +287,7 @@
         "class": "galdr.ComponentManager",
         "method": "newComponent",
         "file": "ComponentManager.java",
-        "lineNumber": 229
+        "lineNumber": 236
       }
     ]
   },
@@ -313,7 +300,7 @@
         "class": "galdr.ComponentManager",
         "method": "get",
         "file": "ComponentManager.java",
-        "lineNumber": 175
+        "lineNumber": 182
       }
     ]
   },
@@ -344,28 +331,15 @@
     ]
   },
   {
-    "code": 44,
-    "type": "API_INVARIANT",
-    "messagePattern": "Attempted to invoke World.getComponentRegistry() on World named '%s' prior to World completing construction",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getComponentRegistry",
-        "file": "World.java",
-        "lineNumber": 140
-      }
-    ]
-  },
-  {
     "code": 45,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempted to invoke World.getStages() on World named '%s' prior to World completing construction",
+    "messagePattern": "Attempted to invoke World.%s() on World named '%s' prior to World completing construction",
     "callers": [
       {
         "class": "galdr.World",
-        "method": "getStages",
+        "method": "assertWorldConstructed",
         "file": "World.java",
-        "lineNumber": 153
+        "lineNumber": 408
       }
     ]
   },
@@ -378,7 +352,7 @@
         "class": "galdr.World",
         "method": "getStageByName",
         "file": "World.java",
-        "lineNumber": 126
+        "lineNumber": 134
       }
     ]
   },
@@ -404,7 +378,7 @@
         "class": "galdr.ComponentManager",
         "method": "getName",
         "file": "ComponentManager.java",
-        "lineNumber": 117
+        "lineNumber": 124
       }
     ]
   },
@@ -417,7 +391,7 @@
         "class": "galdr.EntityManager",
         "method": "doDisposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 196
+        "lineNumber": 198
       }
     ]
   },
@@ -534,7 +508,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 139
+        "lineNumber": 141
       }
     ]
   },
@@ -560,7 +534,7 @@
         "class": "galdr.EntityManager",
         "method": "doDisposeEntity",
         "file": "EntityManager.java",
-        "lineNumber": 200
+        "lineNumber": 202
       }
     ]
   },
@@ -573,7 +547,7 @@
         "class": "galdr.World",
         "method": "removeErrorHandler",
         "file": "World.java",
-        "lineNumber": 205
+        "lineNumber": 217
       }
     ]
   },
@@ -586,7 +560,7 @@
         "class": "galdr.World",
         "method": "addErrorHandler",
         "file": "World.java",
-        "lineNumber": 188
+        "lineNumber": 200
       }
     ]
   },
@@ -625,7 +599,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 143
+        "lineNumber": 145
       }
     ]
   },
@@ -638,7 +612,7 @@
         "class": "galdr.EntityManager",
         "method": "link",
         "file": "EntityManager.java",
-        "lineNumber": 147
+        "lineNumber": 149
       }
     ]
   }
