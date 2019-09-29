@@ -96,9 +96,9 @@ final class Entity
     _flags &= ~Flags.ALIVE;
   }
 
-  boolean isAdding()
+  boolean isNotAdding()
   {
-    return isFlag( Flags.ADDING );
+    return !isFlag( Flags.ADDING );
   }
 
   void setAdding()

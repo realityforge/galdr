@@ -237,14 +237,14 @@ abstract class ComponentManager<T>
                     () -> "Galdr-0031: The ComponentManager.create() method invoked but entity " + entityId +
                           " already has the component named '" + getName() + "'." );
     }
-    if ( !entity.isAdding() && _world.willPropagateSpyEvents() )
+    if ( entity.isNotAdding() && _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new ComponentAddStartEvent( _world, entity.getId(), getId() ) );
     }
     componentIds.set( _id );
     final boolean mustPerformCreate = Flags.ALLOCATE == ( _flags & Flags.ALLOCATE );
     final T component = mustPerformCreate ? performCreate( entityId ) : null;
-    if ( !entity.isAdding() )
+    if ( entity.isNotAdding() )
     {
       for ( final Subscription subscription : _subscriptions )
       {
