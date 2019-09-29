@@ -2,6 +2,7 @@ package galdr;
 
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -242,6 +243,22 @@ public class WorldTest
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     assertEquals( value, 111 );
   }
+
+  @Test
+  public void constructContainingComponentsWithInvalidIndex()
+  {
+    Worlds.world();
+    final World world = WorldHolder.world();
+    final ComponentManager<?>[] components = new ComponentManager[]
+      {
+        new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ),
+        new FastArrayComponentManager<>( world, 1, Component2.class, Component2::new, 120 ),
+        new FastArrayComponentManager<>( world, 3, Component3.class, Component3::new, 120 )
+      };
+    assertInvariantFailure( () -> world.completeConstruction( 100, components, Collections.emptyMap() ),
+                            "Galdr-0003: Component named 'Component3' has id 3 but was passed as index 2." );
+  }
+
   @Test
   public void isComponentIdValid()
   {

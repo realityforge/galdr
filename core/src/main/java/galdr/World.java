@@ -173,6 +173,14 @@ public final class World
     for ( int i = 0; i < components.length; i++ )
     {
       final ComponentManager component = components[ i ];
+      if ( Galdr.shouldCheckApiInvariants() )
+      {
+        final int index = i;
+        final int id = component.getId();
+        invariant( () -> index == id,
+                   () -> "Galdr-0003: Component named '" + component.getName() + "' has id " + id +
+                         " but was passed as index " + index + "." );
+      }
       map.put( component.getType(), component );
     }
     return Collections.unmodifiableMap( map );
