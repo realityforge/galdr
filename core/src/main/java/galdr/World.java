@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
+// TODO: Remove WeakerAccess suppression by adding integration tests that call al the APIs
+@SuppressWarnings( "WeakerAccess" )
 public final class World
   extends Element
 {
