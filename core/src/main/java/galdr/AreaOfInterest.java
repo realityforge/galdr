@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
  * Typically this is used by a {@link galdr.Processor} to describe the {@link galdr.Entity} instances
  * that will be selected by the processor for processing.
  */
-public final class AreaOfInterest
+final class AreaOfInterest
 {
   /**
    * Components that an entity MUST have to be matched.
@@ -33,7 +33,7 @@ public final class AreaOfInterest
    * @param componentIds the componentIds to test.
    * @return true if the specified componentIds matches the area of interest requirements.
    */
-  public boolean matches( @Nonnull final BitSet componentIds )
+  boolean matches( @Nonnull final BitSet componentIds )
   {
     // This can be implemented MUCH more efficiently by manipulating the underlying words.
     // We should add a containsAll() method to out BitSet implementation
