@@ -71,6 +71,14 @@ public class WorldHolderTest
                             "Galdr-0024: Invoked WorldHolder.activateWorld() with world named 'World@2' but an existing world named 'World@1' is active." );
   }
 
+  @SuppressWarnings( "ConstantConditions" )
+  @Test
+  public void activateWorld_nullWorld()
+  {
+    assertInvariantFailure( () -> WorldHolder.activateWorld( null ),
+                            "Galdr-0023: Invoked WorldHolder.activateWorld() with null world." );
+  }
+
   @Test
   public void deactivateWorld_whenWorldNotActive()
   {
