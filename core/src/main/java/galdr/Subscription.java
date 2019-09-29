@@ -4,7 +4,7 @@ import java.util.BitSet;
 import javax.annotation.Nonnull;
 import static org.realityforge.braincheck.Guards.*;
 
-public final class Subscription
+final class Subscription
 {
   /**
    * The area of interest against which entities are matched against to determine whether they
