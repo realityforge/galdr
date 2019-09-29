@@ -149,6 +149,32 @@
     ]
   },
   {
+    "code": 13,
+    "type": "FAIL",
+    "messagePattern": "The ComponentManager.get() method has been invoked for the component named 'Component1' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed.",
+    "callers": [
+      {
+        "class": "galdr.NoStorageComponentManager",
+        "method": "performGet",
+        "file": "NoStorageComponentManager.java",
+        "lineNumber": 29
+      }
+    ]
+  },
+  {
+    "code": 14,
+    "type": "FAIL",
+    "messagePattern": "The ComponentManager.create() method has been invoked for the component named 'Component1' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed.",
+    "callers": [
+      {
+        "class": "galdr.NoStorageComponentManager",
+        "method": "performCreate",
+        "file": "NoStorageComponentManager.java",
+        "lineNumber": 42
+      }
+    ]
+  },
+  {
     "code": 16,
     "type": "API_INVARIANT",
     "messagePattern": "The Link.getTargetEntity() method invoked on invalid link.",
