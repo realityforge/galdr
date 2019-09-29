@@ -30,6 +30,7 @@ public final class AreaOfInterest
   /**
    * Return true if the specified componentIds matches the area of interest requirements.
    *
+   * @param componentIds the componentIds to test.
    * @return true if the specified componentIds matches the area of interest requirements.
    */
   public boolean matches( @Nonnull final BitSet componentIds )
