@@ -48,6 +48,7 @@ final class Subscription
     _flags = 0;
   }
 
+  //TODO: Pass in subscriber here when invariant checks enabled and verify same subscriber until completed
   int nextEntity()
   {
     ensureNotDisposed();
