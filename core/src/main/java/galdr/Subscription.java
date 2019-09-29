@@ -113,7 +113,11 @@ final class Subscription
                  () -> "Galdr-0018: Invoked Subscription.entityRemoved with invalid Entity." );
     }
     final int entityId = entity.getId();
-    // TODO: Do we really need to test via get - is it cheaper to just run removeInterestInEntity ???
+    // We check whether the entity is in the list as it is slightly faster to check than calling
+    // removeInterestInEntity when the entity is not in the list even if it is slightly faster
+    // when the entity is present.
+    // TODO: Use custom BitSet implementation that implements a "boolean clearIfSet()" method
+    //  so we can avoid invoking _newEntities.clear( entityId ) unless necessary.
     if ( _entities.get( entityId ) )
     {
       removeInterestInEntity( entityId );
