@@ -166,8 +166,7 @@ public final class Worlds
       ensureWorldNotConstructed();
       _worldConstructed = true;
       WorldHolder.deactivateWorld( _world );
-      final ComponentRegistry registry = new ComponentRegistry( _components.toArray( new ComponentManager[ 0 ] ) );
-      _world.completeConstruction( _initialEntityCount, registry, _stages );
+      _world.completeConstruction( _initialEntityCount, _components.toArray( new ComponentManager[ 0 ] ), _stages );
       return _world;
     }
 

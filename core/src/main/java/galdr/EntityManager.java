@@ -58,12 +58,11 @@ final class EntityManager
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      final ComponentRegistry registry = _world.getComponentRegistry();
       int current = -1;
       while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
       {
         final int id = current;
-        apiInvariant( () -> registry.isComponentIdValid( id ),
+        apiInvariant( () -> _world.isComponentIdValid( id ),
                       () -> "Galdr-0006: Attempting to create entity with invalid componentId " + id );
       }
     }
@@ -89,13 +88,12 @@ final class EntityManager
 
   private void createComponents( @Nonnull final Entity entity, @Nonnull final BitSet componentIds )
   {
-    final ComponentRegistry registry = _world.getComponentRegistry();
     final int entityId = entity.getId();
 
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      registry.getComponentManagerById( current ).create( entityId );
+      _world.getComponentManagerById( current ).create( entityId );
     }
   }
 
@@ -116,7 +114,7 @@ final class EntityManager
       final int entityId = _nextEntityId++;
       final boolean mustGrow = entityId >= _entities.length;
       assert mustGrow || null == _entities[ entityId ];
-      final Entity entity = new Entity( entityId, _world.getComponentRegistry().size() );
+      final Entity entity = new Entity( entityId, _world.getComponentCount() );
       if ( mustGrow )
       {
         grow( Math.max( 2 * _entities.length, ( 3 * ( _entities.length + 1 ) ) / 2 ) );
@@ -239,14 +237,13 @@ final class EntityManager
 
   private void removeComponents( @Nonnull final Entity entity )
   {
-    final ComponentRegistry registry = _world.getComponentRegistry();
     final int entityId = entity.getId();
     final BitSet componentIds = entity.getComponentIds();
 
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      registry.getComponentManagerById( current ).remove( entityId );
+      _world.getComponentManagerById( current ).remove( entityId );
     }
   }
 

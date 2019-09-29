@@ -19,8 +19,7 @@ public class ComponentManagerTest
   public void basicOperation()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 0 );
@@ -67,8 +66,7 @@ public class ComponentManagerTest
   public void basicComponentLifecycle_spyEnabled()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
 
@@ -112,7 +110,7 @@ public class ComponentManagerTest
   public void allocate()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> cm = world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> cm = world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
     assertFalse( cm.has( entityId ) );
@@ -128,8 +126,7 @@ public class ComponentManagerTest
   public void debugToString()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
 
@@ -142,8 +139,7 @@ public class ComponentManagerTest
   public void getName()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getName(), "Component1" );
 
@@ -157,8 +153,7 @@ public class ComponentManagerTest
   public void errorOnUnAllocatedEntity()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     assertInvariantFailure( () -> componentManager.has( -23 ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );

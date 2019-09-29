@@ -74,8 +74,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Merge `ComponentRegistry` into `World`
-
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
 * Make sure component creation, remove and access only occurs in the context of a world.

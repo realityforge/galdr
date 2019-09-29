@@ -22,7 +22,7 @@ public class MapComponentManagerTest
       .build();
 
     final MapComponentManager<Component1> componentManager = (MapComponentManager<Component1>)
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+      world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 0 );

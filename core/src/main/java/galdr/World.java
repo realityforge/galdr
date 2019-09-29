@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,10 +42,15 @@ public final class World
   @Nullable
   private EntityManager _entityManager;
   /**
-   * The container of ComponentManager available in the world.
+   * The ComponentManagers available in the world ordered by id.
    */
   @Nullable
-  private ComponentRegistry _componentRegistry;
+  private ComponentManager<?>[] _components;
+  /**
+   * The ComponentManagers available in the world accessible by class.
+   */
+  @Nullable
+  private Map<Class<?>, ComponentManager<?>> _componentByClass;
   /**
    * The container of stages available in the world.
    */
@@ -107,12 +113,7 @@ public final class World
   @Nonnull
   EntityManager getEntityManager()
   {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> null != _entityManager,
-                    () -> "Galdr-0005: Attempted to invoke World.getEntityManager() on World named '" +
-                          getName() + "' prior to World completing construction" );
-    }
+    assertWorldConstructed( "World.getEntityManager()" );
     assert null != _entityManager;
     return _entityManager;
   }
@@ -120,7 +121,7 @@ public final class World
   @Nonnull
   public <T> ComponentAPI<T> getComponentByType( @Nonnull final Class<T> type )
   {
-    return getComponentRegistry().getComponentManagerByType( type ).getApi();
+    return getComponentManagerByType( type ).getApi();
   }
 
   @Nonnull
@@ -140,27 +141,9 @@ public final class World
   }
 
   @Nonnull
-  ComponentRegistry getComponentRegistry()
-  {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> null != _componentRegistry,
-                    () -> "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
-                          getName() + "' prior to World completing construction" );
-    }
-    assert null != _componentRegistry;
-    return _componentRegistry;
-  }
-
-  @Nonnull
   Map<String, ProcessorStage> getStages()
   {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> null != _stages,
-                    () -> "Galdr-0045: Attempted to invoke World.getStages() on World named '" +
-                          getName() + "' prior to World completing construction" );
-    }
+    assertWorldConstructed( "World.getStages()" );
     assert null != _stages;
     return _stages;
   }
@@ -173,13 +156,26 @@ public final class World
   }
 
   void completeConstruction( final int initialEntityCount,
-                             @Nonnull final ComponentRegistry componentRegistry,
+                             @Nonnull final ComponentManager<?>[] components,
                              @Nonnull final Map<String, ProcessorStage> stages )
   {
     _entityManager = new EntityManager( this, initialEntityCount );
-    _componentRegistry = Objects.requireNonNull( componentRegistry );
     _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
     _subscriptions = new HashMap<>();
+    _components = components;
+    _componentByClass = buildComponentMap( components );
+  }
+
+  @Nonnull
+  private Map<Class<?>, ComponentManager<?>> buildComponentMap( @Nonnull final ComponentManager<?>[] components )
+  {
+    final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
+    for ( int i = 0; i < components.length; i++ )
+    {
+      final ComponentManager component = components[ i ];
+      map.put( component.getType(), component );
+    }
+    return Collections.unmodifiableMap( map );
   }
 
   /**
@@ -247,12 +243,7 @@ public final class World
   @Nonnull
   Map<AreaOfInterest, Subscription> getSubscriptions()
   {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> null != _subscriptions,
-                    () -> "Galdr-0043: Attempted to invoke World.getSubscriptions() on World named '" +
-                          getName() + "' prior to World completing construction" );
-    }
+    assertWorldConstructed( "World.getSubscriptions()" );
     assert null != _subscriptions;
     return _subscriptions;
   }
@@ -282,7 +273,7 @@ public final class World
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      getComponentRegistry().getComponentManagerById( current ).addSubscription( subscription );
+      getComponentManagerById( current ).addSubscription( subscription );
     }
   }
 
@@ -342,6 +333,57 @@ public final class World
     return _errorHandlerSupport;
   }
 
+  @Nonnull
+  ComponentManager<?> getComponentManagerById( final int id )
+  {
+    assertWorldConstructed( "World.getComponentManagerById()" );
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      invariant( () -> isComponentIdValid( id ),
+                 () -> "Galdr-0002: World.getComponentManagerByIndex() attempted to access Component " +
+                       "with id " + id + " but no such component exists." );
+    }
+    assert null != _components;
+    return _components[ id ];
+  }
+
+  boolean isComponentIdValid( final int id )
+  {
+    assert null != _components;
+    return id >= 0 && id < _components.length;
+  }
+
+  int getComponentCount()
+  {
+    assertWorldConstructed( "World.getComponentCount()" );
+    assert null != _components;
+    return _components.length;
+  }
+
+  @SuppressWarnings( "unchecked" )
+  @Nonnull
+  <T> ComponentManager<T> getComponentManagerByType( @Nonnull final Class<T> type )
+  {
+    assertWorldConstructed( "World.getComponentManagerByType()" );
+    assert null != _componentByClass;
+    final ComponentManager<T> componentManager = (ComponentManager<T>) _componentByClass.get( type );
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      invariant( () -> null != componentManager,
+                 () -> "Galdr-0001: World.getComponentManagerByType() attempted to access Component " +
+                       "for type " + type + " but no such component exists." );
+    }
+    return componentManager;
+  }
+
+  @Nonnull
+  Set<Class<?>> getComponentTypes()
+  {
+    assertWorldConstructed( "World.getComponentTypes()" );
+    assert null != _componentByClass;
+    return _componentByClass.keySet();
+  }
+
   /**
    * Reset id used when constructing names for anonymous worlds.
    * This is only invoked from tests.
@@ -349,5 +391,15 @@ public final class World
   static void resetId()
   {
     c_nextId = 1;
+  }
+
+  private void assertWorldConstructed( @Nonnull final String methodName )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> null != _stages,
+                    () -> "Galdr-0045: Attempted to invoke " + methodName + " on World named '" +
+                          getName() + "' prior to World completing construction" );
+    }
   }
 }

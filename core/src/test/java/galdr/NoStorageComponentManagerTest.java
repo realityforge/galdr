@@ -17,7 +17,7 @@ public class NoStorageComponentManagerTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     final NoStorageComponentManager<Component1> componentManager = (NoStorageComponentManager<Component1>)
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+      world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 0 );
@@ -48,7 +48,7 @@ public class NoStorageComponentManagerTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+      world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
 
@@ -68,7 +68,7 @@ public class NoStorageComponentManagerTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+      world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
 
@@ -86,8 +86,7 @@ public class NoStorageComponentManagerTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
 
@@ -110,8 +109,7 @@ public class NoStorageComponentManagerTest
 
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentManager<Component1> componentManager =
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
     final int entityId = world.createEntity( new BitSet() );
 

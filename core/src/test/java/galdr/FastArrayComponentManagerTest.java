@@ -22,7 +22,7 @@ public class FastArrayComponentManagerTest
       .build();
 
     final FastArrayComponentManager<Component1> componentManager = (FastArrayComponentManager<Component1>)
-      world.getComponentRegistry().getComponentManagerByType( Component1.class );
+      world.getComponentManagerByType( Component1.class );
 
     assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 0 );

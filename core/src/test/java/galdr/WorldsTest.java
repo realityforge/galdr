@@ -60,7 +60,7 @@ public class WorldsTest
         .component( Attack.class, Attack::new, ComponentStorage.MAP )
         .build();
 
-    final Set<Class<?>> componentTypes = world.getComponentRegistry().getComponentTypes();
+    final Set<Class<?>> componentTypes = world.getComponentTypes();
     assertEquals( componentTypes.size(), 3 );
     assertTrue( componentTypes.contains( Armour.class ) );
     assertTrue( componentTypes.contains( Health.class ) );

@@ -1,9 +1,11 @@
 package galdr;
 
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -15,6 +17,10 @@ public class WorldTest
   }
 
   private static class Component2
+  {
+  }
+
+  private static class Component3
   {
   }
 
@@ -86,28 +92,21 @@ public class WorldTest
   }
 
   @Test
-  public void getComponentRegistry()
+  public void getComponentTypes()
   {
     final World world = Worlds.world()
       .component( Component1.class, Component1::new )
       .component( Component2.class, Component2::new )
+      .component( Component3.class, Component3::new )
       .build();
 
-    final ComponentRegistry componentRegistry = world.getComponentRegistry();
-    final Set<Class<?>> componentTypes = componentRegistry.getComponentTypes();
-    assertEquals( componentTypes.size(), 2 );
-    assertTrue( componentTypes.contains( Component1.class ) );
-    assertTrue( componentTypes.contains( Component2.class ) );
-  }
+    assertEquals( world.getComponentCount(), 3 );
+    assertTypeRegistered( world, Component1.class, 0 );
+    assertTypeRegistered( world, Component2.class, 1 );
+    assertTypeRegistered( world, Component3.class, 2 );
 
-  @Test
-  public void getComponentRegistry_PreConstruct()
-  {
-    final String name = randomString();
-    final World world = new World( name );
-    assertInvariantFailure( world::getComponentRegistry,
-                            "Galdr-0044: Attempted to invoke World.getComponentRegistry() on World named '" +
-                            name + "' prior to World completing construction" );
+    assertEquals( world.getComponentTypes(),
+                  new HashSet<>( Arrays.asList( Component1.class, Component2.class, Component3.class ) ) );
   }
 
   @Test
@@ -138,7 +137,7 @@ public class WorldTest
     final String name = randomString();
     final World world = new World( name );
     assertInvariantFailure( world::getEntityManager,
-                            "Galdr-0005: Attempted to invoke World.getEntityManager() on World named '" +
+                            "Galdr-0045: Attempted to invoke World.getEntityManager() on World named '" +
                             name + "' prior to World completing construction" );
   }
 
@@ -242,5 +241,45 @@ public class WorldTest
     } );
     assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
     assertEquals( value, 111 );
+  }
+  @Test
+  public void isComponentIdValid()
+  {
+    final World world = Worlds.world()
+      .component( Component1.class, Component1::new )
+      .build();
+    assertFalse( world.isComponentIdValid( -1 ) );
+    assertTrue( world.isComponentIdValid( 0 ) );
+    assertFalse( world.isComponentIdValid( 1 ) );
+  }
+
+  @Test
+  public void getComponentManagerByIndex_badIndex()
+  {
+    final World world = Worlds.world()
+      .component( Component1.class, Component1::new )
+      .build();
+    assertInvariantFailure( () -> world.getComponentManagerById( -1 ),
+                            "Galdr-0002: World.getComponentManagerByIndex() attempted to access Component with id -1 but no such component exists." );
+    assertInvariantFailure( () -> world.getComponentManagerById( 1 ),
+                            "Galdr-0002: World.getComponentManagerByIndex() attempted to access Component with id 1 but no such component exists." );
+  }
+
+  @Test
+  public void getComponentManagerByType_badType()
+  {
+    final World world = Worlds.world().build();
+    assertInvariantFailure( () -> world.getComponentManagerByType( Component2.class ),
+                            "Galdr-0001: World.getComponentManagerByType() attempted to access Component for type class galdr.WorldTest$Component2 but no such component exists." );
+  }
+
+  private void assertTypeRegistered( @Nonnull final World world,
+                                     @Nonnull final Class<?> type,
+                                     final int id )
+  {
+    final ComponentManager<?> entry = world.getComponentManagerById( id );
+    assertEquals( entry.getId(), id );
+    assertEquals( entry.getType(), type );
+    assertEquals( world.getComponentManagerByType( type ), entry );
   }
 }
