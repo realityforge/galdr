@@ -4,6 +4,11 @@ import java.util.BitSet;
 import javax.annotation.Nonnull;
 import static org.realityforge.braincheck.Guards.*;
 
+/**
+ * A subscription is a set of entities that match an {@link AreaOfInterest} that 1 or more
+ * subscribers are interested in. A single subscriber may iterate over subscription at any
+ * one time.
+ */
 final class Subscription
 {
   /**
