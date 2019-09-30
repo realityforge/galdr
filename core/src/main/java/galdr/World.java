@@ -15,8 +15,14 @@ import static org.realityforge.braincheck.Guards.*;
 // TODO: Remove WeakerAccess suppression by adding integration tests that call al the APIs
 @SuppressWarnings( "WeakerAccess" )
 public final class World
-  extends Element
 {
+  /**
+   * A human consumable name for node. It should be non-null if {@link Galdr#areNamesEnabled()} returns
+   * true and <tt>null</tt> otherwise.
+   */
+  @Nullable
+  private final String _name;
+
   /**
    * Interface used to define actions that can be run in the context of a world.
    */
@@ -75,7 +81,7 @@ public final class World
 
   World( @Nullable final String name )
   {
-    super( Galdr.areNamesEnabled() && null == name ? "World@" + c_nextId++ : name );
+    _name = Galdr.areNamesEnabled() ? null == name ? "World@" + c_nextId++ : name : null;
   }
 
   /**
@@ -146,13 +152,6 @@ public final class World
     assertWorldConstructed( "World.getStages()" );
     assert null != _stages;
     return _stages;
-  }
-
-  @Nonnull
-  @Override
-  protected final String getBaseTypeName()
-  {
-    return "World";
   }
 
   void completeConstruction( final int initialEntityCount,
@@ -248,6 +247,36 @@ public final class World
     return _spy;
   }
 
+  /**
+   * Return the human readable name of the Element.
+   * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
+   *
+   * @return the human readable name of the Element.
+   */
+  @Nonnull
+  public final String getName()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( Galdr::areNamesEnabled,
+                    () -> "Galdr-0004: World.getName() invoked when Galdr.areNamesEnabled() returns false" );
+    }
+    assert null != _name;
+    return _name;
+  }
+
+  @Override
+  public String toString()
+  {
+    if ( Galdr.areDebugToStringMethodsEnabled() )
+    {
+      return "World[" + getName() + "]";
+    }
+    else
+    {
+      return super.toString();
+    }
+  }
   @Nonnull
   Map<AreaOfInterest, Subscription> getSubscriptions()
   {

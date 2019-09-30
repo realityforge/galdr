@@ -38,6 +38,34 @@ public class WorldTest
   }
 
   @Test
+  public void toString_test()
+  {
+    final World world1 = Worlds.world( "Foo" ).build();
+    final World world2 = Worlds.world().build();
+
+    assertEquals( world1.toString(), "World[Foo]" );
+    assertEquals( world2.toString(), "World[World@1]" );
+
+    GaldrTestUtil.disableDebugToString();
+
+    assertDefaultToString( world1 );
+    assertDefaultToString( world2 );
+  }
+
+  @Test
+  public void getName()
+  {
+    assertEquals( Worlds.world( "Foo" ).build().getName(), "Foo" );
+    assertEquals( Worlds.world().build().getName(), "World@1" );
+
+    GaldrTestUtil.disableNames();
+
+    final World world = Worlds.world().build();
+    assertInvariantFailure( world::getName,
+                            "Galdr-0004: World.getName() invoked when Galdr.areNamesEnabled() returns false" );
+  }
+
+  @Test
   public void getStages()
   {
     final String name1 = "ABCDEF";

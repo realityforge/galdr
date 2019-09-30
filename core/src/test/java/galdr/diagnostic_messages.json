@@ -8,7 +8,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerByType",
         "file": "World.java",
-        "lineNumber": 380
+        "lineNumber": 409
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerById",
         "file": "World.java",
-        "lineNumber": 350
+        "lineNumber": 379
       }
     ]
   },
@@ -34,20 +34,26 @@
         "class": "galdr.World",
         "method": "buildComponentMap",
         "file": "World.java",
-        "lineNumber": 180
+        "lineNumber": 179
       }
     ]
   },
   {
     "code": 4,
     "type": "API_INVARIANT",
-    "messagePattern": "Element.getName() invoked when Galdr.areNamesEnabled() returns false",
+    "messagePattern": "%s.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
         "class": "galdr.Element",
         "method": "getName",
         "file": "Element.java",
         "lineNumber": 45
+      },
+      {
+        "class": "galdr.World",
+        "method": "getName",
+        "file": "World.java",
+        "lineNumber": 261
       }
     ]
   },
@@ -260,7 +266,7 @@
         "class": "galdr.World",
         "method": "getSpy",
         "file": "World.java",
-        "lineNumber": 245
+        "lineNumber": 244
       }
     ]
   },
@@ -390,7 +396,7 @@
         "class": "galdr.World",
         "method": "assertWorldConstructed",
         "file": "World.java",
-        "lineNumber": 408
+        "lineNumber": 437
       }
     ]
   },
@@ -403,7 +409,7 @@
         "class": "galdr.World",
         "method": "getStageByName",
         "file": "World.java",
-        "lineNumber": 134
+        "lineNumber": 140
       }
     ]
   },
@@ -598,7 +604,7 @@
         "class": "galdr.World",
         "method": "removeErrorHandler",
         "file": "World.java",
-        "lineNumber": 217
+        "lineNumber": 216
       }
     ]
   },
@@ -611,7 +617,7 @@
         "class": "galdr.World",
         "method": "addErrorHandler",
         "file": "World.java",
-        "lineNumber": 200
+        "lineNumber": 199
       }
     ]
   },
