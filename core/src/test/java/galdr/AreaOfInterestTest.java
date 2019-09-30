@@ -127,7 +127,8 @@ public class AreaOfInterestTest
     assertEquals( aoi1, aoi1 );
     assertEquals( aoi1, aoi2 );
     assertNotEquals( aoi1, aoi3 );
-    assertNotEquals( aoi1, "" );
+    //noinspection EqualsBetweenInconvertibleTypes,SimplifiedTestNGAssertion
+    assertFalse( aoi1.equals( "" ) );
   }
 
   @Nonnull
