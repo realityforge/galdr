@@ -149,7 +149,7 @@ final class Subscription
     }
   }
 
-  private void ensureNotDisposed()
+  void ensureNotDisposed()
   {
     if ( Galdr.shouldCheckInvariants() )
     {
