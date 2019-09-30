@@ -200,6 +200,11 @@ final class Subscription
     return Flags.DISPOSED == ( _flags & Flags.DISPOSED );
   }
 
+  void markAsDisposed()
+  {
+    _flags |= Flags.DISPOSED;
+  }
+
   @Nonnull
   BitSet getEntities()
   {
