@@ -17,7 +17,7 @@ import static org.realityforge.braincheck.Guards.*;
 public final class World
 {
   /**
-   * A human consumable name for node. It should be non-null if {@link Galdr#areNamesEnabled()} returns
+   * A human consumable name for node. It must be non-null if {@link Galdr#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
   @Nullable
@@ -248,10 +248,10 @@ public final class World
   }
 
   /**
-   * Return the human readable name of the Element.
+   * Return the human readable name of the World.
    * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
    *
-   * @return the human readable name of the Element.
+   * @return the human readable name of the World.
    */
   @Nonnull
   public final String getName()
