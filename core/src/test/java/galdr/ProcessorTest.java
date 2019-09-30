@@ -24,7 +24,7 @@ public class ProcessorTest
     final Worlds.Builder builder = Worlds.world();
     // Cache the processor in var
     final Processor processor = new MyProcessor();
-    builder.stage( "MyStage", processor ).build();
+    builder.stage( randomString(), processor ).build();
 
     assertEquals( processor.getName(), "MyProcessor" );
     assertEquals( processor.toString(), "Processor[MyProcessor]" );
