@@ -1,6 +1,7 @@
 package galdr;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
@@ -75,6 +76,17 @@ public abstract class AbstractTest
   protected final int randomInt( final int upperBound )
   {
     return _random.nextInt( upperBound );
+  }
+
+  @Nonnull
+  final BitSet set( @Nonnull final int... bits )
+  {
+    final BitSet set = new BitSet();
+    for ( final int bit : bits )
+    {
+      set.set( bit );
+    }
+    return set;
   }
 
   @Nonnull

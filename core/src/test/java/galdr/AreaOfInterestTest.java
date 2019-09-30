@@ -130,15 +130,4 @@ public class AreaOfInterestTest
     //noinspection EqualsBetweenInconvertibleTypes,SimplifiedTestNGAssertion
     assertFalse( aoi1.equals( "" ) );
   }
-
-  @Nonnull
-  private BitSet set( @Nonnull final int... bits )
-  {
-    final BitSet set = new BitSet();
-    for ( final int bit : bits )
-    {
-      set.set( bit );
-    }
-    return set;
-  }
 }
