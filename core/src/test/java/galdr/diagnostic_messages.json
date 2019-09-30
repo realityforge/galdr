@@ -52,6 +52,31 @@
     ]
   },
   {
+    "code": 5,
+    "type": "INVARIANT",
+    "messagePattern": "AreaOfInterest passed intersecting BitSets %s (%s) and %s (%s).",
+    "callers": [
+      {
+        "class": "galdr.AreaOfInterest",
+        "method": "<init>",
+        "file": "AreaOfInterest.java",
+        "lineNumber": 35
+      },
+      {
+        "class": "galdr.AreaOfInterest",
+        "method": "<init>",
+        "file": "AreaOfInterest.java",
+        "lineNumber": 38
+      },
+      {
+        "class": "galdr.AreaOfInterest",
+        "method": "<init>",
+        "file": "AreaOfInterest.java",
+        "lineNumber": 41
+      }
+    ]
+  },
+  {
     "code": 6,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to create entity with invalid componentId %s",

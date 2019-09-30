@@ -22,6 +22,29 @@ public class AreaOfInterestTest
   }
 
   @Test
+  public void construct_overlappingBitsets()
+  {
+    final BitSet set0 = new BitSet();
+    final BitSet set1 = new BitSet();
+    final BitSet set2 = new BitSet();
+
+    set1.set( 0 );
+    set1.set( 1 );
+    set1.set( 2 );
+
+    set2.set( 2 );
+    set2.set( 3 );
+    set2.set( 4 );
+
+    assertInvariantFailure( () -> new AreaOfInterest( set1, set2, set0 ),
+                            "Galdr-0005: AreaOfInterest passed intersecting BitSets all ({0, 1, 2}) and one ({2, 3, 4})." );
+    assertInvariantFailure( () -> new AreaOfInterest( set1, set0, set2 ),
+                            "Galdr-0005: AreaOfInterest passed intersecting BitSets all ({0, 1, 2}) and exclude ({2, 3, 4})." );
+    assertInvariantFailure( () -> new AreaOfInterest( set0, set1, set2 ),
+                            "Galdr-0005: AreaOfInterest passed intersecting BitSets one ({0, 1, 2}) and exclude ({2, 3, 4})." );
+  }
+
+  @Test
   public void toString_test()
   {
     final BitSet all = new BitSet( 16 );

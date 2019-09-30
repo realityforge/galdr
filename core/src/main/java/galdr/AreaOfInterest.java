@@ -3,6 +3,7 @@ package galdr;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import static org.realityforge.braincheck.Guards.*;
 
 /**
  * Represents a group of components that are of interest.
@@ -29,6 +30,18 @@ final class AreaOfInterest
 
   AreaOfInterest( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> !all.intersects( one ),
+                 () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
+                       "all (" + all + ") and one (" + one + ")." );
+      invariant( () -> !all.intersects( exclude ),
+                 () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
+                       "all (" + all + ") and exclude (" + exclude + ")." );
+      invariant( () -> !one.intersects( exclude ),
+                 () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
+                       "one (" + one + ") and exclude (" + exclude + ")." );
+    }
     _all = Objects.requireNonNull( all );
     _one = Objects.requireNonNull( one );
     _exclude = Objects.requireNonNull( exclude );
