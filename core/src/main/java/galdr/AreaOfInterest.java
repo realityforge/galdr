@@ -15,17 +15,24 @@ final class AreaOfInterest
    * Components that an entity MUST have to be matched.
    */
   @Nonnull
-  private final BitSet _all = new BitSet();
+  private final BitSet _all;
   /**
    * Components that an entity MUST have at least one of to be matched.
    */
   @Nonnull
-  private final BitSet _one = new BitSet();
+  private final BitSet _one;
   /**
    * Components that an entity MUST NOT have to be matched.
    */
   @Nonnull
-  private final BitSet _exclude = new BitSet();
+  private final BitSet _exclude;
+
+  AreaOfInterest( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
+  {
+    _all = Objects.requireNonNull( all );
+    _one = Objects.requireNonNull( one );
+    _exclude = Objects.requireNonNull( exclude );
+  }
 
   /**
    * Return true if the specified componentIds matches the area of interest requirements.
