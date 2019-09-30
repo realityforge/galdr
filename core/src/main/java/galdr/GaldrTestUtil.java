@@ -33,10 +33,8 @@ public final class GaldrTestUtil
     if ( GaldrConfig.isProductionMode() )
     {
       /*
-       * This should really never happen but if it does add assertion (so code stops in debugger) or
-       * failing that throw an exception.
+       * This should never happen.
        */
-      assert GaldrConfig.isDevelopmentMode();
       throw new IllegalStateException( "Unable to reset config as Galdr is in production mode" );
     }
 
@@ -85,10 +83,8 @@ public final class GaldrTestUtil
     if ( GaldrConfig.isProductionMode() )
     {
       /*
-       * This should really never happen but if it does add assertion (so code stops in debugger) or
-       * failing that throw an exception.
+       * This should never happen.
        */
-      assert GaldrConfig.isDevelopmentMode();
       throw new IllegalStateException( "Unable to call GaldrTestUtil.setLogger() as Galdr is in production mode" );
     }
 
@@ -287,10 +283,8 @@ public final class GaldrTestUtil
     if ( GaldrConfig.isProductionMode() )
     {
       /*
-       * This should really never happen but if it does add assertion (so code stops in debugger) or
-       * failing that throw an exception.
+       * This should never happen.
        */
-      assert GaldrConfig.isDevelopmentMode();
       throw new IllegalStateException( "Unable to change constant " + fieldName + " as Galdr is in production mode" );
     }
     else
