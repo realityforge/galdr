@@ -670,6 +670,7 @@ public class LinkTest
                                 final boolean cascadeSourceRemoveToTarget,
                                 final boolean cascadeTargetRemoveToSource )
   {
+    assertEquals( link.getId(), target.getId() );
     assertEquals( link.getSourceEntity(), source );
     assertEquals( link.getTargetEntity(), target );
     assertEquals( link.shouldCascadeSourceRemoveToTarget(), cascadeSourceRemoveToTarget );
