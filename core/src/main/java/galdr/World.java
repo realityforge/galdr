@@ -277,6 +277,7 @@ public final class World
       return super.toString();
     }
   }
+
   @Nonnull
   Map<AreaOfInterest, Subscription> getSubscriptions()
   {
