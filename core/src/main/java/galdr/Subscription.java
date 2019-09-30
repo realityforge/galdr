@@ -180,22 +180,22 @@ final class Subscription
     _newEntities.clear( entityId );
   }
 
-  private boolean hasNewEntities()
+  boolean hasNewEntities()
   {
     return Flags.HAS_NEW_ENTITIES == ( _flags & Flags.HAS_NEW_ENTITIES );
   }
 
-  private boolean isProcessingNewEntities()
+  boolean isProcessingNewEntities()
   {
     return Flags.PROCESSING_NEW_ENTITIES == ( _flags & Flags.PROCESSING_NEW_ENTITIES );
   }
 
-  private boolean isNotDisposed()
+  boolean isNotDisposed()
   {
     return !isDisposed();
   }
 
-  private boolean isDisposed()
+  boolean isDisposed()
   {
     return Flags.DISPOSED == ( _flags & Flags.DISPOSED );
   }
