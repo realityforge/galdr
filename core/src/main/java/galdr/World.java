@@ -287,23 +287,20 @@ public final class World
   }
 
   @Nonnull
-  Subscription findOrCreateSubscription( @Nonnull final AreaOfInterest areaOfInterest )
+  Subscription createSubscription( @Nonnull final AreaOfInterest areaOfInterest )
   {
-    final Map<AreaOfInterest, Subscription> subscriptions = getSubscriptions();
-    final Subscription subscription = subscriptions.get( areaOfInterest );
-    if ( null != subscription )
+    if ( Galdr.shouldCheckInvariants() )
     {
-      return subscription;
+      final Subscription existing = getSubscriptions().get( areaOfInterest );
+      invariant( () -> null == existing,
+                 () -> "Galdr-0034: World.createSubscription() invoked but subscription with matching AreaOfInterest already exists." );
     }
-    else
-    {
-      final Subscription newSubscription = new Subscription( areaOfInterest, getEntityManager().capacity() );
-      subscriptions.put( areaOfInterest, newSubscription );
-      linkSubscription( newSubscription, areaOfInterest.getAll() );
-      linkSubscription( newSubscription, areaOfInterest.getOne() );
-      linkSubscription( newSubscription, areaOfInterest.getExclude() );
-      return newSubscription;
-    }
+    final Subscription subscription = new Subscription( areaOfInterest, getEntityManager().capacity() );
+    getSubscriptions().put( areaOfInterest, subscription );
+    linkSubscription( subscription, areaOfInterest.getAll() );
+    linkSubscription( subscription, areaOfInterest.getOne() );
+    linkSubscription( subscription, areaOfInterest.getExclude() );
+    return subscription;
   }
 
   private void linkSubscription( @Nonnull final Subscription subscription, @Nonnull final BitSet componentIds )
