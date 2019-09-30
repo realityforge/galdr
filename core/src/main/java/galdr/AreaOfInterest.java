@@ -76,6 +76,19 @@ final class AreaOfInterest
   }
 
   @Override
+  public String toString()
+  {
+    if ( Galdr.areDebugToStringMethodsEnabled() )
+    {
+      return "AreaOfInterest[all=" + getAll() + ",one=" + getOne() + ",exclude=" + getExclude() + "]";
+    }
+    else
+    {
+      return super.toString();
+    }
+  }
+
+  @Override
   public boolean equals( final Object obj )
   {
     if ( obj instanceof AreaOfInterest )
