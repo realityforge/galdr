@@ -173,7 +173,7 @@ public final class World
     for ( int i = 0; i < components.length; i++ )
     {
       final ComponentManager component = components[ i ];
-      if ( Galdr.shouldCheckApiInvariants() )
+      if ( Galdr.shouldCheckInvariants() )
       {
         final int index = i;
         final int id = component.getId();
