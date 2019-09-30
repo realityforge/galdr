@@ -46,6 +46,53 @@ public class AreaOfInterestTest
   }
 
   @Test
+  public void matches()
+  {
+    // Matches - huzzah
+    assertMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 7 ) );
+
+    // Matches and includes both ones
+    assertMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 3, 7 ) );
+
+    // Missing all
+    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 1, 2, 7 ) );
+
+    // Missing all one's
+    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 7 ) );
+
+    // Includes exclude
+    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 4, 7 ) );
+
+    // Includes multiple excludes
+    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 4, 5, 7 ) );
+  }
+
+  private void assertMatch( @Nonnull final BitSet all,
+                            @Nonnull final BitSet one,
+                            @Nonnull final BitSet exclude,
+                            @Nonnull final BitSet componentIds )
+  {
+    _assertMatch( all, one, exclude, componentIds, true );
+  }
+
+  private void assertNoMatch( @Nonnull final BitSet all,
+                              @Nonnull final BitSet one,
+                              @Nonnull final BitSet exclude,
+                              @Nonnull final BitSet componentIds )
+  {
+    _assertMatch( all, one, exclude, componentIds, false );
+  }
+
+  private void _assertMatch( @Nonnull final BitSet all,
+                             @Nonnull final BitSet one,
+                             @Nonnull final BitSet exclude,
+                             @Nonnull final BitSet componentIds,
+                             final boolean shouldMatch )
+  {
+    assertEquals( new AreaOfInterest( all, one, exclude ).matches( componentIds ), shouldMatch );
+  }
+
+  @Test
   public void toString_test()
   {
     final BitSet all = set( 0, 1, 5, 12 );
