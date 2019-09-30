@@ -206,6 +206,12 @@ final class Subscription
   }
 
   @Nonnull
+  AreaOfInterest getAreaOfInterest()
+  {
+    return _areaOfInterest;
+  }
+
+  @Nonnull
   BitSet getEntities()
   {
     return _entities;
