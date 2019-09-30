@@ -315,6 +315,33 @@ public final class World
     }
   }
 
+  void removeSubscription( @Nonnull final Subscription subscription )
+  {
+    final AreaOfInterest areaOfInterest = subscription.getAreaOfInterest();
+    final Subscription existing = getSubscriptions().remove( areaOfInterest );
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> null != existing,
+                 () -> "Galdr-0025: World.removeSubscription() invoked but no such subscription." );
+      invariant( () -> subscription == existing,
+                 () -> "Galdr-0032: World.removeSubscription() invoked existing subscription does not match supplied subscription." );
+    }
+    assert null != existing;
+    unlinkSubscription( existing, areaOfInterest.getAll() );
+    unlinkSubscription( existing, areaOfInterest.getOne() );
+    unlinkSubscription( existing, areaOfInterest.getExclude() );
+    existing.markAsDisposed();
+  }
+
+  private void unlinkSubscription( @Nonnull final Subscription subscription, @Nonnull final BitSet componentIds )
+  {
+    int current = -1;
+    while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+    {
+      getComponentManagerById( current ).removeSubscription( subscription );
+    }
+  }
+
   void run( @Nonnull final WorldAction action )
   {
     // TODO: Should we detect that WorldHolder.world() has not been accessed and generate an error?
