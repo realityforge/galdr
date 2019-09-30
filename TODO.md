@@ -115,7 +115,14 @@ for systems/processors ahead of time.
   the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
 
 * Replace `BitSet` with equivalent variant that is more optimized for our use-case?
-* Add a `ReadOnlyBitSet` implementation and make sure the `componentIds` field in `EntityAddCompleteEvent` and `EntityAddStartEvent` use this implementation.
+  - a fixed size `BitSet` implementation that implements `hashCode()` and `equals()` and `toString()` as a
+    binary bit string ala `00010101001` (if size low enough) or a ordered flag set `(1, 4, 6, 33)` if size is
+    too large. This would be used to contain `ComponentIds` as in `AreaOfInterest` or `Entity` and would have
+    operations optimized for our uses (i.e. `containsAll()` for use in `AreaOfInterest`).
+    There would also be a `MutableFixedBitSet` and `UnmodificableFixedBitSet` so that can be propagated via
+    `EntityAddCompleteEvent` although the second kind may be just a proxy that is eliminated in production code.
+  - a dynamically sized `BitSet` implementation containing entity ids with a different set of optimizations and
+    no `hashCode()` and `equals()` implementaions etc.
 
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.
