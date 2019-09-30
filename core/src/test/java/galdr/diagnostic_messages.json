@@ -8,7 +8,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerByType",
         "file": "World.java",
-        "lineNumber": 409
+        "lineNumber": 434
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerById",
         "file": "World.java",
-        "lineNumber": 379
+        "lineNumber": 404
       }
     ]
   },
@@ -206,6 +206,19 @@
     ]
   },
   {
+    "code": 15,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked method on Subscription when subscription is disposed.",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "ensureNotDisposed",
+        "file": "Subscription.java",
+        "lineNumber": 156
+      }
+    ]
+  },
+  {
     "code": 16,
     "type": "API_INVARIANT",
     "messagePattern": "The Link.getTargetEntity() method invoked on invalid link.",
@@ -323,6 +336,19 @@
     ]
   },
   {
+    "code": 29,
+    "type": "INVARIANT",
+    "messagePattern": "The ComponentManager.addSubscription() method for the component named '%s' was invoked but subscription is already registered with ComponentManager.",
+    "callers": [
+      {
+        "class": "galdr.ComponentManager",
+        "method": "addSubscription",
+        "file": "ComponentManager.java",
+        "lineNumber": 338
+      }
+    ]
+  },
+  {
     "code": 30,
     "type": "API_INVARIANT",
     "messagePattern": "The ComponentManager.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
@@ -362,6 +388,19 @@
     ]
   },
   {
+    "code": 34,
+    "type": "INVARIANT",
+    "messagePattern": "World.createSubscription() invoked but subscription with matching AreaOfInterest already exists.",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "createSubscription",
+        "file": "World.java",
+        "lineNumber": 295
+      }
+    ]
+  },
+  {
     "code": 38,
     "type": "INVARIANT",
     "messagePattern": "Attempted to unlink outgoing link Link[%s] but entity %s has no outgoing links.",
@@ -396,7 +435,7 @@
         "class": "galdr.World",
         "method": "assertWorldConstructed",
         "file": "World.java",
-        "lineNumber": 437
+        "lineNumber": 462
       }
     ]
   },
