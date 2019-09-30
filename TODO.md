@@ -122,7 +122,8 @@ for systems/processors ahead of time.
     There would also be a `MutableFixedBitSet` and `UnmodificableFixedBitSet` so that can be propagated via
     `EntityAddCompleteEvent` although the second kind may be just a proxy that is eliminated in production code.
   - a dynamically sized `BitSet` implementation containing entity ids with a different set of optimizations and
-    no `hashCode()` and `equals()` implementations etc.
+    no `hashCode()` and `equals()` implementations etc. A particular implementation of value is `boolean clearIfSet(bit)`
+    used in `Subscription.entityRemove(int entityId)`.
 
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.
