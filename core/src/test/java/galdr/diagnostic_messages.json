@@ -44,10 +44,10 @@
     "messagePattern": "%s.getName() invoked when Galdr.areNamesEnabled() returns false",
     "callers": [
       {
-        "class": "galdr.Element",
+        "class": "galdr.Processor",
         "method": "getName",
-        "file": "Element.java",
-        "lineNumber": 45
+        "file": "Processor.java",
+        "lineNumber": 58
       },
       {
         "class": "galdr.World",
@@ -416,12 +416,12 @@
   {
     "code": 52,
     "type": "API_INVARIANT",
-    "messagePattern": "Element passed a name '%s' but Galdr.areNamesEnabled() is false",
+    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
     "callers": [
       {
-        "class": "galdr.Element",
+        "class": "galdr.Processor",
         "method": "<init>",
-        "file": "Element.java",
+        "file": "Processor.java",
         "lineNumber": 28
       }
     ]

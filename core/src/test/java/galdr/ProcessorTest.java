@@ -27,7 +27,37 @@ public class ProcessorTest
     builder.stage( randomString(), processor ).build();
 
     assertEquals( processor.getName(), "MyProcessor" );
+  }
+
+  @Test
+  public void toString_test()
+  {
+    final Worlds.Builder builder = Worlds.world();
+    // Cache the processor in var
+    final Processor processor = new MyProcessor();
+    builder.stage( randomString(), processor ).build();
+
     assertEquals( processor.toString(), "Processor[MyProcessor]" );
+
+    GaldrTestUtil.disableDebugToString();
+
+    assertDefaultToString( processor );
+  }
+
+  @Test
+  public void getName()
+  {
+    final Worlds.Builder builder = Worlds.world();
+    // Cache the processor in var
+    final Processor processor = new MyProcessor();
+    builder.stage( randomString(), processor ).build();
+
+    assertEquals( processor.getName(), "MyProcessor" );
+
+    GaldrTestUtil.disableNames();
+
+    assertInvariantFailure( processor::getName,
+                            "Galdr-0004: Processor.getName() invoked when Galdr.areNamesEnabled() returns false" );
   }
 
   @Test
