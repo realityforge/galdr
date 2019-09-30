@@ -81,6 +81,9 @@ for systems/processors ahead of time.
 * Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider caching Link objects in world ... at least for spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
+* Add a deferred creation `ComponentManager`. i.e. The creation of the component will be deferred until the first
+  time it is accessed. An example is a `Wall` cell that has health but usually not necessary to track it until it
+  is first damaged. Another alternative is a copy-on-right `ComponentManager`
 * Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
   component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations. Possibly
   only useful when the component is a primary component in an `AreaOfInterest` and can handle the relative slowness
