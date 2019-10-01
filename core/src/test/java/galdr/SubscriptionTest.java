@@ -81,7 +81,7 @@ public class SubscriptionTest
     world.run( () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.entityAdd( entity ),
-                            "Galdr-0022: Invoked Subscription.entityAdded with invalid Entity." );
+                            "Galdr-0022: Invoked Subscription.entityAdd with invalid Entity." );
   }
 
   @Test
@@ -97,6 +97,6 @@ public class SubscriptionTest
     world.run( () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.entityRemove( entity ),
-                            "Galdr-0018: Invoked Subscription.entityRemoved with invalid Entity." );
+                            "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
   }
 }

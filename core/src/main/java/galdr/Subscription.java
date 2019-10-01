@@ -102,7 +102,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0022: Invoked Subscription.entityAdded with invalid Entity." );
+                 () -> "Galdr-0022: Invoked Subscription.entityAdd with invalid Entity." );
     }
     if ( _areaOfInterest.matches( entity.getComponentIds() ) )
     {
@@ -116,7 +116,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0018: Invoked Subscription.entityRemoved with invalid Entity." );
+                 () -> "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
     }
     final int entityId = entity.getId();
     // We check whether the entity is in the list as it is slightly faster to check than calling
@@ -136,7 +136,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0018: Invoked Subscription.componentChanged with invalid Entity." );
+                 () -> "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
     }
     final int entityId = entity.getId();
     if ( _areaOfInterest.matches( entity.getComponentIds() ) )
