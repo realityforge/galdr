@@ -211,6 +211,9 @@ final class EntityManager
     }
     for ( final Subscription subscription : _world.getSubscriptions().values() )
     {
+      // TODO: Assess whether the Entity should have a back-pointer to subscriptions to optimize for
+      //  this scenario. A better solution would be a single node that doubly links into both subscription
+      //  and entity linked lists and thus can be deallocated fast.It could share infrastructure with links.
       subscription.entityRemove( entity );
     }
     entity.setRemoving();
