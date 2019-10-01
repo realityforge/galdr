@@ -99,4 +99,44 @@ public class SubscriptionTest
     assertInvariantFailure( () -> subscription.entityRemove( entity ),
                             "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
   }
+
+  @Test
+  public void componentChangeThatMatchesSubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+
+    final Subscription subscription = world.createSubscription( areaOfInterest );
+
+    assertEquals( subscription.getEntities().cardinality(), 0 );
+
+    final int entityId = world.createEntity( set() );
+
+    assertEquals( subscription.getEntities().cardinality(), 0 );
+
+    world.getComponentByType( Component1.class ).allocate( entityId );
+
+    assertEquals( subscription.getEntities().cardinality(), 1 );
+    assertTrue( subscription.getEntities().get( entityId ) );
+
+    world.getComponentByType( Component1.class ).remove( entityId );
+
+    assertEquals( subscription.getEntities().cardinality(), 0 );
+  }
+
+  @Test
+  public void componentChange_badEntity()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+
+    final Subscription subscription = world.createSubscription( areaOfInterest );
+
+    final int entityId = world.createEntity( set() );
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    world.run( () -> world.disposeEntity( entityId ) );
+
+    assertInvariantFailure( () -> subscription.componentChange( entity ),
+                            "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
+  }
 }
