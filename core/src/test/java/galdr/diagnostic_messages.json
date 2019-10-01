@@ -245,6 +245,31 @@
     ]
   },
   {
+    "code": 18,
+    "type": "INVARIANT",
+    "messagePattern": "Invoked Subscription.%s with invalid Entity.",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "entityAdd",
+        "file": "Subscription.java",
+        "lineNumber": 104
+      },
+      {
+        "class": "galdr.Subscription",
+        "method": "entityRemove",
+        "file": "Subscription.java",
+        "lineNumber": 118
+      },
+      {
+        "class": "galdr.Subscription",
+        "method": "componentChange",
+        "file": "Subscription.java",
+        "lineNumber": 138
+      }
+    ]
+  },
+  {
     "code": 19,
     "type": "INVARIANT",
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
