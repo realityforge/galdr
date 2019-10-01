@@ -93,7 +93,7 @@ final class EntityManager
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      _world.getComponentManagerById( current ).create( entityId );
+      _world.getComponentManagerById( current ).allocate( entityId );
     }
   }
 
