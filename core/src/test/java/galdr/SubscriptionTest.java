@@ -81,7 +81,7 @@ public class SubscriptionTest
     world.run( () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.entityAdd( entity ),
-                            "Galdr-0022: Invoked Subscription.entityAdd with invalid Entity." );
+                            "Galdr-0018: Invoked Subscription.entityAdd with invalid Entity." );
   }
 
   @Test

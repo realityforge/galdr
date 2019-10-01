@@ -102,7 +102,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0022: Invoked Subscription.entityAdd with invalid Entity." );
+                 () -> "Galdr-0018: Invoked Subscription.entityAdd with invalid Entity." );
     }
     if ( _areaOfInterest.matches( entity.getComponentIds() ) )
     {
