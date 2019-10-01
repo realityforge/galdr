@@ -64,7 +64,7 @@ complete as there is too much un-said.
 The toolkit will use annotation processors to build an efficient representation of component accessors and schedulers
 for systems/processors ahead of time.
 
-* Consider creation of some higher level `Archetype` or `Template` classes that act as a stamp that creates the
+* Consider creation of some higher level `Archetype`, `Plan` or `Template` classes that act as a stamp that creates the
   structure of 1 or more `Entity` instances with specific `Component` instances and `Link` defined between `Entity`
   instances. There could be two parts of this library - the first part creates the structure and the second
   part gives the components values. The second part could be done at a higher level subordinate library that reads
