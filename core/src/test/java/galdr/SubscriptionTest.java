@@ -47,4 +47,24 @@ public class SubscriptionTest
     assertInvariantFailure( subscription::ensureNotDisposed,
                             "Galdr-0015: Invoked method on Subscription when subscription is disposed." );
   }
+
+  @Test
+  public void createAndDisposeEntityThatMatchesSubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+
+    final Subscription subscription = world.createSubscription( areaOfInterest );
+
+    assertEquals( subscription.getEntities().cardinality(), 0 );
+
+    final int entityId = world.createEntity( set( 0 ) );
+
+    assertEquals( subscription.getEntities().cardinality(), 1 );
+    assertTrue( subscription.getEntities().get( entityId ) );
+
+    world.run( () -> world.disposeEntity( entityId ) );
+
+    assertEquals( subscription.getEntities().cardinality(), 0 );
+  }
 }
