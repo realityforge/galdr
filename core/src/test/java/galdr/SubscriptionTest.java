@@ -67,4 +67,36 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
   }
+
+  @Test
+  public void entityAdd_badEntity()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+
+    final Subscription subscription = world.createSubscription( areaOfInterest );
+
+    final int entityId = world.createEntity( set() );
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    world.run( () -> world.disposeEntity( entityId ) );
+
+    assertInvariantFailure( () -> subscription.entityAdd( entity ),
+                            "Galdr-0022: Invoked Subscription.entityAdded with invalid Entity." );
+  }
+
+  @Test
+  public void entityRemove_badEntity()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+
+    final Subscription subscription = world.createSubscription( areaOfInterest );
+
+    final int entityId = world.createEntity( set() );
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    world.run( () -> world.disposeEntity( entityId ) );
+
+    assertInvariantFailure( () -> subscription.entityRemove( entity ),
+                            "Galdr-0018: Invoked Subscription.entityRemoved with invalid Entity." );
+  }
 }
