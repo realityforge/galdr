@@ -214,7 +214,7 @@
         "class": "galdr.Subscription",
         "method": "ensureNotDisposed",
         "file": "Subscription.java",
-        "lineNumber": 156
+        "lineNumber": 209
       }
     ]
   },
@@ -253,19 +253,19 @@
         "class": "galdr.Subscription",
         "method": "entityAdd",
         "file": "Subscription.java",
-        "lineNumber": 104
+        "lineNumber": 157
       },
       {
         "class": "galdr.Subscription",
         "method": "entityRemove",
         "file": "Subscription.java",
-        "lineNumber": 118
+        "lineNumber": 171
       },
       {
         "class": "galdr.Subscription",
         "method": "componentChange",
         "file": "Subscription.java",
-        "lineNumber": 138
+        "lineNumber": 191
       }
     ]
   },
@@ -309,6 +309,19 @@
     ]
   },
   {
+    "code": 22,
+    "type": "INVARIANT",
+    "messagePattern": "Subscription.startIteration() invoked with owner '%s' but an existing iteration is in progress with owner '%s'.",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "startIteration",
+        "file": "Subscription.java",
+        "lineNumber": 58
+      }
+    ]
+  },
+  {
     "code": 23,
     "type": "INVARIANT",
     "messagePattern": "Invoked WorldHolder.activateWorld() with null world.",
@@ -331,6 +344,19 @@
         "method": "activateWorld",
         "file": "WorldHolder.java",
         "lineNumber": 63
+      }
+    ]
+  },
+  {
+    "code": 25,
+    "type": "INVARIANT",
+    "messagePattern": "Subscription.nextEntity() invoked with owner '%s' but an existing iteration is in progress with owner '%s'.",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "nextEntity",
+        "file": "Subscription.java",
+        "lineNumber": 91
       }
     ]
   },
