@@ -612,6 +612,23 @@ public class SubscriptionTest
     assertSubscriptionComplete( subscription );
   }
 
+  @SuppressWarnings( "unused" )
+  @Test
+  public void startIteration_badOwner()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final Object owner1 = new Object();
+    final Object owner2 = new Object();
+
+    subscription.startIteration( owner1 );
+
+    assertInvariantFailure( () -> subscription.startIteration( owner2 ),
+                            "Galdr-0022: Subscription.startIteration() invoked with owner '" +
+                            owner2 + "' but an existing iteration is in progress with owner '" + owner1 + "'." );
+  }
+
   private void assertSubscriptionComplete( @Nonnull final Subscription subscription )
   {
     assertFalse( subscription.isIterationInProgress() );
