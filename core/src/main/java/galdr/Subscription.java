@@ -73,7 +73,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> owner == _owner,
-                 () -> "Galdr-0025: Subscription.completeIteration() invoked with owner '" + owner +
+                 () -> "Galdr-0027: Subscription.completeIteration() invoked with owner '" + owner +
                        "' but this does not match the existing owner '" + _owner + "'." );
     }
     _currentEntityId = -1;
