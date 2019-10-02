@@ -77,6 +77,10 @@ final class Subscription
                        "' but this does not match the existing owner '" + _owner + "'." );
     }
     _currentEntityId = -1;
+    if ( hasNewEntities() )
+    {
+      _newEntities.clear();
+    }
     _owner = null;
   }
 
