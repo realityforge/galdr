@@ -1,5 +1,6 @@
 package galdr;
 
+import javax.annotation.Nullable;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -10,6 +11,15 @@ public class ProcessorTest
     extends Processor
   {
     private int _lastDelta;
+
+    MyProcessor()
+    {
+    }
+
+    MyProcessor( @Nullable final String name )
+    {
+      super( name );
+    }
 
     @Override
     protected void process( final int delta )
@@ -27,6 +37,14 @@ public class ProcessorTest
     builder.stage( randomString(), processor ).build();
 
     assertEquals( processor.getName(), "MyProcessor" );
+  }
+
+  @Test
+  public void construct_namedPassedButNamesDisabled()
+  {
+    GaldrTestUtil.disableNames();
+    assertInvariantFailure( () -> new MyProcessor( "MyName" ),
+                            "Galdr-0052: Processor passed a name 'MyName' but Galdr.areNamesEnabled() is false" );
   }
 
   @Test
