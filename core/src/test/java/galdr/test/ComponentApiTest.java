@@ -110,4 +110,19 @@ public class ComponentApiTest
 
     run( world, () -> assertFalse( api.has( entityId ) ) );
   }
+
+  @Test
+  public void attemptToInvokeInOtherWrongWorld()
+  {
+    final World world1 = Worlds.world().component( MyFlag.class ).build();
+    final World world2 = Worlds.world().component( MyFlag.class ).build();
+
+    final int entityId1 = world1.createEntity( new BitSet() );
+    world2.createEntity( new BitSet() );
+
+    final ComponentAPI<MyFlag> api = world1.getComponentByType( MyFlag.class );
+
+    assertInvariantFailure( () -> run( world2, () -> api.allocate( entityId1 ) ),
+                            "Galdr-0035: ComponentAPI method invoked in the context of the world 'World@2' but the component belongs to the world 'World@1'" );
+  }
 }

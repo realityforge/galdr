@@ -3,6 +3,7 @@ package galdr;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import static org.realityforge.braincheck.Guards.*;
 
 /**
  * The Component API exposed to application code.
@@ -51,7 +52,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T create( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     return _store.create( entityId );
   }
 
@@ -64,7 +65,7 @@ public final class ComponentAPI<T>
    */
   public void allocate( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     _store.allocate( entityId );
   }
 
@@ -77,7 +78,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T findOrCreate( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     return _store.findOrCreate( entityId );
   }
 
@@ -90,7 +91,7 @@ public final class ComponentAPI<T>
    */
   public boolean has( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     return _store.has( entityId );
   }
 
@@ -103,7 +104,7 @@ public final class ComponentAPI<T>
   @Nullable
   public T find( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     return _store.find( entityId );
   }
 
@@ -118,7 +119,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T get( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     return _store.get( entityId );
   }
 
@@ -130,7 +131,20 @@ public final class ComponentAPI<T>
    */
   public void remove( final int entityId )
   {
-    WorldHolder.world();
+    ensureCurrentWorldMatches();
     _store.remove( entityId );
+  }
+
+  private void ensureCurrentWorldMatches()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World activeWorld = WorldHolder.world();
+      final World componentWorld = _store.getWorld();
+      apiInvariant( () -> activeWorld == componentWorld,
+                    () -> "Galdr-0035: ComponentAPI method invoked in the context of the world '" +
+                          activeWorld.getName() + "' but the component belongs to the world '" +
+                          componentWorld.getName() + "'" );
+    }
   }
 }

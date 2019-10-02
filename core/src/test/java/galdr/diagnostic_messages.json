@@ -214,7 +214,7 @@
         "class": "galdr.Subscription",
         "method": "ensureNotDisposed",
         "file": "Subscription.java",
-        "lineNumber": 203
+        "lineNumber": 209
       }
     ]
   },
@@ -253,19 +253,19 @@
         "class": "galdr.Subscription",
         "method": "entityAdd",
         "file": "Subscription.java",
-        "lineNumber": 151
+        "lineNumber": 157
       },
       {
         "class": "galdr.Subscription",
         "method": "entityRemove",
         "file": "Subscription.java",
-        "lineNumber": 165
+        "lineNumber": 171
       },
       {
         "class": "galdr.Subscription",
         "method": "componentChange",
         "file": "Subscription.java",
-        "lineNumber": 185
+        "lineNumber": 191
       }
     ]
   },
@@ -317,7 +317,7 @@
         "class": "galdr.Subscription",
         "method": "startIteration",
         "file": "Subscription.java",
-        "lineNumber": 58
+        "lineNumber": 62
       }
     ]
   },
@@ -356,7 +356,7 @@
         "class": "galdr.Subscription",
         "method": "nextEntity",
         "file": "Subscription.java",
-        "lineNumber": 91
+        "lineNumber": 97
       }
     ]
   },
@@ -382,7 +382,7 @@
         "class": "galdr.Subscription",
         "method": "completeIteration",
         "file": "Subscription.java",
-        "lineNumber": 75
+        "lineNumber": 80
       }
     ]
   },
@@ -439,6 +439,19 @@
     ]
   },
   {
+    "code": 32,
+    "type": "INVARIANT",
+    "messagePattern": "Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value %s",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "startIteration",
+        "file": "Subscription.java",
+        "lineNumber": 59
+      }
+    ]
+  },
+  {
     "code": 33,
     "type": "API_INVARIANT",
     "messagePattern": "The ComponentManager.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component.",
@@ -461,6 +474,19 @@
         "method": "createSubscription",
         "file": "World.java",
         "lineNumber": 295
+      }
+    ]
+  },
+  {
+    "code": 35,
+    "type": "API_INVARIANT",
+    "messagePattern": "ComponentAPI method invoked in the context of the world '%s' but the component belongs to the world '%s'",
+    "callers": [
+      {
+        "class": "galdr.ComponentAPI",
+        "method": "ensureCurrentWorldMatches",
+        "file": "ComponentAPI.java",
+        "lineNumber": 144
       }
     ]
   },
