@@ -538,6 +538,36 @@ public class SubscriptionTest
     assertSubscriptionComplete( subscription );
   }
 
+  @SuppressWarnings( "unused" )
+  @Test
+  public void explicitCompleteOfIterationBeforeAllEntitiesProcessed()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.getCurrentEntityId(), entityId0 );
+
+    // Explicit complete of iteration before all entities processed
+    subscription.completeIteration( owner );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
   private void assertSubscriptionComplete( @Nonnull final Subscription subscription )
   {
     assertFalse( subscription.isIterationInProgress() );
