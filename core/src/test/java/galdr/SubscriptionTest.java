@@ -1,5 +1,6 @@
 package galdr;
 
+import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -137,5 +138,357 @@ public class SubscriptionTest
 
     assertInvariantFailure( () -> subscription.componentChange( entity ),
                             "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
+  }
+
+  @Test
+  public void iterateOverEmptySubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    // There is no entities so should immediately complete iteration
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionContainingSubsetOfEntitiesNoModifications()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set() );
+    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId5 = world.createEntity( set() );
+    final int entityId6 = world.createEntity( set() );
+    final int entityId7 = world.createEntity( set( 0 ) );
+    final int entityId8 = world.createEntity( set() );
+    final int entityId9 = world.createEntity( set( 0 ) );
+
+    assertEquals( entityId0, 0 );
+    assertEquals( entityId9, 9 );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    assertEquals( subscription.nextEntity( owner ), entityId4 );
+    assertEquals( subscription.nextEntity( owner ), entityId7 );
+    assertEquals( subscription.nextEntity( owner ), entityId9 );
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionContainingSubsetOfEntitiesRemoveEntityLaterInIteration()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set() );
+    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId5 = world.createEntity( set() );
+    final int entityId6 = world.createEntity( set() );
+    final int entityId7 = world.createEntity( set( 0 ) );
+    final int entityId8 = world.createEntity( set() );
+    final int entityId9 = world.createEntity( set( 0 ) );
+
+    assertEquals( entityId0, 0 );
+    assertEquals( entityId9, 9 );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+
+    // Not part of the subscription
+    world.run( () -> world.disposeEntity( entityId3 ) );
+
+    // Part of the subscription
+    world.run( () -> world.disposeEntity( entityId4 ) );
+
+    // Not part of the subscription
+    world.run( () -> world.disposeEntity( entityId8 ) );
+
+    world.getComponentByType( Component1.class ).remove( entityId7 );
+
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    assertEquals( subscription.nextEntity( owner ), entityId9 );
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionContainingSubsetOfEntitiesRemoveEntityEarlierInIteration()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set() );
+    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId5 = world.createEntity( set() );
+    final int entityId6 = world.createEntity( set() );
+    final int entityId7 = world.createEntity( set( 0 ) );
+    final int entityId8 = world.createEntity( set() );
+    final int entityId9 = world.createEntity( set( 0 ) );
+
+    assertEquals( entityId0, 0 );
+    assertEquals( entityId9, 9 );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    assertEquals( subscription.nextEntity( owner ), entityId4 );
+    assertEquals( subscription.nextEntity( owner ), entityId7 );
+
+    // Not part of the subscription
+    world.run( () -> world.disposeEntity( 3 ) );
+
+    // Part of the subscription
+    world.run( () -> world.disposeEntity( 4 ) );
+
+    // Not part of the subscription
+    world.run( () -> world.disposeEntity( 8 ) );
+
+    assertEquals( subscription.nextEntity( owner ), entityId9 );
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionContainingSubsetOfEntitiesAddEntityLaterInIteration()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set() );
+    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId5 = world.createEntity( set() );
+    final int entityId6 = world.createEntity( set() );
+    final int entityId7 = world.createEntity( set( 0 ) );
+    final int entityId8 = world.createEntity( set() );
+    final int entityId9 = world.createEntity( set( 0 ) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+    assertFalse( subscription.hasNewEntities() );
+
+    // Not part of the subscription before allocate
+    world.getComponentByType( Component1.class ).allocate( entityId3 );
+
+    // Not part of the subscription before allocate
+    world.getComponentByType( Component1.class ).allocate( entityId8 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+    assertFalse( subscription.hasNewEntities() );
+
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    assertEquals( subscription.nextEntity( owner ), entityId3 );
+    assertEquals( subscription.nextEntity( owner ), entityId4 );
+    assertEquals( subscription.nextEntity( owner ), entityId7 );
+    assertEquals( subscription.nextEntity( owner ), entityId8 );
+    assertEquals( subscription.nextEntity( owner ), entityId9 );
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionContainingSubsetOfEntitiesAddEntityEarlierInIteration()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set() );
+    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId5 = world.createEntity( set() );
+    final int entityId6 = world.createEntity( set() );
+    final int entityId7 = world.createEntity( set( 0 ) );
+    final int entityId8 = world.createEntity( set() );
+    final int entityId9 = world.createEntity( set( 0 ) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.getCurrentEntityId(), entityId0 );
+
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    assertEquals( subscription.nextEntity( owner ), entityId4 );
+    assertEquals( subscription.nextEntity( owner ), entityId7 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+    assertFalse( subscription.hasNewEntities() );
+
+    // Not part of the subscription before allocate
+    world.getComponentByType( Component1.class ).allocate( entityId5 );
+
+    // Not part of the subscription before allocate
+    world.getComponentByType( Component1.class ).allocate( entityId3 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 2 );
+    assertTrue( subscription.hasNewEntities() );
+
+    assertEquals( subscription.nextEntity( owner ), entityId9 );
+
+    // This wraps around to the NewEntities list
+    assertEquals( subscription.nextEntity( owner ), entityId3 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 1 );
+
+    assertEquals( subscription.nextEntity( owner ), entityId5 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+
+  @SuppressWarnings( "unused" )
+  @Test
+  public void iterateOverSubscriptionWithMultiplePassesOverNewEntities()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId1 = world.createEntity( set( ) );
+    final int entityId2 = world.createEntity( set() );
+    final int entityId3 = world.createEntity( set(0) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.getCurrentEntityId(), entityId0 );
+
+    assertEquals( subscription.nextEntity( owner ), entityId3 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+    assertFalse( subscription.hasNewEntities() );
+
+    // Not part of the subscription before allocate
+    world.getComponentByType( Component1.class ).allocate( entityId2 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 1 );
+    assertTrue( subscription.hasNewEntities() );
+
+    // This wraps around to the NewEntities list
+    assertEquals( subscription.nextEntity( owner ), entityId2 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+    assertTrue( subscription.hasNewEntities() );
+
+    // Not part of the subscription before allocate
+    // This will cause another wrap around
+    world.getComponentByType( Component1.class ).allocate( entityId1 );
+
+    // This wraps around again
+    assertEquals( subscription.nextEntity( owner ), entityId1 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
+
+    assertEquals( subscription.nextEntity( owner ), -1 );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
+  private void assertSubscriptionComplete( @Nonnull final Subscription subscription )
+  {
+    assertFalse( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertNull( subscription.getOwner() );
   }
 }
