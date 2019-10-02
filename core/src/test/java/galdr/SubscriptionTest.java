@@ -568,6 +568,50 @@ public class SubscriptionTest
     assertSubscriptionComplete( subscription );
   }
 
+  @SuppressWarnings( "unused" )
+  @Test
+  public void explicitCompleteWhenProcessingNewEntitiesList()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set() );
+    final int entityId1 = world.createEntity( set() );
+    final int entityId2 = world.createEntity( set( 0 ) );
+
+    final Object owner = new Object();
+
+    assertNull( subscription.getOwner() );
+
+    subscription.startIteration( owner );
+
+    assertTrue( subscription.isIterationInProgress() );
+    assertEquals( subscription.getCurrentEntityId(), -1 );
+    assertEquals( subscription.getOwner(), owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId2 );
+    assertEquals( subscription.getCurrentEntityId(), entityId2 );
+
+    // Add to New Entities to subscription
+    world.getComponentByType( Component1.class ).allocate( entityId1 );
+    world.getComponentByType( Component1.class ).allocate( entityId0 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 2 );
+    assertTrue( subscription.hasNewEntities() );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.getCurrentEntityId(), entityId0 );
+
+    assertEquals( subscription.getNewEntities().cardinality(), 1 );
+    assertTrue( subscription.hasNewEntities() );
+
+    // Explicit complete of iteration before all entities processed
+    subscription.completeIteration( owner );
+
+    // Verify we are complete
+    assertSubscriptionComplete( subscription );
+  }
+
   private void assertSubscriptionComplete( @Nonnull final Subscription subscription )
   {
     assertFalse( subscription.isIterationInProgress() );
