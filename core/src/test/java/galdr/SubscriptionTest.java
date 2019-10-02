@@ -573,6 +573,7 @@ public class SubscriptionTest
     assertFalse( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertNull( subscription.getOwner() );
+    assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
     assertFalse( subscription.isProcessingNewEntities() );
   }
