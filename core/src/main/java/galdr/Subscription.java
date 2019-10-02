@@ -98,26 +98,20 @@ final class Subscription
       _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
       if ( -1 == _currentEntityId )
       {
+        assert hasNewEntities();
         // If we have added more entities to the _newEntities prior to current pointer
         // then start scanning from the start of the list again
-        if ( hasNewEntities() )
+        _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
+        // By definition if we have set HAS_NEW_ENTITIES we should be able to find one
+        // unless of course it was added to AOI and removed from AOI before we processed
+        // the entity
+        if ( -1 == _currentEntityId )
         {
-          _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
-          // By definition if we have set HAS_NEW_ENTITIES we should be able to find one
-          // unless of course it was added to AOI and remove from AOI within same processing
-          // round in which case this
-          if ( -1 == _currentEntityId )
-          {
-            _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
-          }
-          else
-          {
-            _newEntities.clear( _currentEntityId );
-          }
+          _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
         }
         else
         {
-          _flags &= ~Flags.PROCESSING_NEW_ENTITIES;
+          _newEntities.clear( _currentEntityId );
         }
       }
       else
