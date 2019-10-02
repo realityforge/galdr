@@ -91,7 +91,6 @@ final class Subscription
     ensureNotDisposed();
     if ( isProcessingNewEntities() )
     {
-      _newEntities.clear( _currentEntityId );
       _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
       if ( -1 == _currentEntityId )
       {
@@ -107,11 +106,19 @@ final class Subscription
           {
             _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
           }
+          else
+          {
+            _newEntities.clear( _currentEntityId );
+          }
         }
         else
         {
           _flags &= ~Flags.PROCESSING_NEW_ENTITIES;
         }
+      }
+      else
+      {
+        _newEntities.clear( _currentEntityId );
       }
     }
     else
@@ -126,6 +133,7 @@ final class Subscription
           if ( -1 != _currentEntityId )
           {
             _flags |= Flags.PROCESSING_NEW_ENTITIES;
+            _newEntities.clear( _currentEntityId );
           }
         }
       }
