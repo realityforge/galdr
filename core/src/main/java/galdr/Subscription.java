@@ -56,6 +56,9 @@ final class Subscription
     ensureNotDisposed();
     if ( Galdr.shouldCheckInvariants() )
     {
+      invariant( () -> -1 == _currentEntityId,
+                 () -> "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId " +
+                       "has not been reset. Current value " + _currentEntityId );
       invariant( () -> null == _owner,
                  () -> "Galdr-0022: Subscription.startIteration() invoked with owner '" + owner +
                        "' but an existing iteration is in progress with owner '" + _owner + "'." );

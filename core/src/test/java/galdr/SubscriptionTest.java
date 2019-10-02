@@ -629,6 +629,25 @@ public class SubscriptionTest
                             owner2 + "' but an existing iteration is in progress with owner '" + owner1 + "'." );
   }
 
+  @Test
+  public void startIteration_whenIterationInProgress()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+
+    final int entityId0 = world.createEntity( set( 0 ) );
+
+    final Object owner = new Object();
+
+    subscription.startIteration( owner );
+
+    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    assertEquals( subscription.getCurrentEntityId(), entityId0 );
+
+    assertInvariantFailure( () -> subscription.startIteration( owner ),
+                            "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value 0" );
+  }
+
   private void assertSubscriptionComplete( @Nonnull final Subscription subscription )
   {
     assertFalse( subscription.isIterationInProgress() );
