@@ -79,6 +79,7 @@ final class Subscription
     _currentEntityId = -1;
     if ( hasNewEntities() )
     {
+      _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
       _newEntities.clear();
     }
     _owner = null;
