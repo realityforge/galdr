@@ -427,7 +427,6 @@ public class SubscriptionTest
     assertSubscriptionComplete( subscription );
   }
 
-
   @SuppressWarnings( "unused" )
   @Test
   public void iterateOverSubscriptionWithMultiplePassesOverNewEntities()
@@ -436,9 +435,9 @@ public class SubscriptionTest
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( ) );
+    final int entityId1 = world.createEntity( set() );
     final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set(0) );
+    final int entityId3 = world.createEntity( set( 0 ) );
 
     final Object owner = new Object();
 
