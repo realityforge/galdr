@@ -53,6 +53,7 @@ final class Subscription
 
   void startIteration( @Nonnull final Object owner )
   {
+    ensureNotDisposed();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> null == _owner,
@@ -70,6 +71,7 @@ final class Subscription
    */
   void completeIteration( @Nonnull final Object owner )
   {
+    ensureNotDisposed();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> owner == _owner,
