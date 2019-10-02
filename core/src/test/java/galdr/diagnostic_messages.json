@@ -214,7 +214,7 @@
         "class": "galdr.Subscription",
         "method": "ensureNotDisposed",
         "file": "Subscription.java",
-        "lineNumber": 209
+        "lineNumber": 203
       }
     ]
   },
@@ -253,19 +253,19 @@
         "class": "galdr.Subscription",
         "method": "entityAdd",
         "file": "Subscription.java",
-        "lineNumber": 157
+        "lineNumber": 151
       },
       {
         "class": "galdr.Subscription",
         "method": "entityRemove",
         "file": "Subscription.java",
-        "lineNumber": 171
+        "lineNumber": 165
       },
       {
         "class": "galdr.Subscription",
         "method": "componentChange",
         "file": "Subscription.java",
-        "lineNumber": 191
+        "lineNumber": 185
       }
     ]
   },
@@ -370,6 +370,19 @@
         "method": "world",
         "file": "WorldHolder.java",
         "lineNumber": 35
+      }
+    ]
+  },
+  {
+    "code": 27,
+    "type": "INVARIANT",
+    "messagePattern": "Subscription.completeIteration() invoked with owner '%s' but this does not match the existing owner '%s'.",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "completeIteration",
+        "file": "Subscription.java",
+        "lineNumber": 75
       }
     ]
   },
