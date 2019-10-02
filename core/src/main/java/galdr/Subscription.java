@@ -2,6 +2,7 @@ package galdr;
 
 import java.util.BitSet;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
@@ -38,6 +39,8 @@ final class Subscription
    * Flags describing current state of Subscription.
    */
   private int _flags;
+  @Nullable
+  private Object _owner;
 
   Subscription( @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
   {
@@ -48,9 +51,43 @@ final class Subscription
     _flags = 0;
   }
 
-  //TODO: Pass in subscriber here when invariant checks enabled and verify same subscriber until completed
-  int nextEntity()
+  void startIteration( @Nonnull final Object owner )
   {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> null == _owner,
+                 () -> "Galdr-0022: Subscription.startIteration() invoked with owner '" + owner +
+                       "' but an existing iteration is in progress with owner '" + _owner + "'." );
+      _owner = owner;
+    }
+  }
+
+  /**
+   * This should only be invoked if the owner wants to cancel an in progress iteration.
+   * Normal iteration will complete out when no entities to return.
+   *
+   * @param owner the current owner.
+   */
+  void completeIteration( @Nonnull final Object owner )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> owner == _owner,
+                 () -> "Galdr-0025: Subscription.completeIteration() invoked with owner '" + owner +
+                       "' but this does not match the existing owner '" + _owner + "'." );
+    }
+    _currentEntityId = -1;
+    _owner = null;
+  }
+
+  int nextEntity( @Nonnull final Object owner )
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> owner == _owner,
+                 () -> "Galdr-0025: Subscription.nextEntity() invoked with owner '" + owner +
+                       "' but an existing iteration is in progress with owner '" + _owner + "'." );
+    }
     ensureNotDisposed();
     if ( isProcessingNewEntities() )
     {
@@ -92,6 +129,10 @@ final class Subscription
           }
         }
       }
+    }
+    if ( -1 == _currentEntityId )
+    {
+      _owner = null;
     }
     return _currentEntityId;
   }
@@ -226,6 +267,17 @@ final class Subscription
   int getCurrentEntityId()
   {
     return _currentEntityId;
+  }
+
+  boolean isIterationInProgress()
+  {
+    return null != getOwner();
+  }
+
+  @Nullable
+  Object getOwner()
+  {
+    return _owner;
   }
 
   static final class Flags
