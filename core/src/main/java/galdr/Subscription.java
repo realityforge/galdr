@@ -228,11 +228,6 @@ final class Subscription
     return _currentEntityId;
   }
 
-  int getFlags()
-  {
-    return _flags;
-  }
-
   static final class Flags
   {
     /**

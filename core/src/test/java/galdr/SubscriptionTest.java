@@ -26,7 +26,6 @@ public class SubscriptionTest
     assertEquals( subscription.getEntities().cardinality(), 0 );
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertEquals( subscription.getCurrentEntityId(), -1 );
-    assertEquals( subscription.getFlags(), 0 );
     assertTrue( subscription.isNotDisposed() );
     assertFalse( subscription.isDisposed() );
     assertFalse( subscription.isProcessingNewEntities() );
