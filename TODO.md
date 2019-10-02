@@ -38,15 +38,15 @@ complete as there is too much un-said.
 
 * `AreaOfInterest`
   * Declares a set of rules that match components. These rules include which components MUST be present,
-    which components MUST NOT be present and a set of component where at least one component MUST be present. 
+    which components MUST NOT be present and a set of component where at least one component MUST be present.
 
 * `Subscription`
-  * A subscription is a set of entities maintained by the toolkit that match a specific `AreaOfInterest`. 
+  * A subscription is a set of entities maintained by the toolkit that match a specific `AreaOfInterest`.
 
 * `AccessControl`
   * Rules that declare how a `Processor` accesses `Component` instances. This includes whether the `Processor`
     accesses the component for read or write access and potentially whether the component creates or disposes
-    components or entities.  
+    components or entities.
 
 * `Processor` (a.k.a. Systems in other ECS frameworks)
   * A processor may receive 0 or more event types and applies changes to entities. See the "event" design for
