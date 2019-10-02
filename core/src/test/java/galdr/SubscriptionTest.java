@@ -114,12 +114,12 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
-    world.getComponentByType( Component1.class ).allocate( entityId );
+    run( world, () -> world.getComponentByType( Component1.class ).allocate( entityId ) );
 
     assertEquals( subscription.getEntities().cardinality(), 1 );
     assertTrue( subscription.getEntities().get( entityId ) );
 
-    world.getComponentByType( Component1.class ).remove( entityId );
+    run( world, () -> world.getComponentByType( Component1.class ).remove( entityId ) );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
   }
@@ -210,6 +210,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesRemoveEntityLaterInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
@@ -247,7 +248,7 @@ public class SubscriptionTest
     // Not part of the subscription
     run( world, () -> world.disposeEntity( entityId8 ) );
 
-    world.getComponentByType( Component1.class ).remove( entityId7 );
+    run( world, () -> componentApi.remove( entityId7 ) );
 
     assertEquals( subscription.nextEntity( owner ), entityId1 );
     assertEquals( subscription.nextEntity( owner ), entityId9 );
@@ -314,6 +315,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesAddEntityLaterInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
@@ -343,10 +345,10 @@ public class SubscriptionTest
     assertFalse( subscription.hasNewEntities() );
 
     // Not part of the subscription before allocate
-    world.getComponentByType( Component1.class ).allocate( entityId3 );
+    run( world, () -> componentApi.allocate( entityId3 ) );
 
     // Not part of the subscription before allocate
-    world.getComponentByType( Component1.class ).allocate( entityId8 );
+    run( world, () -> componentApi.allocate( entityId8 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -368,6 +370,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesAddEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
@@ -402,10 +405,10 @@ public class SubscriptionTest
     assertFalse( subscription.hasNewEntities() );
 
     // Not part of the subscription before allocate
-    world.getComponentByType( Component1.class ).allocate( entityId5 );
+    run( world, () -> componentApi.allocate( entityId5 ) );
 
     // Not part of the subscription before allocate
-    world.getComponentByType( Component1.class ).allocate( entityId3 );
+    run( world, () -> componentApi.allocate( entityId3 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
@@ -432,6 +435,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionWithMultiplePassesOverNewEntities()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
@@ -458,7 +462,7 @@ public class SubscriptionTest
     assertFalse( subscription.hasNewEntities() );
 
     // Not part of the subscription before allocate
-    world.getComponentByType( Component1.class ).allocate( entityId2 );
+    run( world, () -> componentApi.allocate( entityId2 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
     assertTrue( subscription.hasNewEntities() );
@@ -471,7 +475,7 @@ public class SubscriptionTest
 
     // Not part of the subscription before allocate
     // This will cause another wrap around
-    world.getComponentByType( Component1.class ).allocate( entityId1 );
+    run( world, () -> componentApi.allocate( entityId1 ) );
 
     // This wraps around again
     assertEquals( subscription.nextEntity( owner ), entityId1 );
@@ -489,6 +493,7 @@ public class SubscriptionTest
   public void iterateWhereEntityAddedAndRemovedFromNewEntitiesPriorToVisiting()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set( 0 ) );
@@ -516,14 +521,14 @@ public class SubscriptionTest
     assertFalse( subscription.hasNewEntities() );
 
     // Add to New Entities
-    world.getComponentByType( Component1.class ).allocate( entityId1 );
-    world.getComponentByType( Component1.class ).allocate( entityId2 );
+    run( world, () -> componentApi.allocate( entityId1 ) );
+    run( world, () -> componentApi.allocate( entityId2 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
 
     // Remove from New Entities
-    world.getComponentByType( Component1.class ).remove( entityId1 );
+    run( world, () -> componentApi.remove( entityId1 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
     assertTrue( subscription.hasNewEntities() );
@@ -573,6 +578,7 @@ public class SubscriptionTest
   public void explicitCompleteWhenProcessingNewEntitiesList()
   {
     final World world = Worlds.world().component( Component1.class ).build();
+    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
     final int entityId0 = world.createEntity( set() );
@@ -593,8 +599,8 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), entityId2 );
 
     // Add to New Entities to subscription
-    world.getComponentByType( Component1.class ).allocate( entityId1 );
-    world.getComponentByType( Component1.class ).allocate( entityId0 );
+    run( world, () -> componentApi.allocate( entityId1 ) );
+    run( world, () -> componentApi.allocate( entityId0 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );

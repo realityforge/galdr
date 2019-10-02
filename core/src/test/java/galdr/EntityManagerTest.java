@@ -86,15 +86,15 @@ public class EntityManagerTest
 
     // Component 1 components
     assertEquals( entity1.getComponentIds(), componentIds1 );
-    assertTrue( armour.has( entity1.getId() ) );
-    assertTrue( health.has( entity1.getId() ) );
-    assertFalse( attack.has( entity1.getId() ) );
+    run( world, () -> assertTrue( armour.has( entity1.getId() ) ) );
+    run( world, () -> assertTrue( health.has( entity1.getId() ) ) );
+    run( world, () -> assertFalse( attack.has( entity1.getId() ) ) );
 
     // Component 2 components
     assertEquals( entity2.getComponentIds(), componentIds2 );
-    assertFalse( armour.has( entity2.getId() ) );
-    assertTrue( health.has( entity2.getId() ) );
-    assertTrue( attack.has( entity2.getId() ) );
+    run( world, () -> assertFalse( armour.has( entity2.getId() ) ) );
+    run( world, () -> assertTrue( health.has( entity2.getId() ) ) );
+    run( world, () -> assertTrue( attack.has( entity2.getId() ) ) );
   }
 
   @Test
@@ -143,15 +143,15 @@ public class EntityManagerTest
 
     // Component 1 components
     assertEquals( entity1.getComponentIds(), componentIds1 );
-    assertTrue( armour.has( entity1.getId() ) );
-    assertTrue( health.has( entity1.getId() ) );
-    assertFalse( attack.has( entity1.getId() ) );
+    run( world, () -> assertTrue( armour.has( entity1.getId() ) ) );
+    run( world, () -> assertTrue( health.has( entity1.getId() ) ) );
+    run( world, () -> assertFalse( attack.has( entity1.getId() ) ) );
 
     // Component 2 components
     assertEquals( entity2.getComponentIds(), componentIds2 );
-    assertFalse( armour.has( entity2.getId() ) );
-    assertTrue( health.has( entity2.getId() ) );
-    assertTrue( attack.has( entity2.getId() ) );
+    run( world, () -> assertFalse( armour.has( entity2.getId() ) ) );
+    run( world, () -> assertTrue( health.has( entity2.getId() ) ) );
+    run( world, () -> assertTrue( attack.has( entity2.getId() ) ) );
 
     handler.unsubscribe();
 
@@ -204,8 +204,8 @@ public class EntityManagerTest
     assertTrue( entity.isAlive() );
 
     assertEquals( entity.getComponentIds(), componentIds1 );
-    assertTrue( armour.has( entityId ) );
-    assertTrue( health.has( entityId ) );
+    run( world, () -> assertTrue( armour.has( entityId ) ) );
+    run( world, () -> assertTrue( health.has( entityId ) ) );
 
     run( world, () -> entityManager.disposeEntity( entityId ) );
 
@@ -234,7 +234,7 @@ public class EntityManagerTest
     assertTrue( entity.isAlive() );
 
     assertEquals( entity.getComponentIds(), componentIds1 );
-    assertTrue( armour.has( entity.getId() ) );
+    run( world, () -> assertTrue( armour.has( entity.getId() ) ) );
 
     run( world, () -> entityManager.disposeEntity( entity ) );
 

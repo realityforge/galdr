@@ -51,6 +51,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T create( final int entityId )
   {
+    WorldHolder.world();
     return _store.create( entityId );
   }
 
@@ -63,6 +64,7 @@ public final class ComponentAPI<T>
    */
   public void allocate( final int entityId )
   {
+    WorldHolder.world();
     _store.allocate( entityId );
   }
 
@@ -75,6 +77,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T findOrCreate( final int entityId )
   {
+    WorldHolder.world();
     return _store.findOrCreate( entityId );
   }
 
@@ -87,6 +90,7 @@ public final class ComponentAPI<T>
    */
   public boolean has( final int entityId )
   {
+    WorldHolder.world();
     return _store.has( entityId );
   }
 
@@ -99,6 +103,7 @@ public final class ComponentAPI<T>
   @Nullable
   public T find( final int entityId )
   {
+    WorldHolder.world();
     return _store.find( entityId );
   }
 
@@ -113,6 +118,7 @@ public final class ComponentAPI<T>
   @Nonnull
   public T get( final int entityId )
   {
+    WorldHolder.world();
     return _store.get( entityId );
   }
 
@@ -124,6 +130,7 @@ public final class ComponentAPI<T>
    */
   public void remove( final int entityId )
   {
+    WorldHolder.world();
     _store.remove( entityId );
   }
 }

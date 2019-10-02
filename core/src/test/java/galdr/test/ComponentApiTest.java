@@ -33,23 +33,23 @@ public class ComponentApiTest
     assertEquals( api.getId(), 0 );
     assertEquals( api.getStorage(), ComponentStorage.ARRAY );
 
-    assertFalse( api.has( entityId ) );
-    assertNull( api.find( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
+    run( world, () -> assertNull( api.find( entityId ) ) );
 
-    final Health health = api.create( entityId );
+    final Health health = run( world, () -> api.create( entityId ) );
 
     final int healthPoints = randomInt( 100 );
     health.healthPoints = healthPoints;
 
-    assertTrue( api.has( entityId ) );
-    assertEquals( api.find( entityId ), health );
-    assertEquals( api.findOrCreate( entityId ), health );
-    assertEquals( api.get( entityId ).healthPoints, healthPoints );
+    run( world, () -> assertTrue( api.has( entityId ) ) );
+    run( world, () -> assertEquals( api.find( entityId ), health ) );
+    run( world, () -> assertEquals( api.findOrCreate( entityId ), health ) );
+    run( world, () -> assertEquals( api.get( entityId ).healthPoints, healthPoints ) );
 
-    api.remove( entityId );
+    run( world, () -> api.remove( entityId ) );
 
-    assertFalse( api.has( entityId ) );
-    assertNull( api.find( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
+    run( world, () -> assertNull( api.find( entityId ) ) );
   }
 
   @Test
@@ -63,28 +63,28 @@ public class ComponentApiTest
 
     assertEquals( api.getId(), 0 );
 
-    assertFalse( api.has( entityId ) );
-    assertNull( api.find( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
+    run( world, () -> assertNull( api.find( entityId ) ) );
 
-    api.allocate( entityId );
+    run( world, () -> api.allocate( entityId ) );
 
-    assertTrue( api.has( entityId ) );
-    assertNotNull( api.find( entityId ) );
+    run( world, () -> assertTrue( api.has( entityId ) ) );
+    run( world, () -> assertNotNull( api.find( entityId ) ) );
 
-    final Health health = api.get( entityId );
+    final Health health = run( world, () -> api.get( entityId ) );
 
     final int healthPoints = randomInt( 100 );
     health.healthPoints = healthPoints;
 
-    assertTrue( api.has( entityId ) );
-    assertEquals( api.find( entityId ), health );
-    assertEquals( api.findOrCreate( entityId ), health );
-    assertEquals( api.get( entityId ).healthPoints, healthPoints );
+    run( world, () -> assertTrue( api.has( entityId ) ) );
+    run( world, () -> assertEquals( api.find( entityId ), health ) );
+    run( world, () -> assertEquals( api.findOrCreate( entityId ), health ) );
+    run( world, () -> assertEquals( api.get( entityId ).healthPoints, healthPoints ) );
 
-    api.remove( entityId );
+    run( world, () -> api.remove( entityId ) );
 
-    assertFalse( api.has( entityId ) );
-    assertNull( api.find( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
+    run( world, () -> assertNull( api.find( entityId ) ) );
   }
 
   @Test
@@ -97,17 +97,17 @@ public class ComponentApiTest
 
     final int entityId = world.createEntity( new BitSet() );
 
-    assertFalse( api.has( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
     assertEquals( api.getStorage(), ComponentStorage.NONE );
 
-    api.allocate( entityId );
+    run( world, () -> api.allocate( entityId ) );
 
-    assertTrue( api.has( entityId ) );
+    run( world, () -> assertTrue( api.has( entityId ) ) );
 
-    assertTrue( api.has( entityId ) );
+    run( world, () -> assertTrue( api.has( entityId ) ) );
 
-    api.remove( entityId );
+    run( world, () -> api.remove( entityId ) );
 
-    assertFalse( api.has( entityId ) );
+    run( world, () -> assertFalse( api.has( entityId ) ) );
   }
 }
