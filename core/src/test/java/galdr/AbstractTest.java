@@ -3,6 +3,7 @@ package galdr;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Random;
+import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import org.realityforge.braincheck.BrainCheckTestUtil;
 import org.testng.annotations.AfterMethod;
@@ -60,6 +61,16 @@ public abstract class AbstractTest
   protected final void ignoreProcessorErrors()
   {
     _ignoreErrors = true;
+  }
+
+  protected final void run( @Nonnull final World world, @Nonnull final Runnable action )
+  {
+    world.run( action::run );
+  }
+
+  protected final <T> T run( @Nonnull final World world, @Nonnull final Supplier<T> action )
+  {
+    return world.run( action::get );
   }
 
   final void assertDefaultToString( @Nonnull final Object object )

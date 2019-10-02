@@ -207,7 +207,7 @@ public class EntityManagerTest
     assertTrue( armour.has( entityId ) );
     assertTrue( health.has( entityId ) );
 
-    world.run( () -> entityManager.disposeEntity( entityId ) );
+    run( world, () -> entityManager.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -236,7 +236,7 @@ public class EntityManagerTest
     assertEquals( entity.getComponentIds(), componentIds1 );
     assertTrue( armour.has( entity.getId() ) );
 
-    world.run( () -> entityManager.disposeEntity( entity ) );
+    run( world, () -> entityManager.disposeEntity( entity ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -273,7 +273,7 @@ public class EntityManagerTest
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
-    world.run( () -> entityManager.disposeEntity( entityId ) );
+    run( world, () -> entityManager.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -302,23 +302,23 @@ public class EntityManagerTest
     final int entityId = entityManager.createEntity( new BitSet() ).getId();
 
     // entity part of different world
-    assertInvariantFailure( () -> world2.run( () -> entityManager.disposeEntity( entityId ) ),
+    assertInvariantFailure( () -> run( world2, () -> entityManager.disposeEntity( entityId ) ),
                             "Galdr-0159: Attempting to dispose entity 0 which is not contained by the active world." );
 
     // No current world
     assertInvariantFailure( () -> entityManager.disposeEntity( entityId ),
                             "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
 
-    world1.run( () -> entityManager.disposeEntity( entityId ) );
+    run( world1, () -> entityManager.disposeEntity( entityId ) );
 
     // In Free list
-    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityId ) ),
+    assertInvariantFailure( () -> run( world1, () -> entityManager.disposeEntity( entityId ) ),
                             "Galdr-0009: Attempting to dispose entity 0 but entity is not allocated." );
     // Not yet allocated
-    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityId + 1 ) ),
+    assertInvariantFailure( () -> run( world1, () -> entityManager.disposeEntity( entityId + 1 ) ),
                             "Galdr-0009: Attempting to dispose entity 1 but entity is not allocated." );
     // Past the end of the capacity
-    assertInvariantFailure( () -> world1.run( () -> entityManager.disposeEntity( entityManager.capacity() + 1 ) ),
+    assertInvariantFailure( () -> run( world1, () -> entityManager.disposeEntity( entityManager.capacity() + 1 ) ),
                             "Galdr-0009: Attempting to dispose entity 5 but entity is not allocated." );
   }
 
@@ -338,7 +338,7 @@ public class EntityManagerTest
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity2 ),
                             "Galdr-0020: Attempting to dispose entity 0 in world 'World@1' but entity was created in a different world." );
 
-    world1.run( () -> entityManager1.disposeEntity( entity1 ) );
+    run( world1, () -> entityManager1.disposeEntity( entity1 ) );
 
     // In Free list
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity1 ),
@@ -357,7 +357,7 @@ public class EntityManagerTest
 
     entity.clearAlive();
 
-    assertInvariantFailure( () -> world.run( () -> entityManager.disposeEntity( entity.getId() ) ),
+    assertInvariantFailure( () -> run( world, () -> entityManager.disposeEntity( entity.getId() ) ),
                             "Galdr-0059: Attempting to dispose entity 0 and entity is allocated but not alive." );
   }
 
@@ -377,7 +377,7 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    world.run( () -> entityManager.disposeEntity( entityId1 ) );
+    run( world, () -> entityManager.disposeEntity( entityId1 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -385,9 +385,9 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    world.run( () -> entityManager.disposeEntity( entityId2 ) );
-    world.run( () -> entityManager.disposeEntity( entityId3 ) );
-    world.run( () -> entityManager.disposeEntity( entityId4 ) );
+    run( world, () -> entityManager.disposeEntity( entityId2 ) );
+    run( world, () -> entityManager.disposeEntity( entityId3 ) );
+    run( world, () -> entityManager.disposeEntity( entityId4 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -417,7 +417,7 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    world.run( () -> entityManager.disposeEntity( entityId1 ) );
+    run( world, () -> entityManager.disposeEntity( entityId1 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -426,9 +426,9 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 8 );
 
-    world.run( () -> entityManager.disposeEntity( entityId2 ) );
-    world.run( () -> entityManager.disposeEntity( entityId3 ) );
-    world.run( () -> entityManager.disposeEntity( entityId4 ) );
+    run( world, () -> entityManager.disposeEntity( entityId2 ) );
+    run( world, () -> entityManager.disposeEntity( entityId3 ) );
+    run( world, () -> entityManager.disposeEntity( entityId4 ) );
 
     assertEquals( entityManager.capacity(), 8 );
 
@@ -541,7 +541,7 @@ public class EntityManagerTest
     assertEquals( entity2.getInwardLinks().size(), 0 );
     assertEquals( entity2.getOutwardLinks().size(), 0 );
 
-    final Link link = world.run( () -> em.link( entity1, entity2, false, false ) );
+    final Link link = run( world, () -> em.link( entity1, entity2, false, false ) );
 
     assertEquals( link.getSourceEntity(), entity1 );
     assertEquals( link.getTargetEntity(), entity2 );
@@ -572,7 +572,7 @@ public class EntityManagerTest
     assertEquals( entity2.getOutwardLinks().size(), 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    final Link link = world.run( () -> em.link( entity1, entity2, false, false ) );
+    final Link link = run( world, () -> em.link( entity1, entity2, false, false ) );
     handler.unsubscribe();
 
     assertEquals( link.getSourceEntity(), entity1 );
@@ -610,9 +610,9 @@ public class EntityManagerTest
     final Entity entity1 = em.createEntity( new BitSet() );
     final Entity entity2 = em.createEntity( new BitSet() );
 
-    world.run( () -> em.disposeEntity( entity1 ) );
+    run( world, () -> em.disposeEntity( entity1 ) );
 
-    assertInvariantFailure( () -> world.run( () -> em.link( entity1, entity2, false, false ) ),
+    assertInvariantFailure( () -> run( world, () -> em.link( entity1, entity2, false, false ) ),
                             "Galdr-0011: Attempted to link from entity 0 to entity 1 but the source entity is not alive." );
 
     assertEquals( entity1.getInwardLinks().size(), 0 );
@@ -631,9 +631,9 @@ public class EntityManagerTest
     final Entity entity1 = em.createEntity( new BitSet() );
     final Entity entity2 = em.createEntity( new BitSet() );
 
-    world.run( () -> em.disposeEntity( entity2 ) );
+    run( world, () -> em.disposeEntity( entity2 ) );
 
-    assertInvariantFailure( () -> world.run( () -> em.link( entity1, entity2, false, false ) ),
+    assertInvariantFailure( () -> run( world, () -> em.link( entity1, entity2, false, false ) ),
                             "Galdr-0010: Attempted to link from entity 0 to entity 1 but the target entity is not alive." );
 
     assertEquals( entity1.getInwardLinks().size(), 0 );
@@ -651,7 +651,7 @@ public class EntityManagerTest
 
     final Entity entity = em.createEntity( new BitSet() );
 
-    assertInvariantFailure( () -> world.run( () -> em.link( entity, entity, false, false ) ),
+    assertInvariantFailure( () -> run( world, () -> em.link( entity, entity, false, false ) ),
                             "Galdr-0110: Attempted to link entity 0 to itself." );
 
     assertEquals( entity.getInwardLinks().size(), 0 );
@@ -669,7 +669,7 @@ public class EntityManagerTest
     final EntityManager em2 = world2.getEntityManager();
     final Entity entity2 = em2.createEntity( new BitSet() );
 
-    assertInvariantFailure( () -> world2.run( () -> em1.link( entity1, entity2, false, false ) ),
+    assertInvariantFailure( () -> run( world2, () -> em1.link( entity1, entity2, false, false ) ),
                             "Galdr-0911: Attempted to link from entity 0 to entity 0 in world named 'World@2' but world does not contain source entity." );
 
     assertEquals( entity1.getInwardLinks().size(), 0 );
@@ -689,7 +689,7 @@ public class EntityManagerTest
     final EntityManager em2 = world2.getEntityManager();
     final Entity entity2 = em2.createEntity( new BitSet() );
 
-    assertInvariantFailure( () -> world1.run( () -> em1.link( entity1, entity2, false, false ) ),
+    assertInvariantFailure( () -> run( world1, () -> em1.link( entity1, entity2, false, false ) ),
                             "Galdr-0912: Attempted to link from entity 0 to entity 0 in world named 'World@1' but world does not contain target entity." );
 
     assertEquals( entity1.getInwardLinks().size(), 0 );

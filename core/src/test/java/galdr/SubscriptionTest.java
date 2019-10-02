@@ -63,7 +63,7 @@ public class SubscriptionTest
     assertEquals( subscription.getEntities().cardinality(), 1 );
     assertTrue( subscription.getEntities().get( entityId ) );
 
-    world.run( () -> world.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
   }
@@ -78,7 +78,7 @@ public class SubscriptionTest
 
     final int entityId = world.createEntity( set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
-    world.run( () -> world.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.entityAdd( entity ),
                             "Galdr-0018: Invoked Subscription.entityAdd with invalid Entity." );
@@ -94,7 +94,7 @@ public class SubscriptionTest
 
     final int entityId = world.createEntity( set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
-    world.run( () -> world.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.entityRemove( entity ),
                             "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
@@ -134,7 +134,7 @@ public class SubscriptionTest
 
     final int entityId = world.createEntity( set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
-    world.run( () -> world.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> subscription.componentChange( entity ),
                             "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
@@ -239,13 +239,13 @@ public class SubscriptionTest
     assertEquals( subscription.nextEntity( owner ), entityId0 );
 
     // Not part of the subscription
-    world.run( () -> world.disposeEntity( entityId3 ) );
+    run( world, () -> world.disposeEntity( entityId3 ) );
 
     // Part of the subscription
-    world.run( () -> world.disposeEntity( entityId4 ) );
+    run( world, () -> world.disposeEntity( entityId4 ) );
 
     // Not part of the subscription
-    world.run( () -> world.disposeEntity( entityId8 ) );
+    run( world, () -> world.disposeEntity( entityId8 ) );
 
     world.getComponentByType( Component1.class ).remove( entityId7 );
 
@@ -294,13 +294,13 @@ public class SubscriptionTest
     assertEquals( subscription.nextEntity( owner ), entityId7 );
 
     // Not part of the subscription
-    world.run( () -> world.disposeEntity( 3 ) );
+    run( world, () -> world.disposeEntity( 3 ) );
 
     // Part of the subscription
-    world.run( () -> world.disposeEntity( 4 ) );
+    run( world, () -> world.disposeEntity( 4 ) );
 
     // Not part of the subscription
-    world.run( () -> world.disposeEntity( 8 ) );
+    run( world, () -> world.disposeEntity( 8 ) );
 
     assertEquals( subscription.nextEntity( owner ), entityId9 );
     assertEquals( subscription.nextEntity( owner ), -1 );

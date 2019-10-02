@@ -149,7 +149,7 @@ public class WorldTest
     assertTrue( world.isEntity( entityId1 ) );
     assertTrue( world.isEntity( entityId2 ) );
 
-    world.run( () -> world.disposeEntity( entityId1 ) );
+    run( world, () -> world.disposeEntity( entityId1 ) );
 
     assertFalse( world.isEntity( entityId1 ) );
     assertTrue( world.isEntity( entityId2 ) );

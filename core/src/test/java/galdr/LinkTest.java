@@ -22,11 +22,11 @@ public class LinkTest
     final Entity source = em.createEntity( new BitSet() );
     final Entity target = em.createEntity( new BitSet() );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
 
     assertEquals( link.toString(), "Link[0->1]" );
 
-    world.run( link::dispose );
+    run( world, link::dispose );
 
     assertEquals( link.toString(), "Link[(disposed)]" );
 
@@ -48,13 +48,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
 
     assertLinkShape( link, source, target, false, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -78,14 +78,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
 
     assertLinkShape( link, source, target, false, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -130,14 +130,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
 
     assertLinkShape( link, source, target, false, false );
 
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -161,7 +161,7 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
 
     assertLinkShape( link, source, target, false, false );
 
@@ -169,7 +169,7 @@ public class LinkTest
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -214,13 +214,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, true, false ) );
+    final Link link = run( world, () -> em.link( source, target, true, false ) );
 
     assertLinkShape( link, source, target, true, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -244,14 +244,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, true, false ) );
+    final Link link = run( world, () -> em.link( source, target, true, false ) );
 
     assertLinkShape( link, source, target, true, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -304,13 +304,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, true, false ) );
+    final Link link = run( world, () -> em.link( source, target, true, false ) );
 
     assertLinkShape( link, source, target, true, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -334,14 +334,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, true, false ) );
+    final Link link = run( world, () -> em.link( source, target, true, false ) );
 
     assertLinkShape( link, source, target, true, false );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -386,13 +386,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -416,14 +416,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( source.getId() ) );
+    run( world, () -> em.disposeEntity( source.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -468,13 +468,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
 
     assertFalse( link.isValid() );
 
@@ -498,14 +498,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( () -> em.disposeEntity( target.getId() ) );
+    run( world, () -> em.disposeEntity( target.getId() ) );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -558,13 +558,13 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
-    world.run( link::dispose );
+    run( world, link::dispose );
 
     assertFalse( link.isValid() );
 
@@ -588,14 +588,14 @@ public class LinkTest
     assertLinkCount( source, 0, 0 );
     assertLinkCount( target, 0, 0 );
 
-    final Link link = world.run( () -> em.link( source, target, false, true ) );
+    final Link link = run( world, () -> em.link( source, target, false, true ) );
 
     assertLinkShape( link, source, target, false, true );
     assertLinkCount( source, 0, 1 );
     assertLinkCount( target, 1, 0 );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    world.run( link::dispose );
+    run( world, link::dispose );
     handler.unsubscribe();
 
     assertFalse( link.isValid() );
@@ -624,8 +624,8 @@ public class LinkTest
     final Entity source = em.createEntity( new BitSet() );
     final Entity target = em.createEntity( new BitSet() );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
-    world.run( link::dispose );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
+    run( world, link::dispose );
 
     assertInvariantFailure( link::dispose, "Galdr-0117: Link.dispose() method invoked on invalid link." );
   }
@@ -640,8 +640,8 @@ public class LinkTest
     final Entity source = em.createEntity( new BitSet() );
     final Entity target = em.createEntity( new BitSet() );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
-    world.run( link::dispose );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
+    run( world, link::dispose );
 
     assertInvariantFailure( link::getSourceEntity,
                             "Galdr-0007: The Link.getSourceEntity() method invoked on invalid link." );
@@ -657,8 +657,8 @@ public class LinkTest
     final Entity source = em.createEntity( new BitSet() );
     final Entity target = em.createEntity( new BitSet() );
 
-    final Link link = world.run( () -> em.link( source, target, false, false ) );
-    world.run( link::dispose );
+    final Link link = run( world, () -> em.link( source, target, false, false ) );
+    run( world, link::dispose );
 
     assertInvariantFailure( link::getTargetEntity,
                             "Galdr-0016: The Link.getTargetEntity() method invoked on invalid link." );
