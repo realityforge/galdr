@@ -402,8 +402,6 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
-
     assertNextEntity( world, subscription, owner, entityId1 );
     assertNextEntity( world, subscription, owner, entityId4 );
     assertNextEntity( world, subscription, owner, entityId7 );
@@ -461,8 +459,6 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
-
     assertNextEntity( world, subscription, owner, entityId3 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
@@ -520,8 +516,6 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
-
     assertNextEntity( world, subscription, owner, entityId4 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
@@ -571,7 +565,6 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     // Explicit complete of iteration before all entities processed
     run( world, () -> subscription.completeIteration( owner ) );
@@ -603,7 +596,6 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     assertNextEntity( world, subscription, owner, entityId2 );
-    assertEquals( subscription.getCurrentEntityId(), entityId2 );
 
     // Add to New Entities to subscription
     run( world, () -> componentApi.allocate( entityId1 ) );
@@ -613,7 +605,6 @@ public class SubscriptionTest
     assertTrue( subscription.hasNewEntities() );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
     assertTrue( subscription.hasNewEntities() );
@@ -655,7 +646,6 @@ public class SubscriptionTest
     run( world, () -> subscription.startIteration( owner ) );
 
     assertNextEntity( world, subscription, owner, entityId0 );
-    assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner ) ),
                             "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value 0" );
@@ -677,5 +667,6 @@ public class SubscriptionTest
                                  final int entityId )
   {
     run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId ) );
+    assertEquals( subscription.getCurrentEntityId(), entityId );
   }
 }
