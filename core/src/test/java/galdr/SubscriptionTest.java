@@ -157,9 +157,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     // There is no entities so should immediately complete iteration
     assertNextEntity( world, subscription, owner, -1 );
@@ -193,9 +191,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
     assertNextEntity( world, subscription, owner, entityId1 );
@@ -234,9 +230,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
 
@@ -284,9 +278,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
     assertNextEntity( world, subscription, owner, entityId1 );
@@ -332,9 +324,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
 
@@ -385,9 +375,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
     assertNextEntity( world, subscription, owner, entityId1 );
@@ -440,9 +428,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
     assertNextEntity( world, subscription, owner, entityId3 );
@@ -495,9 +481,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
     assertNextEntity( world, subscription, owner, entityId4 );
@@ -542,9 +526,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
 
@@ -571,9 +553,7 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    run( world, () -> subscription.startIteration( owner ) );
-
-    assertSubscriptionIterationStart( subscription, owner );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId2 );
 
@@ -606,7 +586,7 @@ public class SubscriptionTest
     final Object owner1 = new Object();
     final Object owner2 = new Object();
 
-    run( world, () -> subscription.startIteration( owner1 ) );
+    startIteration( world, subscription, owner1 );
 
     assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner2 ) ),
                             "Galdr-0022: Subscription.startIteration() invoked with owner '" +
@@ -623,12 +603,21 @@ public class SubscriptionTest
 
     final Object owner = new Object();
 
-    run( world, () -> subscription.startIteration( owner ) );
+    startIteration( world, subscription, owner );
 
     assertNextEntity( world, subscription, owner, entityId0 );
 
     assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner ) ),
                             "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value 0" );
+  }
+
+  private void startIteration( @Nonnull final World world,
+                               @Nonnull final Subscription subscription,
+                               @Nonnull final Object owner )
+  {
+    run( world, () -> subscription.startIteration( owner ) );
+
+    assertSubscriptionIterationStart( subscription, owner );
   }
 
   private void assertSubscriptionIterationStart( @Nonnull final Subscription subscription, @Nonnull final Object owner )
