@@ -506,13 +506,13 @@
   {
     "code": 37,
     "type": "API_INVARIANT",
-    "messagePattern": "World.createSubscription() invoked on world named '%s' when a world named '%s' is active.",
+    "messagePattern": "World.%s invoked on world named '%s' when a world named '%s' is active.",
     "callers": [
       {
         "class": "galdr.World",
-        "method": "createSubscription",
+        "method": "ensureCurrentWorldMatches",
         "file": "World.java",
-        "lineNumber": 295
+        "lineNumber": 485
       }
     ]
   },

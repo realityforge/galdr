@@ -289,13 +289,7 @@ public final class World
   @Nonnull
   Subscription createSubscription( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
   {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      final World world = WorldHolder.world();
-      apiInvariant( () -> this == world,
-                    () -> "Galdr-0037: World.createSubscription() invoked on world named '" + getName() +
-                          "' when a world named '" + world.getName() + "' is active." );
-    }
+    ensureCurrentWorldMatches( "createSubscription()" );
     final AreaOfInterest areaOfInterest = new AreaOfInterest( all, one, exclude );
     if ( Galdr.shouldCheckInvariants() )
     {
@@ -477,6 +471,17 @@ public final class World
       apiInvariant( () -> null != _stages,
                     () -> "Galdr-0045: Attempted to invoke " + methodName + " on World named '" +
                           getName() + "' prior to World completing construction" );
+    }
+  }
+
+  private void ensureCurrentWorldMatches( @Nonnull final String methodName )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World world = WorldHolder.world();
+      apiInvariant( () -> this == world,
+                    () -> "Galdr-0037: World." + methodName + " invoked on world named '" + getName() +
+                          "' when a world named '" + world.getName() + "' is active." );
     }
   }
 }
