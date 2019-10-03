@@ -90,7 +90,7 @@ public abstract class AbstractTest
   }
 
   @Nonnull
-  final BitSet set( @Nonnull final int... bits )
+  protected final BitSet set( @Nonnull final int... bits )
   {
     final BitSet set = new BitSet();
     for ( final int bit : bits )
