@@ -8,7 +8,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerByType",
         "file": "World.java",
-        "lineNumber": 449
+        "lineNumber": 446
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerById",
         "file": "World.java",
-        "lineNumber": 419
+        "lineNumber": 416
       }
     ]
   },
@@ -34,7 +34,7 @@
         "class": "galdr.World",
         "method": "buildComponentMap",
         "file": "World.java",
-        "lineNumber": 179
+        "lineNumber": 182
       }
     ]
   },
@@ -53,7 +53,7 @@
         "class": "galdr.World",
         "method": "getName",
         "file": "World.java",
-        "lineNumber": 261
+        "lineNumber": 264
       }
     ]
   },
@@ -304,7 +304,7 @@
         "class": "galdr.World",
         "method": "getSpy",
         "file": "World.java",
-        "lineNumber": 244
+        "lineNumber": 247
       }
     ]
   },
@@ -473,7 +473,7 @@
         "class": "galdr.World",
         "method": "createSubscription",
         "file": "World.java",
-        "lineNumber": 303
+        "lineNumber": 300
       }
     ]
   },
@@ -551,7 +551,7 @@
         "class": "galdr.World",
         "method": "assertWorldConstructed",
         "file": "World.java",
-        "lineNumber": 477
+        "lineNumber": 474
       }
     ]
   },
@@ -564,7 +564,7 @@
         "class": "galdr.World",
         "method": "getStageByName",
         "file": "World.java",
-        "lineNumber": 140
+        "lineNumber": 143
       }
     ]
   },
@@ -759,7 +759,7 @@
         "class": "galdr.World",
         "method": "removeErrorHandler",
         "file": "World.java",
-        "lineNumber": 216
+        "lineNumber": 219
       }
     ]
   },
@@ -772,7 +772,7 @@
         "class": "galdr.World",
         "method": "addErrorHandler",
         "file": "World.java",
-        "lineNumber": 199
+        "lineNumber": 202
       }
     ]
   },
