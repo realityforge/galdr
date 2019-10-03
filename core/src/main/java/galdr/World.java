@@ -295,7 +295,7 @@ public final class World
       invariant( () -> null == existing,
                  () -> "Galdr-0034: World.createSubscription() invoked but subscription with matching AreaOfInterest already exists." );
     }
-    final Subscription subscription = new Subscription( areaOfInterest, getEntityManager().capacity() );
+    final Subscription subscription = new Subscription( this, areaOfInterest, getEntityManager().capacity() );
     getSubscriptions().put( areaOfInterest, subscription );
     linkSubscription( subscription, areaOfInterest.getAll() );
     linkSubscription( subscription, areaOfInterest.getOne() );

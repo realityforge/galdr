@@ -23,6 +23,7 @@ public class SubscriptionTest
     assertEquals( world.getSubscriptions().size(), 1 );
     assertEquals( world.getSubscriptions().get( areaOfInterest ), subscription );
 
+    assertEquals( subscription.getWorld(), world );
     assertEquals( subscription.getAreaOfInterest(), areaOfInterest );
     assertEquals( subscription.getEntities().cardinality(), 0 );
     assertEquals( subscription.getNewEntities().cardinality(), 0 );

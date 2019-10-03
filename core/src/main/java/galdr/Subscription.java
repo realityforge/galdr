@@ -14,6 +14,11 @@ import static org.realityforge.braincheck.Guards.*;
 final class Subscription
 {
   /**
+   * The world containing the subscription.
+   */
+  @Nonnull
+  private final World _world;
+  /**
    * The area of interest against which entities are matched against to determine whether they
    * belong in the subscription.
    */
@@ -43,8 +48,9 @@ final class Subscription
   @Nullable
   private Object _owner;
 
-  Subscription( @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
+  Subscription( @Nonnull final World world, @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
   {
+    _world = Objects.requireNonNull( world );
     _areaOfInterest = Objects.requireNonNull( areaOfInterest );
     _entities = new BitSet( initialEntityCount );
     _newEntities = new BitSet( initialEntityCount );
@@ -285,6 +291,12 @@ final class Subscription
   boolean isIterationInProgress()
   {
     return null != getOwner();
+  }
+
+  @Nonnull
+  World getWorld()
+  {
+    return _world;
   }
 
   @Nullable
