@@ -1,6 +1,5 @@
 package galdr;
 
-import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -27,7 +26,7 @@ public class NoStorageComponentManagerTest
     assertEquals( componentManager.hashCode(), 0 );
     assertEquals( componentManager.getStorage(), ComponentStorage.NONE );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
@@ -50,7 +49,7 @@ public class NoStorageComponentManagerTest
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
       world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( cm.has( entityId ) );
     assertNull( cm.find( entityId ) );
@@ -70,7 +69,7 @@ public class NoStorageComponentManagerTest
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
       world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( cm.has( entityId ) );
     assertNull( cm.find( entityId ) );
@@ -88,7 +87,7 @@ public class NoStorageComponentManagerTest
 
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
@@ -111,7 +110,7 @@ public class NoStorageComponentManagerTest
 
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );

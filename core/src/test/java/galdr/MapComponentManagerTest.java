@@ -35,16 +35,16 @@ public class MapComponentManagerTest
 
     assertEquals( componentManager.getComponents().size(), 0 );
 
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );

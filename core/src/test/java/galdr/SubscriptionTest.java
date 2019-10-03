@@ -72,7 +72,7 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
-    final int entityId = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId = createEntity( world, set( 0 ) );
 
     assertEquals( subscription.getEntities().cardinality(), 1 );
     assertTrue( subscription.getEntities().get( entityId ) );
@@ -88,7 +88,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId = run( world, () -> world.createEntity( set() ) );
+    final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -102,7 +102,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId = run( world, () -> world.createEntity( set() ) );
+    final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -119,7 +119,7 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
-    final int entityId = run( world, () -> world.createEntity( set() ) );
+    final int entityId = createEntity( world, set() );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -139,7 +139,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId = run( world, () -> world.createEntity( set() ) );
+    final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -175,16 +175,16 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId5 = run( world, () -> world.createEntity( set() ) );
-    final int entityId6 = run( world, () -> world.createEntity( set() ) );
-    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId8 = run( world, () -> world.createEntity( set() ) );
-    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
+    final int entityId7 = createEntity( world, set( 0 ) );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set( 0 ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -216,16 +216,16 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId5 = run( world, () -> world.createEntity( set() ) );
-    final int entityId6 = run( world, () -> world.createEntity( set() ) );
-    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId8 = run( world, () -> world.createEntity( set() ) );
-    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
+    final int entityId7 = createEntity( world, set( 0 ) );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set( 0 ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -266,16 +266,16 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId5 = run( world, () -> world.createEntity( set() ) );
-    final int entityId6 = run( world, () -> world.createEntity( set() ) );
-    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId8 = run( world, () -> world.createEntity( set() ) );
-    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
+    final int entityId7 = createEntity( world, set( 0 ) );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set( 0 ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -317,16 +317,16 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId5 = run( world, () -> world.createEntity( set() ) );
-    final int entityId6 = run( world, () -> world.createEntity( set() ) );
-    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId8 = run( world, () -> world.createEntity( set() ) );
-    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
+    final int entityId7 = createEntity( world, set( 0 ) );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -370,16 +370,16 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId5 = run( world, () -> world.createEntity( set() ) );
-    final int entityId6 = run( world, () -> world.createEntity( set() ) );
-    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId8 = run( world, () -> world.createEntity( set() ) );
-    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
+    final int entityId7 = createEntity( world, set( 0 ) );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -431,10 +431,10 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set() ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -485,11 +485,11 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set() ) );
-    final int entityId2 = run( world, () -> world.createEntity( set() ) );
-    final int entityId3 = run( world, () -> world.createEntity( set() ) );
-    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -535,8 +535,8 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
-    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId1 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -563,9 +563,9 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set() ) );
-    final int entityId1 = run( world, () -> world.createEntity( set() ) );
-    final int entityId2 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set() );
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 
@@ -619,7 +619,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
-    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId0 = createEntity( world, set( 0 ) );
 
     final Object owner = new Object();
 

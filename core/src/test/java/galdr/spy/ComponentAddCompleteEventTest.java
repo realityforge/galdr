@@ -19,7 +19,7 @@ public class ComponentAddCompleteEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().component( Health.class, Health::new ).build();
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
     final int componentId = world.getComponentByType( Health.class ).getId();
     final ComponentAddCompleteEvent event = new ComponentAddCompleteEvent( world, entityId, componentId );
 

@@ -34,16 +34,16 @@ public class FastArrayComponentManagerTest
     assertEquals( componentManager.getStorage(), ComponentStorage.ARRAY );
     assertEquals( componentManager.capacity(), 5 );
 
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
-    world.createEntity( new BitSet() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
+    createEntity( world, set() );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     // entityId is > initial capacity
     assertFalse( componentManager.has( entityId ) );

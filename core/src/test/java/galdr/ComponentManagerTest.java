@@ -29,7 +29,7 @@ public class ComponentManagerTest
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, new BitSet() );
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
     assertInvariantFailure( () -> componentManager.get( entityId ),
@@ -68,7 +68,7 @@ public class ComponentManagerTest
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
@@ -112,7 +112,7 @@ public class ComponentManagerTest
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> cm = world.getComponentManagerByType( Component1.class );
 
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
     assertFalse( cm.has( entityId ) );
     assertNull( cm.find( entityId ) );
 

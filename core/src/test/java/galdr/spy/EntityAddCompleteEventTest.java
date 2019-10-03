@@ -15,7 +15,7 @@ public class EntityAddCompleteEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entityId = world.createEntity( new BitSet() );
+    final int entityId = createEntity( world, set() );
     final BitSet componentIds = new BitSet();
     final EntityAddCompleteEvent event = new EntityAddCompleteEvent( world, entityId, componentIds );
 

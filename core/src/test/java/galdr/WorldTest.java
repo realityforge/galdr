@@ -143,8 +143,8 @@ public class WorldTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = world.createEntity( new BitSet() );
-    final int entityId2 = world.createEntity( new BitSet() );
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
 
     assertTrue( world.isEntity( entityId1 ) );
     assertTrue( world.isEntity( entityId2 ) );
@@ -154,7 +154,7 @@ public class WorldTest
     assertFalse( world.isEntity( entityId1 ) );
     assertTrue( world.isEntity( entityId2 ) );
 
-    final int entityId3 = world.createEntity( new BitSet() );
+    final int entityId3 = createEntity( world, set() );
 
     assertTrue( world.isEntity( entityId2 ) );
     assertTrue( world.isEntity( entityId3 ) );

@@ -15,8 +15,8 @@ public class LinkRemoveStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entity1Id = world.createEntity( new BitSet() );
-    final int entity2Id = world.createEntity( new BitSet() );
+    final int entity1Id = createEntity( world, set() );
+    final int entity2Id = createEntity( world, set() );
     final LinkRemoveStartEvent event = new LinkRemoveStartEvent( world, entity1Id, entity2Id );
 
     assertEquals( event.getWorld(), world );

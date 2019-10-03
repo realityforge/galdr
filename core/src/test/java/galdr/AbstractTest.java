@@ -73,6 +73,11 @@ public abstract class AbstractTest
     return world.run( action::get );
   }
 
+  protected final int createEntity( @Nonnull final World world, @Nonnull final BitSet componentIds )
+  {
+    return run( world, () -> world.createEntity( componentIds ) );
+  }
+
   final void assertDefaultToString( @Nonnull final Object object )
   {
     assertEquals( object.toString(),

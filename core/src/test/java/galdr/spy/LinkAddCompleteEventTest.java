@@ -15,8 +15,8 @@ public class LinkAddCompleteEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entity1Id = world.createEntity( new BitSet() );
-    final int entity2Id = world.createEntity( new BitSet() );
+    final int entity1Id = createEntity( world, set() );
+    final int entity2Id = createEntity( world, set() );
     final LinkAddCompleteEvent event = new LinkAddCompleteEvent( world, entity1Id, entity2Id );
 
     assertEquals( event.getWorld(), world );
