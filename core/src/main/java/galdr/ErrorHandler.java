@@ -1,7 +1,6 @@
 package galdr;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Interface for handling errors in processors.

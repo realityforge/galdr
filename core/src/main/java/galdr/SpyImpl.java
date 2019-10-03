@@ -3,7 +3,6 @@ package galdr;
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Spy implementation.

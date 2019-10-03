@@ -1,7 +1,5 @@
 package galdr;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.realityforge.braincheck.BrainCheckConfig;
 
 /**
