@@ -1,6 +1,7 @@
 package galdr;
 
 import java.util.BitSet;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
@@ -44,7 +45,7 @@ final class Subscription
 
   Subscription( @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
   {
-    _areaOfInterest = areaOfInterest;
+    _areaOfInterest = Objects.requireNonNull( areaOfInterest );
     _entities = new BitSet( initialEntityCount );
     _newEntities = new BitSet( initialEntityCount );
     _currentEntityId = -1;
