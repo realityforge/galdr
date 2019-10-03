@@ -92,6 +92,7 @@ public final class World
    */
   public int createEntity( @Nonnull final BitSet initialComponentIds )
   {
+    ensureCurrentWorldMatches( "createEntity()" );
     return getEntityManager().createEntity( initialComponentIds ).getId();
   }
 
@@ -102,6 +103,7 @@ public final class World
    */
   public void disposeEntity( final int entityId )
   {
+    ensureCurrentWorldMatches( "disposeEntity()" );
     getEntityManager().disposeEntity( entityId );
   }
 
@@ -113,6 +115,7 @@ public final class World
    */
   public boolean isEntity( final int entityId )
   {
+    ensureCurrentWorldMatches( "isEntity()" );
     return getEntityManager().isAlive( entityId );
   }
 

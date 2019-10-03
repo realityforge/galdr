@@ -145,18 +145,18 @@ public class WorldTest
     final int entityId1 = createEntity( world, set() );
     final int entityId2 = createEntity( world, set() );
 
-    assertTrue( world.isEntity( entityId1 ) );
-    assertTrue( world.isEntity( entityId2 ) );
+    world.run( () -> assertTrue( world.isEntity( entityId1 ) ) );
+    world.run( () -> assertTrue( world.isEntity( entityId2 ) ) );
 
     run( world, () -> world.disposeEntity( entityId1 ) );
 
-    assertFalse( world.isEntity( entityId1 ) );
-    assertTrue( world.isEntity( entityId2 ) );
+    world.run( () -> assertFalse( world.isEntity( entityId1 ) ) );
+    world.run( () -> assertTrue( world.isEntity( entityId2 ) ) );
 
     final int entityId3 = createEntity( world, set() );
 
-    assertTrue( world.isEntity( entityId2 ) );
-    assertTrue( world.isEntity( entityId3 ) );
+    world.run( () -> assertTrue( world.isEntity( entityId2 ) ) );
+    world.run( () -> assertTrue( world.isEntity( entityId3 ) ) );
   }
 
   @Test
