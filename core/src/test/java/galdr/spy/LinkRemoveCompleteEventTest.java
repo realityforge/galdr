@@ -3,7 +3,6 @@ package galdr.spy;
 import galdr.AbstractTest;
 import galdr.World;
 import galdr.Worlds;
-import java.util.BitSet;
 import java.util.HashMap;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;

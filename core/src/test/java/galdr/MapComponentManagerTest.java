@@ -1,6 +1,5 @@
 package galdr;
 
-import java.util.BitSet;
 import java.util.function.Supplier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
