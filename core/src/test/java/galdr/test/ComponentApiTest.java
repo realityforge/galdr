@@ -117,8 +117,8 @@ public class ComponentApiTest
     final World world1 = Worlds.world().component( MyFlag.class ).build();
     final World world2 = Worlds.world().component( MyFlag.class ).build();
 
-    final int entityId1 = world1.createEntity( new BitSet() );
-    world2.createEntity( new BitSet() );
+    final int entityId1 = createEntity( world1, set() );
+    createEntity( world2, set() );
 
     final ComponentAPI<MyFlag> api = world1.getComponentByType( MyFlag.class );
 

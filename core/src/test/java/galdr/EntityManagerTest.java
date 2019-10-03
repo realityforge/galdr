@@ -299,7 +299,7 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world1.getEntityManager();
 
-    final int entityId = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId = createEntity( world1, set() );
 
     // entity part of different world
     assertInvariantFailure( () -> run( world2, () -> entityManager.disposeEntity( entityId ) ),
@@ -370,10 +370,10 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    final int entityId1 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId2 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId3 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId4 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -407,13 +407,13 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 2 );
 
-    final int entityId1 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId2 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 2 );
 
-    final int entityId3 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId4 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId3 = createEntity( world, set() );
+    final int entityId4 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -421,8 +421,8 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    final int entityId5 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId6 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId5 = createEntity( world, set() );
+    final int entityId6 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 8 );
 
@@ -432,19 +432,19 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 8 );
 
-    final int entityId7 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId8 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId9 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId7 = createEntity( world, set() );
+    final int entityId8 = createEntity( world, set() );
+    final int entityId9 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 8 );
 
-    final int entityId10 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId11 = entityManager.createEntity( new BitSet() ).getId();
-    final int entityId12 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId10 = createEntity( world, set() );
+    final int entityId11 = createEntity( world, set() );
+    final int entityId12 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 8 );
 
-    final int entityId13 = entityManager.createEntity( new BitSet() ).getId();
+    final int entityId13 = createEntity( world, set() );
 
     assertEquals( entityManager.capacity(), 16 );
 
