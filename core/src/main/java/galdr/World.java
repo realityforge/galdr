@@ -287,8 +287,9 @@ public final class World
   }
 
   @Nonnull
-  Subscription createSubscription( @Nonnull final AreaOfInterest areaOfInterest )
+  Subscription createSubscription( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
   {
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( all, one, exclude );
     if ( Galdr.shouldCheckInvariants() )
     {
       final Subscription existing = getSubscriptions().get( areaOfInterest );

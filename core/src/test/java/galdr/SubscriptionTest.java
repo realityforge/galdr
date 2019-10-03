@@ -15,12 +15,13 @@ public class SubscriptionTest
   public void create()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
 
     assertEquals( world.getSubscriptions().size(), 0 );
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     assertEquals( world.getSubscriptions().size(), 1 );
+
+    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
     assertEquals( world.getSubscriptions().get( areaOfInterest ), subscription );
 
     assertEquals( subscription.getWorld(), world );
@@ -39,7 +40,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().build();
 
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set(), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set(), set(), set() );
 
     subscription.ensureNotDisposed();
 
@@ -55,7 +56,7 @@ public class SubscriptionTest
     final World world1 = Worlds.world().build();
     final World world2 = Worlds.world().build();
 
-    final Subscription subscription = world1.createSubscription( new AreaOfInterest( set(), set(), set() ) );
+    final Subscription subscription = world1.createSubscription( set(), set(), set() );
 
     run( world1, subscription::ensureCurrentWorldMatches );
 
@@ -67,9 +68,7 @@ public class SubscriptionTest
   public void createAndDisposeEntityThatMatchesSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
-
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -87,9 +86,7 @@ public class SubscriptionTest
   public void entityAdd_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
-
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -103,9 +100,7 @@ public class SubscriptionTest
   public void entityRemove_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
-
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -119,9 +114,8 @@ public class SubscriptionTest
   public void componentChangeThatMatchesSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
 
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -143,9 +137,7 @@ public class SubscriptionTest
   public void componentChange_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
-
-    final Subscription subscription = world.createSubscription( areaOfInterest );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -159,7 +151,7 @@ public class SubscriptionTest
   public void iterateOverEmptySubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final Object owner = new Object();
 
@@ -183,7 +175,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesNoModifications()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -226,7 +218,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -278,7 +270,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesRemoveEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -331,7 +323,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -386,7 +378,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -451,7 +443,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set() ) );
@@ -509,7 +501,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set() ) );
@@ -563,7 +555,7 @@ public class SubscriptionTest
   public void explicitCompleteOfIterationBeforeAllEntitiesProcessed()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
     final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
@@ -594,7 +586,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set() ) );
     final int entityId1 = run( world, () -> world.createEntity( set() ) );
@@ -638,7 +630,7 @@ public class SubscriptionTest
   public void startIteration_badOwner()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final Object owner1 = new Object();
     final Object owner2 = new Object();
@@ -654,7 +646,7 @@ public class SubscriptionTest
   public void startIteration_whenIterationInProgress()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
+    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
 
     final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
 
