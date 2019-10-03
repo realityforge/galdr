@@ -164,7 +164,7 @@ public class SubscriptionTest
     assertEquals( subscription.getOwner(), owner );
 
     // There is no entities so should immediately complete iteration
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -201,12 +201,12 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
+    assertNextEntity( world, subscription, owner, entityId1 );
+    assertNextEntity( world, subscription, owner, entityId4 );
+    assertNextEntity( world, subscription, owner, entityId7 );
+    assertNextEntity( world, subscription, owner, entityId9 );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -244,7 +244,7 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
 
     // Not part of the subscription
     run( world, () -> world.disposeEntity( entityId3 ) );
@@ -257,9 +257,9 @@ public class SubscriptionTest
 
     run( world, () -> componentApi.remove( entityId7 ) );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, entityId1 );
+    assertNextEntity( world, subscription, owner, entityId9 );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -296,10 +296,10 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
+    assertNextEntity( world, subscription, owner, entityId1 );
+    assertNextEntity( world, subscription, owner, entityId4 );
+    assertNextEntity( world, subscription, owner, entityId7 );
 
     // Not part of the subscription
     run( world, () -> world.disposeEntity( 3 ) );
@@ -310,8 +310,8 @@ public class SubscriptionTest
     // Not part of the subscription
     run( world, () -> world.disposeEntity( 8 ) );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, entityId9 );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -346,7 +346,7 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -360,13 +360,13 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId8 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, entityId1 );
+    assertNextEntity( world, subscription, owner, entityId3 );
+    assertNextEntity( world, subscription, owner, entityId4 );
+    assertNextEntity( world, subscription, owner, entityId7 );
+    assertNextEntity( world, subscription, owner, entityId8 );
+    assertNextEntity( world, subscription, owner, entityId9 );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -401,12 +401,12 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
+    assertNextEntity( world, subscription, owner, entityId1 );
+    assertNextEntity( world, subscription, owner, entityId4 );
+    assertNextEntity( world, subscription, owner, entityId7 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -420,18 +420,18 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
+    assertNextEntity( world, subscription, owner, entityId9 );
 
     // This wraps around to the NewEntities list
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
+    assertNextEntity( world, subscription, owner, entityId3 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId5 ) );
+    assertNextEntity( world, subscription, owner, entityId5 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -460,10 +460,10 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
+    assertNextEntity( world, subscription, owner, entityId3 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -475,7 +475,7 @@ public class SubscriptionTest
     assertTrue( subscription.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
+    assertNextEntity( world, subscription, owner, entityId2 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertTrue( subscription.hasNewEntities() );
@@ -485,11 +485,11 @@ public class SubscriptionTest
     run( world, () -> componentApi.allocate( entityId1 ) );
 
     // This wraps around again
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    assertNextEntity( world, subscription, owner, entityId1 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -519,10 +519,10 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
+    assertNextEntity( world, subscription, owner, entityId4 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -541,10 +541,10 @@ public class SubscriptionTest
     assertTrue( subscription.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
+    assertNextEntity( world, subscription, owner, entityId2 );
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
+    assertNextEntity( world, subscription, owner, -1 );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -570,7 +570,7 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     // Explicit complete of iteration before all entities processed
@@ -602,7 +602,7 @@ public class SubscriptionTest
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
+    assertNextEntity( world, subscription, owner, entityId2 );
     assertEquals( subscription.getCurrentEntityId(), entityId2 );
 
     // Add to New Entities to subscription
@@ -612,7 +612,7 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
@@ -654,7 +654,7 @@ public class SubscriptionTest
 
     run( world, () -> subscription.startIteration( owner ) );
 
-    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    assertNextEntity( world, subscription, owner, entityId0 );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner ) ),
@@ -669,5 +669,13 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
     assertFalse( subscription.isProcessingNewEntities() );
+  }
+
+  private void assertNextEntity( @Nonnull final World world,
+                                 @Nonnull final Subscription subscription,
+                                 @Nonnull final Object owner,
+                                 final int entityId )
+  {
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId ) );
   }
 }
