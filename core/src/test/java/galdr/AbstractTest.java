@@ -84,7 +84,8 @@ public abstract class AbstractTest
                   object.getClass().getName() + "@" + Integer.toHexString( object.hashCode() ) );
   }
 
-  protected final void assertInvariantFailure( @Nonnull final ThrowingRunnable throwingRunnable, @Nonnull final String message )
+  protected final void assertInvariantFailure( @Nonnull final ThrowingRunnable throwingRunnable,
+                                               @Nonnull final String message )
   {
     assertEquals( expectThrows( IllegalStateException.class, throwingRunnable ).getMessage(), message );
   }
