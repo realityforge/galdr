@@ -322,6 +322,13 @@ public final class World
 
   void removeSubscription( @Nonnull final Subscription subscription )
   {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World world = WorldHolder.world();
+      apiInvariant( () -> this == world,
+                    () -> "Galdr-0037: World.removeSubscription() invoked on world named '" + getName() +
+                          "' when a world named '" + world.getName() + "' is active." );
+    }
     final AreaOfInterest areaOfInterest = subscription.getAreaOfInterest();
     final Subscription existing = getSubscriptions().remove( areaOfInterest );
     if ( Galdr.shouldCheckInvariants() )
