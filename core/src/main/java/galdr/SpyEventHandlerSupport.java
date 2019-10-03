@@ -58,7 +58,7 @@ final class SpyEventHandlerSupport
       {
         final String message =
           GaldrUtil.safeGetString( () -> "Exception when notifying spy handler '" + handler + "' of '" +
-                                        event + "' event." );
+                                         event + "' event." );
         GaldrLogger.log( message, error );
       }
     }
