@@ -61,6 +61,7 @@ final class Subscription
   void startIteration( @Nonnull final Object owner )
   {
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> -1 == _currentEntityId,
@@ -82,6 +83,7 @@ final class Subscription
   void completeIteration( @Nonnull final Object owner )
   {
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> owner == _owner,
@@ -106,6 +108,7 @@ final class Subscription
                        "' but an existing iteration is in progress with owner '" + _owner + "'." );
     }
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( isProcessingNewEntities() )
     {
       _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
@@ -159,6 +162,7 @@ final class Subscription
   void entityAdd( @Nonnull final Entity entity )
   {
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
@@ -173,6 +177,7 @@ final class Subscription
   void entityRemove( @Nonnull final Entity entity )
   {
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
@@ -193,6 +198,7 @@ final class Subscription
   void componentChange( @Nonnull final Entity entity )
   {
     ensureNotDisposed();
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
@@ -303,6 +309,18 @@ final class Subscription
   Object getOwner()
   {
     return _owner;
+  }
+
+  void ensureCurrentWorldMatches()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World activeWorld = WorldHolder.world();
+      apiInvariant( () -> activeWorld == _world,
+                    () -> "Galdr-0036: Subscription method invoked in the context of the world '" +
+                          activeWorld.getName() + "' but the subscription belongs to the world '" +
+                          _world.getName() + "'" );
+    }
   }
 
   static final class Flags

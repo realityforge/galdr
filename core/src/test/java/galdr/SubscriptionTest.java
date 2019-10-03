@@ -50,6 +50,20 @@ public class SubscriptionTest
   }
 
   @Test
+  public void ensureCurrentWorldMatches()
+  {
+    final World world1 = Worlds.world().build();
+    final World world2 = Worlds.world().build();
+
+    final Subscription subscription = world1.createSubscription( new AreaOfInterest( set(), set(), set() ) );
+
+    run( world1, subscription::ensureCurrentWorldMatches );
+
+    assertInvariantFailure( () -> run( world2, subscription::ensureCurrentWorldMatches ),
+                            "Galdr-0036: Subscription method invoked in the context of the world 'World@2' but the subscription belongs to the world 'World@1'" );
+  }
+
+  @Test
   public void createAndDisposeEntityThatMatchesSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
@@ -59,7 +73,7 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
-    final int entityId = world.createEntity( set( 0 ) );
+    final int entityId = run( world, () -> world.createEntity( set( 0 ) ) );
 
     assertEquals( subscription.getEntities().cardinality(), 1 );
     assertTrue( subscription.getEntities().get( entityId ) );
@@ -77,11 +91,11 @@ public class SubscriptionTest
 
     final Subscription subscription = world.createSubscription( areaOfInterest );
 
-    final int entityId = world.createEntity( set() );
+    final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
-    assertInvariantFailure( () -> subscription.entityAdd( entity ),
+    assertInvariantFailure( () -> run( world, () -> subscription.entityAdd( entity ) ),
                             "Galdr-0018: Invoked Subscription.entityAdd with invalid Entity." );
   }
 
@@ -93,11 +107,11 @@ public class SubscriptionTest
 
     final Subscription subscription = world.createSubscription( areaOfInterest );
 
-    final int entityId = world.createEntity( set() );
+    final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
-    assertInvariantFailure( () -> subscription.entityRemove( entity ),
+    assertInvariantFailure( () -> run( world, () -> subscription.entityRemove( entity ) ),
                             "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
   }
 
@@ -111,7 +125,7 @@ public class SubscriptionTest
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
-    final int entityId = world.createEntity( set() );
+    final int entityId = run( world, () -> world.createEntity( set() ) );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -133,11 +147,11 @@ public class SubscriptionTest
 
     final Subscription subscription = world.createSubscription( areaOfInterest );
 
-    final int entityId = world.createEntity( set() );
+    final int entityId = run( world, () -> world.createEntity( set() ) );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
-    assertInvariantFailure( () -> subscription.componentChange( entity ),
+    assertInvariantFailure( () -> run( world, () -> subscription.componentChange( entity ) ),
                             "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
   }
 
@@ -151,14 +165,14 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
     // There is no entities so should immediately complete iteration
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -171,16 +185,16 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
-    final int entityId5 = world.createEntity( set() );
-    final int entityId6 = world.createEntity( set() );
-    final int entityId7 = world.createEntity( set( 0 ) );
-    final int entityId8 = world.createEntity( set() );
-    final int entityId9 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId5 = run( world, () -> world.createEntity( set() ) );
+    final int entityId6 = run( world, () -> world.createEntity( set() ) );
+    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId8 = run( world, () -> world.createEntity( set() ) );
+    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -189,18 +203,18 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
-    assertEquals( subscription.nextEntity( owner ), entityId4 );
-    assertEquals( subscription.nextEntity( owner ), entityId7 );
-    assertEquals( subscription.nextEntity( owner ), entityId9 );
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -214,16 +228,16 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
-    final int entityId5 = world.createEntity( set() );
-    final int entityId6 = world.createEntity( set() );
-    final int entityId7 = world.createEntity( set( 0 ) );
-    final int entityId8 = world.createEntity( set() );
-    final int entityId9 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId5 = run( world, () -> world.createEntity( set() ) );
+    final int entityId6 = run( world, () -> world.createEntity( set() ) );
+    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId8 = run( world, () -> world.createEntity( set() ) );
+    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -232,13 +246,13 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
 
     // Not part of the subscription
     run( world, () -> world.disposeEntity( entityId3 ) );
@@ -251,9 +265,9 @@ public class SubscriptionTest
 
     run( world, () -> componentApi.remove( entityId7 ) );
 
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
-    assertEquals( subscription.nextEntity( owner ), entityId9 );
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -266,16 +280,16 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
-    final int entityId5 = world.createEntity( set() );
-    final int entityId6 = world.createEntity( set() );
-    final int entityId7 = world.createEntity( set( 0 ) );
-    final int entityId8 = world.createEntity( set() );
-    final int entityId9 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId5 = run( world, () -> world.createEntity( set() ) );
+    final int entityId6 = run( world, () -> world.createEntity( set() ) );
+    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId8 = run( world, () -> world.createEntity( set() ) );
+    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -284,16 +298,16 @@ public class SubscriptionTest
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
-    assertEquals( subscription.nextEntity( owner ), entityId4 );
-    assertEquals( subscription.nextEntity( owner ), entityId7 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
 
     // Not part of the subscription
     run( world, () -> world.disposeEntity( 3 ) );
@@ -304,8 +318,8 @@ public class SubscriptionTest
     // Not part of the subscription
     run( world, () -> world.disposeEntity( 8 ) );
 
-    assertEquals( subscription.nextEntity( owner ), entityId9 );
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -319,28 +333,28 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
-    final int entityId5 = world.createEntity( set() );
-    final int entityId6 = world.createEntity( set() );
-    final int entityId7 = world.createEntity( set( 0 ) );
-    final int entityId8 = world.createEntity( set() );
-    final int entityId9 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId5 = run( world, () -> world.createEntity( set() ) );
+    final int entityId6 = run( world, () -> world.createEntity( set() ) );
+    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId8 = run( world, () -> world.createEntity( set() ) );
+    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -354,13 +368,13 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
 
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
-    assertEquals( subscription.nextEntity( owner ), entityId3 );
-    assertEquals( subscription.nextEntity( owner ), entityId4 );
-    assertEquals( subscription.nextEntity( owner ), entityId7 );
-    assertEquals( subscription.nextEntity( owner ), entityId8 );
-    assertEquals( subscription.nextEntity( owner ), entityId9 );
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId8 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -374,33 +388,33 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
-    final int entityId5 = world.createEntity( set() );
-    final int entityId6 = world.createEntity( set() );
-    final int entityId7 = world.createEntity( set( 0 ) );
-    final int entityId8 = world.createEntity( set() );
-    final int entityId9 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId5 = run( world, () -> world.createEntity( set() ) );
+    final int entityId6 = run( world, () -> world.createEntity( set() ) );
+    final int entityId7 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId8 = run( world, () -> world.createEntity( set() ) );
+    final int entityId9 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
-    assertEquals( subscription.nextEntity( owner ), entityId4 );
-    assertEquals( subscription.nextEntity( owner ), entityId7 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId7 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -414,18 +428,18 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
 
-    assertEquals( subscription.nextEntity( owner ), entityId9 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId9 ) );
 
     // This wraps around to the NewEntities list
-    assertEquals( subscription.nextEntity( owner ), entityId3 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
 
-    assertEquals( subscription.nextEntity( owner ), entityId5 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId5 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -439,25 +453,25 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set() );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set() ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    assertEquals( subscription.nextEntity( owner ), entityId3 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId3 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -469,7 +483,7 @@ public class SubscriptionTest
     assertTrue( subscription.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    assertEquals( subscription.nextEntity( owner ), entityId2 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertTrue( subscription.hasNewEntities() );
@@ -479,11 +493,11 @@ public class SubscriptionTest
     run( world, () -> componentApi.allocate( entityId1 ) );
 
     // This wraps around again
-    assertEquals( subscription.nextEntity( owner ), entityId1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId1 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -497,26 +511,26 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set() );
-    final int entityId2 = world.createEntity( set() );
-    final int entityId3 = world.createEntity( set() );
-    final int entityId4 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set() ) );
+    final int entityId2 = run( world, () -> world.createEntity( set() ) );
+    final int entityId3 = run( world, () -> world.createEntity( set() ) );
+    final int entityId4 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    assertEquals( subscription.nextEntity( owner ), entityId4 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId4 ) );
 
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
     assertFalse( subscription.hasNewEntities() );
@@ -535,10 +549,10 @@ public class SubscriptionTest
     assertTrue( subscription.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    assertEquals( subscription.nextEntity( owner ), entityId2 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
     assertEquals( subscription.getNewEntities().cardinality(), 0 );
 
-    assertEquals( subscription.nextEntity( owner ), -1 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), -1 ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -551,24 +565,24 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
-    final int entityId1 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
+    final int entityId1 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     // Explicit complete of iteration before all entities processed
-    subscription.completeIteration( owner );
+    run( world, () -> subscription.completeIteration( owner ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -582,21 +596,21 @@ public class SubscriptionTest
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set() );
-    final int entityId1 = world.createEntity( set() );
-    final int entityId2 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set() ) );
+    final int entityId1 = run( world, () -> world.createEntity( set() ) );
+    final int entityId2 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
     assertNull( subscription.getOwner() );
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
     assertTrue( subscription.isIterationInProgress() );
     assertEquals( subscription.getCurrentEntityId(), -1 );
     assertEquals( subscription.getOwner(), owner );
 
-    assertEquals( subscription.nextEntity( owner ), entityId2 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId2 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId2 );
 
     // Add to New Entities to subscription
@@ -606,14 +620,14 @@ public class SubscriptionTest
     assertEquals( subscription.getNewEntities().cardinality(), 2 );
     assertTrue( subscription.hasNewEntities() );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
     assertEquals( subscription.getNewEntities().cardinality(), 1 );
     assertTrue( subscription.hasNewEntities() );
 
     // Explicit complete of iteration before all entities processed
-    subscription.completeIteration( owner );
+    run( world, () -> subscription.completeIteration( owner ) );
 
     // Verify we are complete
     assertSubscriptionComplete( subscription );
@@ -629,9 +643,9 @@ public class SubscriptionTest
     final Object owner1 = new Object();
     final Object owner2 = new Object();
 
-    subscription.startIteration( owner1 );
+    run( world, () -> subscription.startIteration( owner1 ) );
 
-    assertInvariantFailure( () -> subscription.startIteration( owner2 ),
+    assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner2 ) ),
                             "Galdr-0022: Subscription.startIteration() invoked with owner '" +
                             owner2 + "' but an existing iteration is in progress with owner '" + owner1 + "'." );
   }
@@ -642,16 +656,16 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = world.createSubscription( new AreaOfInterest( set( 0 ), set(), set() ) );
 
-    final int entityId0 = world.createEntity( set( 0 ) );
+    final int entityId0 = run( world, () -> world.createEntity( set( 0 ) ) );
 
     final Object owner = new Object();
 
-    subscription.startIteration( owner );
+    run( world, () -> subscription.startIteration( owner ) );
 
-    assertEquals( subscription.nextEntity( owner ), entityId0 );
+    run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId0 ) );
     assertEquals( subscription.getCurrentEntityId(), entityId0 );
 
-    assertInvariantFailure( () -> subscription.startIteration( owner ),
+    assertInvariantFailure( () -> run( world, () -> subscription.startIteration( owner ) ),
                             "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value 0" );
   }
 
