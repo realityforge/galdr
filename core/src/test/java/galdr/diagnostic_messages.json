@@ -8,7 +8,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerByType",
         "file": "World.java",
-        "lineNumber": 434
+        "lineNumber": 449
       }
     ]
   },
@@ -21,7 +21,7 @@
         "class": "galdr.World",
         "method": "getComponentManagerById",
         "file": "World.java",
-        "lineNumber": 404
+        "lineNumber": 419
       }
     ]
   },
@@ -214,7 +214,7 @@
         "class": "galdr.Subscription",
         "method": "ensureNotDisposed",
         "file": "Subscription.java",
-        "lineNumber": 209
+        "lineNumber": 222
       }
     ]
   },
@@ -253,19 +253,19 @@
         "class": "galdr.Subscription",
         "method": "entityAdd",
         "file": "Subscription.java",
-        "lineNumber": 157
+        "lineNumber": 168
       },
       {
         "class": "galdr.Subscription",
         "method": "entityRemove",
         "file": "Subscription.java",
-        "lineNumber": 171
+        "lineNumber": 183
       },
       {
         "class": "galdr.Subscription",
         "method": "componentChange",
         "file": "Subscription.java",
-        "lineNumber": 191
+        "lineNumber": 204
       }
     ]
   },
@@ -317,7 +317,7 @@
         "class": "galdr.Subscription",
         "method": "startIteration",
         "file": "Subscription.java",
-        "lineNumber": 62
+        "lineNumber": 70
       }
     ]
   },
@@ -356,7 +356,7 @@
         "class": "galdr.Subscription",
         "method": "nextEntity",
         "file": "Subscription.java",
-        "lineNumber": 97
+        "lineNumber": 106
       }
     ]
   },
@@ -382,7 +382,7 @@
         "class": "galdr.Subscription",
         "method": "completeIteration",
         "file": "Subscription.java",
-        "lineNumber": 80
+        "lineNumber": 89
       }
     ]
   },
@@ -447,7 +447,7 @@
         "class": "galdr.Subscription",
         "method": "startIteration",
         "file": "Subscription.java",
-        "lineNumber": 59
+        "lineNumber": 67
       }
     ]
   },
@@ -473,7 +473,7 @@
         "class": "galdr.World",
         "method": "createSubscription",
         "file": "World.java",
-        "lineNumber": 295
+        "lineNumber": 303
       }
     ]
   },
@@ -487,6 +487,32 @@
         "method": "ensureCurrentWorldMatches",
         "file": "ComponentAPI.java",
         "lineNumber": 144
+      }
+    ]
+  },
+  {
+    "code": 36,
+    "type": "API_INVARIANT",
+    "messagePattern": "Subscription method invoked in the context of the world '%s' but the subscription belongs to the world '%s'",
+    "callers": [
+      {
+        "class": "galdr.Subscription",
+        "method": "ensureCurrentWorldMatches",
+        "file": "Subscription.java",
+        "lineNumber": 319
+      }
+    ]
+  },
+  {
+    "code": 37,
+    "type": "API_INVARIANT",
+    "messagePattern": "World.createSubscription() invoked on world named '%s' when a world named '%s' is active.",
+    "callers": [
+      {
+        "class": "galdr.World",
+        "method": "createSubscription",
+        "file": "World.java",
+        "lineNumber": 295
       }
     ]
   },
@@ -525,7 +551,7 @@
         "class": "galdr.World",
         "method": "assertWorldConstructed",
         "file": "World.java",
-        "lineNumber": 462
+        "lineNumber": 477
       }
     ]
   },
@@ -629,7 +655,7 @@
         "class": "galdr.ErrorHandlerSupport",
         "method": "addErrorHandler",
         "file": "ErrorHandlerSupport.java",
-        "lineNumber": 32
+        "lineNumber": 31
       }
     ]
   },
@@ -642,7 +668,7 @@
         "class": "galdr.ErrorHandlerSupport",
         "method": "removeErrorHandler",
         "file": "ErrorHandlerSupport.java",
-        "lineNumber": 49
+        "lineNumber": 48
       }
     ]
   },

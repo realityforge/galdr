@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.BitSet;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -17,7 +18,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     assertEquals( world.getSubscriptions().size(), 0 );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     assertEquals( world.getSubscriptions().size(), 1 );
 
@@ -40,7 +41,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().build();
 
-    final Subscription subscription = world.createSubscription( set(), set(), set() );
+    final Subscription subscription = createSubscription( world, set(), set(), set() );
 
     subscription.ensureNotDisposed();
 
@@ -51,12 +52,22 @@ public class SubscriptionTest
   }
 
   @Test
+  public void createSubscription_whenInContextOfDifferentWorld()
+  {
+    final World world1 = Worlds.world().build();
+    final World world2 = Worlds.world().build();
+
+    assertInvariantFailure( () -> world1.run( () -> world2.createSubscription( set(), set(), set() ) ),
+                            "Galdr-0037: World.createSubscription() invoked on world named 'World@2' when a world named 'World@1' is active." );
+  }
+
+  @Test
   public void ensureCurrentWorldMatches()
   {
     final World world1 = Worlds.world().build();
     final World world2 = Worlds.world().build();
 
-    final Subscription subscription = world1.createSubscription( set(), set(), set() );
+    final Subscription subscription = createSubscription( world1, set(), set(), set() );
 
     run( world1, subscription::ensureCurrentWorldMatches );
 
@@ -68,7 +79,7 @@ public class SubscriptionTest
   public void createAndDisposeEntityThatMatchesSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -86,7 +97,7 @@ public class SubscriptionTest
   public void entityAdd_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -100,7 +111,7 @@ public class SubscriptionTest
   public void entityRemove_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -115,7 +126,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     assertEquals( subscription.getEntities().cardinality(), 0 );
 
@@ -137,7 +148,10 @@ public class SubscriptionTest
   public void componentChange_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final BitSet all = set( 0 );
+    final BitSet one = set();
+    final BitSet exclude = set();
+    final Subscription subscription = createSubscription( world, all, one, exclude );
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().getEntityById( entityId );
@@ -151,7 +165,7 @@ public class SubscriptionTest
   public void iterateOverEmptySubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final Object owner = new Object();
 
@@ -171,7 +185,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesNoModifications()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -210,7 +224,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -258,7 +272,7 @@ public class SubscriptionTest
   public void iterateOverSubscriptionContainingSubsetOfEntitiesRemoveEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -307,7 +321,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -358,7 +372,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -417,7 +431,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set() );
@@ -469,7 +483,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set() );
@@ -517,7 +531,7 @@ public class SubscriptionTest
   public void explicitCompleteOfIterationBeforeAllEntitiesProcessed()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -543,7 +557,7 @@ public class SubscriptionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set() );
     final int entityId1 = createEntity( world, set() );
@@ -581,7 +595,7 @@ public class SubscriptionTest
   public void startIteration_badOwner()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final Object owner1 = new Object();
     final Object owner2 = new Object();
@@ -597,7 +611,7 @@ public class SubscriptionTest
   public void startIteration_whenIterationInProgress()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = world.createSubscription( set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId0 = createEntity( world, set( 0 ) );
 
@@ -644,5 +658,14 @@ public class SubscriptionTest
   {
     run( world, () -> assertEquals( subscription.nextEntity( owner ), entityId ) );
     assertEquals( subscription.getCurrentEntityId(), entityId );
+  }
+
+  @Nonnull
+  private Subscription createSubscription( @Nonnull final World world,
+                                           @Nonnull final BitSet all,
+                                           @Nonnull final BitSet one,
+                                           @Nonnull final BitSet exclude )
+  {
+    return world.run( () -> world.createSubscription( all, one, exclude ) );
   }
 }

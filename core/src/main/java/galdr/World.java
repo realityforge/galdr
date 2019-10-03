@@ -289,6 +289,13 @@ public final class World
   @Nonnull
   Subscription createSubscription( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
   {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World world = WorldHolder.world();
+      apiInvariant( () -> this == world,
+                    () -> "Galdr-0037: World.createSubscription() invoked on world named '" + getName() +
+                          "' when a world named '" + world.getName() + "' is active." );
+    }
     final AreaOfInterest areaOfInterest = new AreaOfInterest( all, one, exclude );
     if ( Galdr.shouldCheckInvariants() )
     {
