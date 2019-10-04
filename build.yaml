@@ -9,7 +9,7 @@ artifacts:
 
   javax_annotation: org.realityforge.javax.annotation:javax.annotation:jar:1.0.1
 
-  braincheck: org.realityforge.braincheck:braincheck:jar:1.23.0
+  braincheck: org.realityforge.braincheck:braincheck:jar:1.24.0
 
   gwt_user: com.google.gwt:gwt-user:jar:2.8.2
   gwt_dev: com.google.gwt:gwt-dev:jar:2.8.2
