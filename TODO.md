@@ -74,7 +74,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Update Braincheck to omit line numbers for this project.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.

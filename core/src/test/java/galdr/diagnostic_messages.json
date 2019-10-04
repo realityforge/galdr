@@ -2,830 +2,306 @@
   {
     "code": 1,
     "type": "INVARIANT",
-    "messagePattern": "World.getComponentManagerByType() attempted to access Component for type class %s but no such component exists.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getComponentManagerByType",
-        "file": "World.java",
-        "lineNumber": 446
-      }
-    ]
+    "messagePattern": "World.getComponentManagerByType() attempted to access Component for type class %s but no such component exists."
   },
   {
     "code": 2,
     "type": "INVARIANT",
-    "messagePattern": "World.getComponentManagerByIndex() attempted to access Component with id %s but no such component exists.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getComponentManagerById",
-        "file": "World.java",
-        "lineNumber": 416
-      }
-    ]
+    "messagePattern": "World.getComponentManagerByIndex() attempted to access Component with id %s but no such component exists."
   },
   {
     "code": 3,
     "type": "INVARIANT",
-    "messagePattern": "Component named '%s' has id %s but was passed as index %s.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "buildComponentMap",
-        "file": "World.java",
-        "lineNumber": 182
-      }
-    ]
+    "messagePattern": "Component named '%s' has id %s but was passed as index %s."
   },
   {
     "code": 4,
     "type": "API_INVARIANT",
-    "messagePattern": "%s.getName() invoked when Galdr.areNamesEnabled() returns false",
-    "callers": [
-      {
-        "class": "galdr.Processor",
-        "method": "getName",
-        "file": "Processor.java",
-        "lineNumber": 58
-      },
-      {
-        "class": "galdr.World",
-        "method": "getName",
-        "file": "World.java",
-        "lineNumber": 264
-      }
-    ]
+    "messagePattern": "%s.getName() invoked when Galdr.areNamesEnabled() returns false"
   },
   {
     "code": 5,
     "type": "INVARIANT",
-    "messagePattern": "AreaOfInterest passed intersecting BitSets %s (%s) and %s (%s).",
-    "callers": [
-      {
-        "class": "galdr.AreaOfInterest",
-        "method": "<init>",
-        "file": "AreaOfInterest.java",
-        "lineNumber": 35
-      },
-      {
-        "class": "galdr.AreaOfInterest",
-        "method": "<init>",
-        "file": "AreaOfInterest.java",
-        "lineNumber": 38
-      },
-      {
-        "class": "galdr.AreaOfInterest",
-        "method": "<init>",
-        "file": "AreaOfInterest.java",
-        "lineNumber": 41
-      }
-    ]
+    "messagePattern": "AreaOfInterest passed intersecting BitSets %s (%s) and %s (%s)."
   },
   {
     "code": 6,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to create entity with invalid componentId %s",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "createEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 65
-      }
-    ]
+    "messagePattern": "Attempting to create entity with invalid componentId %s"
   },
   {
     "code": 7,
     "type": "API_INVARIANT",
-    "messagePattern": "The Link.getSourceEntity() method invoked on invalid link.",
-    "callers": [
-      {
-        "class": "galdr.Link",
-        "method": "getSourceEntity",
-        "file": "Link.java",
-        "lineNumber": 57
-      }
-    ]
+    "messagePattern": "The Link.getSourceEntity() method invoked on invalid link."
   },
   {
     "code": 8,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to unlink incoming link Link[%s] but entity %s has no incoming links.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "unlinkIncoming",
-        "file": "Entity.java",
-        "lineNumber": 165
-      }
-    ]
+    "messagePattern": "Attempted to unlink incoming link Link[%s] but entity %s has no incoming links."
   },
   {
     "code": 9,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to dispose entity %s but entity is not allocated.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "disposeEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 171
-      },
-      {
-        "class": "galdr.EntityManager",
-        "method": "disposeEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 181
-      }
-    ]
+    "messagePattern": "Attempting to dispose entity %s but entity is not allocated."
   },
   {
     "code": 10,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s but the target entity is not alive.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "link",
-        "file": "EntityManager.java",
-        "lineNumber": 138
-      }
-    ]
+    "messagePattern": "Attempted to link from entity %s to entity %s but the target entity is not alive."
   },
   {
     "code": 11,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s but the source entity is not alive.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "link",
-        "file": "EntityManager.java",
-        "lineNumber": 135
-      }
-    ]
+    "messagePattern": "Attempted to link from entity %s to entity %s but the source entity is not alive."
   },
   {
     "code": 12,
     "type": "INVARIANT",
-    "messagePattern": "Invoked Entity.unlinkIncoming with link Link[%s] but entity %s has no such incoming link.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "unlinkIncoming",
-        "file": "Entity.java",
-        "lineNumber": 173
-      }
-    ]
+    "messagePattern": "Invoked Entity.unlinkIncoming with link Link[%s] but entity %s has no such incoming link."
   },
   {
     "code": 13,
     "type": "FAIL",
-    "messagePattern": "The ComponentManager.get() method has been invoked for the component named '%s' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed.",
-    "callers": [
-      {
-        "class": "galdr.NoStorageComponentManager",
-        "method": "performGet",
-        "file": "NoStorageComponentManager.java",
-        "lineNumber": 29
-      }
-    ]
+    "messagePattern": "The ComponentManager.get() method has been invoked for the component named '%s' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed."
   },
   {
     "code": 14,
     "type": "FAIL",
-    "messagePattern": "The ComponentManager.create() method has been invoked for the component named '%s' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed.",
-    "callers": [
-      {
-        "class": "galdr.NoStorageComponentManager",
-        "method": "performCreate",
-        "file": "NoStorageComponentManager.java",
-        "lineNumber": 42
-      }
-    ]
+    "messagePattern": "The ComponentManager.create() method has been invoked for the component named '%s' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed."
   },
   {
     "code": 15,
     "type": "INVARIANT",
-    "messagePattern": "Invoked method on Subscription when subscription is disposed.",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "ensureNotDisposed",
-        "file": "Subscription.java",
-        "lineNumber": 222
-      }
-    ]
+    "messagePattern": "Invoked method on Subscription when subscription is disposed."
   },
   {
     "code": 16,
     "type": "API_INVARIANT",
-    "messagePattern": "The Link.getTargetEntity() method invoked on invalid link.",
-    "callers": [
-      {
-        "class": "galdr.Link",
-        "method": "getTargetEntity",
-        "file": "Link.java",
-        "lineNumber": 68
-      }
-    ]
+    "messagePattern": "The Link.getTargetEntity() method invoked on invalid link."
   },
   {
     "code": 17,
     "type": "INVARIANT",
-    "messagePattern": "Link.invalidate() method invoked on invalid link.",
-    "callers": [
-      {
-        "class": "galdr.Link",
-        "method": "invalidate",
-        "file": "Link.java",
-        "lineNumber": 95
-      }
-    ]
+    "messagePattern": "Link.invalidate() method invoked on invalid link."
   },
   {
     "code": 18,
     "type": "INVARIANT",
-    "messagePattern": "Invoked Subscription.%s with invalid Entity.",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "entityAdd",
-        "file": "Subscription.java",
-        "lineNumber": 168
-      },
-      {
-        "class": "galdr.Subscription",
-        "method": "entityRemove",
-        "file": "Subscription.java",
-        "lineNumber": 183
-      },
-      {
-        "class": "galdr.Subscription",
-        "method": "componentChange",
-        "file": "Subscription.java",
-        "lineNumber": 204
-      }
-    ]
+    "messagePattern": "Invoked Subscription.%s with invalid Entity."
   },
   {
     "code": 19,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed",
-    "callers": [
-      {
-        "class": "galdr.Worlds$Builder",
-        "method": "ensureWorldNotConstructed",
-        "file": "Worlds.java",
-        "lineNumber": 177
-      }
-    ]
+    "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed"
   },
   {
     "code": 20,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to dispose entity %s in world '%s' but entity was created in a different world.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "disposeEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 187
-      }
-    ]
+    "messagePattern": "Attempting to dispose entity %s in world '%s' but entity was created in a different world."
   },
   {
     "code": 21,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to get Spy but spies are not enabled.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getSpy",
-        "file": "World.java",
-        "lineNumber": 247
-      }
-    ]
+    "messagePattern": "Attempting to get Spy but spies are not enabled."
   },
   {
     "code": 22,
     "type": "INVARIANT",
-    "messagePattern": "Subscription.startIteration() invoked with owner '%s' but an existing iteration is in progress with owner '%s'.",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "startIteration",
-        "file": "Subscription.java",
-        "lineNumber": 70
-      }
-    ]
+    "messagePattern": "Subscription.startIteration() invoked with owner '%s' but an existing iteration is in progress with owner '%s'."
   },
   {
     "code": 23,
     "type": "INVARIANT",
-    "messagePattern": "Invoked WorldHolder.activateWorld() with null world.",
-    "callers": [
-      {
-        "class": "galdr.WorldHolder",
-        "method": "activateWorld",
-        "file": "WorldHolder.java",
-        "lineNumber": 61
-      }
-    ]
+    "messagePattern": "Invoked WorldHolder.activateWorld() with null world."
   },
   {
     "code": 24,
     "type": "INVARIANT",
-    "messagePattern": "Invoked WorldHolder.activateWorld() with world named '%s' but an existing world named '%s' is active.",
-    "callers": [
-      {
-        "class": "galdr.WorldHolder",
-        "method": "activateWorld",
-        "file": "WorldHolder.java",
-        "lineNumber": 63
-      }
-    ]
+    "messagePattern": "Invoked WorldHolder.activateWorld() with world named '%s' but an existing world named '%s' is active."
   },
   {
     "code": 25,
     "type": "INVARIANT",
-    "messagePattern": "Subscription.nextEntity() invoked with owner '%s' but an existing iteration is in progress with owner '%s'.",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "nextEntity",
-        "file": "Subscription.java",
-        "lineNumber": 106
-      }
-    ]
+    "messagePattern": "Subscription.nextEntity() invoked with owner '%s' but an existing iteration is in progress with owner '%s'."
   },
   {
     "code": 26,
     "type": "API_INVARIANT",
-    "messagePattern": "Invoked WorldHolder.world() when no world was active.",
-    "callers": [
-      {
-        "class": "galdr.WorldHolder",
-        "method": "world",
-        "file": "WorldHolder.java",
-        "lineNumber": 35
-      }
-    ]
+    "messagePattern": "Invoked WorldHolder.world() when no world was active."
   },
   {
     "code": 27,
     "type": "INVARIANT",
-    "messagePattern": "Subscription.completeIteration() invoked with owner '%s' but this does not match the existing owner '%s'.",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "completeIteration",
-        "file": "Subscription.java",
-        "lineNumber": 89
-      }
-    ]
+    "messagePattern": "Subscription.completeIteration() invoked with owner '%s' but this does not match the existing owner '%s'."
   },
   {
     "code": 28,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempted to deactivate world named '%s' that is not active.",
-    "callers": [
-      {
-        "class": "galdr.WorldHolder",
-        "method": "deactivateWorld",
-        "file": "WorldHolder.java",
-        "lineNumber": 79
-      }
-    ]
+    "messagePattern": "Attempted to deactivate world named '%s' that is not active."
   },
   {
     "code": 29,
     "type": "INVARIANT",
-    "messagePattern": "The ComponentManager.addSubscription() method for the component named '%s' was invoked but subscription is already registered with ComponentManager.",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "addSubscription",
-        "file": "ComponentManager.java",
-        "lineNumber": 338
-      }
-    ]
+    "messagePattern": "The ComponentManager.addSubscription() method for the component named '%s' was invoked but subscription is already registered with ComponentManager."
   },
   {
     "code": 30,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentManager.remove() method for the component named '%s' was invoked but the entity %s does not have the component.",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "remove",
-        "file": "ComponentManager.java",
-        "lineNumber": 282
-      }
-    ]
+    "messagePattern": "The ComponentManager.remove() method for the component named '%s' was invoked but the entity %s does not have the component."
   },
   {
     "code": 31,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentManager.create() method invoked but entity %s already has the component named '%s'.",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "newComponent",
-        "file": "ComponentManager.java",
-        "lineNumber": 236
-      }
-    ]
+    "messagePattern": "The ComponentManager.create() method invoked but entity %s already has the component named '%s'."
   },
   {
     "code": 32,
     "type": "INVARIANT",
-    "messagePattern": "Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value %s",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "startIteration",
-        "file": "Subscription.java",
-        "lineNumber": 67
-      }
-    ]
+    "messagePattern": "Subscription.startIteration() invoked when _currentEntityId has not been reset. Current value %s"
   },
   {
     "code": 33,
     "type": "API_INVARIANT",
-    "messagePattern": "The ComponentManager.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component.",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "get",
-        "file": "ComponentManager.java",
-        "lineNumber": 182
-      }
-    ]
+    "messagePattern": "The ComponentManager.get() method for the component named '%s' expected to find a component for entityId %s but is unable to locate component."
   },
   {
     "code": 34,
     "type": "INVARIANT",
-    "messagePattern": "World.createSubscription() invoked but subscription with matching AreaOfInterest already exists.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "createSubscription",
-        "file": "World.java",
-        "lineNumber": 300
-      }
-    ]
+    "messagePattern": "World.createSubscription() invoked but subscription with matching AreaOfInterest already exists."
   },
   {
     "code": 35,
     "type": "API_INVARIANT",
-    "messagePattern": "ComponentAPI method invoked in the context of the world '%s' but the component belongs to the world '%s'",
-    "callers": [
-      {
-        "class": "galdr.ComponentAPI",
-        "method": "ensureCurrentWorldMatches",
-        "file": "ComponentAPI.java",
-        "lineNumber": 144
-      }
-    ]
+    "messagePattern": "ComponentAPI method invoked in the context of the world '%s' but the component belongs to the world '%s'"
   },
   {
     "code": 36,
     "type": "API_INVARIANT",
-    "messagePattern": "Subscription method invoked in the context of the world '%s' but the subscription belongs to the world '%s'",
-    "callers": [
-      {
-        "class": "galdr.Subscription",
-        "method": "ensureCurrentWorldMatches",
-        "file": "Subscription.java",
-        "lineNumber": 319
-      }
-    ]
+    "messagePattern": "Subscription method invoked in the context of the world '%s' but the subscription belongs to the world '%s'"
   },
   {
     "code": 37,
     "type": "API_INVARIANT",
-    "messagePattern": "World.%s invoked on world named '%s' when a world named '%s' is active.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "ensureCurrentWorldMatches",
-        "file": "World.java",
-        "lineNumber": 485
-      }
-    ]
+    "messagePattern": "World.%s invoked on world named '%s' when a world named '%s' is active."
   },
   {
     "code": 38,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to unlink outgoing link Link[%s] but entity %s has no outgoing links.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "unlinkOutgoing",
-        "file": "Entity.java",
-        "lineNumber": 183
-      }
-    ]
+    "messagePattern": "Attempted to unlink outgoing link Link[%s] but entity %s has no outgoing links."
   },
   {
     "code": 39,
     "type": "INVARIANT",
-    "messagePattern": "Invoked Entity.unlinkOutgoing with link Link[%s] but entity %s has no such outgoing link.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "unlinkOutgoing",
-        "file": "Entity.java",
-        "lineNumber": 191
-      }
-    ]
+    "messagePattern": "Invoked Entity.unlinkOutgoing with link Link[%s] but entity %s has no such outgoing link."
   },
   {
     "code": 45,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempted to invoke World.%s() on World named '%s' prior to World completing construction",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "assertWorldConstructed",
-        "file": "World.java",
-        "lineNumber": 474
-      }
-    ]
+    "messagePattern": "Attempted to invoke World.%s() on World named '%s' prior to World completing construction"
   },
   {
     "code": 46,
     "type": "API_INVARIANT",
-    "messagePattern": "Invoked World.getStageByName() on World named '%s' with stage name '%s' but no such stage exists. Known stages include: [%s]",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "getStageByName",
-        "file": "World.java",
-        "lineNumber": 143
-      }
-    ]
+    "messagePattern": "Invoked World.getStageByName() on World named '%s' with stage name '%s' but no such stage exists. Known stages include: [%s]"
   },
   {
     "code": 52,
     "type": "API_INVARIANT",
-    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false",
-    "callers": [
-      {
-        "class": "galdr.Processor",
-        "method": "<init>",
-        "file": "Processor.java",
-        "lineNumber": 28
-      }
-    ]
+    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false"
   },
   {
     "code": 53,
     "type": "API_INVARIANT",
-    "messagePattern": "ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false",
-    "callers": [
-      {
-        "class": "galdr.ComponentManager",
-        "method": "getName",
-        "file": "ComponentManager.java",
-        "lineNumber": 124
-      }
-    ]
+    "messagePattern": "ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false"
   },
   {
     "code": 59,
     "type": "INVARIANT",
-    "messagePattern": "Attempting to dispose entity %s and entity is allocated but not alive.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "doDisposeEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 198
-      }
-    ]
+    "messagePattern": "Attempting to dispose entity %s and entity is allocated but not alive."
   },
   {
     "code": 78,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to get entity %s but entity is allocated but not alive.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "getEntityById",
-        "file": "EntityManager.java",
-        "lineNumber": 49
-      }
-    ]
+    "messagePattern": "Attempting to get entity %s but entity is allocated but not alive."
   },
   {
     "code": 79,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to get entity %s but entity is not allocated.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "getEntityById",
-        "file": "EntityManager.java",
-        "lineNumber": 47
-      }
-    ]
+    "messagePattern": "Attempting to get entity %s but entity is not allocated."
   },
   {
     "code": 87,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempted to create stage named named '%s' but a stage already exists with the specified name. Existing stages include: [%s]",
-    "callers": [
-      {
-        "class": "galdr.Worlds$Builder",
-        "method": "stage",
-        "file": "Worlds.java",
-        "lineNumber": 153
-      }
-    ]
+    "messagePattern": "Attempted to create stage named named '%s' but a stage already exists with the specified name. Existing stages include: [%s]"
   },
   {
     "code": 96,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to add handler %s that is already in the list of error handlers.",
-    "callers": [
-      {
-        "class": "galdr.ErrorHandlerSupport",
-        "method": "addErrorHandler",
-        "file": "ErrorHandlerSupport.java",
-        "lineNumber": 31
-      }
-    ]
+    "messagePattern": "Attempting to add handler %s that is already in the list of error handlers."
   },
   {
     "code": 97,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to remove handler %s that is not in the list of error handlers.",
-    "callers": [
-      {
-        "class": "galdr.ErrorHandlerSupport",
-        "method": "removeErrorHandler",
-        "file": "ErrorHandlerSupport.java",
-        "lineNumber": 48
-      }
-    ]
+    "messagePattern": "Attempting to remove handler %s that is not in the list of error handlers."
   },
   {
     "code": 102,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to add handler %s that is already in the list of spy handlers.",
-    "callers": [
-      {
-        "class": "galdr.SpyEventHandlerSupport",
-        "method": "addSpyEventHandler",
-        "file": "SpyEventHandlerSupport.java",
-        "lineNumber": 25
-      }
-    ]
+    "messagePattern": "Attempting to add handler %s that is already in the list of spy handlers."
   },
   {
     "code": 103,
     "type": "API_INVARIANT",
-    "messagePattern": "Attempting to remove handler %s that is not in the list of spy handlers.",
-    "callers": [
-      {
-        "class": "galdr.SpyEventHandlerSupport",
-        "method": "removeSpyEventHandler",
-        "file": "SpyEventHandlerSupport.java",
-        "lineNumber": 36
-      }
-    ]
+    "messagePattern": "Attempting to remove handler %s that is not in the list of spy handlers."
   },
   {
     "code": 104,
     "type": "INVARIANT",
-    "messagePattern": "Attempting to report SpyEvent '%s' but willPropagateSpyEvents() returns false.",
-    "callers": [
-      {
-        "class": "galdr.SpyEventHandlerSupport",
-        "method": "reportSpyEvent",
-        "file": "SpyEventHandlerSupport.java",
-        "lineNumber": 47
-      }
-    ]
+    "messagePattern": "Attempting to report SpyEvent '%s' but willPropagateSpyEvents() returns false."
   },
   {
     "code": 110,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to link entity %s to itself.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "link",
-        "file": "EntityManager.java",
-        "lineNumber": 141
-      }
-    ]
+    "messagePattern": "Attempted to link entity %s to itself."
   },
   {
     "code": 117,
     "type": "INVARIANT",
-    "messagePattern": "Link.dispose() method invoked on invalid link.",
-    "callers": [
-      {
-        "class": "galdr.Link",
-        "method": "dispose",
-        "file": "Link.java",
-        "lineNumber": 133
-      }
-    ]
+    "messagePattern": "Link.dispose() method invoked on invalid link."
   },
   {
     "code": 159,
     "type": "INVARIANT",
-    "messagePattern": "Attempting to dispose entity %s which is not contained by the active world.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "doDisposeEntity",
-        "file": "EntityManager.java",
-        "lineNumber": 202
-      }
-    ]
+    "messagePattern": "Attempting to dispose entity %s which is not contained by the active world."
   },
   {
     "code": 181,
     "type": "INVARIANT",
-    "messagePattern": "World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "removeErrorHandler",
-        "file": "World.java",
-        "lineNumber": 219
-      }
-    ]
+    "messagePattern": "World.removeErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false."
   },
   {
     "code": 182,
     "type": "INVARIANT",
-    "messagePattern": "World.addErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false.",
-    "callers": [
-      {
-        "class": "galdr.World",
-        "method": "addErrorHandler",
-        "file": "World.java",
-        "lineNumber": 202
-      }
-    ]
+    "messagePattern": "World.addErrorHandler() invoked when Galdr.areErrorHandlersEnabled() returns false."
   },
   {
     "code": 808,
     "type": "INVARIANT",
-    "messagePattern": "Entity.linkIncoming() on entity %s but entity is not the target of the link.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "linkIncoming",
-        "file": "Entity.java",
-        "lineNumber": 150
-      }
-    ]
+    "messagePattern": "Entity.linkIncoming() on entity %s but entity is not the target of the link."
   },
   {
     "code": 809,
     "type": "INVARIANT",
-    "messagePattern": "Entity.linkOutgoing() on entity %s but entity is not the source of the link.",
-    "callers": [
-      {
-        "class": "galdr.Entity",
-        "method": "linkOutgoing",
-        "file": "Entity.java",
-        "lineNumber": 134
-      }
-    ]
+    "messagePattern": "Entity.linkOutgoing() on entity %s but entity is not the source of the link."
   },
   {
     "code": 911,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain source entity.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "link",
-        "file": "EntityManager.java",
-        "lineNumber": 145
-      }
-    ]
+    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain source entity."
   },
   {
     "code": 912,
     "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain target entity.",
-    "callers": [
-      {
-        "class": "galdr.EntityManager",
-        "method": "link",
-        "file": "EntityManager.java",
-        "lineNumber": 149
-      }
-    ]
+    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain target entity."
   }
 ]
