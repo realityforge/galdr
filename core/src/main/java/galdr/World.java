@@ -77,7 +77,7 @@ public final class World
    * Support infrastructure for spy events.
    */
   @Nullable
-  private final SpyImpl _spy = Galdr.areSpiesEnabled() ? new SpyImpl() : null;
+  private final SpyImpl _spy = Galdr.areSpiesEnabled() ? new SpyImpl( this ) : null;
 
   World( @Nullable final String name )
   {

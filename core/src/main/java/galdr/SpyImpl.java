@@ -2,6 +2,7 @@ package galdr;
 
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
@@ -11,13 +12,19 @@ final class SpyImpl
   implements Spy
 {
   /**
+   * The world that this spy is associated wtih.
+   */
+  @Nonnull
+  private final World _world;
+  /**
    * Support infrastructure for interacting with spy event handlers..
    */
   @Nonnull
   private final SpyEventHandlerSupport _spyEventHandlerSupport = new SpyEventHandlerSupport();
 
-  SpyImpl()
+  SpyImpl( @Nonnull final World world )
   {
+    _world = Objects.requireNonNull( world );
   }
 
   @Override
