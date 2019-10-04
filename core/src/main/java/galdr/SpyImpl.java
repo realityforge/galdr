@@ -2,6 +2,7 @@ package galdr;
 
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
+import galdr.spy.WorldInfo;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -49,5 +50,12 @@ final class SpyImpl
   public boolean willPropagateSpyEvents()
   {
     return _spyEventHandlerSupport.willPropagateSpyEvents();
+  }
+
+  @Nonnull
+  @Override
+  public WorldInfo asWorldInfo()
+  {
+    return _world.asInfo();
   }
 }

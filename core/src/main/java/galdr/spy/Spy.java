@@ -37,4 +37,12 @@ public interface Spy
    * @param event the event that occurred.
    */
   void reportSpyEvent( @Nonnull Object event );
+
+  /**
+   * Return the info object representing the world.
+   *
+   * @return the info object representing the world.
+   */
+  @Nonnull
+  WorldInfo asWorldInfo();
 }

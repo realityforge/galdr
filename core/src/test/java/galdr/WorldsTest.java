@@ -29,7 +29,7 @@ public class WorldsTest
         .initialEntityCount( 233 )
         .build();
 
-    assertEquals( world.getEntityManager().capacity(), 233 );
+    assertEquals( world.getSpy().asWorldInfo().getEntityCapacity(), 233 );
   }
 
   @Test

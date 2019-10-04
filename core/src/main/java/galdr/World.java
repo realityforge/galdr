@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.Spy;
+import galdr.spy.WorldInfo;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +23,11 @@ public final class World
    */
   @Nullable
   private final String _name;
+  /**
+   * Cached info object associated with element.
+   * This should be null if {@link Galdr#areSpiesEnabled()} is false.
+   */
+  private WorldInfoImpl _info;
 
   /**
    * Interface used to define actions that can be run in the context of a world.
@@ -279,6 +285,27 @@ public final class World
     {
       return super.toString();
     }
+  }
+
+  /**
+   * Return the info associated with this class.
+   *
+   * @return the info associated with this class.
+   */
+  @SuppressWarnings( "ConstantConditions" )
+  @Nonnull
+  WorldInfo asInfo()
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areSpiesEnabled,
+                 () -> "Galdr-0040: World.asInfo() invoked but Galdr.areSpiesEnabled() returned false." );
+    }
+    if ( Galdr.areSpiesEnabled() && null == _info )
+    {
+      _info = new WorldInfoImpl( this );
+    }
+    return Galdr.areSpiesEnabled() ? _info : null;
   }
 
   @Nonnull

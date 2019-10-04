@@ -195,6 +195,11 @@
     "messagePattern": "Invoked Entity.unlinkOutgoing with link Link[%s] but entity %s has no such outgoing link."
   },
   {
+    "code": 40,
+    "type": "INVARIANT",
+    "messagePattern": "World.asInfo() invoked but Galdr.areSpiesEnabled() returned false."
+  },
+  {
     "code": 45,
     "type": "API_INVARIANT",
     "messagePattern": "Attempted to invoke World.%s() on World named '%s' prior to World completing construction"
