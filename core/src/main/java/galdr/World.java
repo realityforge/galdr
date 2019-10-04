@@ -113,7 +113,7 @@ public final class World
    * @param entityId the entity id.
    * @return true if the entityId represents a valid entity.
    */
-  public boolean isEntity( final int entityId )
+  public boolean isAlive( final int entityId )
   {
     ensureCurrentWorldMatches( "isEntity()" );
     return getEntityManager().isAlive( entityId );
