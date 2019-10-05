@@ -5,7 +5,6 @@ import galdr.ComponentAPI;
 import galdr.ComponentStorage;
 import galdr.World;
 import galdr.Worlds;
-import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
