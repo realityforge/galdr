@@ -26,6 +26,8 @@ public final class Link
     _targetEntity = Objects.requireNonNull( targetEntity );
     _cascadeSourceRemoveToTarget = cascadeSourceRemoveToTarget;
     _cascadeTargetRemoveToSource = cascadeTargetRemoveToSource;
+    _sourceEntity.linkOutgoing( this );
+    _targetEntity.linkIncoming( this );
   }
 
   /**

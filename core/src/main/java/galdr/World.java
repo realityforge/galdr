@@ -140,8 +140,6 @@ public final class World
       getSpy().reportSpyEvent( new LinkAddStartEvent( this, sourceEntityId, targetEntityId ) );
     }
     final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
-    source.linkOutgoing( link );
-    target.linkIncoming( link );
     if ( willPropagateSpyEvents() )
     {
       getSpy().reportSpyEvent( new LinkAddCompleteEvent( this, sourceEntityId, targetEntityId ) );
