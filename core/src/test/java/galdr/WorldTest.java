@@ -128,7 +128,7 @@ public class WorldTest
       .component( Component3.class, Component3::new )
       .build();
 
-    assertEquals( world.getComponentCount(), 3 );
+    assertEquals( world.getSpy().asWorldInfo().getComponentCount(), 3 );
     assertTypeRegistered( world, Component1.class, 0 );
     assertTypeRegistered( world, Component2.class, 1 );
     assertTypeRegistered( world, Component3.class, 2 );

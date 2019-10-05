@@ -28,4 +28,11 @@ public interface WorldInfo
    * @return the number of entities that the world can contain without allocating more storage.
    */
   int getEntityCapacity();
+
+  /**
+   * Return the number of component types that exist in the world. This fixed over the lifetime of the World.
+   *
+   * @return the number of component types that exist in the world.
+   */
+  int getComponentCount();
 }

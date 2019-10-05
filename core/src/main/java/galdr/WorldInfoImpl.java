@@ -35,6 +35,12 @@ final class WorldInfoImpl
   }
 
   @Override
+  public int getComponentCount()
+  {
+    return _world.getComponentCount();
+  }
+
+  @Override
   public String toString()
   {
     return _world.toString();

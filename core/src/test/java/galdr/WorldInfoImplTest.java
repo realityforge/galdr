@@ -7,6 +7,14 @@ import static org.testng.Assert.*;
 public class WorldInfoImplTest
   extends AbstractTest
 {
+  private static class Component1
+  {
+  }
+
+  private static class Component2
+  {
+  }
+
   @Test
   public void basicOperation()
   {
@@ -52,6 +60,18 @@ public class WorldInfoImplTest
     world.run( () -> world.disposeEntity( entityId3 ) );
 
     assertEquals( info.getEntityCount(), 2 );
+  }
+
+  @Test
+  public void getComponentCount()
+  {
+    final World world1 = Worlds.world().build();
+    final World world2 = Worlds.world().component( Component1.class ).build();
+    final World world3 = Worlds.world().component( Component1.class ).component( Component2.class ).build();
+
+    assertEquals( world1.getSpy().asWorldInfo().getComponentCount(), 0 );
+    assertEquals( world2.getSpy().asWorldInfo().getComponentCount(), 1 );
+    assertEquals( world3.getSpy().asWorldInfo().getComponentCount(), 2 );
   }
 
   @Test
