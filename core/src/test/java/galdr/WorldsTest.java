@@ -37,7 +37,7 @@ public class WorldsTest
   {
     final String name = randomString();
     final World world = Worlds.world( name ).build();
-    assertEquals( world.getEntityManager().capacity(), Worlds.Builder.DEFAULT_INITIAL_ENTITY_COUNT );
+    assertEquals( world.getSpy().asWorldInfo().getEntityCapacity(), Worlds.Builder.DEFAULT_INITIAL_ENTITY_COUNT );
   }
 
   @Test
