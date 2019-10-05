@@ -51,7 +51,9 @@ final class EntityCollection
   @Nullable
   private Object _owner;
 
-  EntityCollection( @Nonnull final World world, @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
+  EntityCollection( @Nonnull final World world,
+                    @Nonnull final AreaOfInterest areaOfInterest,
+                    final int initialEntityCount )
   {
     _world = Objects.requireNonNull( world );
     _areaOfInterest = Objects.requireNonNull( areaOfInterest );
