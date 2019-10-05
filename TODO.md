@@ -79,25 +79,21 @@ for systems/processors ahead of time.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Add API to expose `Link` objects for entities in Spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
-* Add a deferred creation `ComponentManager`. i.e. The creation of the component will be deferred until the first
-  time it is accessed. An example is a `Wall` cell that has health but usually not necessary to track it until it
-  is first damaged. Another alternative is a copy-on-right `ComponentManager`
-* Add `LookupAndArrayComponentManager` that stores entityId -> index in lookup map which then is used to address
-  component in array. This is halfway in perf tradeoffs between the `FastArray` and `Map` implementations. Possibly
-  only useful when the component is a primary component in an `AreaOfInterest` and can handle the relative slowness
-  of lookups in other scenarios.
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
 * Change component into an annotation `@Component`
 * Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
   `Collections.unmodifiableMap()` if `Galdr.enforceUnmodifiableCOllections()` returns `true`.
-* Add different implementations of `ComponentStore` that optimize for different distributions of entities. The
-  current implementation is a java array. We could create a store where there is a dense lookup array that looks
-  into a very sparse component array. Useful when there is a low proportion of components. We could create a
-  implementation based on [FlatBuffers](https://google.github.io/flatbuffers/index.html) for cache friendly
-  access. We could use a `Map` based implementation that is used when there is relative low density component
-  distribution that does not need fast access times.
+
+* Add additional `ComponentManager` implementations.
+  - `Lazy` implementation that does not allocate the component instance until it is first accessed.
+  - `CopyOnWrite` implementation that uses a global shared component instance until write occurs.  This may be
+    useful for `Health` on walls which may have many wall instances but rarely need t track changes.
+  - `LookupAndArray` implementation that uses a dense array for storage but stores the index in a separate
+    `entityId` => `index` map.
+  - A [FlatBuffers](https://google.github.io/flatbuffers/index.html) based implementation for cache friendly
+    access patterns.
 
 * Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
   picked up by a processor later in the stage which applies the work items. The later processor could also filter,
