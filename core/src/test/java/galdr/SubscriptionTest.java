@@ -100,7 +100,7 @@ public class SubscriptionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId = createEntity( world, set() );
-    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> run( world, () -> subscription.entityAdd( entity ) ),
@@ -114,7 +114,7 @@ public class SubscriptionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
 
     final int entityId = createEntity( world, set() );
-    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> run( world, () -> subscription.entityRemove( entity ) ),
@@ -154,7 +154,7 @@ public class SubscriptionTest
     final Subscription subscription = createSubscription( world, all, one, exclude );
 
     final int entityId = createEntity( world, set() );
-    final Entity entity = world.getEntityManager().getEntityById( entityId );
+    final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
     assertInvariantFailure( () -> run( world, () -> subscription.componentChange( entity ) ),
