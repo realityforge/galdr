@@ -455,20 +455,12 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = set();
     // invalid
-    componentIds1.set( 33 );
-
-    assertInvariantFailure( () -> entityManager.createEntity( componentIds1 ),
+    assertInvariantFailure( () -> entityManager.createEntity( set( 33 ) ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 33" );
 
-    final BitSet componentIds2 = set();
-    componentIds2.set( 0 );
-    componentIds2.set( 1 );
     // 2 is invalid
-    componentIds2.set( 2 );
-
-    assertInvariantFailure( () -> entityManager.createEntity( componentIds2 ),
+    assertInvariantFailure( () -> entityManager.createEntity( set( 0, 1, 2 ) ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 2" );
   }
 }
