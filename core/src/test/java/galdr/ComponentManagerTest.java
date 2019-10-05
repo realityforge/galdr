@@ -3,7 +3,6 @@ package galdr;
 import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
-import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
