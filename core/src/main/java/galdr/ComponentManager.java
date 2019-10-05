@@ -42,10 +42,10 @@ abstract class ComponentManager<T>
   @Nonnull
   private final ComponentAPI<T> _api;
   /**
-   * The subscriptions that have an {@link AreaOfInterest} that overlaps this subscription.
+   * The collections that have an {@link AreaOfInterest} that overlaps with this component.
    */
   @Nonnull
-  private final List<Subscription> _subscriptions = new ArrayList<>();
+  private final List<EntityCollection> _collections = new ArrayList<>();
 
   ComponentManager( @Nonnull final World world,
                     final int id,
@@ -246,9 +246,9 @@ abstract class ComponentManager<T>
     final T component = mustPerformCreate ? performCreate( entityId ) : null;
     if ( entity.isNotAdding() )
     {
-      for ( final Subscription subscription : _subscriptions )
+      for ( final EntityCollection collection : _collections )
       {
-        subscription.componentChange( entity );
+        collection.componentChange( entity );
       }
       //TODO: Generate application message for component creation?
       if ( _world.willPropagateSpyEvents() )
@@ -291,9 +291,9 @@ abstract class ComponentManager<T>
         _world.getSpy().reportSpyEvent( new ComponentRemoveStartEvent( _world, entity.getId(), getId() ) );
       }
       //TODO: Generate application message for component removal?
-      for ( final Subscription subscription : _subscriptions )
+      for ( final EntityCollection collection : _collections )
       {
-        subscription.componentChange( entity );
+        collection.componentChange( entity );
       }
     }
     performRemove( entityId );
@@ -331,26 +331,26 @@ abstract class ComponentManager<T>
     return _id;
   }
 
-  void addSubscription( @Nonnull final Subscription subscription )
+  void addEntityCollection( @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> !_subscriptions.contains( subscription ),
-                 () -> "Galdr-0029: The ComponentManager.addSubscription() method for the component named '" +
-                       getName() + "' was invoked but subscription is already registered with ComponentManager." );
+      invariant( () -> !_collections.contains( collection ),
+                 () -> "Galdr-0029: The ComponentManager.addEntityCollection() method for the component named '" +
+                       getName() + "' was invoked but collection is already registered with ComponentManager." );
     }
-    _subscriptions.add( subscription );
+    _collections.add( collection );
   }
 
-  void removeSubscription( @Nonnull final Subscription subscription )
+  void removeCollection( @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> _subscriptions.contains( subscription ),
-                 () -> "Galdr-0027: The ComponentManager.removeSubscription() method for the component named '" +
-                       getName() + "' was invoked but subscription is not registered with ComponentManager." );
+      invariant( () -> _collections.contains( collection ),
+                 () -> "Galdr-0027: The ComponentManager.removeEntityCollection() method for the component named '" +
+                       getName() + "' was invoked but collection is not registered with ComponentManager." );
     }
-    _subscriptions.remove( subscription );
+    _collections.remove( collection );
   }
 
   static final class Flags

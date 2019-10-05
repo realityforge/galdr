@@ -71,10 +71,10 @@ public final class World
   @Nullable
   private Map<String, ProcessorStage> _stages;
   /**
-   * The collection of subscriptions in the world.
+   * The collection of entity collections in the world.
    */
   @Nullable
-  private Map<AreaOfInterest, Subscription> _subscriptions;
+  private Map<AreaOfInterest, EntityCollection> _collections;
   /**
    * Support infrastructure for propagating processor errors.
    */
@@ -214,7 +214,7 @@ public final class World
   {
     _entityManager = new EntityManager( this, initialEntityCount );
     _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
-    _subscriptions = new HashMap<>();
+    _collections = new HashMap<>();
     _components = components;
     _componentByClass = buildComponentMap( components );
   }
@@ -354,77 +354,79 @@ public final class World
   }
 
   @Nonnull
-  Map<AreaOfInterest, Subscription> getSubscriptions()
+  Map<AreaOfInterest, EntityCollection> getEntityCollections()
   {
-    assertWorldConstructed( "World.getSubscriptions()" );
-    assert null != _subscriptions;
-    return _subscriptions;
+    assertWorldConstructed( "World.getEntityCollections()" );
+    assert null != _collections;
+    return _collections;
   }
 
   @Nonnull
-  Subscription createSubscription( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
+  EntityCollection createCollection( @Nonnull final BitSet all,
+                                     @Nonnull final BitSet one,
+                                     @Nonnull final BitSet exclude )
   {
-    return createSubscription( new AreaOfInterest( all, one, exclude ) );
+    return createCollection( new AreaOfInterest( all, one, exclude ) );
   }
 
   @Nonnull
-  private Subscription createSubscription( @Nonnull final AreaOfInterest areaOfInterest )
+  private EntityCollection createCollection( @Nonnull final AreaOfInterest areaOfInterest )
   {
-    ensureCurrentWorldMatches( "createSubscription()" );
+    ensureCurrentWorldMatches( "createCollection()" );
     if ( Galdr.shouldCheckInvariants() )
     {
-      final Subscription existing = getSubscriptions().get( areaOfInterest );
+      final EntityCollection existing = getEntityCollections().get( areaOfInterest );
       invariant( () -> null == existing,
-                 () -> "Galdr-0034: World.createSubscription() invoked but subscription with matching AreaOfInterest already exists." );
+                 () -> "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
     }
-    final Subscription subscription = new Subscription( this, areaOfInterest, getEntityManager().capacity() );
-    getSubscriptions().put( areaOfInterest, subscription );
-    linkSubscription( subscription, areaOfInterest.getAll() );
-    linkSubscription( subscription, areaOfInterest.getOne() );
-    linkSubscription( subscription, areaOfInterest.getExclude() );
-    return subscription;
+    final EntityCollection collection = new EntityCollection( this, areaOfInterest, getEntityManager().capacity() );
+    getEntityCollections().put( areaOfInterest, collection );
+    linkCollection( collection, areaOfInterest.getAll() );
+    linkCollection( collection, areaOfInterest.getOne() );
+    linkCollection( collection, areaOfInterest.getExclude() );
+    return collection;
   }
 
-  private void linkSubscription( @Nonnull final Subscription subscription, @Nonnull final BitSet componentIds )
+  private void linkCollection( @Nonnull final EntityCollection collection, @Nonnull final BitSet componentIds )
   {
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      getComponentManagerById( current ).addSubscription( subscription );
+      getComponentManagerById( current ).addEntityCollection( collection );
     }
   }
 
-  void removeSubscription( @Nonnull final Subscription subscription )
+  void removeCollection( @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
       final World world = WorldHolder.world();
       apiInvariant( () -> this == world,
-                    () -> "Galdr-0037: World.removeSubscription() invoked on world named '" + getName() +
+                    () -> "Galdr-0037: World.removeCollection() invoked on world named '" + getName() +
                           "' when a world named '" + world.getName() + "' is active." );
     }
-    final AreaOfInterest areaOfInterest = subscription.getAreaOfInterest();
-    final Subscription existing = getSubscriptions().remove( areaOfInterest );
+    final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
+    final EntityCollection existing = getEntityCollections().remove( areaOfInterest );
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> null != existing,
-                 () -> "Galdr-0025: World.removeSubscription() invoked but no such subscription." );
-      invariant( () -> subscription == existing,
-                 () -> "Galdr-0032: World.removeSubscription() invoked existing subscription does not match supplied subscription." );
+                 () -> "Galdr-0025: World.removeCollection() invoked but no such collection." );
+      invariant( () -> collection == existing,
+                 () -> "Galdr-0032: World.removeCollection() invoked existing collection does not match supplied collection." );
     }
     assert null != existing;
-    unlinkSubscription( existing, areaOfInterest.getAll() );
-    unlinkSubscription( existing, areaOfInterest.getOne() );
-    unlinkSubscription( existing, areaOfInterest.getExclude() );
+    unlinkCollection( existing, areaOfInterest.getAll() );
+    unlinkCollection( existing, areaOfInterest.getOne() );
+    unlinkCollection( existing, areaOfInterest.getExclude() );
     existing.markAsDisposed();
   }
 
-  private void unlinkSubscription( @Nonnull final Subscription subscription, @Nonnull final BitSet componentIds )
+  private void unlinkCollection( @Nonnull final EntityCollection collection, @Nonnull final BitSet componentIds )
   {
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      getComponentManagerById( current ).removeSubscription( subscription );
+      getComponentManagerById( current ).removeCollection( collection );
     }
   }
 

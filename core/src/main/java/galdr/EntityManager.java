@@ -90,9 +90,9 @@ final class EntityManager
     entity.setAdding();
     createComponents( entity, componentIds );
     entity.clearAdding();
-    for ( final Subscription subscription : _world.getSubscriptions().values() )
+    for ( final EntityCollection collection : _world.getEntityCollections().values() )
     {
-      subscription.entityAdd( entity );
+      collection.entityAdd( entity );
     }
     if ( _world.willPropagateSpyEvents() )
     {
@@ -167,12 +167,12 @@ final class EntityManager
       componentIds = BitSet.valueOf( entity.getComponentIds().toLongArray() );
       _world.getSpy().reportSpyEvent( new EntityRemoveStartEvent( _world, entity.getId(), componentIds ) );
     }
-    for ( final Subscription subscription : _world.getSubscriptions().values() )
+    for ( final EntityCollection collection : _world.getEntityCollections().values() )
     {
-      // TODO: Assess whether the Entity should have a back-pointer to subscriptions to optimize for
-      //  this scenario. A better solution would be a single node that doubly links into both subscription
+      // TODO: Assess whether the Entity should have a back-pointer to collections to optimize for
+      //  this scenario. A better solution would be a single node that doubly links into both collection
       //  and entity linked lists and thus can be deallocated fast.It could share infrastructure with links.
-      subscription.entityRemove( entity );
+      collection.entityRemove( entity );
     }
     entity.setRemoving();
     removeComponents( entity );

@@ -7,33 +7,33 @@ import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * A subscription is a set of entities that match an {@link AreaOfInterest} that 1 or more
- * subscribers are interested in. A single subscriber may iterate over subscription at any
+ * An EntityCollection is a set of entities that match an {@link AreaOfInterest} that 1 or more
+ * subscribers are interested in. A single subscriber may iterate over collection at any
  * one time.
  */
-final class Subscription
+final class EntityCollection
 {
   /**
-   * The world containing the subscription.
+   * The world containing the collection.
    */
   @Nonnull
   private final World _world;
   /**
    * The area of interest against which entities are matched against to determine whether they
-   * belong in the subscription.
+   * belong in the collection.
    */
   @Nonnull
   private final AreaOfInterest _areaOfInterest;
   /**
-   * The bitset containing entities that are part of the subscription.
+   * The bitset containing entities that are part of the collection.
    */
   @Nonnull
   private final BitSet _entities;
   /**
-   * The bitset containing entities that were added to the subscription after the
-   * iteration started and were below the _currentEntityId and thus must be visited
-   * in a second pass. If the entity was added to the subscription after the current
-   * pointer then it will be picked up in the standard processing steps.
+   * The bitset containing entities that were added to the collection after the
+   * iteration started and have an entityId less than the _currentEntityId and thus must be visited
+   * in a second pass. If the entity was added to the collection and has an entityId after _currentEntityId
+   * then it need not be added to this list as it will be picked up as part of first pass through collection.
    */
   @Nonnull
   private final BitSet _newEntities;
@@ -42,13 +42,13 @@ final class Subscription
    */
   private int _currentEntityId;
   /**
-   * Flags describing current state of Subscription.
+   * Flags describing current state of the collection.
    */
   private int _flags;
   @Nullable
   private Object _owner;
 
-  Subscription( @Nonnull final World world, @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
+  EntityCollection( @Nonnull final World world, @Nonnull final AreaOfInterest areaOfInterest, final int initialEntityCount )
   {
     _world = Objects.requireNonNull( world );
     _areaOfInterest = Objects.requireNonNull( areaOfInterest );
@@ -65,10 +65,10 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> -1 == _currentEntityId,
-                 () -> "Galdr-0032: Subscription.startIteration() invoked when _currentEntityId " +
+                 () -> "Galdr-0032: EntityCollection.startIteration() invoked when _currentEntityId " +
                        "has not been reset. Current value " + _currentEntityId );
       invariant( () -> null == _owner,
-                 () -> "Galdr-0022: Subscription.startIteration() invoked with owner '" + owner +
+                 () -> "Galdr-0022: EntityCollection.startIteration() invoked with owner '" + owner +
                        "' but an existing iteration is in progress with owner '" + _owner + "'." );
       _owner = owner;
     }
@@ -87,7 +87,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> owner == _owner,
-                 () -> "Galdr-0027: Subscription.completeIteration() invoked with owner '" + owner +
+                 () -> "Galdr-0027: EntityCollection.completeIteration() invoked with owner '" + owner +
                        "' but this does not match the existing owner '" + _owner + "'." );
     }
     _currentEntityId = -1;
@@ -104,7 +104,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> owner == _owner,
-                 () -> "Galdr-0025: Subscription.nextEntity() invoked with owner '" + owner +
+                 () -> "Galdr-0025: EntityCollection.nextEntity() invoked with owner '" + owner +
                        "' but an existing iteration is in progress with owner '" + _owner + "'." );
     }
     ensureNotDisposed();
@@ -166,7 +166,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0018: Invoked Subscription.entityAdd with invalid Entity." );
+                 () -> "Galdr-0018: Invoked EntityCollection.entityAdd with invalid Entity." );
     }
     if ( _areaOfInterest.matches( entity.getComponentIds() ) )
     {
@@ -181,7 +181,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0018: Invoked Subscription.entityRemove with invalid Entity." );
+                 () -> "Galdr-0018: Invoked EntityCollection.entityRemove with invalid Entity." );
     }
     final int entityId = entity.getId();
     // We check whether the entity is in the list as it is slightly faster to check than calling
@@ -202,7 +202,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,
-                 () -> "Galdr-0018: Invoked Subscription.componentChange with invalid Entity." );
+                 () -> "Galdr-0018: Invoked EntityCollection.componentChange with invalid Entity." );
     }
     final int entityId = entity.getId();
     if ( _areaOfInterest.matches( entity.getComponentIds() ) )
@@ -220,7 +220,7 @@ final class Subscription
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( this::isNotDisposed,
-                 () -> "Galdr-0015: Invoked method on Subscription when subscription is disposed." );
+                 () -> "Galdr-0015: Invoked method on a disposed EntityCollection." );
     }
   }
 
@@ -317,8 +317,8 @@ final class Subscription
     {
       final World activeWorld = WorldHolder.world();
       apiInvariant( () -> activeWorld == _world,
-                    () -> "Galdr-0036: Subscription method invoked in the context of the world '" +
-                          activeWorld.getName() + "' but the subscription belongs to the world '" +
+                    () -> "Galdr-0036: EntityCollection method invoked in the context of the world '" +
+                          activeWorld.getName() + "' but the collection belongs to the world '" +
                           _world.getName() + "'" );
     }
   }
@@ -326,15 +326,15 @@ final class Subscription
   static final class Flags
   {
     /**
-     * A flag set when the Subscription is processing entities from the _newEntities set.
+     * A flag set when the EntityCollection is processing entities from the _newEntities set.
      */
     static final int PROCESSING_NEW_ENTITIES = 1 << 1;
     /**
-     * A flag set when the Subscription has added entities to the _newEntities set but has yet to start processing them.
+     * A flag set when the EntityCollection has added entities to the _newEntities set but has yet to start processing them.
      */
     static final int HAS_NEW_ENTITIES = 1 << 2;
     /**
-     * The subscription has been disposed and should no longer be intereacted with.
+     * The EntityCollection has been disposed and should no longer be intereacted with.
      */
     static final int DISPOSED = 1 << 3;
 
