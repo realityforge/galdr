@@ -161,7 +161,7 @@ public final class World
   }
 
   /**
-   * Return true if the specified id designates a valid entity.
+   * Return true if the specified id designates an entity that has completed creation and has not yet started removal.
    *
    * @param entityId the entity id.
    * @return true if the entityId represents a valid entity.
