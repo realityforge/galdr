@@ -77,7 +77,6 @@ for systems/processors ahead of time.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
-* Consider exposing `Link` or a wrapper like `EntityReferece` to application code.
 * Consider caching Link objects in world ... at least for spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add a deferred creation `ComponentManager`. i.e. The creation of the component will be deferred until the first
