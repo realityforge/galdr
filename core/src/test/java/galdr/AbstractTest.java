@@ -78,6 +78,11 @@ public abstract class AbstractTest
     return run( world, () -> world.createEntity( componentIds ) );
   }
 
+  final boolean isAlive( @Nonnull final World world, final int entityId )
+  {
+    return run( world, () -> world.isAlive( entityId ) );
+  }
+
   final void assertDefaultToString( @Nonnull final Object object )
   {
     assertEquals( object.toString(),
