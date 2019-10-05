@@ -109,16 +109,16 @@ public class ComponentManagerTest
   public void allocate()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentManager<Component1> cm = world.getComponentManagerByType( Component1.class );
+    final ComponentAPI<Component1> cm = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world, set() );
-    assertFalse( cm.has( entityId ) );
-    assertNull( cm.find( entityId ) );
+    assertFalse( world.run( () -> cm.has( entityId ) ) );
+    assertNull( world.run( () -> cm.find( entityId ) ) );
 
-    cm.allocate( entityId );
+    world.run( () -> cm.allocate( entityId ) );
 
-    assertTrue( cm.has( entityId ) );
-    assertNotNull( cm.find( entityId ) );
+    assertTrue( world.run( () -> cm.has( entityId ) ) );
+    assertNotNull( world.run( () -> cm.find( entityId ) ) );
   }
 
   @Test
