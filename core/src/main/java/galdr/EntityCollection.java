@@ -45,6 +45,9 @@ final class EntityCollection
    * Flags describing current state of the collection.
    */
   private int _flags;
+  /**
+   * The subscriber that is currently iterating over the collection.
+   */
   @Nullable
   private Object _owner;
 
