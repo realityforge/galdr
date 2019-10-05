@@ -4,8 +4,6 @@ import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityAddStartEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
-import galdr.spy.LinkAddCompleteEvent;
-import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -31,8 +29,8 @@ public class EntityManagerTest
     final int initialEntityCount = 10;
     final EntityManager entityManager =
       Worlds.world().initialEntityCount( initialEntityCount ).build().getEntityManager();
-    final Entity entity1 = entityManager.createEntity( new BitSet() );
-    final Entity entity2 = entityManager.createEntity( new BitSet() );
+    final Entity entity1 = entityManager.createEntity( set() );
+    final Entity entity2 = entityManager.createEntity( set() );
 
     assertTrue( entityManager.isAlive( entity1.getId() ) );
     assertTrue( entityManager.isAlive( entity2.getId() ) );
@@ -62,11 +60,11 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     componentIds1.set( armourId );
     componentIds1.set( healthId );
 
-    final BitSet componentIds2 = new BitSet();
+    final BitSet componentIds2 = set();
     componentIds2.set( healthId );
     componentIds2.set( attackId );
 
@@ -117,11 +115,11 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     componentIds1.set( armourId );
     componentIds1.set( healthId );
 
-    final BitSet componentIds2 = new BitSet();
+    final BitSet componentIds2 = set();
     componentIds2.set( healthId );
     componentIds2.set( attackId );
 
@@ -194,7 +192,7 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     componentIds1.set( armourId );
     componentIds1.set( healthId );
 
@@ -226,7 +224,7 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     componentIds1.set( armour.getId() );
 
     final Entity entity = entityManager.createEntity( componentIds1 );
@@ -260,7 +258,7 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     componentIds1.set( armourId );
     componentIds1.set( healthId );
 
@@ -331,8 +329,8 @@ public class EntityManagerTest
     final EntityManager entityManager1 = world1.getEntityManager();
     final EntityManager entityManager2 = world2.getEntityManager();
 
-    final Entity entity1 = entityManager1.createEntity( new BitSet() );
-    final Entity entity2 = entityManager2.createEntity( new BitSet() );
+    final Entity entity1 = entityManager1.createEntity( set() );
+    final Entity entity2 = entityManager2.createEntity( set() );
 
     // Entity from wrong world
     assertInvariantFailure( () -> entityManager1.disposeEntity( entity2 ),
@@ -351,7 +349,7 @@ public class EntityManagerTest
     final World world = Worlds.world().build();
 
     final EntityManager entityManager = world.getEntityManager();
-    final Entity entity = entityManager.createEntity( new BitSet() );
+    final Entity entity = entityManager.createEntity( set() );
 
     assertEquals( entityManager.getEntityById( entity.getId() ), entity );
 
@@ -381,7 +379,7 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.createEntity( new BitSet() );
+    entityManager.createEntity( set() );
 
     assertEquals( entityManager.capacity(), 4 );
 
@@ -391,9 +389,9 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.createEntity( new BitSet() );
-    entityManager.createEntity( new BitSet() );
-    entityManager.createEntity( new BitSet() );
+    entityManager.createEntity( set() );
+    entityManager.createEntity( set() );
+    entityManager.createEntity( set() );
 
     assertEquals( entityManager.capacity(), 4 );
   }
@@ -480,7 +478,7 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final Entity entity = entityManager.createEntity( new BitSet() );
+    final Entity entity = entityManager.createEntity( set() );
 
     assertEquals( entityManager.getEntityById( entity.getId() ), entity );
     entity.clearAlive();
@@ -509,14 +507,14 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final BitSet componentIds1 = new BitSet();
+    final BitSet componentIds1 = set();
     // invalid
     componentIds1.set( 33 );
 
     assertInvariantFailure( () -> entityManager.createEntity( componentIds1 ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 33" );
 
-    final BitSet componentIds2 = new BitSet();
+    final BitSet componentIds2 = set();
     componentIds2.set( 0 );
     componentIds2.set( 1 );
     // 2 is invalid
@@ -524,177 +522,5 @@ public class EntityManagerTest
 
     assertInvariantFailure( () -> entityManager.createEntity( componentIds2 ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 2" );
-  }
-
-  @Test
-  public void link()
-  {
-    final World world = Worlds.world().build();
-
-    final EntityManager em = world.getEntityManager();
-
-    final Entity entity1 = em.createEntity( new BitSet() );
-    final Entity entity2 = em.createEntity( new BitSet() );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-
-    final Link link = run( world, () -> em.link( entity1, entity2, false, false ) );
-
-    assertEquals( link.getSourceEntity(), entity1 );
-    assertEquals( link.getTargetEntity(), entity2 );
-    assertFalse( link.shouldCascadeSourceRemoveToTarget() );
-    assertFalse( link.shouldCascadeTargetRemoveToSource() );
-    assertTrue( link.isValid() );
-    assertEquals( link.toString(), "Link[0->1]" );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 1 );
-    assertEquals( entity2.getInwardLinks().size(), 1 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-  }
-
-  @Test
-  public void link_withSpyEnabled()
-  {
-    final World world = Worlds.world().build();
-
-    final EntityManager em = world.getEntityManager();
-
-    final Entity entity1 = em.createEntity( new BitSet() );
-    final Entity entity2 = em.createEntity( new BitSet() );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-
-    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
-    final Link link = run( world, () -> em.link( entity1, entity2, false, false ) );
-    handler.unsubscribe();
-
-    assertEquals( link.getSourceEntity(), entity1 );
-    assertEquals( link.getTargetEntity(), entity2 );
-    assertFalse( link.shouldCascadeSourceRemoveToTarget() );
-    assertFalse( link.shouldCascadeTargetRemoveToSource() );
-    assertTrue( link.isValid() );
-    assertEquals( link.toString(), "Link[0->1]" );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 1 );
-    assertEquals( entity2.getInwardLinks().size(), 1 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-
-    handler.assertEventCount( 2 );
-    handler.assertNextEvent( LinkAddStartEvent.class, e -> {
-      assertEquals( e.getWorld(), world );
-      assertEquals( e.getSourceEntityId(), entity1.getId() );
-      assertEquals( e.getTargetEntityId(), entity2.getId() );
-    } );
-    handler.assertNextEvent( LinkAddCompleteEvent.class, e -> {
-      assertEquals( e.getWorld(), world );
-      assertEquals( e.getSourceEntityId(), entity1.getId() );
-      assertEquals( e.getTargetEntityId(), entity2.getId() );
-    } );
-  }
-
-  @Test
-  public void link_butSourceEntityNotAlive()
-  {
-    final World world = Worlds.world().build();
-
-    final EntityManager em = world.getEntityManager();
-
-    final Entity entity1 = em.createEntity( new BitSet() );
-    final Entity entity2 = em.createEntity( new BitSet() );
-
-    run( world, () -> em.disposeEntity( entity1 ) );
-
-    assertInvariantFailure( () -> run( world, () -> em.link( entity1, entity2, false, false ) ),
-                            "Galdr-0011: Attempted to link from entity 0 to entity 1 but the source entity is not alive." );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-  }
-
-  @Test
-  public void link_butTargetEntityNotAlive()
-  {
-    final World world = Worlds.world().build();
-
-    final EntityManager em = world.getEntityManager();
-
-    final Entity entity1 = em.createEntity( new BitSet() );
-    final Entity entity2 = em.createEntity( new BitSet() );
-
-    run( world, () -> em.disposeEntity( entity2 ) );
-
-    assertInvariantFailure( () -> run( world, () -> em.link( entity1, entity2, false, false ) ),
-                            "Galdr-0010: Attempted to link from entity 0 to entity 1 but the target entity is not alive." );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-  }
-
-  @Test
-  public void link_self()
-  {
-    final World world = Worlds.world().build();
-
-    final EntityManager em = world.getEntityManager();
-
-    final Entity entity = em.createEntity( new BitSet() );
-
-    assertInvariantFailure( () -> run( world, () -> em.link( entity, entity, false, false ) ),
-                            "Galdr-0110: Attempted to link entity 0 to itself." );
-
-    assertEquals( entity.getInwardLinks().size(), 0 );
-    assertEquals( entity.getOutwardLinks().size(), 0 );
-  }
-
-  @Test
-  public void link_butSourceFromDifferentWorld()
-  {
-    final World world1 = Worlds.world().build();
-    final EntityManager em1 = world1.getEntityManager();
-    final Entity entity1 = em1.createEntity( new BitSet() );
-
-    final World world2 = Worlds.world().build();
-    final EntityManager em2 = world2.getEntityManager();
-    final Entity entity2 = em2.createEntity( new BitSet() );
-
-    assertInvariantFailure( () -> run( world2, () -> em1.link( entity1, entity2, false, false ) ),
-                            "Galdr-0911: Attempted to link from entity 0 to entity 0 in world named 'World@2' but world does not contain source entity." );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
-  }
-
-  @Test
-  public void link_butTargetFromDifferentWorld()
-  {
-    final World world1 = Worlds.world().build();
-    final EntityManager em1 = world1.getEntityManager();
-    final Entity entity1 = em1.createEntity( new BitSet() );
-
-    final World world2 = Worlds.world().build();
-    final EntityManager em2 = world2.getEntityManager();
-    final Entity entity2 = em2.createEntity( new BitSet() );
-
-    assertInvariantFailure( () -> run( world1, () -> em1.link( entity1, entity2, false, false ) ),
-                            "Galdr-0912: Attempted to link from entity 0 to entity 0 in world named 'World@1' but world does not contain target entity." );
-
-    assertEquals( entity1.getInwardLinks().size(), 0 );
-    assertEquals( entity1.getOutwardLinks().size(), 0 );
-    assertEquals( entity2.getInwardLinks().size(), 0 );
-    assertEquals( entity2.getOutwardLinks().size(), 0 );
   }
 }

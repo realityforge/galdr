@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.LinkAddCompleteEvent;
+import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
 import galdr.spy.WorldInfo;
 import java.util.BitSet;
@@ -100,6 +102,51 @@ public final class World
   {
     ensureCurrentWorldMatches( "createEntity()" );
     return getEntityManager().createEntity( initialComponentIds ).getId();
+  }
+
+  /**
+   * Link a source entity to a target entity.
+   * If either entity is disposed then the Link is marked as invalid. The link may also cascade the dispose from
+   * the source entity to the target entity or vice-versa if the appropriate configuration is set.
+   *
+   * @param sourceEntityId              the source entity id.
+   * @param targetEntityId              the target entity id.
+   * @param cascadeSourceRemoveToTarget a flag that controls whether the target entity will be disposed if the source entity is disposed.
+   * @param cascadeTargetRemoveToSource a flag that controls whether the source entity will be disposed if the target entity is disposed.
+   * @return the newly created Link.
+   */
+  @Nonnull
+  public Link link( final int sourceEntityId,
+                    final int targetEntityId,
+                    final boolean cascadeSourceRemoveToTarget,
+                    final boolean cascadeTargetRemoveToSource )
+  {
+    ensureCurrentWorldMatches( "link()" );
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> isAlive( sourceEntityId ),
+                 () -> "Galdr-0011: Attempted to link from entity " + sourceEntityId + " to entity " + targetEntityId +
+                       " but the source entity is not alive." );
+      invariant( () -> isAlive( targetEntityId ),
+                 () -> "Galdr-0010: Attempted to link from entity " + sourceEntityId + " to entity " + targetEntityId +
+                       " but the target entity is not alive." );
+      invariant( () -> sourceEntityId != targetEntityId,
+                 () -> "Galdr-0110: Attempted to link entity " + sourceEntityId + " to itself." );
+    }
+    final Entity source = getEntityManager().getEntityById( sourceEntityId );
+    final Entity target = getEntityManager().getEntityById( targetEntityId );
+    if ( willPropagateSpyEvents() )
+    {
+      getSpy().reportSpyEvent( new LinkAddStartEvent( this, sourceEntityId, targetEntityId ) );
+    }
+    final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
+    source.linkOutgoing( link );
+    target.linkIncoming( link );
+    if ( willPropagateSpyEvents() )
+    {
+      getSpy().reportSpyEvent( new LinkAddCompleteEvent( this, sourceEntityId, targetEntityId ) );
+    }
+    return link;
   }
 
   /**

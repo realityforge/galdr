@@ -4,8 +4,6 @@ import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityAddStartEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
-import galdr.spy.LinkAddCompleteEvent;
-import galdr.spy.LinkAddStartEvent;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -139,46 +137,6 @@ final class EntityManager
       _entities[ entityId ] = entity;
       return entity;
     }
-  }
-
-  @Nonnull
-  Link link( @Nonnull final Entity source,
-             @Nonnull final Entity target,
-             final boolean cascadeSourceRemoveToTarget,
-             final boolean cascadeTargetRemoveToSource )
-  {
-    if ( Galdr.shouldCheckInvariants() )
-    {
-      invariant( source::isAlive,
-                 () -> "Galdr-0011: Attempted to link from entity " + source.getId() + " to entity " + target.getId() +
-                       " but the source entity is not alive." );
-      invariant( target::isAlive,
-                 () -> "Galdr-0010: Attempted to link from entity " + source.getId() + " to entity " + target.getId() +
-                       " but the target entity is not alive." );
-      invariant( () -> source != target,
-                 () -> "Galdr-0110: Attempted to link entity " + source.getId() + " to itself." );
-      final World world = WorldHolder.world();
-      final Entity sourceInWorld = world.getEntityManager().getEntityById( source.getId() );
-      invariant( () -> sourceInWorld == source,
-                 () -> "Galdr-0911: Attempted to link from entity " + source.getId() + " to entity " + target.getId() +
-                       " in world named '" + world.getName() + "' but world does not contain source entity." );
-      final Entity targetInWorld = world.getEntityManager().getEntityById( target.getId() );
-      invariant( () -> targetInWorld == target,
-                 () -> "Galdr-0912: Attempted to link from entity " + source.getId() + " to entity " + target.getId() +
-                       " in world named '" + world.getName() + "' but world does not contain target entity." );
-    }
-    if ( _world.willPropagateSpyEvents() )
-    {
-      _world.getSpy().reportSpyEvent( new LinkAddStartEvent( _world, source.getId(), target.getId() ) );
-    }
-    final Link link = new Link( source, target, cascadeSourceRemoveToTarget, cascadeTargetRemoveToSource );
-    source.linkOutgoing( link );
-    target.linkIncoming( link );
-    if ( _world.willPropagateSpyEvents() )
-    {
-      _world.getSpy().reportSpyEvent( new LinkAddCompleteEvent( _world, source.getId(), target.getId() ) );
-    }
-    return link;
   }
 
   void disposeEntity( final int entityId )
