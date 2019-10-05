@@ -50,6 +50,10 @@ final class EntityCollection
    */
   @Nullable
   private Object _owner;
+  /**
+   * A count of how many subscribers are attached to the collection.
+   */
+  private int _refCount;
 
   EntityCollection( @Nonnull final World world,
                     @Nonnull final AreaOfInterest areaOfInterest,
@@ -61,6 +65,21 @@ final class EntityCollection
     _newEntities = new BitSet( initialEntityCount );
     _currentEntityId = -1;
     _flags = 0;
+  }
+
+  void incRef()
+  {
+    _refCount++;
+  }
+
+  void decRef()
+  {
+    assert _refCount > 0;
+    _refCount--;
+    if ( 0 == _refCount )
+    {
+      _world.removeCollection( this );
+    }
   }
 
   void startIteration( @Nonnull final Object owner )
