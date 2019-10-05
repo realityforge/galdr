@@ -298,15 +298,5 @@
     "code": 809,
     "type": "INVARIANT",
     "messagePattern": "Entity.linkOutgoing() on entity %s but entity is not the source of the link."
-  },
-  {
-    "code": 911,
-    "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain source entity."
-  },
-  {
-    "code": 912,
-    "type": "INVARIANT",
-    "messagePattern": "Attempted to link from entity %s to entity %s in world named '%s' but world does not contain target entity."
   }
 ]
