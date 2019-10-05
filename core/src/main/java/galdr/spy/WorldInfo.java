@@ -16,6 +16,13 @@ public interface WorldInfo
   String getName();
 
   /**
+   * Return the number of entities that currently exist in the world.
+   *
+   * @return the number of entities that currently exist in the world.
+   */
+  int getEntityCount();
+
+  /**
    * Return the number of entities that the world can contain without allocating more storage.
    *
    * @return the number of entities that the world can contain without allocating more storage.

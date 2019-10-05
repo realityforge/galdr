@@ -20,12 +20,19 @@ final class EntityManager
   @Nonnull
   private Entity[] _entities;
   private int _nextEntityId;
+  private int _entityCount;
 
   EntityManager( @Nonnull final World world, final int entityCount )
   {
     assert entityCount > 0;
     _world = Objects.requireNonNull( world );
     _entities = new Entity[ entityCount ];
+  }
+
+  int getEntityCount()
+  {
+    assert Galdr.areSpiesEnabled();
+    return _entityCount;
   }
 
   /**
@@ -69,6 +76,10 @@ final class EntityManager
     if ( _world.willPropagateSpyEvents() )
     {
       _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world, componentIds ) );
+    }
+    if ( Galdr.areSpiesEnabled() )
+    {
+      _entityCount++;
     }
     final Entity entity = allocateEntity();
     entity.setAlive();
@@ -202,6 +213,10 @@ final class EntityManager
       invariant( () -> currentWorld == _world,
                  () -> "Galdr-0159: Attempting to dispose entity " + entity.getId() + " which is not contained " +
                        "by the active world." );
+    }
+    if ( Galdr.areSpiesEnabled() )
+    {
+      _entityCount--;
     }
     BitSet componentIds = null;
     if ( _world.willPropagateSpyEvents() )

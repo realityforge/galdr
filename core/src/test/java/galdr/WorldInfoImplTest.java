@@ -16,12 +16,42 @@ public class WorldInfoImplTest
     final WorldInfo info = world.getSpy().asWorldInfo();
 
     assertEquals( info.getName(), name );
+    assertEquals( info.getEntityCount(), 0 );
     assertEquals( info.getEntityCapacity(), initialEntityCount );
     assertEquals( info.toString(), world.toString() );
 
     // This verifies that it is exactly the same instance
     //noinspection SimplifiedTestNGAssertion
     assertTrue( info == world.getSpy().asWorldInfo() );
+  }
+
+  @Test
+  public void getEntityCount()
+  {
+    final World world = Worlds.world().build();
+    final WorldInfo info = world.getSpy().asWorldInfo();
+
+    assertEquals( info.getEntityCount(), 0 );
+
+    final int entityId1 = createEntity( world, set() );
+    final int entityId2 = createEntity( world, set() );
+    final int entityId3 = createEntity( world, set() );
+
+    assertEquals( info.getEntityCount(), 3 );
+
+    world.run( () -> world.disposeEntity( entityId1 ) );
+
+    assertEquals( info.getEntityCount(), 2 );
+
+    createEntity( world, set() );
+    createEntity( world, set() );
+
+    assertEquals( info.getEntityCount(), 4 );
+
+    world.run( () -> world.disposeEntity( entityId2 ) );
+    world.run( () -> world.disposeEntity( entityId3 ) );
+
+    assertEquals( info.getEntityCount(), 2 );
   }
 
   @Test

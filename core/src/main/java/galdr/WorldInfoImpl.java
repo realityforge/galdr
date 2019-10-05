@@ -23,6 +23,12 @@ final class WorldInfoImpl
   }
 
   @Override
+  public int getEntityCount()
+  {
+    return _world.getEntityManager().getEntityCount();
+  }
+
+  @Override
   public int getEntityCapacity()
   {
     return _world.getEntityManager().capacity();
