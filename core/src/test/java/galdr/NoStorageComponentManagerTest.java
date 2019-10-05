@@ -85,18 +85,18 @@ public class NoStorageComponentManagerTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
+    final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world, set() );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    assertFalse( run( world, () -> componentManager.has( entityId ) ) );
+    assertNull( run( world, () -> componentManager.find( entityId ) ) );
 
-    componentManager.allocate( entityId );
+    run( world, () -> componentManager.allocate( entityId ) );
 
-    assertTrue( componentManager.has( entityId ) );
+    assertTrue( run( world, () -> componentManager.has( entityId ) ) );
 
-    assertInvariantFailure( () -> componentManager.get( entityId ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.get( entityId ) ),
                             "Galdr-0013: The ComponentManager.get() method has been invoked for the component named 'Component1' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed." );
   }
 
@@ -108,19 +108,19 @@ public class NoStorageComponentManagerTest
 
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
+    final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world, set() );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    assertFalse( run( world, () -> componentManager.has( entityId ) ) );
+    assertNull( run( world, () -> componentManager.find( entityId ) ) );
 
-    componentManager.allocate( entityId );
+    run( world, () -> componentManager.allocate( entityId ) );
 
-    assertTrue( componentManager.has( entityId ) );
+    assertTrue( run( world, () -> componentManager.has( entityId ) ) );
 
     final IllegalStateException exception =
-      expectThrows( IllegalStateException.class, () -> componentManager.get( entityId ) );
+      expectThrows( IllegalStateException.class, () -> run( world, () -> componentManager.get( entityId ) ) );
 
     assertNull( exception.getMessage() );
   }

@@ -313,7 +313,7 @@ public class WorldTest
   public void getComponentManagerByType_badType()
   {
     final World world = Worlds.world().build();
-    assertInvariantFailure( () -> world.getComponentManagerByType( Component2.class ),
+    assertInvariantFailure( () -> world.getComponentByType( Component2.class ),
                             "Galdr-0001: World.getComponentManagerByType() attempted to access Component for type class galdr.WorldTest$Component2 but no such component exists." );
   }
 
