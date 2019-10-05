@@ -97,6 +97,8 @@ public final class Link
     assert null != _sourceEntity;
     assert null != _targetEntity;
     reportLinkRemoveStartEvent( _sourceEntity.getId(), _targetEntity.getId() );
+    final int sourceEntityId = _sourceEntity.getId();
+    final int targetEntityId = _targetEntity.getId();
     if ( sourceRemove )
     {
       if ( _targetEntity.isNotRemoving() )
@@ -105,7 +107,7 @@ public final class Link
       }
       if ( shouldCascadeSourceRemoveToTarget() )
       {
-        WorldHolder.world().getEntityManager().disposeEntity( _targetEntity );
+        WorldHolder.world().disposeEntity( targetEntityId );
       }
     }
     else
@@ -116,11 +118,9 @@ public final class Link
       }
       if ( shouldCascadeTargetRemoveToSource() )
       {
-        WorldHolder.world().getEntityManager().disposeEntity( _sourceEntity );
+        WorldHolder.world().disposeEntity( sourceEntityId );
       }
     }
-    final int sourceEntityId = _sourceEntity.getId();
-    final int targetEntityId = _targetEntity.getId();
     _sourceEntity = null;
     _targetEntity = null;
     reportLinkRemoveCompleteEvent( sourceEntityId, targetEntityId );

@@ -146,28 +146,7 @@ final class EntityManager
       apiInvariant( () -> isAllocated( entityId ),
                     () -> "Galdr-0009: Attempting to dispose entity " + entityId + " but entity is not allocated." );
     }
-    doDisposeEntity( _entities[ entityId ] );
-  }
-
-  void disposeEntity( @Nonnull final Entity entity )
-  {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      apiInvariant( () -> isAllocated( entity.getId() ),
-                    () -> "Galdr-0009: Attempting to dispose entity " + entity.getId() + " but entity " +
-                          "is not allocated." );
-    }
-    if ( Galdr.shouldCheckInvariants() )
-    {
-      apiInvariant( () -> _entities[ entity.getId() ] == entity,
-                    () -> "Galdr-0020: Attempting to dispose entity " + entity.getId() + " in world '" +
-                          _world.getName() + "' but entity was created in a different world." );
-    }
-    doDisposeEntity( entity );
-  }
-
-  private void doDisposeEntity( @Nonnull final Entity entity )
-  {
+    final Entity entity = _entities[ entityId ];
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( entity::isAlive,

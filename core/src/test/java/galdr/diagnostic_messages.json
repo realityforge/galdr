@@ -95,11 +95,6 @@
     "messagePattern": "Attempted to invoke method on WorldBuilder but world has already been constructed"
   },
   {
-    "code": 20,
-    "type": "API_INVARIANT",
-    "messagePattern": "Attempting to dispose entity %s in world '%s' but entity was created in a different world."
-  },
-  {
     "code": 21,
     "type": "API_INVARIANT",
     "messagePattern": "Attempting to get Spy but spies are not enabled."
