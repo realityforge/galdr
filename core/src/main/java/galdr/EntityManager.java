@@ -61,6 +61,12 @@ final class EntityManager
   }
 
   @Nonnull
+  Entity unsafeGetEntityById( final int entityId )
+  {
+    return _entities[ entityId ];
+  }
+
+  @Nonnull
   Entity createEntity( @Nonnull final BitSet componentIds )
   {
     if ( Galdr.shouldCheckApiInvariants() )
