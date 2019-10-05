@@ -15,7 +15,7 @@ public class EntityAddStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final BitSet componentIds = new BitSet();
+    final BitSet componentIds = set();
     final EntityAddStartEvent event = new EntityAddStartEvent( world, componentIds );
 
     assertEquals( event.getWorld(), world );

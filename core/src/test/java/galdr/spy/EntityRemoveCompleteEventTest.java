@@ -16,7 +16,7 @@ public class EntityRemoveCompleteEventTest
   {
     final World world = Worlds.world().build();
     final int entityId = createEntity( world, set() );
-    final BitSet componentIds = new BitSet();
+    final BitSet componentIds = set();
     final EntityRemoveCompleteEvent event = new EntityRemoveCompleteEvent( world, entityId, componentIds );
 
     assertEquals( event.getWorld(), world );

@@ -16,7 +16,7 @@ public class EntityRemoveStartEventTest
   {
     final World world = Worlds.world().build();
     final int entityId = createEntity( world, set() );
-    final BitSet componentIds = new BitSet();
+    final BitSet componentIds = set();
     final EntityRemoveStartEvent event = new EntityRemoveStartEvent( world, entityId, componentIds );
 
     assertEquals( event.getWorld(), world );

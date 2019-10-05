@@ -29,7 +29,7 @@ public class ComponentManagerTest
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
 
-    final int entityId = createEntity( world, new BitSet() );
+    final int entityId = createEntity( world, set() );
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
     assertInvariantFailure( () -> componentManager.get( entityId ),

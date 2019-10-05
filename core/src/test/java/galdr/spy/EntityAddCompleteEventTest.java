@@ -16,7 +16,7 @@ public class EntityAddCompleteEventTest
   {
     final World world = Worlds.world().build();
     final int entityId = createEntity( world, set() );
-    final BitSet componentIds = new BitSet();
+    final BitSet componentIds = set();
     final EntityAddCompleteEvent event = new EntityAddCompleteEvent( world, entityId, componentIds );
 
     assertEquals( event.getWorld(), world );
