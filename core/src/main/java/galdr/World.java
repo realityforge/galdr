@@ -404,13 +404,7 @@ public final class World
 
   void removeCollection( @Nonnull final EntityCollection collection )
   {
-    if ( Galdr.shouldCheckApiInvariants() )
-    {
-      final World world = WorldHolder.world();
-      apiInvariant( () -> this == world,
-                    () -> "Galdr-0037: World.removeCollection() invoked on world named '" + getName() +
-                          "' when a world named '" + world.getName() + "' is active." );
-    }
+    ensureCurrentWorldMatches( "removeCollection()" );
     final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
     final EntityCollection existing = getEntityCollections().remove( areaOfInterest );
     if ( Galdr.shouldCheckInvariants() )
