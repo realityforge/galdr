@@ -45,6 +45,18 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void createCollection_whenMatchingCollectionExists()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    // Ensure a matching collection exists
+    createCollection( world, set( 0 ), set(), set() );
+
+    assertInvariantFailure( () -> createCollection( world, set( 0 ), set(), set() ),
+                            "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
+  }
+
+  @Test
   public void refCount()
   {
     final World world = Worlds.world().component( Component1.class ).build();
