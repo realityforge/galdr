@@ -432,9 +432,6 @@ public final class World
 
   void run( @Nonnull final WorldAction action )
   {
-    // TODO: Should we detect that WorldHolder.world() has not been accessed and generate an error?
-    //  We could probably pass a flags to this method so that the check is optional but in most cases
-    //  this check is a reasonable default.
     WorldHolder.activateWorld( this );
     try
     {
@@ -448,9 +445,6 @@ public final class World
 
   <T> T run( @Nonnull final WorldFunction<T> action )
   {
-    // TODO: Should we detect that WorldHolder.world() has not been accessed and generate an error?
-    //  We could probably pass a flags to this method so that the check is optional but in most cases
-    //  this check is a reasonable default.
     WorldHolder.activateWorld( this );
     try
     {
