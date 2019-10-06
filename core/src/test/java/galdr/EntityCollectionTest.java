@@ -140,7 +140,7 @@ public class EntityCollectionTest
     final World world1 = Worlds.world().build();
     final World world2 = Worlds.world().build();
 
-    assertInvariantFailure( () -> world1.run( () -> world2.createCollection( set(), set(), set() ) ),
+    assertInvariantFailure( () -> run( world1, () -> world2.createCollection( set(), set(), set() ) ),
                             "Galdr-0037: World.createCollection() invoked on world named 'World@2' when a world named 'World@1' is active." );
   }
 
@@ -749,6 +749,6 @@ public class EntityCollectionTest
                                              @Nonnull final BitSet one,
                                              @Nonnull final BitSet exclude )
   {
-    return world.run( () -> world.createCollection( all, one, exclude ) );
+    return run( world, () -> world.createCollection( all, one, exclude ) );
   }
 }
