@@ -82,7 +82,7 @@ final class GaldrLogger
   }
 
   /**
-   * The basic log provider implementation.
+   * The console log provider implementation providing javascript based console logging.
    */
   private static abstract class AbstractConsoleLogger
     implements Logger
