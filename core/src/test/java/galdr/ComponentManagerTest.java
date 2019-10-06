@@ -145,7 +145,7 @@ public class ComponentManagerTest
     GaldrTestUtil.disableNames();
 
     assertInvariantFailure( componentManager::getName,
-                            "Galdr-0053: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
+                            "Galdr-0004: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
   }
 
   @Test

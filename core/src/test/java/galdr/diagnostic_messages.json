@@ -225,11 +225,6 @@
     "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false"
   },
   {
-    "code": 53,
-    "type": "API_INVARIANT",
-    "messagePattern": "ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false"
-  },
-  {
     "code": 59,
     "type": "INVARIANT",
     "messagePattern": "Attempting to dispose entity %s and entity is allocated but not alive."

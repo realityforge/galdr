@@ -122,7 +122,7 @@ abstract class ComponentManager<T>
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( Galdr::areNamesEnabled,
-                    () -> "Galdr-0053: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
+                    () -> "Galdr-0004: ComponentManager.getName() invoked when Galdr.areNamesEnabled() returns false" );
     }
     return _type.getSimpleName();
   }
