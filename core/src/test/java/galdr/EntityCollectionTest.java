@@ -57,6 +57,36 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void removeCollection_collectionsMisaligned()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    // Create a collection with known AreaOfInterest
+    final EntityCollection collection1 = createCollection( world, set( 0 ), set(), set() );
+    world.run( () -> world.removeCollection( collection1 ) );
+
+    // Create a different collection with the same AreaOfInterest
+    createCollection( world, set( 0 ), set(), set() );
+
+    assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection1 ) ),
+                            "Galdr-0032: World.removeCollection() invoked existing collection does not match supplied collection." );
+  }
+
+  @Test
+  public void removeCollection_collectionsMissing()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    // Create a collection with known AreaOfInterest
+    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    // Remove it so there is no match
+    world.run( () -> world.removeCollection( collection ) );
+
+    assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection ) ),
+                            "Galdr-0025: World.removeCollection() invoked but no such collection." );
+  }
+
+  @Test
   public void refCount()
   {
     final World world = Worlds.world().component( Component1.class ).build();
