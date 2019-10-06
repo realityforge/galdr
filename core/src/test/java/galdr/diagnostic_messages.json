@@ -222,7 +222,7 @@
   {
     "code": 52,
     "type": "API_INVARIANT",
-    "messagePattern": "Processor passed a name '%s' but Galdr.areNamesEnabled() is false"
+    "messagePattern": "%s passed a name '%s' but Galdr.areNamesEnabled() is false"
   },
   {
     "code": 59,
