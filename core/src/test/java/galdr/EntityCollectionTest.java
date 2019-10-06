@@ -45,6 +45,39 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void refCount()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    assertEquals( world.getEntityCollections().size(), 0 );
+
+    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+
+    assertEquals( world.getEntityCollections().size(), 1 );
+    assertTrue( collection.isNotDisposed() );
+
+    run( world, collection::incRef );
+
+    assertEquals( world.getEntityCollections().size(), 1 );
+    assertTrue( collection.isNotDisposed() );
+
+    run( world, collection::incRef );
+
+    assertEquals( world.getEntityCollections().size(), 1 );
+    assertTrue( collection.isNotDisposed() );
+
+    run( world, collection::decRef );
+
+    assertEquals( world.getEntityCollections().size(), 1 );
+    assertTrue( collection.isNotDisposed() );
+
+    run( world, collection::decRef );
+
+    assertEquals( world.getEntityCollections().size(), 0 );
+    assertTrue( collection.isDisposed() );
+  }
+
+  @Test
   public void ensureNotDisposed()
   {
     final World world = Worlds.world().build();
