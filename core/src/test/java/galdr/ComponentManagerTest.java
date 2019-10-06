@@ -112,13 +112,13 @@ public class ComponentManagerTest
     final ComponentAPI<Component1> cm = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world, set() );
-    assertFalse( world.run( () -> cm.has( entityId ) ) );
-    assertNull( world.run( () -> cm.find( entityId ) ) );
+    assertFalse( run( world, () -> cm.has( entityId ) ) );
+    assertNull( run( world, () -> cm.find( entityId ) ) );
 
-    world.run( () -> cm.allocate( entityId ) );
+    run( world, () -> cm.allocate( entityId ) );
 
-    assertTrue( world.run( () -> cm.has( entityId ) ) );
-    assertNotNull( world.run( () -> cm.find( entityId ) ) );
+    assertTrue( run( world, () -> cm.has( entityId ) ) );
+    assertNotNull( run( world, () -> cm.find( entityId ) ) );
   }
 
   @Test
