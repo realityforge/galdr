@@ -22,8 +22,12 @@ public class EntityCollectionTest
 
     assertEquals( world.getEntityCollections().size(), 1 );
 
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( set( 0 ), set(), set() );
+    final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
     assertEquals( world.getEntityCollections().get( areaOfInterest ), collection );
+
+    assertEquals( areaOfInterest.getAll(), set( 0 ) );
+    assertEquals( areaOfInterest.getOne(), set() );
+    assertEquals( areaOfInterest.getExclude(), set() );
 
     assertEquals( collection.getWorld(), world );
     assertEquals( collection.getAreaOfInterest(), areaOfInterest );
