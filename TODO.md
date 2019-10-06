@@ -74,6 +74,8 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Add `spy.ComponentInfo` and make sure it exposes the number of collections that intersect component.
+* Add `spy.CollectionInfo` to expose set of current collections to spy layer.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
