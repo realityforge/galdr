@@ -97,6 +97,10 @@ for systems/processors ahead of time.
   - A [FlatBuffers](https://google.github.io/flatbuffers/index.html) based implementation for cache friendly
     access patterns.
 
+* Change the strategy for iteration over `Entity` instances in an `EntityCollection` so that they can be based
+  on the `"primary"` component. This would allow `FlatBuffers` and `LookupAndArray` `ComponentManager`
+  implementations to optimize cache access patterns.
+
 * Consider adding application-level (i.e. non-spy) events when Entities are created/disposed and when components
   are allocated/removed. These events would remain in production applications and thus able to perform application
   logic, unlike spy events that would be optimized out in production environments.
