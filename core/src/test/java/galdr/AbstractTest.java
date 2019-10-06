@@ -65,12 +65,12 @@ public abstract class AbstractTest
 
   protected final void run( @Nonnull final World world, @Nonnull final Runnable action )
   {
-    world.run( action::run );
+    WorldHolder.run( world, action::run );
   }
 
   protected final <T> T run( @Nonnull final World world, @Nonnull final Supplier<T> action )
   {
-    return world.run( action::get );
+    return WorldHolder.run( world, action::get );
   }
 
   protected final int createEntity( @Nonnull final World world, @Nonnull final BitSet componentIds )

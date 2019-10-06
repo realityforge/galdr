@@ -97,4 +97,28 @@ public class WorldHolderTest
     assertInvariantFailure( () -> WorldHolder.deactivateWorld( world1 ),
                             "Galdr-0028: Attempted to deactivate world named 'World@1' that is not active." );
   }
+
+  @Test
+  public void run_action()
+  {
+    final World world = Worlds.world().build();
+
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    WorldHolder.run( world, () -> assertEquals( WorldHolder.world(), world ) );
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+  }
+
+  @Test
+  public void run_function()
+  {
+    final World world = Worlds.world().build();
+
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    final int value = WorldHolder.run( world, () -> {
+      assertEquals( WorldHolder.world(), world );
+      return 111;
+    } );
+    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
+    assertEquals( value, 111 );
+  }
 }

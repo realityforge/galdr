@@ -430,32 +430,6 @@ public final class World
     }
   }
 
-  void run( @Nonnull final WorldAction action )
-  {
-    WorldHolder.activateWorld( this );
-    try
-    {
-      action.call();
-    }
-    finally
-    {
-      WorldHolder.deactivateWorld( this );
-    }
-  }
-
-  <T> T run( @Nonnull final WorldFunction<T> action )
-  {
-    WorldHolder.activateWorld( this );
-    try
-    {
-      return action.call();
-    }
-    finally
-    {
-      WorldHolder.deactivateWorld( this );
-    }
-  }
-
   /**
    * Report an error in processor.
    *

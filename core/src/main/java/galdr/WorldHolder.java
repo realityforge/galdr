@@ -68,6 +68,32 @@ final class WorldHolder
     c_world = world;
   }
 
+  static <T> T run( @Nonnull final World world, @Nonnull final World.WorldFunction<T> action )
+  {
+    activateWorld( world );
+    try
+    {
+      return action.call();
+    }
+    finally
+    {
+      deactivateWorld( world );
+    }
+  }
+
+  static void run( @Nonnull final World world, @Nonnull final World.WorldAction action )
+  {
+    activateWorld( world );
+    try
+    {
+      action.call();
+    }
+    finally
+    {
+      deactivateWorld( world );
+    }
+  }
+
   /**
    * Deactivate the world.
    * It is expected that the supplied world is the current active world.

@@ -47,7 +47,7 @@ public class WorldInfoImplTest
 
     assertEquals( info.getEntityCount(), 3 );
 
-    world.run( () -> world.disposeEntity( entityId1 ) );
+    run( world, () -> world.disposeEntity( entityId1 ) );
 
     assertEquals( info.getEntityCount(), 2 );
 
@@ -56,8 +56,8 @@ public class WorldInfoImplTest
 
     assertEquals( info.getEntityCount(), 4 );
 
-    world.run( () -> world.disposeEntity( entityId2 ) );
-    world.run( () -> world.disposeEntity( entityId3 ) );
+    run( world, () -> world.disposeEntity( entityId2 ) );
+    run( world, () -> world.disposeEntity( entityId3 ) );
 
     assertEquals( info.getEntityCount(), 2 );
   }

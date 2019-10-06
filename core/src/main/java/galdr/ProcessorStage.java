@@ -45,7 +45,7 @@ public final class ProcessorStage
 
   public void process( final int delta )
   {
-    _world.run( () -> runStage( delta ) );
+    WorldHolder.run( _world, () -> runStage( delta ) );
   }
 
   /**

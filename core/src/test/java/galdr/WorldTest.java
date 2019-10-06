@@ -145,18 +145,18 @@ public class WorldTest
     final int entityId1 = createEntity( world, set() );
     final int entityId2 = createEntity( world, set() );
 
-    world.run( () -> assertTrue( world.isAlive( entityId1 ) ) );
-    world.run( () -> assertTrue( world.isAlive( entityId2 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId1 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
 
     run( world, () -> world.disposeEntity( entityId1 ) );
 
-    world.run( () -> assertFalse( world.isAlive( entityId1 ) ) );
-    world.run( () -> assertTrue( world.isAlive( entityId2 ) ) );
+    run( world, () -> assertFalse( world.isAlive( entityId1 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
 
     final int entityId3 = createEntity( world, set() );
 
-    world.run( () -> assertTrue( world.isAlive( entityId2 ) ) );
-    world.run( () -> assertTrue( world.isAlive( entityId3 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId3 ) ) );
   }
 
   @Test
@@ -245,30 +245,6 @@ public class WorldTest
     final World world = Worlds.world().build();
 
     assertInvariantFailure( world::getSpy, "Galdr-0021: Attempting to get Spy but spies are not enabled." );
-  }
-
-  @Test
-  public void run_action()
-  {
-    final World world = Worlds.world().build();
-
-    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
-    world.run( () -> assertEquals( WorldHolder.world(), world ) );
-    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
-  }
-
-  @Test
-  public void run_function()
-  {
-    final World world = Worlds.world().build();
-
-    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
-    final int value = world.run( () -> {
-      assertEquals( WorldHolder.world(), world );
-      return 111;
-    } );
-    assertInvariantFailure( WorldHolder::world, "Galdr-0026: Invoked WorldHolder.world() when no world was active." );
-    assertEquals( value, 111 );
   }
 
   @Test

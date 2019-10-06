@@ -63,12 +63,12 @@ public class EntityCollectionTest
 
     // Create a collection with known AreaOfInterest
     final EntityCollection collection1 = createCollection( world, set( 0 ), set(), set() );
-    world.run( () -> world.removeCollection( collection1 ) );
+    run( world, () -> world.removeCollection( collection1 ) );
 
     // Create a different collection with the same AreaOfInterest
     createCollection( world, set( 0 ), set(), set() );
 
-    assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection1 ) ),
+    assertInvariantFailure( () -> run( world, () -> world.removeCollection( collection1 ) ),
                             "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
   }
 
@@ -80,9 +80,9 @@ public class EntityCollectionTest
     // Create a collection with known AreaOfInterest
     final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
     // Remove it so there is no match
-    world.run( () -> world.removeCollection( collection ) );
+    run( world, () -> world.removeCollection( collection ) );
 
-    assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection ) ),
+    assertInvariantFailure( () -> run( world, () -> world.removeCollection( collection ) ),
                             "Galdr-0020: World.removeCollection() invoked but no such collection." );
   }
 
