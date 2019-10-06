@@ -1,6 +1,5 @@
 package galdr;
 
-import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsMethod;
@@ -13,9 +12,7 @@ import jsinterop.annotations.JsType;
 final class GaldrLogger
 {
   private static final Logger c_logger =
-    "console".equals( GaldrConfig.loggerType() ) ? new BasicLogger() :
-    "console_js".equals( GaldrConfig.loggerType() ) ? new BasicJsLogger() :
-    "jul".equals( GaldrConfig.loggerType() ) ? new JavaUtilLogger() :
+    "console".equals( GaldrConfig.loggerType() ) ? new ConsoleLogger() :
     "proxy".equals( GaldrConfig.loggerType() ) ? new ProxyLogger() :
     new NoopLogger();
 
@@ -60,11 +57,12 @@ final class GaldrLogger
   }
 
   /**
-   * The basic log provider implementation.
+   * The console log provider implementation.
    */
-  private static final class BasicLogger
-    implements Logger
+  private static final class ConsoleLogger
+    extends AbstractConsoleLogger
   {
+    @GwtIncompatible
     @Override
     public void log( @Nonnull final String message, @Nullable final Throwable throwable )
     {
@@ -86,7 +84,7 @@ final class GaldrLogger
   /**
    * The basic log provider implementation.
    */
-  private static final class BasicJsLogger
+  private static abstract class AbstractConsoleLogger
     implements Logger
   {
     @Override
@@ -97,21 +95,6 @@ final class GaldrLogger
       {
         NativeJsLoggerUtil.log( throwable );
       }
-    }
-  }
-
-  /**
-   * The normal log provider implementation.
-   */
-  private static final class JavaUtilLogger
-    implements Logger
-  {
-    private final java.util.logging.Logger _logger = java.util.logging.Logger.getLogger( GaldrLogger.class.getName() );
-
-    @Override
-    public void log( @Nonnull final String message, @Nullable final Throwable throwable )
-    {
-      _logger.log( Level.INFO, message, throwable );
     }
   }
 
