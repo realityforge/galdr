@@ -69,11 +69,13 @@ final class EntityCollection
 
   void incRef()
   {
+    ensureCurrentWorldMatches();
     _refCount++;
   }
 
   void decRef()
   {
+    ensureCurrentWorldMatches();
     assert _refCount > 0;
     _refCount--;
     if ( 0 == _refCount )
