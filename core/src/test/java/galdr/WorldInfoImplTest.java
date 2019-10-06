@@ -97,4 +97,14 @@ public class WorldInfoImplTest
     assertNotEquals( info2.hashCode(), info1.hashCode() );
     assertNotEquals( info2.hashCode(), info1b.hashCode() );
   }
+
+  @Test
+  public void spyDisabled()
+  {
+    GaldrTestUtil.disableSpies();
+
+    final World world = Worlds.world().build();
+    assertInvariantFailure( world::asInfo,
+                            "Galdr-0040: World.asInfo() invoked but Galdr.areSpiesEnabled() returned false." );
+  }
 }
