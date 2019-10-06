@@ -410,9 +410,9 @@ public final class World
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> null != existing,
-                 () -> "Galdr-0025: World.removeCollection() invoked but no such collection." );
+                 () -> "Galdr-0020: World.removeCollection() invoked but no such collection." );
       invariant( () -> collection == existing,
-                 () -> "Galdr-0032: World.removeCollection() invoked existing collection does not match supplied collection." );
+                 () -> "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
     }
     assert null != existing;
     unlinkCollection( existing, areaOfInterest.getAll() );

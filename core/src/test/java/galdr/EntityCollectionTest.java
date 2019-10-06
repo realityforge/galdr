@@ -69,7 +69,7 @@ public class EntityCollectionTest
     createCollection( world, set( 0 ), set(), set() );
 
     assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection1 ) ),
-                            "Galdr-0032: World.removeCollection() invoked existing collection does not match supplied collection." );
+                            "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
   }
 
   @Test
@@ -83,7 +83,7 @@ public class EntityCollectionTest
     world.run( () -> world.removeCollection( collection ) );
 
     assertInvariantFailure( () -> world.run( () -> world.removeCollection( collection ) ),
-                            "Galdr-0025: World.removeCollection() invoked but no such collection." );
+                            "Galdr-0020: World.removeCollection() invoked but no such collection." );
   }
 
   @Test
