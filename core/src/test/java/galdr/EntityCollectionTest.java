@@ -17,10 +17,14 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
+    final ComponentManager<Component1> component = world.getComponentManagerByType( Component1.class );
     assertEquals( world.getEntityCollections().size(), 0 );
+    //TODO: Change component to componentAPI and use spy to get collections count
+    assertEquals( component.getCollections().size(), 0 );
     final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
 
     assertEquals( world.getEntityCollections().size(), 1 );
+    assertEquals( component.getCollections().size(), 1 );
 
     final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
     assertEquals( world.getEntityCollections().get( areaOfInterest ), collection );

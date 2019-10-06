@@ -319,6 +319,12 @@ abstract class ComponentManager<T>
     }
   }
 
+  @Nonnull
+  List<EntityCollection> getCollections()
+  {
+    return _collections;
+  }
+
   @Override
   public boolean equals( final Object o )
   {
