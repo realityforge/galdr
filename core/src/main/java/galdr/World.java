@@ -369,13 +369,19 @@ public final class World
     return createCollection( new AreaOfInterest( all, one, exclude ) );
   }
 
+  @Nullable
+  EntityCollection findCollection( @Nonnull final AreaOfInterest areaOfInterest )
+  {
+    return getEntityCollections().get( areaOfInterest );
+  }
+
   @Nonnull
   private EntityCollection createCollection( @Nonnull final AreaOfInterest areaOfInterest )
   {
     ensureCurrentWorldMatches( "createCollection()" );
     if ( Galdr.shouldCheckInvariants() )
     {
-      final EntityCollection existing = getEntityCollections().get( areaOfInterest );
+      final EntityCollection existing = findCollection( areaOfInterest );
       invariant( () -> null == existing,
                  () -> "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
     }

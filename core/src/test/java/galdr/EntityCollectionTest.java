@@ -27,7 +27,7 @@ public class EntityCollectionTest
     assertEquals( component.getCollections().size(), 1 );
 
     final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
-    assertEquals( world.getEntityCollections().get( areaOfInterest ), collection );
+    assertEquals( world.findCollection( areaOfInterest ), collection );
 
     assertEquals( areaOfInterest.getAll(), set( 0 ) );
     assertEquals( areaOfInterest.getOne(), set() );
