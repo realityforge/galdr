@@ -250,7 +250,6 @@ abstract class ComponentManager<T>
       {
         collection.componentChange( entity );
       }
-      //TODO: Generate application message for component creation?
       if ( _world.willPropagateSpyEvents() )
       {
         _world.getSpy().reportSpyEvent( new ComponentAddCompleteEvent( _world, entity.getId(), getId() ) );
@@ -290,7 +289,6 @@ abstract class ComponentManager<T>
       {
         _world.getSpy().reportSpyEvent( new ComponentRemoveStartEvent( _world, entity.getId(), getId() ) );
       }
-      //TODO: Generate application message for component removal?
       for ( final EntityCollection collection : _collections )
       {
         collection.componentChange( entity );

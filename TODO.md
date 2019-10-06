@@ -97,6 +97,10 @@ for systems/processors ahead of time.
   - A [FlatBuffers](https://google.github.io/flatbuffers/index.html) based implementation for cache friendly
     access patterns.
 
+* Consider adding application-level (i.e. non-spy) events when Entities are created/disposed and when components
+  are allocated/removed. These events would remain in production applications and thus able to perform application
+  logic, unlike spy events that would be optimized out in production environments.
+
 * Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
   picked up by a processor later in the stage which applies the work items. The later processor could also filter,
   drop, reorder or modify the work items as it sees fit, potentially spreading the work over several invocations
