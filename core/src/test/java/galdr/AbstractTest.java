@@ -20,9 +20,6 @@ public abstract class AbstractTest
   private final TestLogger _logger = new TestLogger();
   @Nonnull
   private final ArrayList<String> _errors = new ArrayList<>();
-  @Nonnull
-  private final ErrorHandler _errorHandler = this::onProcessorError;
-  private boolean _ignoreErrors;
 
   @BeforeMethod
   protected void beforeTest()
@@ -31,8 +28,6 @@ public abstract class AbstractTest
     GaldrTestUtil.resetConfig( false );
     _logger.getEntries().clear();
     GaldrTestUtil.setLogger( _logger );
-    _ignoreErrors = false;
-    _errors.clear();
   }
 
   @AfterMethod
@@ -40,27 +35,12 @@ public abstract class AbstractTest
   {
     GaldrTestUtil.resetConfig( true );
     BrainCheckTestUtil.resetConfig( true );
-    if ( !_ignoreErrors && !_errors.isEmpty() )
-    {
-      fail( "Unexpected Processor Errors: " + String.join( "\n", _errors ) );
-    }
   }
 
   @Nonnull
   final TestLogger getTestLogger()
   {
     return _logger;
-  }
-
-  @Nonnull
-  protected final ErrorHandler getErrorHandler()
-  {
-    return _errorHandler;
-  }
-
-  protected final void ignoreProcessorErrors()
-  {
-    _ignoreErrors = true;
   }
 
   protected final void run( @Nonnull final World world, @Nonnull final Runnable action )
@@ -128,18 +108,5 @@ public abstract class AbstractTest
       sb.append( stringCharacters.charAt( _random.nextInt( length ) ) );
     }
     return sb.toString();
-  }
-
-  private void onProcessorError( @Nonnull final ProcessorStage stage,
-                                 @Nonnull final Processor processor,
-                                 @Nonnull final Throwable throwable )
-  {
-    final String message = "Stage: " + stage.getName() + " Processor: " + processor.getName() + " " + throwable;
-    _errors.add( message );
-    if ( !_ignoreErrors )
-    {
-      System.out.println( message );
-      throwable.printStackTrace();
-    }
   }
 }
