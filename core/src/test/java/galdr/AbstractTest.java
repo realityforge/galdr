@@ -63,6 +63,15 @@ public abstract class AbstractTest
     return run( world, () -> world.isAlive( entityId ) );
   }
 
+  @Nonnull
+  final Subscription createSubscription( @Nonnull final World world,
+                                         @Nonnull final BitSet all,
+                                         @Nonnull final BitSet one,
+                                         @Nonnull final BitSet exclude )
+  {
+    return run( world, () -> world.createSubscription( null, world.createAreaOfInterest( all, one, exclude ) ) );
+  }
+
   final void assertDefaultToString( @Nonnull final Object object )
   {
     assertEquals( object.toString(),

@@ -21,7 +21,7 @@ public class EntityCollectionTest
     assertEquals( world.getEntityCollections().size(), 0 );
     //TODO: Change component to componentAPI and use spy to get collections count
     assertEquals( component.getCollections().size(), 0 );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
     assertEquals( component.getCollections().size(), 1 );
@@ -50,9 +50,9 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     // Ensure a matching collection exists
-    createCollection( world, set( 0 ), set(), set() );
+    createSubscription( world, set( 0 ), set(), set() );
 
-    assertInvariantFailure( () -> createCollection( world, set( 0 ), set(), set() ),
+    assertInvariantFailure( () -> run( world, () -> world.createCollection( set( 0 ), set(), set() ) ),
                             "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
   }
 
@@ -62,11 +62,11 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     // Create a collection with known AreaOfInterest
-    final EntityCollection collection1 = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection1 = createSubscription( world, set( 0 ), set(), set() ).getCollection();
     run( world, () -> world.removeCollection( collection1 ) );
 
     // Create a different collection with the same AreaOfInterest
-    createCollection( world, set( 0 ), set(), set() );
+    createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     assertInvariantFailure( () -> run( world, () -> world.removeCollection( collection1 ) ),
                             "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
@@ -78,7 +78,7 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     // Create a collection with known AreaOfInterest
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
     // Remove it so there is no match
     run( world, () -> world.removeCollection( collection ) );
 
@@ -93,12 +93,10 @@ public class EntityCollectionTest
 
     assertEquals( world.getEntityCollections().size(), 0 );
 
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
     assertTrue( collection.isNotDisposed() );
-
-    run( world, collection::incRef );
 
     assertEquals( world.getEntityCollections().size(), 1 );
     assertTrue( collection.isNotDisposed() );
@@ -124,7 +122,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().build();
 
-    final EntityCollection collection = createCollection( world, set(), set(), set() );
+    final EntityCollection collection = createSubscription( world, set(), set(), set() ).getCollection();
 
     collection.ensureNotDisposed();
 
@@ -150,7 +148,7 @@ public class EntityCollectionTest
     final World world1 = Worlds.world().build();
     final World world2 = Worlds.world().build();
 
-    final EntityCollection collection = createCollection( world1, set(), set(), set() );
+    final EntityCollection collection = createSubscription( world1, set(), set(), set() ).getCollection();
 
     run( world1, collection::ensureCurrentWorldMatches );
 
@@ -162,7 +160,7 @@ public class EntityCollectionTest
   public void createAndDisposeEntityThatMatchesCollection()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
@@ -180,7 +178,7 @@ public class EntityCollectionTest
   public void entityAdd_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -194,7 +192,7 @@ public class EntityCollectionTest
   public void entityRemove_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -209,7 +207,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
@@ -234,7 +232,7 @@ public class EntityCollectionTest
     final BitSet all = set( 0 );
     final BitSet one = set();
     final BitSet exclude = set();
-    final EntityCollection collection = createCollection( world, all, one, exclude );
+    final EntityCollection collection = createSubscription( world, all, one, exclude ).getCollection();
 
     final int entityId = createEntity( world, set() );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -248,16 +246,15 @@ public class EntityCollectionTest
   public void iterateOverEmptyCollection()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
-
-    startIteration( world, collection, owner );
+    beginIteration( world, collection, subscription );
 
     // There is no entities so should immediately complete iteration
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -268,7 +265,8 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesNoModifications()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -284,18 +282,16 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
-    assertNextEntity( world, collection, owner, entityId1 );
-    assertNextEntity( world, collection, owner, entityId4 );
-    assertNextEntity( world, collection, owner, entityId7 );
-    assertNextEntity( world, collection, owner, entityId9 );
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId4 );
+    assertNextEntity( world, collection, subscription, entityId7 );
+    assertNextEntity( world, collection, subscription, entityId9 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -307,7 +303,8 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -323,13 +320,11 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId0 );
 
     // Not part of the collection
     run( world, () -> world.disposeEntity( entityId3 ) );
@@ -342,9 +337,9 @@ public class EntityCollectionTest
 
     run( world, () -> componentApi.remove( entityId7 ) );
 
-    assertNextEntity( world, collection, owner, entityId1 );
-    assertNextEntity( world, collection, owner, entityId9 );
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId9 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -355,7 +350,8 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesRemoveEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -371,16 +367,14 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
-    assertNextEntity( world, collection, owner, entityId1 );
-    assertNextEntity( world, collection, owner, entityId4 );
-    assertNextEntity( world, collection, owner, entityId7 );
+    assertNextEntity( world, collection, subscription, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId4 );
+    assertNextEntity( world, collection, subscription, entityId7 );
 
     // Not part of the collection
     run( world, () -> world.disposeEntity( 3 ) );
@@ -391,8 +385,8 @@ public class EntityCollectionTest
     // Not part of the collection
     run( world, () -> world.disposeEntity( 8 ) );
 
-    assertNextEntity( world, collection, owner, entityId9 );
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, entityId9 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -404,7 +398,8 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -417,13 +412,11 @@ public class EntityCollectionTest
     final int entityId8 = createEntity( world, set() );
     final int entityId9 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId0 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
@@ -437,13 +430,13 @@ public class EntityCollectionTest
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
 
-    assertNextEntity( world, collection, owner, entityId1 );
-    assertNextEntity( world, collection, owner, entityId3 );
-    assertNextEntity( world, collection, owner, entityId4 );
-    assertNextEntity( world, collection, owner, entityId7 );
-    assertNextEntity( world, collection, owner, entityId8 );
-    assertNextEntity( world, collection, owner, entityId9 );
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId3 );
+    assertNextEntity( world, collection, subscription, entityId4 );
+    assertNextEntity( world, collection, subscription, entityId7 );
+    assertNextEntity( world, collection, subscription, entityId8 );
+    assertNextEntity( world, collection, subscription, entityId9 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -455,7 +448,8 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
@@ -468,16 +462,14 @@ public class EntityCollectionTest
     final int entityId8 = createEntity( world, set() );
     final int entityId9 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
-    assertNextEntity( world, collection, owner, entityId1 );
-    assertNextEntity( world, collection, owner, entityId4 );
-    assertNextEntity( world, collection, owner, entityId7 );
+    assertNextEntity( world, collection, subscription, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId4 );
+    assertNextEntity( world, collection, subscription, entityId7 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
@@ -491,18 +483,18 @@ public class EntityCollectionTest
     assertEquals( collection.getNewEntities().cardinality(), 2 );
     assertTrue( collection.hasNewEntities() );
 
-    assertNextEntity( world, collection, owner, entityId9 );
+    assertNextEntity( world, collection, subscription, entityId9 );
 
     // This wraps around to the NewEntities list
-    assertNextEntity( world, collection, owner, entityId3 );
+    assertNextEntity( world, collection, subscription, entityId3 );
 
     assertEquals( collection.getNewEntities().cardinality(), 1 );
 
-    assertNextEntity( world, collection, owner, entityId5 );
+    assertNextEntity( world, collection, subscription, entityId5 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
 
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -514,21 +506,20 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set() );
     final int entityId2 = createEntity( world, set() );
     final int entityId3 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
-    assertNextEntity( world, collection, owner, entityId3 );
+    assertNextEntity( world, collection, subscription, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId3 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
@@ -540,7 +531,7 @@ public class EntityCollectionTest
     assertTrue( collection.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    assertNextEntity( world, collection, owner, entityId2 );
+    assertNextEntity( world, collection, subscription, entityId2 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertTrue( collection.hasNewEntities() );
@@ -550,11 +541,11 @@ public class EntityCollectionTest
     run( world, () -> componentApi.allocate( entityId1 ) );
 
     // This wraps around again
-    assertNextEntity( world, collection, owner, entityId1 );
+    assertNextEntity( world, collection, subscription, entityId1 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
 
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -566,7 +557,8 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set() );
@@ -574,14 +566,12 @@ public class EntityCollectionTest
     final int entityId3 = createEntity( world, set() );
     final int entityId4 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
-    assertNextEntity( world, collection, owner, entityId4 );
+    assertNextEntity( world, collection, subscription, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId4 );
 
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
@@ -600,10 +590,10 @@ public class EntityCollectionTest
     assertTrue( collection.hasNewEntities() );
 
     // This wraps around to the NewEntities list
-    assertNextEntity( world, collection, owner, entityId2 );
+    assertNextEntity( world, collection, subscription, entityId2 );
     assertEquals( collection.getNewEntities().cardinality(), 0 );
 
-    assertNextEntity( world, collection, owner, -1 );
+    assertNextEntity( world, collection, subscription, -1 );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -611,24 +601,23 @@ public class EntityCollectionTest
 
   @SuppressWarnings( "unused" )
   @Test
-  public void explicitCompleteOfIterationBeforeAllEntitiesProcessed()
+  public void abortIterationBeforeAllEntitiesProcessed()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
     final int entityId1 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId0 );
 
     // Explicit complete of iteration before all entities processed
-    run( world, () -> collection.completeIteration( owner ) );
+    run( world, subscription::abortIteration );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -636,23 +625,22 @@ public class EntityCollectionTest
 
   @SuppressWarnings( "unused" )
   @Test
-  public void explicitCompleteWhenProcessingNewEntitiesList()
+  public void abortIterationWhenProcessingNewEntitiesList()
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set() );
     final int entityId1 = createEntity( world, set() );
     final int entityId2 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    assertNull( collection.getSubscription() );
 
-    assertNull( collection.getOwner() );
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
-
-    assertNextEntity( world, collection, owner, entityId2 );
+    assertNextEntity( world, collection, subscription, entityId2 );
 
     // Add to New Entities to collection
     run( world, () -> componentApi.allocate( entityId1 ) );
@@ -661,13 +649,13 @@ public class EntityCollectionTest
     assertEquals( collection.getNewEntities().cardinality(), 2 );
     assertTrue( collection.hasNewEntities() );
 
-    assertNextEntity( world, collection, owner, entityId0 );
+    assertNextEntity( world, collection, subscription, entityId0 );
 
     assertEquals( collection.getNewEntities().cardinality(), 1 );
     assertTrue( collection.hasNewEntities() );
 
     // Explicit complete of iteration before all entities processed
-    run( world, () -> collection.completeIteration( owner ) );
+    run( world, subscription::abortIteration );
 
     // Verify we are complete
     assertCollectionComplete( collection );
@@ -675,60 +663,60 @@ public class EntityCollectionTest
 
   @SuppressWarnings( "unused" )
   @Test
-  public void startIteration_badOwner()
+  public void beginIteration_badOwner()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription1.getCollection();
 
-    final Object owner1 = new Object();
-    final Object owner2 = new Object();
+    beginIteration( world, collection, subscription1 );
 
-    startIteration( world, collection, owner1 );
-
-    assertInvariantFailure( () -> run( world, () -> collection.startIteration( owner2 ) ),
-                            "Galdr-0022: EntityCollection.startIteration() invoked with owner '" +
-                            owner2 + "' but an existing iteration is in progress with owner '" + owner1 + "'." );
+    assertInvariantFailure( () -> run( world, () -> collection.beginIteration( subscription2 ) ),
+                            "Galdr-0022: EntityCollection.beginIteration() invoked with subscription named '" +
+                            subscription2.getName() + "' but an existing iteration is in progress with subscription " +
+                            "named '" + subscription1.getName() + "'." );
   }
 
   @Test
-  public void startIteration_whenIterationInProgress()
+  public void beginIteration_whenIterationInProgress()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createCollection( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
 
-    final Object owner = new Object();
+    beginIteration( world, collection, subscription );
 
-    startIteration( world, collection, owner );
+    assertNextEntity( world, collection, subscription, entityId0 );
 
-    assertNextEntity( world, collection, owner, entityId0 );
-
-    assertInvariantFailure( () -> run( world, () -> collection.startIteration( owner ) ),
-                            "Galdr-0032: EntityCollection.startIteration() invoked when _currentEntityId has not been reset. Current value 0" );
+    assertInvariantFailure( () -> run( world, subscription::beginIteration ),
+                            "Galdr-0032: EntityCollection.beginIteration() invoked when _currentEntityId has not been reset. Current value 0" );
   }
 
-  private void startIteration( @Nonnull final World world,
+  private void beginIteration( @Nonnull final World world,
                                @Nonnull final EntityCollection collection,
-                               @Nonnull final Object owner )
+                               @Nonnull final Subscription subscription )
   {
-    run( world, () -> collection.startIteration( owner ) );
+    run( world, subscription::beginIteration );
 
-    assertCollectionIterationStart( collection, owner );
+    assertCollectionIterationStart( collection, subscription );
   }
 
-  private void assertCollectionIterationStart( @Nonnull final EntityCollection collection, @Nonnull final Object owner )
+  private void assertCollectionIterationStart( @Nonnull final EntityCollection collection,
+                                               @Nonnull final Subscription subscription )
   {
     assertTrue( collection.isIterationInProgress() );
     assertEquals( collection.getCurrentEntityId(), -1 );
-    assertEquals( collection.getOwner(), owner );
+    assertEquals( collection.getSubscription(), subscription );
   }
 
   private void assertCollectionComplete( @Nonnull final EntityCollection collection )
   {
     assertFalse( collection.isIterationInProgress() );
     assertEquals( collection.getCurrentEntityId(), -1 );
-    assertNull( collection.getOwner() );
+    assertNull( collection.getSubscription() );
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
     assertFalse( collection.isProcessingNewEntities() );
@@ -736,19 +724,11 @@ public class EntityCollectionTest
 
   private void assertNextEntity( @Nonnull final World world,
                                  @Nonnull final EntityCollection collection,
-                                 @Nonnull final Object owner,
+                                 @Nonnull final Subscription subscription,
                                  final int entityId )
   {
-    run( world, () -> assertEquals( collection.nextEntity( owner ), entityId ) );
+    run( world, () -> assertEquals( subscription.nextEntity(), entityId ) );
     assertEquals( collection.getCurrentEntityId(), entityId );
   }
 
-  @Nonnull
-  private EntityCollection createCollection( @Nonnull final World world,
-                                             @Nonnull final BitSet all,
-                                             @Nonnull final BitSet one,
-                                             @Nonnull final BitSet exclude )
-  {
-    return run( world, () -> world.createCollection( all, one, exclude ) );
-  }
 }

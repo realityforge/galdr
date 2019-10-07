@@ -107,7 +107,7 @@
   {
     "code": 22,
     "type": "INVARIANT",
-    "messagePattern": "EntityCollection.startIteration() invoked with owner '%s' but an existing iteration is in progress with owner '%s'."
+    "messagePattern": "EntityCollection.beginIteration() invoked with subscription named 'Subscription@1' but an existing iteration is in progress with subscription named 'Subscription@0'."
   },
   {
     "code": 23,
@@ -122,7 +122,7 @@
   {
     "code": 25,
     "type": "INVARIANT",
-    "messagePattern": "EntityCollection.nextEntity() invoked with owner '%s' but an existing iteration is in progress with owner '%s'."
+    "messagePattern": "EntityCollection.nextEntity() invoked with subscription named '%s' but an existing iteration is in progress with subscription named '%s'."
   },
   {
     "code": 26,
@@ -132,7 +132,7 @@
   {
     "code": 27,
     "type": "INVARIANT",
-    "messagePattern": "EntityCollection.completeIteration() invoked with owner '%s' but this does not match the existing owner '%s'."
+    "messagePattern": "EntityCollection.abortIteration() invoked with subscription named '%s' but this does not match the existing subscription named '%s'."
   },
   {
     "code": 28,
@@ -157,7 +157,7 @@
   {
     "code": 32,
     "type": "INVARIANT",
-    "messagePattern": "EntityCollection.startIteration() invoked when _currentEntityId has not been reset. Current value %s"
+    "messagePattern": "EntityCollection.beginIteration() invoked when _currentEntityId has not been reset. Current value %s"
   },
   {
     "code": 33,
@@ -210,6 +210,16 @@
     "messagePattern": "The ComponentManager.removeEntityCollection() method for the component named '%s' was invoked but collection is not registered with ComponentManager."
   },
   {
+    "code": 43,
+    "type": "API_INVARIANT",
+    "messagePattern": "Attempted to invoke method on Subscription named '%s' but the Subscription is disposed."
+  },
+  {
+    "code": 44,
+    "type": "API_INVARIANT",
+    "messagePattern": "World.createAreaOfInterest() passed an invalid component id %s in the %s component set."
+  },
+  {
     "code": 45,
     "type": "API_INVARIANT",
     "messagePattern": "Attempted to invoke World.%s() on World named '%s' prior to World completing construction"
@@ -218,6 +228,11 @@
     "code": 46,
     "type": "API_INVARIANT",
     "messagePattern": "Invoked World.getStageByName() on World named '%s' with stage name '%s' but no such stage exists. Known stages include: [%s]"
+  },
+  {
+    "code": 47,
+    "type": "INVARIANT",
+    "messagePattern": "EntityCollection.%s() invoked with subscription named '%s' but no iteration was active."
   },
   {
     "code": 52,

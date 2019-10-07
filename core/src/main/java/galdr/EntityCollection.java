@@ -49,7 +49,7 @@ final class EntityCollection
    * The subscription that is currently iterating over the collection.
    */
   @Nullable
-  private Object _owner;
+  private Subscription _subscription;
   /**
    * A count of how many subscriptions are attached to the collection.
    */
@@ -84,19 +84,20 @@ final class EntityCollection
     }
   }
 
-  void startIteration( @Nonnull final Object owner )
+  void beginIteration( @Nonnull final Subscription subscription )
   {
     ensureNotDisposed();
     ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> -1 == _currentEntityId,
-                 () -> "Galdr-0032: EntityCollection.startIteration() invoked when _currentEntityId " +
+                 () -> "Galdr-0032: EntityCollection.beginIteration() invoked when _currentEntityId " +
                        "has not been reset. Current value " + _currentEntityId );
-      invariant( () -> null == _owner,
-                 () -> "Galdr-0022: EntityCollection.startIteration() invoked with owner '" + owner +
-                       "' but an existing iteration is in progress with owner '" + _owner + "'." );
-      _owner = owner;
+      invariant( () -> null == _subscription,
+                 () -> "Galdr-0022: EntityCollection.beginIteration() invoked with subscription named '" +
+                       subscription.getName() + "' but an existing iteration is in progress with subscription named '" +
+                       Objects.requireNonNull( _subscription ).getName() + "'." );
+      _subscription = subscription;
     }
   }
 
@@ -104,17 +105,21 @@ final class EntityCollection
    * This should only be invoked if the owner wants to cancel an in progress iteration.
    * Normal iteration will complete out when no entities to return.
    *
-   * @param owner the current owner.
+   * @param subscription the current owner.
    */
-  void completeIteration( @Nonnull final Object owner )
+  void abortIteration( @Nonnull final Subscription subscription )
   {
     ensureNotDisposed();
     ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> owner == _owner,
-                 () -> "Galdr-0027: EntityCollection.completeIteration() invoked with owner '" + owner +
-                       "' but this does not match the existing owner '" + _owner + "'." );
+      invariant( () -> null != _subscription,
+                 () -> "Galdr-0047: EntityCollection.abortIteration() invoked with subscription named '" +
+                       subscription.getName() + "' but no iteration was active." );
+      invariant( () -> subscription == _subscription,
+                 () -> "Galdr-0027: EntityCollection.abortIteration() invoked with subscription named '" +
+                       subscription.getName() + "' but this does not match the existing subscription named '" +
+                       Objects.requireNonNull( _subscription ).getName() + "'." );
     }
     _currentEntityId = -1;
     if ( hasNewEntities() )
@@ -122,19 +127,23 @@ final class EntityCollection
       _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
       _newEntities.clear();
     }
-    _owner = null;
+    _subscription = null;
   }
 
-  int nextEntity( @Nonnull final Object owner )
+  int nextEntity( @Nonnull final Subscription subscription )
   {
-    if ( Galdr.shouldCheckInvariants() )
-    {
-      invariant( () -> owner == _owner,
-                 () -> "Galdr-0025: EntityCollection.nextEntity() invoked with owner '" + owner +
-                       "' but an existing iteration is in progress with owner '" + _owner + "'." );
-    }
     ensureNotDisposed();
     ensureCurrentWorldMatches();
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( () -> null != _subscription,
+                 () -> "Galdr-0047: EntityCollection.nextEntity() invoked with subscription named '" +
+                       subscription.getName() + "' but no iteration was active." );
+      invariant( () -> subscription == _subscription,
+                 () -> "Galdr-0025: EntityCollection.nextEntity() invoked with subscription named '" +
+                       subscription.getName() + "' but an existing iteration is in progress with subscription " +
+                       "named '" + Objects.requireNonNull( _subscription ).getName() + "'." );
+    }
     if ( isProcessingNewEntities() )
     {
       _currentEntityId = _newEntities.nextSetBit( _currentEntityId + 1 );
@@ -180,7 +189,7 @@ final class EntityCollection
     }
     if ( -1 == _currentEntityId )
     {
-      _owner = null;
+      _subscription = null;
     }
     return _currentEntityId;
   }
@@ -322,7 +331,7 @@ final class EntityCollection
 
   boolean isIterationInProgress()
   {
-    return null != getOwner();
+    return null != getSubscription();
   }
 
   @Nonnull
@@ -332,9 +341,9 @@ final class EntityCollection
   }
 
   @Nullable
-  Object getOwner()
+  Object getSubscription()
   {
-    return _owner;
+    return _subscription;
   }
 
   void ensureCurrentWorldMatches()

@@ -5,6 +5,7 @@ import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
 import galdr.spy.WorldInfo;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,10 @@ public final class World
    * This should be null if {@link Galdr#areSpiesEnabled()} is false.
    */
   private WorldInfoImpl _info;
+  /**
+   * The id used to create the next unnamed subscription.
+   */
+  private int _nextSubscriptionId;
 
   /**
    * Interface used to define actions that can be run in the context of a world.
@@ -366,7 +371,83 @@ public final class World
                                      @Nonnull final BitSet one,
                                      @Nonnull final BitSet exclude )
   {
-    return createCollection( new AreaOfInterest( all, one, exclude ) );
+    return createCollection( createAreaOfInterest( all, one, exclude ) );
+  }
+
+  @Nonnull
+  public AreaOfInterest createAreaOfInterest( @Nonnull final BitSet all,
+                                              @Nonnull final BitSet one,
+                                              @Nonnull final BitSet exclude )
+  {
+    verifyBitSet( "all", all );
+    verifyBitSet( "one", one );
+    verifyBitSet( "exclude", exclude );
+    return new AreaOfInterest( all, one, exclude );
+  }
+
+  private void verifyBitSet( @Nonnull final String name, @Nonnull final BitSet set )
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      int current = -1;
+      while ( -1 != ( current = set.nextSetBit( current + 1 ) ) )
+      {
+        final int id = current;
+        apiInvariant( () -> isComponentIdValid( id ),
+                      () -> "Galdr-0044: World.createAreaOfInterest() passed an invalid component id " +
+                            id + " in the " + name + " component set." );
+
+      }
+    }
+  }
+
+  @Nonnull
+  public Subscription createSubscription( @Nullable final String name, @Nonnull final AreaOfInterest areaOfInterest )
+  {
+    final String actualName =
+      Galdr.areNamesEnabled() ? null == name ? "Subscription@" + _nextSubscriptionId++ : name : null;
+    return new Subscription( actualName, findOrCreateCollection( areaOfInterest ) );
+
+  }
+
+  @Nonnull
+  public AreaOfInterest createAreaOfInterest( @Nonnull final Collection<Class<?>> all,
+                                              @Nonnull final Collection<Class<?>> one,
+                                              @Nonnull final Collection<Class<?>> exclude )
+  {
+    return new AreaOfInterest( toBitSet( "all", all ), toBitSet( "one", one ), toBitSet( "exclude", exclude ) );
+  }
+
+  @Nonnull
+  private BitSet toBitSet( @Nonnull final String name, @Nonnull final Collection<Class<?>> components )
+  {
+    final BitSet set = new BitSet();
+    for ( final Class<?> type : components )
+    {
+      final int id = getComponentByType( type ).getId();
+      if ( Galdr.shouldCheckApiInvariants() )
+      {
+        apiInvariant( () -> !set.get( id ),
+                      () -> "Galdr-0043: World.createAreaOfInterest() passed a duplicate component " +
+                            type.getName() + " in the " + name + " component set." );
+      }
+      set.set( id );
+    }
+    return set;
+  }
+
+  @Nonnull
+  private EntityCollection findOrCreateCollection( @Nonnull final AreaOfInterest areaOfInterest )
+  {
+    final EntityCollection collection = findCollection( areaOfInterest );
+    if ( null == collection )
+    {
+      return createCollection( areaOfInterest );
+    }
+    else
+    {
+      return collection;
+    }
   }
 
   @Nullable
