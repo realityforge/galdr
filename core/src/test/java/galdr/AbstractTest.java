@@ -69,7 +69,7 @@ public abstract class AbstractTest
                                          @Nonnull final BitSet one,
                                          @Nonnull final BitSet exclude )
   {
-    return run( world, () -> world.createSubscription( null, world.createAreaOfInterest( all, one, exclude ) ) );
+    return run( world, () -> world.createSubscription( world.createAreaOfInterest( all, one, exclude ) ) );
   }
 
   final void assertDefaultToString( @Nonnull final Object object )

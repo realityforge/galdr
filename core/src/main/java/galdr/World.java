@@ -402,6 +402,12 @@ public final class World
   }
 
   @Nonnull
+  public Subscription createSubscription( @Nonnull final AreaOfInterest areaOfInterest )
+  {
+    return createSubscription( null, areaOfInterest );
+  }
+
+  @Nonnull
   public Subscription createSubscription( @Nullable final String name, @Nonnull final AreaOfInterest areaOfInterest )
   {
     final String actualName =
