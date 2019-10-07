@@ -407,7 +407,6 @@ public final class World
     final String actualName =
       Galdr.areNamesEnabled() ? null == name ? "Subscription@" + _nextSubscriptionId++ : name : null;
     return new Subscription( actualName, findOrCreateCollection( areaOfInterest ) );
-
   }
 
   @Nonnull
