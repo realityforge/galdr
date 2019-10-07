@@ -34,7 +34,7 @@ public final class World
   /**
    * The id used to create the next unnamed subscription.
    */
-  private int _nextSubscriptionId;
+  private int _nextSubscriptionId = 1;
 
   /**
    * Interface used to define actions that can be run in the context of a world.
