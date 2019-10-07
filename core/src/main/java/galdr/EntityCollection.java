@@ -46,12 +46,12 @@ final class EntityCollection
    */
   private int _flags;
   /**
-   * The subscriber that is currently iterating over the collection.
+   * The subscription that is currently iterating over the collection.
    */
   @Nullable
   private Object _owner;
   /**
-   * A count of how many subscribers are attached to the collection.
+   * A count of how many subscriptions are attached to the collection.
    */
   private int _refCount;
 
