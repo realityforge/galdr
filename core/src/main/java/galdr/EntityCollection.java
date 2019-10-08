@@ -105,7 +105,7 @@ final class EntityCollection
    * This should only be invoked if the subscription needs to cancel an in-progress iteration.
    * Iteration will complete normally when there are no entities to return.
    *
-   * @param subscription the current owner.
+   * @param subscription the subscription that begun the iteration.
    */
   void abortIteration( @Nonnull final Subscription subscription )
   {
