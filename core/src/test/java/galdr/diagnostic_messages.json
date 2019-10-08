@@ -207,7 +207,7 @@
   {
     "code": 42,
     "type": "INVARIANT",
-    "messagePattern": "The ComponentManager.removeEntityCollection() method for the component named '%s' was invoked but collection is not registered with ComponentManager."
+    "messagePattern": "The ComponentManager.removeCollection() method for the component named '%s' was invoked but collection is not registered with ComponentManager."
   },
   {
     "code": 43,

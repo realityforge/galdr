@@ -351,7 +351,7 @@ abstract class ComponentManager<T>
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> _collections.contains( collection ),
-                 () -> "Galdr-0042: The ComponentManager.removeEntityCollection() method for the component named '" +
+                 () -> "Galdr-0042: The ComponentManager.removeCollection() method for the component named '" +
                        getName() + "' was invoked but collection is not registered with ComponentManager." );
     }
     _collections.remove( collection );
