@@ -650,7 +650,6 @@ public class EntityCollectionTest
     assertCollectionComplete( collection );
   }
 
-  @SuppressWarnings( "unused" )
   @Test
   public void abortIterationWhenProcessingNewEntitiesList()
   {
