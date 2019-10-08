@@ -107,7 +107,7 @@
   {
     "code": 22,
     "type": "INVARIANT",
-    "messagePattern": "EntityCollection.beginIteration() invoked with subscription named 'Subscription@1' but an existing iteration is in progress with subscription named 'Subscription@0'."
+    "messagePattern": "EntityCollection.beginIteration() invoked with subscription named '%s' but an existing iteration is in progress with subscription named '%s'."
   },
   {
     "code": 23,
