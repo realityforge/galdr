@@ -663,7 +663,7 @@ public class EntityCollectionTest
 
   @SuppressWarnings( "unused" )
   @Test
-  public void beginIteration_badOwner()
+  public void beginIteration_subscriptionAlreadyIterating()
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
