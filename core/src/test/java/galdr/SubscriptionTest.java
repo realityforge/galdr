@@ -29,6 +29,23 @@ public class SubscriptionTest
   }
 
   @Test
+  public void getName()
+  {
+    final World world = Worlds.world().build();
+
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( set(), set(), set() );
+    assertEquals( run( world,
+                       () -> world.createSubscription( "Foo", areaOfInterest ).getName() ),
+                  "Foo" );
+    assertEquals( createSubscription( world, set(), set(), set() ).getName(), "Subscription@1" );
+
+    GaldrTestUtil.disableNames();
+
+    assertInvariantFailure( () -> createSubscription( world, set(), set(), set() ).getName(),
+                            "Galdr-0004: Subscription.getName() invoked when Galdr.areNamesEnabled() returns false" );
+  }
+
+  @Test
   public void toString_test()
   {
     final World world = Worlds.world().build();
