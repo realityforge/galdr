@@ -10,7 +10,7 @@ import static org.realityforge.braincheck.Guards.*;
  * Typically this is used by a {@link galdr.Processor} to describe the {@link galdr.Entity} instances
  * that will be selected by the processor for processing.
  */
-final class AreaOfInterest
+public final class AreaOfInterest
 {
   /**
    * Components that an entity MUST have to be matched.
