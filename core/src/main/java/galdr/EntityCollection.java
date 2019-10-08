@@ -102,8 +102,8 @@ final class EntityCollection
   }
 
   /**
-   * This should only be invoked if the owner wants to cancel an in progress iteration.
-   * Normal iteration will complete out when no entities to return.
+   * This should only be invoked if the subscription needs to cancel an in-progress iteration.
+   * Iteration will complete normally when there are no entities to return.
    *
    * @param subscription the current owner.
    */
