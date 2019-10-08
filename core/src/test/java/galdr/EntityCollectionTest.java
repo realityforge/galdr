@@ -626,7 +626,6 @@ public class EntityCollectionTest
     assertCollectionComplete( collection );
   }
 
-  @SuppressWarnings( "unused" )
   @Test
   public void abortIterationBeforeAllEntitiesProcessed()
   {
@@ -635,7 +634,7 @@ public class EntityCollectionTest
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
+    createEntity( world, set( 0 ) );
 
     assertNull( collection.getSubscription() );
 
