@@ -59,4 +59,38 @@ public class SubscriptionTest
 
     assertDefaultToString( subscription );
   }
+
+  @Test
+  public void dispose()
+  {
+    final World world = Worlds.world().build();
+    final Subscription subscription = createSubscription( world, set(), set(), set() );
+
+    final EntityCollection collection = subscription.getCollection();
+
+    assertTrue( subscription.isNotDisposed() );
+    assertFalse( subscription.isDisposed() );
+    assertFalse( collection.isDisposed() );
+
+    run( world, subscription::dispose );
+
+    assertFalse( subscription.isNotDisposed() );
+    assertTrue( subscription.isDisposed() );
+    assertTrue( collection.isDisposed() );
+  }
+
+  @Test
+  public void ensureNotDisposed()
+  {
+    final World world = Worlds.world().build();
+    final Subscription subscription = createSubscription( world, set(), set(), set() );
+    run( world, subscription::dispose );
+
+    assertInvariantFailure( subscription::beginIteration,
+                            "Galdr-0043: Attempted to invoke method on Subscription named 'Subscription@1' but the Subscription is disposed." );
+    assertInvariantFailure( subscription::abortIteration,
+                            "Galdr-0043: Attempted to invoke method on Subscription named 'Subscription@1' but the Subscription is disposed." );
+    assertInvariantFailure( subscription::nextEntity,
+                            "Galdr-0043: Attempted to invoke method on Subscription named 'Subscription@1' but the Subscription is disposed." );
+  }
 }
