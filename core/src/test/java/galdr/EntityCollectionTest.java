@@ -711,6 +711,29 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void nextEntity_noActiveSubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+
+    assertInvariantFailure( () -> run( world, subscription::nextEntity ),
+                            "Galdr-0047: EntityCollection.nextEntity() invoked with subscription named 'Subscription@1' but no iteration was active." );
+  }
+
+  @Test
+  public void nextEntity_nonMatchingSubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+
+    run( world, subscription1::beginIteration );
+
+    assertInvariantFailure( () -> run( world, subscription2::nextEntity ),
+                            "Galdr-0025: EntityCollection.nextEntity() invoked with subscription named 'Subscription@2' but an existing iteration is in progress with subscription named 'Subscription@1'." );
+  }
+
+  @Test
   public void beginIteration_subscriptionAlreadyIterating()
   {
     final World world = Worlds.world().component( Component1.class ).build();
