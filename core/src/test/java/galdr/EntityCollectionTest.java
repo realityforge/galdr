@@ -73,6 +73,33 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void ComponentMnaager_addCollection_CollectionAlreadyRegistered()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
+
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
+    assertInvariantFailure( () -> componentManager.addCollection( collection ),
+                            "Galdr-0029: The ComponentManager.addCollection() method for the component named 'Component1' was invoked but collection is already registered with ComponentManager." );
+  }
+
+  @Test
+  public void ComponentMnaager_removeCollection_CollectionAlreadyRegistered()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final EntityCollection collection = subscription.getCollection();
+
+    final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
+    componentManager.removeCollection( collection );
+    assertInvariantFailure( () -> componentManager.removeCollection( collection ),
+                            "Galdr-0042: The ComponentManager.removeCollection() method for the component named 'Component1' was invoked but collection is not registered with ComponentManager." );
+  }
+
+  @Test
   public void removeCollection_collectionsMissing()
   {
     final World world = Worlds.world().component( Component1.class ).build();
