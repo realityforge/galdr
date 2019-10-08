@@ -66,7 +66,7 @@ public class EntityCollectionTest
     run( world, () -> world.removeCollection( collection1 ) );
 
     // Create a different collection with the same AreaOfInterest
-    createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    createSubscription( world, set( 0 ), set(), set() );
 
     assertInvariantFailure( () -> run( world, () -> world.removeCollection( collection1 ) ),
                             "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
