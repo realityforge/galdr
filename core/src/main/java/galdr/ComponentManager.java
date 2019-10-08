@@ -335,12 +335,12 @@ abstract class ComponentManager<T>
     return _id;
   }
 
-  void addEntityCollection( @Nonnull final EntityCollection collection )
+  void addCollection( @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckInvariants() )
     {
       invariant( () -> !_collections.contains( collection ),
-                 () -> "Galdr-0029: The ComponentManager.addEntityCollection() method for the component named '" +
+                 () -> "Galdr-0029: The ComponentManager.addCollection() method for the component named '" +
                        getName() + "' was invoked but collection is already registered with ComponentManager." );
     }
     _collections.add( collection );

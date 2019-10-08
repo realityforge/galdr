@@ -484,7 +484,7 @@ public final class World
     int current = -1;
     while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
     {
-      getComponentManagerById( current ).addEntityCollection( collection );
+      getComponentManagerById( current ).addCollection( collection );
     }
   }
 

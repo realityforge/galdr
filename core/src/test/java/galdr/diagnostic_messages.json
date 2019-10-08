@@ -142,7 +142,7 @@
   {
     "code": 29,
     "type": "INVARIANT",
-    "messagePattern": "The ComponentManager.addEntityCollection() method for the component named '%s' was invoked but collection is already registered with ComponentManager."
+    "messagePattern": "The ComponentManager.addCollection() method for the component named '%s' was invoked but collection is already registered with ComponentManager."
   },
   {
     "code": 30,
