@@ -687,6 +687,30 @@ public class EntityCollectionTest
   }
 
   @Test
+  public void abortIteration_noIterationActive()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+
+    assertInvariantFailure( () -> run( world, subscription::abortIteration ),
+                            "Galdr-0047: EntityCollection.abortIteration() invoked with subscription named '" +
+                            subscription.getName() + "' but no iteration was active." );
+  }
+
+  @Test
+  public void abortIteration_nonMatchingSubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+
+    run( world, subscription1::beginIteration );
+
+    assertInvariantFailure( () -> run( world, subscription2::abortIteration ),
+                            "Galdr-0027: EntityCollection.abortIteration() invoked with subscription named 'Subscription@2' but this does not match the existing subscription named 'Subscription@1'." );
+  }
+
+  @Test
   public void beginIteration_subscriptionAlreadyIterating()
   {
     final World world = Worlds.world().component( Component1.class ).build();
