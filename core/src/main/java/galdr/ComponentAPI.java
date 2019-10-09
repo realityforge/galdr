@@ -139,7 +139,7 @@ public final class ComponentAPI<T>
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      final World activeWorld = WorldHolder.world();
+      final World activeWorld = World.current();
       final World componentWorld = _store.getWorld();
       apiInvariant( () -> activeWorld == componentWorld,
                     () -> "Galdr-0035: ComponentAPI method invoked in the context of the world '" +

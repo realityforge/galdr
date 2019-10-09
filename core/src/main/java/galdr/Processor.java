@@ -34,17 +34,6 @@ public abstract class Processor
   protected abstract void process( int delta );
 
   /**
-   * Return the world that the element is associated with.
-   *
-   * @return the associated World.
-   */
-  @Nonnull
-  protected final World world()
-  {
-    return WorldHolder.world();
-  }
-
-  /**
    * Return the human readable name of the Processor.
    * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
    *

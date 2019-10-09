@@ -350,7 +350,7 @@ final class EntityCollection
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      final World activeWorld = WorldHolder.world();
+      final World activeWorld = World.current();
       apiInvariant( () -> activeWorld == _world,
                     () -> "Galdr-0036: EntityCollection method invoked in the context of the world '" +
                           activeWorld.getName() + "' but the collection belongs to the world '" +

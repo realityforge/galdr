@@ -28,7 +28,7 @@ public class ProcessorStageTest
     protected void process( final int delta )
     {
       _trace.add( _key + ":" + delta );
-      assertEquals( world().getName(), "MyWorld" );
+      assertEquals( World.current().getName(), "MyWorld" );
     }
   }
 

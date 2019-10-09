@@ -98,6 +98,20 @@ public final class World
   }
 
   /**
+   * Return the current world.
+   * A world is marked as current when a processor is being created and for the duration of
+   * the call to {@link ProcessorStage#process(int)}. This method MUST NOT be invoked when a
+   * world is not active.
+   *
+   * @return the current World.
+   */
+  @Nonnull
+  public static World current()
+  {
+    return WorldHolder.world();
+  }
+
+  /**
    * Create a new entity with the specified components.
    *
    * @param initialComponentIds the ids of the components to create.
@@ -614,7 +628,7 @@ public final class World
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
-      final World world = WorldHolder.world();
+      final World world = current();
       apiInvariant( () -> this == world,
                     () -> "Galdr-0037: World." + methodName + " invoked on world named '" + getName() +
                           "' when a world named '" + world.getName() + "' is active." );

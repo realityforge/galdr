@@ -165,7 +165,7 @@ public final class Link
 
   private void reportLinkRemoveCompleteEvent( final int sourceEntityId, final int targetEntityId )
   {
-    final World world = WorldHolder.world();
+    final World world = World.current();
     if ( world.willPropagateSpyEvents() )
     {
       world.getSpy().reportSpyEvent( new LinkRemoveCompleteEvent( world, sourceEntityId, targetEntityId ) );
@@ -176,7 +176,7 @@ public final class Link
   {
     assert null != _sourceEntity;
     assert null != _targetEntity;
-    final World world = WorldHolder.world();
+    final World world = World.current();
     if ( world.willPropagateSpyEvents() )
     {
       world.getSpy().reportSpyEvent( new LinkRemoveStartEvent( world, sourceEntityId, targetEntityId ) );
