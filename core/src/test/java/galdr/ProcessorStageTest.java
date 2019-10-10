@@ -134,7 +134,7 @@ public class ProcessorStageTest
 
     world.addErrorHandler( ( stage, processor, throwable ) ->
                              trace.add( "Stage: " + stage.getName() +
-                                        ", Processor: " + processor.getName() +
+                                        ", Processor: " + processor +
                                         ", Error: " + throwable.toString() ) );
     final ProcessorStage stage = world.getStageByName( "MyStage" );
 
@@ -144,6 +144,6 @@ public class ProcessorStageTest
     stage.process( 2 );
 
     assertEquals( String.join( ",", trace ),
-                  "A:2,B:!!Error!!:2,Stage: MyStage, Processor: MyFaultyProcessor, Error: java.lang.IllegalStateException: Blah!,C:2" );
+                  "A:2,B:!!Error!!:2,Stage: MyStage, Processor: Processor[MyFaultyProcessor], Error: java.lang.IllegalStateException: Blah!,C:2" );
   }
 }
