@@ -447,7 +447,7 @@ public final class World
       if ( Galdr.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> !set.get( id ),
-                      () -> "Galdr-0043: World.createAreaOfInterest() passed a duplicate component " +
+                      () -> "Galdr-0048: World.createAreaOfInterest() passed a duplicate component " +
                             type.getName() + " in the " + name + " component set." );
       }
       set.set( id );

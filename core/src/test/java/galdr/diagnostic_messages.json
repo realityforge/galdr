@@ -235,6 +235,11 @@
     "messagePattern": "EntityCollection.%s() invoked with subscription named '%s' but no iteration was active."
   },
   {
+    "code": 48,
+    "type": "API_INVARIANT",
+    "messagePattern": "World.createAreaOfInterest() passed a duplicate component %s in the %s component set."
+  },
+  {
     "code": 52,
     "type": "API_INVARIANT",
     "messagePattern": "%s passed a name '%s' but Galdr.areNamesEnabled() is false"
