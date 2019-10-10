@@ -74,6 +74,9 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Change the way worlds are created so that we pass in a factory for creating processes. We could then defer
+  the creation of any elements until `build()` is invoked and we would not have to worry about maintaining
+  the value of `World.current()` during the creation process.
 * Add `spy.ComponentInfo` and make sure it exposes the number of collections that intersect component.
 * Add `spy.CollectionInfo` to expose set of current collections to spy layer.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
