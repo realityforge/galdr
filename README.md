@@ -7,7 +7,8 @@
 
 ## What is galdr?
 
-An entity component system implementation.
+`galdr` is an ancient form of sung incantation, intended to have magical effects. Or in more practical
+terms, Galdr is an entity component system implementation.
 
 ### Getting Started
 
