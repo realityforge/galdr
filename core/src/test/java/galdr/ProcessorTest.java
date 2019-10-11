@@ -19,21 +19,6 @@ public class ProcessorTest
   }
 
   @Test
-  public void toString_test()
-  {
-    final Worlds.Builder builder = Worlds.world();
-    // Cache the processor in var
-    final Processor processor = new MyProcessor();
-    builder.stage( randomString(), processor ).build();
-
-    assertEquals( processor.toString(), "Processor[MyProcessor]" );
-
-    GaldrTestUtil.disableDebugToString();
-
-    assertDefaultToString( processor );
-  }
-
-  @Test
   public void process()
   {
     final MyProcessor processor = new MyProcessor();

@@ -125,10 +125,11 @@ public class ProcessorStageTest
   public void processorGeneratesError()
   {
     final List<String> trace = new ArrayList<>();
+    final MyFaultyProcessor faultyProcessor = new MyFaultyProcessor( "B", trace );
     final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage",
               new MyProcessor( "A", trace ),
-              new MyFaultyProcessor( "B", trace ),
+              faultyProcessor,
               new MyProcessor( "C", trace ) )
       .build();
 
@@ -144,6 +145,7 @@ public class ProcessorStageTest
     stage.process( 2 );
 
     assertEquals( String.join( ",", trace ),
-                  "A:2,B:!!Error!!:2,Stage: MyStage, Processor: Processor[MyFaultyProcessor], Error: java.lang.IllegalStateException: Blah!,C:2" );
+                  "A:2,B:!!Error!!:2,Stage: MyStage, Processor: " + faultyProcessor +
+                  ", Error: java.lang.IllegalStateException: Blah!,C:2" );
   }
 }
