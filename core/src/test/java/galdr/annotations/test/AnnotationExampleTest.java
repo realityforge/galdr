@@ -17,16 +17,13 @@ public class AnnotationExampleTest
   {
     // This is a very basic test that is used to try out the developer experience of
     // using the annotation development driven model
-    final Galdr_HealthProcessor processor = (Galdr_HealthProcessor) new Galdr_HealthProcessorFactory().get();
     final World world =
       Worlds
         .world()
         .component( Health.class, Health::new )
         .component( MyFlag.class )
-        .stage( "sim", processor )
+        .stage( "sim", new Galdr_HealthProcessor() )
         .build();
-
-    run( world, processor::postConstruct );
 
     final ProcessorStage stage = world.getStageByName( "sim" );
 

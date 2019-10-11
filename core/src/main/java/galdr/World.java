@@ -236,6 +236,8 @@ public final class World
     _collections = new HashMap<>();
     _components = components;
     _componentByClass = buildComponentMap( components );
+
+    WorldHolder.run( this, () -> _stages.values().forEach( ProcessorStage::postConstruct ) );
   }
 
   @Nonnull

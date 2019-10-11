@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.internal.DisposeFn;
+import galdr.internal.PostConstructFn;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -39,6 +41,23 @@ public final class ProcessorStage
     else
     {
       _processors = processors;
+    }
+  }
+
+  void postConstruct()
+  {
+    for ( final Processor processor : _processors )
+    {
+      PostConstructFn.postConstruct( processor );
+    }
+  }
+
+  void dispose()
+  {
+    //TODO: Set flag when invariants enabled and check in other methods when invariant enabled
+    for ( final Processor processor : _processors )
+    {
+      DisposeFn.dispose( processor );
     }
   }
 
