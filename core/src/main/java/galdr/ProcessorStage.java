@@ -2,7 +2,6 @@ package galdr;
 
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * An ordered list of {@link Processor} instances that are explicitly invoked by application code.
