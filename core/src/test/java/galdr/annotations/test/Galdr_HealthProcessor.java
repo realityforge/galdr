@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 @Generated( "galdr" )
 final class Galdr_HealthProcessor
-  extends Processor
+  implements Processor
 {
   @Nonnull
   private final Galdr_HealthProcessorImpl _processor = new Galdr_HealthProcessorImpl( this );
@@ -19,7 +19,7 @@ final class Galdr_HealthProcessor
   }
 
   @Override
-  protected void process( final int delta )
+  public void process( final int delta )
   {
     _processor.$galdr$_process( delta );
   }

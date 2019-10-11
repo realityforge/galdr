@@ -11,7 +11,7 @@ public class ProcessorStageTest
   extends AbstractTest
 {
   public static class MyProcessor
-    extends Processor
+    implements Processor
   {
     @Nonnull
     final String _key;
@@ -25,7 +25,7 @@ public class ProcessorStageTest
     }
 
     @Override
-    protected void process( final int delta )
+    public void process( final int delta )
     {
       _trace.add( _key + ":" + delta );
       assertEquals( World.current().getName(), "MyWorld" );
@@ -41,7 +41,7 @@ public class ProcessorStageTest
     }
 
     @Override
-    protected void process( final int delta )
+    public void process( final int delta )
     {
       _trace.add( _key + ":!!Error!!:" + delta );
       throw new IllegalStateException( "Blah!" );

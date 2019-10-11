@@ -1,10 +1,10 @@
 package galdr;
 
 final class BasicNoopProcessor
-  extends Processor
+  implements Processor
 {
   @Override
-  protected void process( final int delta )
+  public void process( final int delta )
   {
   }
 }
