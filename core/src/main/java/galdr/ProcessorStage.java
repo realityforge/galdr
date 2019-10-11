@@ -1,7 +1,7 @@
 package galdr;
 
-import galdr.internal.DisposeFn;
-import galdr.internal.PostConstructFn;
+import galdr.internal.OnDeactivateFn;
+import galdr.internal.OnActivateFn;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -44,20 +44,20 @@ public final class ProcessorStage
     }
   }
 
-  void postConstruct()
+  void activate()
   {
     for ( final Processor processor : _processors )
     {
-      PostConstructFn.postConstruct( processor );
+      OnActivateFn.activate( processor );
     }
   }
 
-  void dispose()
+  void deactivate()
   {
     //TODO: Set flag when invariants enabled and check in other methods when invariant enabled
     for ( final Processor processor : _processors )
     {
-      DisposeFn.dispose( processor );
+      OnDeactivateFn.deactivate( processor );
     }
   }
 

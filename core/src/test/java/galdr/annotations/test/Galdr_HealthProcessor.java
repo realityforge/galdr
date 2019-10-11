@@ -2,14 +2,14 @@ package galdr.annotations.test;
 
 import galdr.Processor;
 import galdr.World;
-import galdr.internal.DisposeFn;
-import galdr.internal.PostConstructFn;
+import galdr.internal.OnDeactivateFn;
+import galdr.internal.OnActivateFn;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated( "galdr" )
 final class Galdr_HealthProcessor
-  implements Processor, PostConstructFn, DisposeFn
+  implements Processor, OnActivateFn, OnDeactivateFn
 {
   @Nonnull
   private final Galdr_HealthProcessorImpl _processor = new Galdr_HealthProcessorImpl( this );
@@ -27,14 +27,14 @@ final class Galdr_HealthProcessor
   }
 
   @Override
-  public void postConstruct()
+  public void activate()
   {
-    _processor.$galdr$_postConstruct();
+    _processor.$galdr$_activate();
   }
 
   @Override
-  public void dispose()
+  public void deactivate()
   {
-    _processor.$galdr$_dispose();
+    _processor.$galdr$_deactivate();
   }
 }

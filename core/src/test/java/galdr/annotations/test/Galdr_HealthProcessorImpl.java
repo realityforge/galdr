@@ -54,7 +54,7 @@ final class Galdr_HealthProcessorImpl
     }
   }
 
-  void $galdr$_postConstruct()
+  void $galdr$_activate()
   {
     final AreaOfInterest areaOfInterest =
       world().createAreaOfInterest( Collections.singleton( Health.class ),
@@ -65,10 +65,11 @@ final class Galdr_HealthProcessorImpl
     $galdrc$_health = world().getComponentByType( Health.class );
   }
 
-  void $galdr$_dispose()
+  void $galdr$_deactivate()
   {
     assert null != $galdr$_processHealth_subscription;
     $galdr$_processHealth_subscription.dispose();
+    $galdr$_processHealth_subscription = null;
   }
 
   @Nonnull

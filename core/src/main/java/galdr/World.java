@@ -237,7 +237,7 @@ public final class World
     _components = components;
     _componentByClass = buildComponentMap( components );
 
-    WorldHolder.run( this, () -> _stages.values().forEach( ProcessorStage::postConstruct ) );
+    WorldHolder.run( this, () -> _stages.values().forEach( ProcessorStage::activate ) );
   }
 
   @Nonnull
