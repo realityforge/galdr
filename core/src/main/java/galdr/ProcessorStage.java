@@ -25,7 +25,7 @@ public final class ProcessorStage
   @Nonnull
   private final Processor[] _processors;
 
-  ProcessorStage( @Nullable final String name, @Nonnull final World world, @Nonnull final Processor... processors )
+  ProcessorStage( @Nonnull final String name, @Nonnull final World world, @Nonnull final Processor... processors )
   {
     _name = Objects.requireNonNull( name );
     _world = Objects.requireNonNull( world );
