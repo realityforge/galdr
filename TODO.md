@@ -64,13 +64,14 @@ complete as there is too much un-said.
 The toolkit will use annotation processors to build an efficient representation of component accessors and schedulers
 for systems/processors ahead of time.
 
-* Consider creation of some higher level `Archetype`, `Plan` or `Template` classes that act as a stamp that creates the
-  structure of 1 or more `Entity` instances with specific `Component` instances and `Link` defined between `Entity`
-  instances. There could be two parts of this library - the first part creates the structure and the second
-  part gives the components values. The second part could be done at a higher level subordinate library that reads
-  data from json/xml/whatever to provide values. The first part could also be adapted so that it takes a lambda and
-  thus the components could be populated prior to events being propagated and the rest of the system being made aware
-  of the entities etc.
+* Consider creation of some higher level `Archetype`, `Plan`, `Blueprint`, `Prefab` or `Template` classes that act
+  as a stamp that creates the structure of 1 or more `Entity` instances with specific `Component` instances and
+  `Link` defined between `Entity` instances. There could be two parts of this library - the first part creates
+  the structure and the second part gives the components values. The second part could be done at a higher level
+  subordinate library that reads data from json/xml/whatever to provide values. The first part could also be adapted
+  so that it takes a lambda and thus the components could be populated prior to events being propagated and the rest
+  of the system being made aware of the entities etc. The mechanisms for storing state should be linked in to the
+  same mechanisms used to serialize world state so that both are optimized together.
 
 ### Tasks
 
