@@ -3,6 +3,7 @@
 
   <source path='' includes='*.java'/>
   <source path='spy' includes='*.java'/>
+  <source path='internal' includes='*.java'/>
 
   <!--
     These properties are all defined in galdr.GaldrConfig
