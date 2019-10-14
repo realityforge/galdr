@@ -135,6 +135,8 @@ for systems/processors ahead of time.
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.
 
+* Make sure that all entities (mobiles, items, spells, and their effects) can be represented in Galdr.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
