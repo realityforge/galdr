@@ -1,0 +1,5 @@
+<module>
+  <inherits name='galdr.Galdr'/>
+
+  <source path=''/>
+</module>
