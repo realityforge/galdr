@@ -71,7 +71,9 @@ for systems/processors ahead of time.
   subordinate library that reads data from json/xml/whatever to provide values. The first part could also be adapted
   so that it takes a lambda and thus the components could be populated prior to events being propagated and the rest
   of the system being made aware of the entities etc. The mechanisms for storing state should be linked in to the
-  same mechanisms used to serialize world state so that both are optimized together.
+  same mechanisms used to serialize world state so that both are optimized together. It should also be noted that
+  the templates may be loaded from data files or they could be created in-code. However they should be relatively
+  efficient to represent regardless of how they are used from the application.
 
 ### Tasks
 
