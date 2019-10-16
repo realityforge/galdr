@@ -146,6 +146,8 @@ for systems/processors ahead of time.
 
 * Make sure that all entities (mobiles, items, spells, and their effects) can be represented in Galdr.
 
+* Change at the API and/or GWT configuration level such that `check_api_invariants=true` => `check_invariants=true`
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
