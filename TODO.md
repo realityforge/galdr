@@ -60,6 +60,9 @@ complete as there is too much un-said.
     time.
   * May operate in parallel or concurrently if `Component` types do not overlap or the `Processor` instances
     only need to read a component type.
+  * In some cases it may be useful to explicitly declare dependency relationships between `Processor` instances
+    as they may generate side-effects other that manipulating component state as a side-effect and thus you want
+    to order processes explicitly.
 
 The toolkit will use annotation processors to build an efficient representation of component accessors and schedulers
 for systems/processors ahead of time.
