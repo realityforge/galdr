@@ -135,6 +135,11 @@ for systems/processors ahead of time.
   - a dynamically sized `BitSet` implementation containing entity ids with a different set of optimizations and
     no `hashCode()` and `equals()` implementations etc. A particular implementation of value is `boolean clearIfSet(bit)`
     used in `Subscription.entityRemove(int entityId)`.
+  - Consider hierarchical bitsets. A hierarchical bitset is essentially a multi-layer bitset, where each upper
+    layer "summarizes" multiple bits of the underlying layers. That means as soon as one of the underlying bits
+    is 1, the upper one also becomes 1, so that we can skip a whole range of indices if an upper bit is 0 in
+    that section. In case it's 1, we go down by one layer and perform the same steps again (it currently has 4
+    layers).
 
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.
