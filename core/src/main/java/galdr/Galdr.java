@@ -1,10 +1,12 @@
 package galdr;
 
+import grim.annotations.OmitClinit;
 import org.realityforge.braincheck.BrainCheckConfig;
 
 /**
  * Provide access to global configuration settings.
  */
+@OmitClinit
 public final class Galdr
 {
   private Galdr()

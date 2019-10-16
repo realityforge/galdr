@@ -1,5 +1,6 @@
 package galdr;
 
+import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -135,6 +136,7 @@ public final class ComponentAPI<T>
     _store.remove( entityId );
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   private void ensureCurrentWorldMatches()
   {
     if ( Galdr.shouldCheckApiInvariants() )

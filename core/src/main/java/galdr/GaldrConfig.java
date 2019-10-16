@@ -1,10 +1,12 @@
 package galdr;
 
+import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 
 /**
  * The location of all compile time configuration settings for framework.
  */
+@OmitType
 final class GaldrConfig
 {
   private static final ConfigProvider PROVIDER = new ConfigProvider();

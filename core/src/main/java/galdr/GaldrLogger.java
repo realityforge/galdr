@@ -1,5 +1,6 @@
 package galdr;
 
+import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jsinterop.annotations.JsMethod;
@@ -47,6 +48,7 @@ final class GaldrLogger
   /**
    * The noop log provider implementation.
    */
+  @OmitType
   private static final class NoopLogger
     implements Logger
   {
@@ -59,6 +61,7 @@ final class GaldrLogger
   /**
    * The console log provider implementation.
    */
+  @OmitType( unless = "galdr.logger=console" )
   private static final class ConsoleLogger
     extends AbstractConsoleLogger
   {
@@ -74,6 +77,7 @@ final class GaldrLogger
     }
   }
 
+  @OmitType( unless = "galdr.logger=console" )
   @JsType( isNative = true, name = "window.console", namespace = JsPackage.GLOBAL )
   private static final class NativeJsLoggerUtil
   {
@@ -84,6 +88,7 @@ final class GaldrLogger
   /**
    * The console log provider implementation providing javascript based console logging.
    */
+  @OmitType( unless = "galdr.logger=console" )
   private static abstract class AbstractConsoleLogger
     implements Logger
   {
@@ -101,6 +106,7 @@ final class GaldrLogger
   /**
    * The log provider implementation that forwards to another logger if present.
    */
+  @OmitType( unless = "galdr.logger=proxy" )
   static final class ProxyLogger
     implements Logger
   {

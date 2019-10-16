@@ -33,7 +33,10 @@ define 'galdr' do
 
     compile.with :javax_annotation,
                  :jsinterop_annotations,
+                 :grim_annotations,
                  :braincheck
+
+    project.processorpath << artifacts(:grim_processor, :javax_json)
 
     gwt_enhance(project)
 

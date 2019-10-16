@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.SpyEventHandler;
+import grim.annotations.OmitType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +11,7 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * Class supporting the propagation of events to SpyEventHandler callbacks.
  */
+@OmitType( unless = "galdr.enable_spies" )
 final class SpyEventHandlerSupport
 {
   /**

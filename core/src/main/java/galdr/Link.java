@@ -2,6 +2,8 @@ package galdr;
 
 import galdr.spy.LinkRemoveCompleteEvent;
 import galdr.spy.LinkRemoveStartEvent;
+import grim.annotations.OmitSymbol;
+import grim.annotations.OmitType;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -146,6 +148,7 @@ public final class Link
     reportLinkRemoveCompleteEvent( sourceEntityId, targetEntityId );
   }
 
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public final String toString()
   {

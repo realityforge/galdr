@@ -1,5 +1,7 @@
 package galdr;
 
+import grim.annotations.OmitSymbol;
+import grim.annotations.OmitType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +11,7 @@ import static org.realityforge.braincheck.Guards.*;
 /**
  * Class supporting the propagation of errors for ErrorHandler callback to multiple error handlers.
  */
+@OmitType( unless = "galdr.enable_error_handlers" )
 final class ErrorHandlerSupport
   implements ErrorHandler
 {
@@ -80,6 +83,7 @@ final class ErrorHandlerSupport
     }
   }
 
+  @OmitSymbol
   @Nonnull
   List<ErrorHandler> getHandlers()
   {

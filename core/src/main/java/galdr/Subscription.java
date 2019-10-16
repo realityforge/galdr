@@ -1,5 +1,6 @@
 package galdr;
 
+import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,6 +78,7 @@ public final class Subscription
    *
    * @return the human readable name of the Subscription.
    */
+  @OmitSymbol( unless = "galdr.enable_names" )
   @Nonnull
   public final String getName()
   {
@@ -89,6 +91,7 @@ public final class Subscription
     return _name;
   }
 
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public String toString()
   {
@@ -108,6 +111,7 @@ public final class Subscription
     return _collection;
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   private void ensureNotDisposed()
   {
     if ( Galdr.shouldCheckApiInvariants() )

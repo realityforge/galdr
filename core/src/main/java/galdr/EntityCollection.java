@@ -1,5 +1,6 @@
 package galdr;
 
+import grim.annotations.OmitSymbol;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -250,6 +251,7 @@ final class EntityCollection
     }
   }
 
+  @OmitSymbol( unless = "galdr.check_invariants" )
   void ensureNotDisposed()
   {
     if ( Galdr.shouldCheckInvariants() )
@@ -346,6 +348,7 @@ final class EntityCollection
     return _subscription;
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   void ensureCurrentWorldMatches()
   {
     if ( Galdr.shouldCheckApiInvariants() )

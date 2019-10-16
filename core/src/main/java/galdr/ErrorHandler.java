@@ -1,10 +1,12 @@
 package galdr;
 
+import grim.annotations.OmitType;
 import javax.annotation.Nonnull;
 
 /**
  * Interface for handling errors in processors.
  */
+@OmitType( unless = "galdr.enable_error_handlers" )
 @FunctionalInterface
 public interface ErrorHandler
 {

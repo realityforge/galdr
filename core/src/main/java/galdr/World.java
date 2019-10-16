@@ -4,6 +4,7 @@ import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
 import galdr.spy.WorldInfo;
+import grim.annotations.OmitSymbol;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,12 +25,15 @@ public final class World
    * A human consumable name for node. It must be non-null if {@link Galdr#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
+  @OmitSymbol( unless = "galdr.enable_names" )
   @Nullable
   private final String _name;
   /**
    * Cached info object associated with element.
    * This should be null if {@link Galdr#areSpiesEnabled()} is false.
    */
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nullable
   private WorldInfoImpl _info;
   /**
    * The id used to create the next unnamed subscription.
@@ -83,12 +87,14 @@ public final class World
   /**
    * Support infrastructure for propagating processor errors.
    */
+  @OmitSymbol( unless = "galdr.enable_error_handlers" )
   @Nullable
   private final ErrorHandlerSupport _errorHandlerSupport =
     Galdr.areErrorHandlersEnabled() ? new ErrorHandlerSupport() : null;
   /**
    * Support infrastructure for spy events.
    */
+  @OmitSymbol( unless = "galdr.enable_spies" )
   @Nullable
   private final SpyImpl _spy = Galdr.areSpiesEnabled() ? new SpyImpl( this ) : null;
 
@@ -267,6 +273,7 @@ public final class World
    *
    * @param handler the error handler.
    */
+  @OmitSymbol( unless = "galdr.enable_error_handlers" )
   public void addErrorHandler( @Nonnull final ErrorHandler handler )
   {
     if ( Galdr.shouldCheckInvariants() )
@@ -284,6 +291,7 @@ public final class World
    *
    * @param handler the error handler.
    */
+  @OmitSymbol( unless = "galdr.enable_error_handlers" )
   public void removeErrorHandler( @Nonnull final ErrorHandler handler )
   {
     if ( Galdr.shouldCheckInvariants() )
@@ -300,6 +308,7 @@ public final class World
    *
    * @return true if spy events will be propagated, false otherwise.
    */
+  @OmitSymbol( unless = "galdr.enable_spies" )
   boolean willPropagateSpyEvents()
   {
     return Galdr.areSpiesEnabled() && getSpy().willPropagateSpyEvents();
@@ -311,6 +320,7 @@ public final class World
    *
    * @return the spy associated with context.
    */
+  @OmitSymbol( unless = "galdr.enable_spies" )
   @Nonnull
   public Spy getSpy()
   {
@@ -328,6 +338,7 @@ public final class World
    *
    * @return the human readable name of the World.
    */
+  @OmitSymbol( unless = "galdr.enable_names" )
   @Nonnull
   public final String getName()
   {
@@ -340,6 +351,7 @@ public final class World
     return _name;
   }
 
+  @OmitSymbol( unless = "galdr.enable_names" )
   @Override
   public String toString()
   {
@@ -359,6 +371,7 @@ public final class World
    * @return the info associated with this class.
    */
   @SuppressWarnings( "ConstantConditions" )
+  @OmitSymbol( unless = "galdr.enable_spies" )
   @Nonnull
   WorldInfo asInfo()
   {
@@ -401,6 +414,7 @@ public final class World
     return new AreaOfInterest( all, one, exclude );
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   private void verifyBitSet( @Nonnull final String name, @Nonnull final BitSet set )
   {
     if ( Galdr.shouldCheckApiInvariants() )
@@ -539,6 +553,7 @@ public final class World
    * @param processor the processor that generated error.
    * @param throwable the exception that caused error if any.
    */
+  @OmitSymbol( unless = "galdr.enable_error_handlers" )
   void reportError( @Nonnull final ProcessorStage stage,
                     @Nonnull final Processor processor,
                     @Nonnull final Throwable throwable )
@@ -550,6 +565,7 @@ public final class World
   }
 
   @Nonnull
+  @OmitSymbol( unless = "galdr.enable_error_handlers" )
   ErrorHandlerSupport getErrorHandlerSupport()
   {
     assert null != _errorHandlerSupport;
@@ -570,6 +586,7 @@ public final class World
     return _components[ id ];
   }
 
+  @OmitSymbol( unless = "galdr.check_invariants" )
   boolean isComponentIdValid( final int id )
   {
     assert null != _components;
@@ -599,6 +616,7 @@ public final class World
     return componentManager;
   }
 
+  @OmitSymbol
   @Nonnull
   Set<Class<?>> getComponentTypes()
   {
@@ -616,6 +634,7 @@ public final class World
     c_nextId = 1;
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   private void assertWorldConstructed( @Nonnull final String methodName )
   {
     if ( Galdr.shouldCheckApiInvariants() )
@@ -626,6 +645,7 @@ public final class World
     }
   }
 
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
   private void ensureCurrentWorldMatches( @Nonnull final String methodName )
   {
     if ( Galdr.shouldCheckApiInvariants() )

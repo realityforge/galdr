@@ -3,12 +3,14 @@ package galdr;
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
 import galdr.spy.WorldInfo;
+import grim.annotations.OmitType;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
 /**
  * Spy implementation.
  */
+@OmitType( unless = "galdr.enable_spies" )
 final class SpyImpl
   implements Spy
 {

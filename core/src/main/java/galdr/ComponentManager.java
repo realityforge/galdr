@@ -3,6 +3,7 @@ package galdr;
 import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentAddStartEvent;
 import galdr.spy.ComponentRemoveStartEvent;
+import grim.annotations.OmitSymbol;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -116,6 +117,7 @@ abstract class ComponentManager<T>
    *
    * @return the human readable name of the ComponentManager.
    */
+  @OmitSymbol( unless = "galdr.enable_names" )
   @Nonnull
   String getName()
   {

@@ -1,9 +1,11 @@
 package galdr;
 
 import galdr.spy.WorldInfo;
+import grim.annotations.OmitType;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
+@OmitType( unless = "galdr.enable_spies" )
 final class WorldInfoImpl
   implements WorldInfo
 {
