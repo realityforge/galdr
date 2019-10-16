@@ -81,6 +81,7 @@ for systems/processors ahead of time.
 * Add `spy.CollectionInfo` to expose set of current collections to spy layer.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
+* Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Add API to expose `Link` objects for entities in Spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
