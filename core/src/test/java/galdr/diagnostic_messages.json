@@ -197,7 +197,7 @@
   {
     "code": 40,
     "type": "INVARIANT",
-    "messagePattern": "World.asInfo() invoked but Galdr.areSpiesEnabled() returned false."
+    "messagePattern": "%s.asInfo() invoked but Galdr.areSpiesEnabled() returned false."
   },
   {
     "code": 41,

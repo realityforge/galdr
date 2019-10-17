@@ -45,4 +45,13 @@ public interface Spy
    */
   @Nonnull
   WorldInfo asWorldInfo();
+
+  /**
+   * Return the component that models the specified type.
+   *
+   * @param componentType the type of the component.
+   * @return the component info.
+   */
+  @Nonnull
+  ComponentInfo getComponentByType( @Nonnull Class<?> componentType );
 }

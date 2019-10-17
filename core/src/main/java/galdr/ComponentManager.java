@@ -2,6 +2,7 @@ package galdr;
 
 import galdr.spy.ComponentAddCompleteEvent;
 import galdr.spy.ComponentAddStartEvent;
+import galdr.spy.ComponentInfo;
 import galdr.spy.ComponentRemoveStartEvent;
 import grim.annotations.OmitSymbol;
 import java.util.ArrayList;
@@ -47,6 +48,13 @@ abstract class ComponentManager<T>
    */
   @Nonnull
   private final List<EntityCollection> _collections = new ArrayList<>();
+  /**
+   * Cached info object associated with element.
+   * This should be null if {@link Galdr#areSpiesEnabled()} is false.
+   */
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nullable
+  private ComponentInfoImpl _info;
 
   ComponentManager( @Nonnull final World world,
                     final int id,
@@ -323,6 +331,28 @@ abstract class ComponentManager<T>
   List<EntityCollection> getCollections()
   {
     return _collections;
+  }
+
+  /**
+   * Return the info associated with this class.
+   *
+   * @return the info associated with this class.
+   */
+  @SuppressWarnings( "ConstantConditions" )
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nonnull
+  ComponentInfo asInfo()
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areSpiesEnabled,
+                 () -> "Galdr-0040: ComponentManager.asInfo() invoked but Galdr.areSpiesEnabled() returned false." );
+    }
+    if ( Galdr.areSpiesEnabled() && null == _info )
+    {
+      _info = new ComponentInfoImpl( this );
+    }
+    return Galdr.areSpiesEnabled() ? _info : null;
   }
 
   @Override

@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.ComponentInfo;
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
 import galdr.spy.WorldInfo;
@@ -59,5 +60,12 @@ final class SpyImpl
   public WorldInfo asWorldInfo()
   {
     return _world.asInfo();
+  }
+
+  @Nonnull
+  @Override
+  public ComponentInfo getComponentByType( @Nonnull final Class<?> componentType )
+  {
+    return _world.getComponentManagerByType( componentType ).asInfo();
   }
 }
