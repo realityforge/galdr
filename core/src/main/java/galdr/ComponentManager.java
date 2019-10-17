@@ -328,7 +328,9 @@ abstract class ComponentManager<T>
   @Override
   public boolean equals( final Object o )
   {
-    return o instanceof ComponentManager && _id == ( (ComponentManager) o )._id;
+    return o instanceof ComponentManager &&
+           _id == ( (ComponentManager<?>) o )._id &&
+           _world == ( (ComponentManager<?>) o )._world;
   }
 
   @Override

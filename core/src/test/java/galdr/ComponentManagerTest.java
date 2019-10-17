@@ -62,6 +62,21 @@ public class ComponentManagerTest
   }
 
   @Test
+  public void equals_test()
+  {
+    final World world1 = Worlds.world().component( Component1.class, Component1::new ).build();
+    final World world2 = Worlds.world().component( Component1.class, Component1::new ).build();
+    final ComponentManager<Component1> componentManager1 = world1.getComponentManagerByType( Component1.class );
+    final ComponentManager<Component1> componentManager2 = world2.getComponentManagerByType( Component1.class );
+
+    assertEquals( componentManager1, componentManager1 );
+    assertEquals( componentManager2, componentManager2 );
+    assertEquals( componentManager2, componentManager2 );
+    assertNotEquals( componentManager1, componentManager2 );
+    assertEquals( componentManager1.hashCode(), componentManager2.hashCode() );
+  }
+
+  @Test
   public void basicComponentLifecycle_spyEnabled()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
