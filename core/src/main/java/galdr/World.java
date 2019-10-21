@@ -118,6 +118,30 @@ public final class World
   }
 
   /**
+   * Create a new ComponentIdSet with the components specified by types.
+   *
+   * @param componentTypes the java types of the components.
+   * @return the component id set.
+   */
+  @Nonnull
+  public ComponentIdSet createComponentIdSet( @Nonnull final Class<?>... componentTypes )
+  {
+    final BitSet set = new BitSet();
+    for ( final Class<?> componentType : componentTypes )
+    {
+      final int id = getComponentByType( componentType ).getId();
+      if ( Galdr.shouldCheckApiInvariants() )
+      {
+        apiInvariant( () -> !set.get( id ),
+                      () -> "Galdr-0049: A duplicate component named '" + componentType.getName() + "' was passed " +
+                            "when attempting to create ComponentIdSet." );
+      }
+      set.set( id );
+    }
+    return new ComponentIdSet( set );
+  }
+
+  /**
    * Create a new entity with the specified components.
    *
    * @param initialComponentIds the ids of the components to create.
