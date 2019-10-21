@@ -41,9 +41,9 @@ public class WorldInfoImplTest
 
     assertEquals( info.getEntityCount(), 0 );
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     assertEquals( info.getEntityCount(), 3 );
 
@@ -51,8 +51,8 @@ public class WorldInfoImplTest
 
     assertEquals( info.getEntityCount(), 2 );
 
-    createEntity( world, set() );
-    createEntity( world, set() );
+    createEntity( world );
+    createEntity( world );
 
     assertEquals( info.getEntityCount(), 4 );
 

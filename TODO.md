@@ -128,7 +128,6 @@ for systems/processors ahead of time.
   - there are 3 places it is exposed in the current API. (See below). The `createEntity()` and
     `createAreaOfInterest()` are only optimizations and we could replace them with another abstraction
     where the lookup occurred ahead of time. See new `ComponentIdSet`
-    - `World.createEntity(BitSet ComponentIds)`
     - `World.createAreaOfInterest(BitSet all, BitSet one, BitSet exclude)`
     - `galdr.spy.*Event`
   - a fixed size `BitSet` implementation that implements `hashCode()` and `equals()` and `toString()` as a

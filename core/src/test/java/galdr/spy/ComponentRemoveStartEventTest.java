@@ -18,7 +18,7 @@ public class ComponentRemoveStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().component( Health.class, Health::new ).build();
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final int componentId = world.getComponentByType( Health.class ).getId();
     final ComponentRemoveStartEvent event = new ComponentRemoveStartEvent( world, entityId, componentId );
 

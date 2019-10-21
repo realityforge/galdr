@@ -25,7 +25,7 @@ public class ComponentApiTest
   {
     final World world = Worlds.world().component( Health.class, Health::new ).build();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 
@@ -56,7 +56,7 @@ public class ComponentApiTest
   {
     final World world = Worlds.world().component( Health.class, Health::new ).build();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     final ComponentAPI<Health> api = world.getComponentByType( Health.class );
 
@@ -94,7 +94,7 @@ public class ComponentApiTest
     final ComponentAPI<MyFlag> api = world.getComponentByType( MyFlag.class );
     assertEquals( api.getId(), 0 );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     run( world, () -> assertFalse( api.has( entityId ) ) );
     assertEquals( api.getStorage(), ComponentStorage.NONE );
@@ -116,8 +116,8 @@ public class ComponentApiTest
     final World world1 = Worlds.world().component( MyFlag.class ).build();
     final World world2 = Worlds.world().component( MyFlag.class ).build();
 
-    final int entityId1 = createEntity( world1, set() );
-    createEntity( world2, set() );
+    final int entityId1 = createEntity( world1 );
+    createEntity( world2 );
 
     final ComponentAPI<MyFlag> api = world1.getComponentByType( MyFlag.class );
 

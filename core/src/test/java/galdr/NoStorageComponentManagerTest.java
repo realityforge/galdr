@@ -26,7 +26,7 @@ public class NoStorageComponentManagerTest
     assertEquals( componentManager.hashCode(), 0 );
     assertEquals( componentManager.getStorage(), ComponentStorage.NONE );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertFalse( componentManager.has( entityId ) );
     assertNull( componentManager.find( entityId ) );
@@ -49,7 +49,7 @@ public class NoStorageComponentManagerTest
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
       world.getComponentManagerByType( Component1.class );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertFalse( cm.has( entityId ) );
     assertNull( cm.find( entityId ) );
@@ -69,7 +69,7 @@ public class NoStorageComponentManagerTest
     final NoStorageComponentManager<Component1> cm = (NoStorageComponentManager<Component1>)
       world.getComponentManagerByType( Component1.class );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertFalse( cm.has( entityId ) );
     assertNull( cm.find( entityId ) );
@@ -87,7 +87,7 @@ public class NoStorageComponentManagerTest
 
     final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertFalse( run( world, () -> componentManager.has( entityId ) ) );
     assertNull( run( world, () -> componentManager.find( entityId ) ) );
@@ -110,7 +110,7 @@ public class NoStorageComponentManagerTest
 
     final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertFalse( run( world, () -> componentManager.has( entityId ) ) );
     assertNull( run( world, () -> componentManager.find( entityId ) ) );

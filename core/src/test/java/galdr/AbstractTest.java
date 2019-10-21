@@ -53,9 +53,9 @@ public abstract class AbstractTest
     return WorldHolder.run( world, action::get );
   }
 
-  protected final int createEntity( @Nonnull final World world, @Nonnull final BitSet componentIds )
+  protected final int createEntity( @Nonnull final World world, @Nonnull final Class<?>... componentTypes )
   {
-    return run( world, () -> world.createEntity( componentIds ) );
+    return run( world, () -> world.createEntity( componentTypes ) );
   }
 
   final boolean isAlive( @Nonnull final World world, final int entityId )

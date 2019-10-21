@@ -142,15 +142,26 @@ public final class World
   }
 
   /**
+   * Create a new entity with the components specified by types.
+   *
+   * @param componentTypes the java types of the components.
+   * @return the id of the entity.
+   */
+  public int createEntity( @Nonnull final Class<?>... componentTypes )
+  {
+    return createEntity( createComponentIdSet( componentTypes ) );
+  }
+
+  /**
    * Create a new entity with the specified components.
    *
    * @param initialComponentIds the ids of the components to create.
    * @return the id of the entity.
    */
-  public int createEntity( @Nonnull final BitSet initialComponentIds )
+  public int createEntity( @Nonnull final ComponentIdSet initialComponentIds )
   {
     ensureCurrentWorldMatches( "createEntity()" );
-    return getEntityManager().createEntity( initialComponentIds ).getId();
+    return getEntityManager().createEntity( initialComponentIds.getComponentIds() ).getId();
   }
 
   /**

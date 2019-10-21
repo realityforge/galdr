@@ -191,7 +191,7 @@ public class EntityCollectionTest
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
-    final int entityId = createEntity( world, set( 0 ) );
+    final int entityId = createEntity( world, Component1.class );
 
     assertEquals( collection.getEntities().cardinality(), 1 );
     assertTrue( collection.getEntities().get( entityId ) );
@@ -207,7 +207,7 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -221,7 +221,7 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -238,7 +238,7 @@ public class EntityCollectionTest
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
@@ -261,7 +261,7 @@ public class EntityCollectionTest
     final BitSet exclude = set();
     final EntityCollection collection = createSubscription( world, all, one, exclude ).getCollection();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
     run( world, () -> world.disposeEntity( entityId ) );
 
@@ -295,16 +295,16 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
-    final int entityId5 = createEntity( world, set() );
-    final int entityId6 = createEntity( world, set() );
-    final int entityId7 = createEntity( world, set( 0 ) );
-    final int entityId8 = createEntity( world, set() );
-    final int entityId9 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world, Component1.class );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
+    final int entityId5 = createEntity( world );
+    final int entityId6 = createEntity( world );
+    final int entityId7 = createEntity( world, Component1.class );
+    final int entityId8 = createEntity( world );
+    final int entityId9 = createEntity( world, Component1.class );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -333,16 +333,16 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
-    final int entityId5 = createEntity( world, set() );
-    final int entityId6 = createEntity( world, set() );
-    final int entityId7 = createEntity( world, set( 0 ) );
-    final int entityId8 = createEntity( world, set() );
-    final int entityId9 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world, Component1.class );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
+    final int entityId5 = createEntity( world );
+    final int entityId6 = createEntity( world );
+    final int entityId7 = createEntity( world, Component1.class );
+    final int entityId8 = createEntity( world );
+    final int entityId9 = createEntity( world, Component1.class );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -380,16 +380,16 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
-    final int entityId5 = createEntity( world, set() );
-    final int entityId6 = createEntity( world, set() );
-    final int entityId7 = createEntity( world, set( 0 ) );
-    final int entityId8 = createEntity( world, set() );
-    final int entityId9 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world, Component1.class );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
+    final int entityId5 = createEntity( world );
+    final int entityId6 = createEntity( world );
+    final int entityId7 = createEntity( world, Component1.class );
+    final int entityId8 = createEntity( world );
+    final int entityId9 = createEntity( world, Component1.class );
 
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
@@ -428,16 +428,16 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
-    final int entityId5 = createEntity( world, set() );
-    final int entityId6 = createEntity( world, set() );
-    final int entityId7 = createEntity( world, set( 0 ) );
-    final int entityId8 = createEntity( world, set() );
-    final int entityId9 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world, Component1.class );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
+    final int entityId5 = createEntity( world );
+    final int entityId6 = createEntity( world );
+    final int entityId7 = createEntity( world, Component1.class );
+    final int entityId8 = createEntity( world );
+    final int entityId9 = createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -478,16 +478,16 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set( 0 ) );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
-    final int entityId5 = createEntity( world, set() );
-    final int entityId6 = createEntity( world, set() );
-    final int entityId7 = createEntity( world, set( 0 ) );
-    final int entityId8 = createEntity( world, set() );
-    final int entityId9 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world, Component1.class );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
+    final int entityId5 = createEntity( world );
+    final int entityId6 = createEntity( world );
+    final int entityId7 = createEntity( world, Component1.class );
+    final int entityId8 = createEntity( world );
+    final int entityId9 = createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -536,10 +536,10 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -587,11 +587,11 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
-    final int entityId4 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
+    final int entityId4 = createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -633,8 +633,8 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
-    createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
+    createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -657,9 +657,9 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set() );
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world, Component1.class );
 
     assertNull( collection.getSubscription() );
 
@@ -756,7 +756,7 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
     final EntityCollection collection = subscription.getCollection();
 
-    final int entityId0 = createEntity( world, set( 0 ) );
+    final int entityId0 = createEntity( world, Component1.class );
 
     beginIteration( world, collection, subscription );
 

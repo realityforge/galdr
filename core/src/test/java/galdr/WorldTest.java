@@ -142,8 +142,8 @@ public class WorldTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
 
     run( world, () -> assertTrue( world.isAlive( entityId1 ) ) );
     run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
@@ -153,10 +153,34 @@ public class WorldTest
     run( world, () -> assertFalse( world.isAlive( entityId1 ) ) );
     run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
 
-    final int entityId3 = createEntity( world, set() );
+    final int entityId3 = createEntity( world );
 
     run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
     run( world, () -> assertTrue( world.isAlive( entityId3 ) ) );
+  }
+
+  @Test
+  public void createEntityWithComponentIdSet()
+  {
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .component( Component3.class )
+      .build();
+
+    final ComponentIdSet componentIdSet = world.createComponentIdSet( Component1.class, Component3.class );
+
+    final int entityId = run( world, () -> world.createEntity( componentIdSet ) );
+
+    run( world, () -> assertTrue( world.isAlive( entityId ) ) );
+
+    final ComponentAPI<Component1> cm1 = world.getComponentByType( Component1.class );
+    final ComponentAPI<Component2> cm2 = world.getComponentByType( Component2.class );
+    final ComponentAPI<Component3> cm3 = world.getComponentByType( Component3.class );
+
+    run( world, () -> assertTrue( cm1.has( entityId ) ) );
+    run( world, () -> assertFalse( cm2.has( entityId ) ) );
+    run( world, () -> assertTrue( cm3.has( entityId ) ) );
   }
 
   @Test

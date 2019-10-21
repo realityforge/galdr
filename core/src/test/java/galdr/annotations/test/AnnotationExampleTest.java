@@ -29,7 +29,7 @@ public class AnnotationExampleTest
 
     stage.process( 1 );
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     stage.process( 1 );
 

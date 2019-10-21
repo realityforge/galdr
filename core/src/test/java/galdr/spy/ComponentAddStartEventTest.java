@@ -18,7 +18,7 @@ public class ComponentAddStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().component( Health.class, Health::new ).build();
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final int componentId = world.getComponentByType( Health.class ).getId();
     final ComponentAddStartEvent event = new ComponentAddStartEvent( world, entityId, componentId );
 

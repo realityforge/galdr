@@ -18,8 +18,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -37,8 +37,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -70,8 +70,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     run( world, () -> world.disposeEntity( sourceEntityId ) );
 
@@ -87,8 +87,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     run( world, () -> world.disposeEntity( targetEntityId ) );
 
@@ -104,7 +104,7 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
 
     assertInvariantFailure( () -> link( world, entityId, entityId, false, false ),
                             "Galdr-0110: Attempted to link entity 0 to itself." );
@@ -117,8 +117,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     final Link link = link( world, sourceEntityId, targetEntityId, false, false );
 
@@ -138,8 +138,8 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -165,8 +165,8 @@ public class LinkTest
   public void createLinkWithNoCascadeAndDisposeSource_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -214,8 +214,8 @@ public class LinkTest
   public void createLinkWithNoCascadeAndDisposeTarget()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -242,8 +242,8 @@ public class LinkTest
   public void createLinkWithNoCascadeAndDisposeTarget_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -292,8 +292,8 @@ public class LinkTest
   public void createLinkWithCascadeSourceRemoveAndDisposeSource()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -319,8 +319,8 @@ public class LinkTest
   public void createLinkWithCascadeSourceRemoveAndDisposeSource_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -376,8 +376,8 @@ public class LinkTest
   public void createLinkWithCascadeSourceRemoveAndDisposeTarget()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -403,8 +403,8 @@ public class LinkTest
   public void createLinkWithCascadeSourceRemoveAndDisposeTarget_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -452,8 +452,8 @@ public class LinkTest
   public void createLinkWithCascadeTargetRemoveAndDisposeSource()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -479,8 +479,8 @@ public class LinkTest
   public void createLinkWithCascadeTargetRemoveAndDisposeSource_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -528,8 +528,8 @@ public class LinkTest
   public void createLinkWithCascadeTargetRemoveAndDisposeTarget()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -555,8 +555,8 @@ public class LinkTest
   public void createLinkWithCascadeTargetRemoveAndDisposeTarget_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -612,8 +612,8 @@ public class LinkTest
   public void dispose()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -639,8 +639,8 @@ public class LinkTest
   public void dispose_withSpyEnabled()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     assertLinkCount( world, sourceEntityId, 0, 0 );
     assertLinkCount( world, targetEntityId, 0, 0 );
@@ -675,8 +675,8 @@ public class LinkTest
   public void dispose_disposedLink()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     final Link link = link( world, sourceEntityId, targetEntityId, false, false );
     run( world, link::dispose );
@@ -688,8 +688,8 @@ public class LinkTest
   public void getSourceEntity_disposedLink()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     final Link link = link( world, sourceEntityId, targetEntityId, false, false );
     run( world, link::dispose );
@@ -702,8 +702,8 @@ public class LinkTest
   public void getTargetEntity_disposedLink()
   {
     final World world = Worlds.world().build();
-    final int sourceEntityId = createEntity( world, set() );
-    final int targetEntityId = createEntity( world, set() );
+    final int sourceEntityId = createEntity( world );
+    final int targetEntityId = createEntity( world );
 
     final Link link = link( world, sourceEntityId, targetEntityId, false, false );
     run( world, link::dispose );
@@ -717,9 +717,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link = link( world, entityId1, entityId2, false, false );
 
@@ -733,9 +733,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link = link( world, entityId1, entityId2, false, false );
 
@@ -749,9 +749,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link = link( world, entityId1, entityId2, false, false );
 
@@ -765,9 +765,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link1 = link( world, entityId1, entityId2, false, false );
     link( world, entityId1, entityId3, false, false );
@@ -782,9 +782,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link = link( world, entityId1, entityId2, false, false );
 
@@ -798,9 +798,9 @@ public class LinkTest
   {
     final World world = Worlds.world().build();
 
-    final int entityId1 = createEntity( world, set() );
-    final int entityId2 = createEntity( world, set() );
-    final int entityId3 = createEntity( world, set() );
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
+    final int entityId3 = createEntity( world );
 
     final Link link1 = link( world, entityId1, entityId2, false, false );
     link( world, entityId3, entityId2, false, false );

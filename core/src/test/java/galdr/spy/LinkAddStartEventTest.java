@@ -14,8 +14,8 @@ public class LinkAddStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entity1Id = createEntity( world, set() );
-    final int entity2Id = createEntity( world, set() );
+    final int entity1Id = createEntity( world );
+    final int entity2Id = createEntity( world );
     final LinkAddStartEvent event = new LinkAddStartEvent( world, entity1Id, entity2Id );
 
     assertEquals( event.getWorld(), world );

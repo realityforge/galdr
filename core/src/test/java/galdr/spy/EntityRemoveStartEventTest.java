@@ -15,7 +15,7 @@ public class EntityRemoveStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().build();
-    final int entityId = createEntity( world, set() );
+    final int entityId = createEntity( world );
     final BitSet componentIds = set();
     final EntityRemoveStartEvent event = new EntityRemoveStartEvent( world, entityId, componentIds );
 
