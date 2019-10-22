@@ -21,6 +21,7 @@ final class Galdr_HealthProcessorImpl
   private Subscription $galdr$_processHealth_subscription;
   @Nullable
   private ComponentAPI<Health> $galdrc$_health;
+  private AreaOfInterest $galdr$_processHealth_areaOfInterest;
 
   Galdr_HealthProcessorImpl( @Nonnull final Galdr_HealthProcessor processor )
   {
@@ -54,15 +55,19 @@ final class Galdr_HealthProcessorImpl
     }
   }
 
-  void $galdr$_activate()
+  void $galdr$_postConstruct()
   {
-    final AreaOfInterest areaOfInterest =
+    $galdr$_processHealth_areaOfInterest =
       world().createAreaOfInterest( Collections.singleton( Health.class ),
                                     Collections.emptyList(),
                                     Collections.emptyList() );
-    $galdr$_processHealth_subscription =
-      world().createSubscription( Galdr.areNamesEnabled() ? getName() : null, areaOfInterest );
     $galdrc$_health = world().getComponentByType( Health.class );
+  }
+
+  void $galdr$_activate()
+  {
+    $galdr$_processHealth_subscription =
+      world().createSubscription( Galdr.areNamesEnabled() ? getName() : null, $galdr$_processHealth_areaOfInterest );
   }
 
   void $galdr$_deactivate()

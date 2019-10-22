@@ -4,12 +4,13 @@ import galdr.Processor;
 import galdr.World;
 import galdr.internal.OnDeactivateFn;
 import galdr.internal.OnActivateFn;
+import galdr.internal.PostConstructFn;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated( "galdr" )
 final class Galdr_HealthProcessor
-  implements Processor, OnActivateFn, OnDeactivateFn
+  implements Processor, PostConstructFn, OnActivateFn, OnDeactivateFn
 {
   @Nonnull
   private final Galdr_HealthProcessorImpl _processor = new Galdr_HealthProcessorImpl( this );
@@ -24,6 +25,12 @@ final class Galdr_HealthProcessor
   public void process( final int delta )
   {
     _processor.$galdr$_process( delta );
+  }
+
+  @Override
+  public void postConstruct()
+  {
+    _processor.$galdr$_postConstruct();
   }
 
   @Override
