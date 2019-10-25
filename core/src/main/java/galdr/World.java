@@ -185,7 +185,7 @@ public final class World
   public int createEntity( @Nonnull final ComponentIdSet initialComponentIds )
   {
     ensureCurrentWorldMatches( "createEntity()" );
-    return getEntityManager().createEntity( initialComponentIds.getBitSet() ).getId();
+    return getEntityManager().createEntity( initialComponentIds ).getId();
   }
 
   /**

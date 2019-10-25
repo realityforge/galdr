@@ -22,6 +22,10 @@ public class EntityManagerTest
   {
   }
 
+  private static class Resistance
+  {
+  }
+
   @Test
   public void isAlive()
   {
@@ -400,19 +404,27 @@ public class EntityManagerTest
   @Test
   public void createEntity_badComponentId()
   {
-    final World world = Worlds.world()
+    final World world1 = Worlds.world()
       .component( Armour.class )
       .component( Health.class )
       .build();
+    final World world2 = Worlds.world()
+      .component( Armour.class )
+      .component( Health.class )
+      .component( Attack.class )
+      .component( Resistance.class )
+      .build();
 
-    final EntityManager entityManager = world.getEntityManager();
+    final ComponentIdSet componentIdSet1 = world2.createComponentIdSet( Resistance.class );
+    final ComponentIdSet componentIdSet2 =
+      world2.createComponentIdSet( Armour.class, Health.class, Attack.class );
 
     // invalid
-    assertInvariantFailure( () -> entityManager.createEntity( set( 33 ) ),
-                            "Galdr-0006: Attempting to create entity with invalid componentId 33" );
+    assertInvariantFailure( () -> run( world1, () -> world1.createEntity( componentIdSet1 ) ),
+                            "Galdr-0006: Attempting to create entity with invalid componentId 3" );
 
     // 2 is invalid
-    assertInvariantFailure( () -> entityManager.createEntity( set( 0, 1, 2 ) ),
+    assertInvariantFailure( () -> run( world1, () -> world1.createEntity( componentIdSet2 ) ),
                             "Galdr-0006: Attempting to create entity with invalid componentId 2" );
   }
 }

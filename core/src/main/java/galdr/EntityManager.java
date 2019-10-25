@@ -65,12 +65,13 @@ final class EntityManager
   }
 
   @Nonnull
-  Entity createEntity( @Nonnull final BitSet componentIds )
+  Entity createEntity( @Nonnull final ComponentIdSet componentIdSet )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
       int current = -1;
-      while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+      final BitSet bitSet = componentIdSet.getBitSet();
+      while ( -1 != ( current = bitSet.nextSetBit( current + 1 ) ) )
       {
         final int id = current;
         apiInvariant( () -> _world.isComponentIdValid( id ),
@@ -79,7 +80,7 @@ final class EntityManager
     }
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world, componentIds ) );
+      _world.getSpy().reportSpyEvent( new EntityAddStartEvent( _world, componentIdSet.getBitSet() ) );
     }
     if ( Galdr.areSpiesEnabled() )
     {
@@ -88,7 +89,7 @@ final class EntityManager
     final Entity entity = allocateEntity();
     entity.setAlive();
     entity.setAdding();
-    createComponents( entity, componentIds );
+    createComponents( entity, componentIdSet );
     entity.clearAdding();
     for ( final EntityCollection collection : _world.getEntityCollections().values() )
     {
@@ -96,17 +97,19 @@ final class EntityManager
     }
     if ( _world.willPropagateSpyEvents() )
     {
-      _world.getSpy().reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId(), componentIds ) );
+      _world.getSpy()
+        .reportSpyEvent( new EntityAddCompleteEvent( _world, entity.getId(), componentIdSet.getBitSet() ) );
     }
     return entity;
   }
 
-  private void createComponents( @Nonnull final Entity entity, @Nonnull final BitSet componentIds )
+  private void createComponents( @Nonnull final Entity entity, @Nonnull final ComponentIdSet componentIdSet )
   {
     final int entityId = entity.getId();
 
+    final BitSet bitSet = componentIdSet.getBitSet();
     int current = -1;
-    while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+    while ( -1 != ( current = bitSet.nextSetBit( current + 1 ) ) )
     {
       _world.getComponentManagerById( current ).allocate( entityId );
     }
