@@ -57,10 +57,7 @@ final class Galdr_HealthProcessorImpl
 
   void $galdr$_postConstruct()
   {
-    $galdr$_processHealth_areaOfInterest =
-      world().createAreaOfInterest( Collections.singleton( Health.class ),
-                                    Collections.emptyList(),
-                                    Collections.emptyList() );
+    $galdr$_processHealth_areaOfInterest = world().createAreaOfInterest( Collections.singleton( Health.class ) );
     $galdrc$_health = world().getComponentByType( Health.class );
   }
 

@@ -2,6 +2,8 @@ package galdr;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
@@ -64,10 +66,24 @@ public abstract class AbstractTest
   }
 
   @Nonnull
+  final Subscription createSubscription( @Nonnull final World world, @Nonnull final Collection<Class<?>> all )
+  {
+    return createSubscription( world, all, Collections.emptyList() );
+  }
+
+  @Nonnull
   final Subscription createSubscription( @Nonnull final World world,
-                                         @Nonnull final BitSet all,
-                                         @Nonnull final BitSet one,
-                                         @Nonnull final BitSet exclude )
+                                         @Nonnull final Collection<Class<?>> all,
+                                         @Nonnull final Collection<Class<?>> one )
+  {
+    return createSubscription( world, all, one, Collections.emptyList() );
+  }
+
+  @Nonnull
+  final Subscription createSubscription( @Nonnull final World world,
+                                         @Nonnull final Collection<Class<?>> all,
+                                         @Nonnull final Collection<Class<?>> one,
+                                         @Nonnull final Collection<Class<?>> exclude )
   {
     return run( world, () -> world.createSubscription( world.createAreaOfInterest( all, one, exclude ) ) );
   }

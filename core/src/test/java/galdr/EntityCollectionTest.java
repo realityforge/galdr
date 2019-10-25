@@ -1,6 +1,6 @@
 package galdr;
 
-import java.util.BitSet;
+import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -21,7 +21,8 @@ public class EntityCollectionTest
     assertEquals( world.getEntityCollections().size(), 0 );
     //TODO: Change component to componentAPI and use spy to get collections count
     assertEquals( component.getCollections().size(), 0 );
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
     assertEquals( component.getCollections().size(), 1 );
@@ -49,10 +50,12 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    // Ensure a matching collection exists
-    createSubscription( world, set( 0 ), set(), set() );
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
 
-    assertInvariantFailure( () -> run( world, () -> world.createCollection( set( 0 ), set(), set() ) ),
+    // Ensure a matching collection exists
+    run( world, () -> world.createSubscription( areaOfInterest ) );
+
+    assertInvariantFailure( () -> run( world, () -> world.createCollection( areaOfInterest ) ),
                             "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
   }
 
@@ -61,12 +64,14 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
+
     // Create a collection with known AreaOfInterest
-    final EntityCollection collection1 = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection1 = run( world, () -> world.createSubscription( areaOfInterest ) ).getCollection();
     run( world, () -> world.removeCollection( collection1 ) );
 
     // Create a different collection with the same AreaOfInterest
-    createSubscription( world, set( 0 ), set(), set() );
+    run( world, () -> world.createSubscription( areaOfInterest ) );
 
     assertInvariantFailure( () -> run( world, () -> world.removeCollection( collection1 ) ),
                             "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
@@ -77,7 +82,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
@@ -90,7 +95,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
@@ -105,7 +110,8 @@ public class EntityCollectionTest
     final World world = Worlds.world().component( Component1.class ).build();
 
     // Create a collection with known AreaOfInterest
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
     // Remove it so there is no match
     run( world, () -> world.removeCollection( collection ) );
 
@@ -120,7 +126,8 @@ public class EntityCollectionTest
 
     assertEquals( world.getEntityCollections().size(), 0 );
 
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
     assertTrue( collection.isNotDisposed() );
@@ -147,9 +154,10 @@ public class EntityCollectionTest
   @Test
   public void ensureNotDisposed()
   {
-    final World world = Worlds.world().build();
+    final World world = Worlds.world().component( Component1.class ).build();
 
-    final EntityCollection collection = createSubscription( world, set(), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     collection.ensureNotDisposed();
 
@@ -162,20 +170,23 @@ public class EntityCollectionTest
   @Test
   public void createCollection_whenInContextOfDifferentWorld()
   {
-    final World world1 = Worlds.world().build();
-    final World world2 = Worlds.world().build();
+    final World world1 = Worlds.world().component( Component1.class ).build();
+    final World world2 = Worlds.world().component( Component1.class ).build();
 
-    assertInvariantFailure( () -> run( world1, () -> world2.createCollection( set(), set(), set() ) ),
+    final AreaOfInterest areaOfInterest = world2.createAreaOfInterest( Collections.singletonList( Component1.class ) );
+
+    assertInvariantFailure( () -> run( world1, () -> world2.createCollection( areaOfInterest ) ),
                             "Galdr-0037: World.createCollection() invoked on world named 'World@2' when a world named 'World@1' is active." );
   }
 
   @Test
   public void ensureCurrentWorldMatches()
   {
-    final World world1 = Worlds.world().build();
-    final World world2 = Worlds.world().build();
+    final World world1 = Worlds.world().component( Component1.class ).build();
+    final World world2 = Worlds.world().component( Component1.class ).build();
 
-    final EntityCollection collection = createSubscription( world1, set(), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world1, Collections.singletonList( Component1.class ) ).getCollection();
 
     run( world1, collection::ensureCurrentWorldMatches );
 
@@ -187,7 +198,8 @@ public class EntityCollectionTest
   public void createAndDisposeEntityThatMatchesCollection()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
@@ -205,7 +217,8 @@ public class EntityCollectionTest
   public void entityAdd_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -219,7 +232,8 @@ public class EntityCollectionTest
   public void entityRemove_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -234,7 +248,8 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final EntityCollection collection = createSubscription( world, set( 0 ), set(), set() ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( collection.getEntities().cardinality(), 0 );
 
@@ -256,10 +271,8 @@ public class EntityCollectionTest
   public void componentChange_badEntity()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final BitSet all = set( 0 );
-    final BitSet one = set();
-    final BitSet exclude = set();
-    final EntityCollection collection = createSubscription( world, all, one, exclude ).getCollection();
+    final EntityCollection collection =
+      createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     final int entityId = createEntity( world );
     final Entity entity = world.getEntityManager().unsafeGetEntityById( entityId );
@@ -273,7 +286,7 @@ public class EntityCollectionTest
   public void iterateOverEmptyCollection()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     assertNull( collection.getSubscription() );
@@ -292,7 +305,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesNoModifications()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -330,7 +343,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -377,7 +390,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesRemoveEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -425,7 +438,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -475,7 +488,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -533,7 +546,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -584,7 +597,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -630,7 +643,7 @@ public class EntityCollectionTest
   public void abortIterationBeforeAllEntitiesProcessed()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );
@@ -654,7 +667,7 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
     final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world );
@@ -690,7 +703,7 @@ public class EntityCollectionTest
   public void abortIteration_noIterationActive()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
 
     assertInvariantFailure( () -> run( world, subscription::abortIteration ),
                             "Galdr-0047: EntityCollection.abortIteration() invoked with subscription named '" +
@@ -701,8 +714,8 @@ public class EntityCollectionTest
   public void abortIteration_nonMatchingSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
-    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription1 = createSubscription( world, Collections.singletonList( Component1.class ) );
+    final Subscription subscription2 = createSubscription( world, Collections.singletonList( Component1.class ) );
 
     run( world, subscription1::beginIteration );
 
@@ -714,7 +727,7 @@ public class EntityCollectionTest
   public void nextEntity_noActiveSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
 
     assertInvariantFailure( () -> run( world, subscription::nextEntity ),
                             "Galdr-0047: EntityCollection.nextEntity() invoked with subscription named 'Subscription@1' but no iteration was active." );
@@ -724,8 +737,8 @@ public class EntityCollectionTest
   public void nextEntity_nonMatchingSubscription()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
-    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription1 = createSubscription( world, Collections.singletonList( Component1.class ) );
+    final Subscription subscription2 = createSubscription( world, Collections.singletonList( Component1.class ) );
 
     run( world, subscription1::beginIteration );
 
@@ -737,8 +750,8 @@ public class EntityCollectionTest
   public void beginIteration_subscriptionAlreadyIterating()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription1 = createSubscription( world, set( 0 ), set(), set() );
-    final Subscription subscription2 = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription1 = createSubscription( world, Collections.singletonList( Component1.class ) );
+    final Subscription subscription2 = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription1.getCollection();
 
     beginIteration( world, collection, subscription1 );
@@ -753,7 +766,7 @@ public class EntityCollectionTest
   public void beginIteration_whenIterationInProgress()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final Subscription subscription = createSubscription( world, set( 0 ), set(), set() );
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
     final int entityId0 = createEntity( world, Component1.class );

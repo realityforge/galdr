@@ -142,6 +142,30 @@ public final class World
   }
 
   /**
+   * Create a new ComponentIdSet with the components specified by types.
+   *
+   * @param componentTypes the java types of the components.
+   * @return the component id set.
+   */
+  @Nonnull
+  public ComponentIdSet createComponentIdSet( @Nonnull final Collection<Class<?>> componentTypes )
+  {
+    final BitSet set = new BitSet();
+    for ( final Class<?> componentType : componentTypes )
+    {
+      final int id = getComponentByType( componentType ).getId();
+      if ( Galdr.shouldCheckApiInvariants() )
+      {
+        apiInvariant( () -> !set.get( id ),
+                      () -> "Galdr-0049: A duplicate component named '" + componentType.getName() + "' was passed " +
+                            "when attempting to create ComponentIdSet." );
+      }
+      set.set( id );
+    }
+    return new ComponentIdSet( set );
+  }
+
+  /**
    * Create a new entity with the components specified by types.
    *
    * @param componentTypes the java types of the components.
@@ -432,17 +456,40 @@ public final class World
   }
 
   @Nonnull
-  EntityCollection createCollection( @Nonnull final BitSet all,
-                                     @Nonnull final BitSet one,
-                                     @Nonnull final BitSet exclude )
+  public AreaOfInterest createAreaOfInterest( @Nonnull final Collection<Class<?>> all )
   {
-    return createCollection( createAreaOfInterest( all, one, exclude ) );
+    return createAreaOfInterest( all, Collections.emptyList() );
   }
 
   @Nonnull
-  public AreaOfInterest createAreaOfInterest( @Nonnull final BitSet all,
-                                              @Nonnull final BitSet one,
-                                              @Nonnull final BitSet exclude )
+  public AreaOfInterest createAreaOfInterest( @Nonnull final Collection<Class<?>> all,
+                                              @Nonnull final Collection<Class<?>> one )
+  {
+    return createAreaOfInterest( all, one, Collections.emptyList() );
+  }
+
+  @Nonnull
+  public AreaOfInterest createAreaOfInterest( @Nonnull final Collection<Class<?>> all,
+                                              @Nonnull final Collection<Class<?>> one,
+                                              @Nonnull final Collection<Class<?>> exclude )
+  {
+    return createAreaOfInterest( createComponentIdSet( all ),
+                                 createComponentIdSet( one ),
+                                 createComponentIdSet( exclude ) );
+  }
+
+  @Nonnull
+  public AreaOfInterest createAreaOfInterest( @Nonnull final ComponentIdSet all,
+                                              @Nonnull final ComponentIdSet one,
+                                              @Nonnull final ComponentIdSet exclude )
+  {
+    return createAreaOfInterest( all.getComponentIds(), one.getComponentIds(), exclude.getComponentIds() );
+  }
+
+  @Nonnull
+  private AreaOfInterest createAreaOfInterest( @Nonnull final BitSet all,
+                                               @Nonnull final BitSet one,
+                                               @Nonnull final BitSet exclude )
   {
     verifyBitSet( "all", all );
     verifyBitSet( "one", one );
@@ -482,32 +529,6 @@ public final class World
   }
 
   @Nonnull
-  public AreaOfInterest createAreaOfInterest( @Nonnull final Collection<Class<?>> all,
-                                              @Nonnull final Collection<Class<?>> one,
-                                              @Nonnull final Collection<Class<?>> exclude )
-  {
-    return new AreaOfInterest( toBitSet( "all", all ), toBitSet( "one", one ), toBitSet( "exclude", exclude ) );
-  }
-
-  @Nonnull
-  private BitSet toBitSet( @Nonnull final String name, @Nonnull final Collection<Class<?>> components )
-  {
-    final BitSet set = new BitSet();
-    for ( final Class<?> type : components )
-    {
-      final int id = getComponentByType( type ).getId();
-      if ( Galdr.shouldCheckApiInvariants() )
-      {
-        apiInvariant( () -> !set.get( id ),
-                      () -> "Galdr-0048: World.createAreaOfInterest() passed a duplicate component " +
-                            type.getName() + " in the " + name + " component set." );
-      }
-      set.set( id );
-    }
-    return set;
-  }
-
-  @Nonnull
   private EntityCollection findOrCreateCollection( @Nonnull final AreaOfInterest areaOfInterest )
   {
     final EntityCollection collection = findCollection( areaOfInterest );
@@ -528,7 +549,7 @@ public final class World
   }
 
   @Nonnull
-  private EntityCollection createCollection( @Nonnull final AreaOfInterest areaOfInterest )
+  EntityCollection createCollection( @Nonnull final AreaOfInterest areaOfInterest )
   {
     ensureCurrentWorldMatches( "createCollection()" );
     if ( Galdr.shouldCheckInvariants() )

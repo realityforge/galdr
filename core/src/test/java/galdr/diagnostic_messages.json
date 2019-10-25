@@ -235,11 +235,6 @@
     "messagePattern": "EntityCollection.%s() invoked with subscription named '%s' but no iteration was active."
   },
   {
-    "code": 48,
-    "type": "API_INVARIANT",
-    "messagePattern": "World.createAreaOfInterest() passed a duplicate component %s in the %s component set."
-  },
-  {
     "code": 49,
     "type": "API_INVARIANT",
     "messagePattern": "A duplicate component named '%s' was passed when attempting to create ComponentIdSet."

@@ -44,21 +44,16 @@ public class ComponentInfoImplTest
     assertEquals( info.getCollectionCount(), 0 );
 
     final AreaOfInterest areaOfInterest1 =
-      world.createAreaOfInterest( Collections.singletonList( Component1.class ),
-                                  Collections.emptyList(),
-                                  Collections.emptyList() );
+      world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
     final AreaOfInterest areaOfInterest2 =
       world.createAreaOfInterest( Collections.emptyList(),
-                                  Collections.singletonList( Component1.class ),
-                                  Collections.emptyList() );
+                                  Collections.singletonList( Component1.class ) );
     final AreaOfInterest areaOfInterest3 =
       world.createAreaOfInterest( Collections.emptyList(),
                                   Collections.emptyList(),
                                   Collections.singletonList( Component1.class ) );
     final AreaOfInterest areaOfInterest4 =
-      world.createAreaOfInterest( Collections.singletonList( Component2.class ),
-                                  Collections.emptyList(),
-                                  Collections.emptyList() );
+      world.createAreaOfInterest( Collections.singletonList( Component2.class ) );
 
     assertEquals( info.getCollectionCount(), 0 );
 
