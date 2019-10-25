@@ -1,6 +1,5 @@
 package galdr;
 
-import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -29,15 +28,10 @@ public class ComponentIdSetTest
     final ComponentIdSet componentIdSet3 = world.createComponentIdSet( Component1.class, Component2.class );
     final ComponentIdSet componentIdSet3b = world.createComponentIdSet( Component1.class, Component2.class );
 
-    final BitSet componentIds0 = set();
-    final BitSet componentIds1 = set( 0 );
-    final BitSet componentIds2 = set( 1 );
-    final BitSet componentIds3 = set( 0, 1 );
-
-    assertEquals( componentIdSet0.getBitSet(), componentIds0 );
-    assertEquals( componentIdSet1.getBitSet(), componentIds1 );
-    assertEquals( componentIdSet2.getBitSet(), componentIds2 );
-    assertEquals( componentIdSet3.getBitSet(), componentIds3 );
+    assertEquals( componentIdSet0.getBitSet(), set() );
+    assertEquals( componentIdSet1.getBitSet(), set( 0 ) );
+    assertEquals( componentIdSet2.getBitSet(), set( 1 ) );
+    assertEquals( componentIdSet3.getBitSet(), set( 0, 1 ) );
 
     assertEquals( componentIdSet0, componentIdSet0 );
     assertEquals( componentIdSet0, componentIdSet0b );
