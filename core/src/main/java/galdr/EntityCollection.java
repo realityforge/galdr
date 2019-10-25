@@ -372,7 +372,7 @@ final class EntityCollection
      */
     static final int HAS_NEW_ENTITIES = 1 << 2;
     /**
-     * The EntityCollection has been disposed and should no longer be intereacted with.
+     * The EntityCollection has been disposed and should no longer be interacted with.
      */
     static final int DISPOSED = 1 << 3;
 
