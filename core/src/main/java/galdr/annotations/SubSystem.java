@@ -34,4 +34,29 @@ public @interface SubSystem
    */
   @Nonnull
   String stage() default "<default>";
+
+  /**
+   * Return the priority of the processor.
+   * Processors with lower priority will execute earlier in a stage.
+   * Processors with the same priority will be ordered based on a dependency analysis or if the processors
+   * are independent then then by the declaration order.
+   *
+   * @return the priority of the processor.
+   */
+  int priority() default Priority.DEFAULT;
+
+  /**
+   * The class containing priority constants.
+   */
+  final class Priority
+  {
+    /**
+     * The default priority if no other priority is specified.
+     */
+    public static final int DEFAULT = 1000;
+
+    private Priority()
+    {
+    }
+  }
 }
