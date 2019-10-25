@@ -130,24 +130,25 @@ public class EntityCollectionTest
       createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
-    assertTrue( collection.isNotDisposed() );
-
-    assertEquals( world.getEntityCollections().size(), 1 );
+    assertEquals( collection.getRefCount(), 1 );
     assertTrue( collection.isNotDisposed() );
 
     run( world, collection::incRef );
 
     assertEquals( world.getEntityCollections().size(), 1 );
+    assertEquals( collection.getRefCount(), 2 );
     assertTrue( collection.isNotDisposed() );
 
     run( world, collection::decRef );
 
     assertEquals( world.getEntityCollections().size(), 1 );
+    assertEquals( collection.getRefCount(), 1 );
     assertTrue( collection.isNotDisposed() );
 
     run( world, collection::decRef );
 
     assertEquals( world.getEntityCollections().size(), 0 );
+    assertEquals( collection.getRefCount(), 0 );
     assertTrue( collection.isDisposed() );
   }
 

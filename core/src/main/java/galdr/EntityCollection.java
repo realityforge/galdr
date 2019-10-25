@@ -68,6 +68,11 @@ final class EntityCollection
     _flags = 0;
   }
 
+  int getRefCount()
+  {
+    return _refCount;
+  }
+
   void incRef()
   {
     ensureCurrentWorldMatches();
