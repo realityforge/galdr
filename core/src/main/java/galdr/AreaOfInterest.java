@@ -90,9 +90,9 @@ public final class AreaOfInterest
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
       return "AreaOfInterest[" +
-             "all=" + getAll().getBitSet() + "," +
-             "one=" + getOne().getBitSet() + "," +
-             "exclude=" + getExclude().getBitSet() +
+             "all=" + _all.getBitSet() + "," +
+             "one=" + _one.getBitSet() + "," +
+             "exclude=" + _exclude.getBitSet() +
              "]";
     }
     else
