@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 /**
  * Marks a template method that returns the named {@link galdr.ProcessorStage} instance.
- * This annotation can appear on classes annotated by {@link GaldrApplication}.
+ * This annotation will be processed on classes annotated by {@link GaldrApplication}.
  *
  * <p>The method that is annotated with this annotation must also comply with the following constraints:</p>
  * <ul>
