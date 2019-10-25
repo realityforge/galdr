@@ -7,9 +7,14 @@ import javax.annotation.Nonnull;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * Represents a group of components that are of interest.
- * Typically this is used by a {@link galdr.Processor} to describe the {@link galdr.Entity} instances
- * that will be selected by the processor for processing.
+ * Represents an "Area Of Interest" in the world.
+ * An "Area of Interest" is a set of entities that contains components that match the requirements of
+ * the AreaOfInterest. These requirements are defined in terms of components that an entity MUST contain,
+ * components an entity MUST contain at least one of and components that an entity MUST not contain.
+ *
+ * <p>The AreaOfInterest is used by the {@link Subscription} class to define which {@link galdr.Entity}
+ * instances that are part of the subscription and is primarily used by the {@link galdr.Processor} to
+ * select entities for processing.</p>
  */
 public final class AreaOfInterest
 {
