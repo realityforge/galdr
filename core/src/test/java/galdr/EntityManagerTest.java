@@ -4,7 +4,6 @@ import galdr.spy.EntityAddCompleteEvent;
 import galdr.spy.EntityAddStartEvent;
 import galdr.spy.EntityRemoveCompleteEvent;
 import galdr.spy.EntityRemoveStartEvent;
-import java.util.BitSet;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -27,16 +26,15 @@ public class EntityManagerTest
   public void isAlive()
   {
     final int initialEntityCount = 10;
-    final EntityManager entityManager =
-      Worlds.world().initialEntityCount( initialEntityCount ).build().getEntityManager();
-    final Entity entity1 = entityManager.createEntity( set() );
-    final Entity entity2 = entityManager.createEntity( set() );
+    final World world = Worlds.world().initialEntityCount( initialEntityCount ).build();
+    final int entityId1 = createEntity( world );
+    final int entityId2 = createEntity( world );
 
-    assertTrue( entityManager.isAlive( entity1.getId() ) );
-    assertTrue( entityManager.isAlive( entity2.getId() ) );
-    assertFalse( entityManager.isAlive( entity2.getId() + 1 ) );
-    assertFalse( entityManager.isAlive( initialEntityCount ) );
-    assertFalse( entityManager.isAlive( initialEntityCount + 1 ) );
+    run( world, () -> assertTrue( world.isAlive( entityId1 ) ) );
+    run( world, () -> assertTrue( world.isAlive( entityId2 ) ) );
+    run( world, () -> assertFalse( world.isAlive( entityId2 + 1 ) ) );
+    run( world, () -> assertFalse( world.isAlive( initialEntityCount ) ) );
+    run( world, () -> assertFalse( world.isAlive( initialEntityCount + 1 ) ) );
   }
 
   @Test
@@ -45,54 +43,43 @@ public class EntityManagerTest
     final int initialEntityCount = 5;
     final World world = Worlds.world()
       .initialEntityCount( initialEntityCount )
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
-      .component( Attack.class, Attack::new )
+      .component( Armour.class )
+      .component( Health.class )
+      .component( Attack.class )
       .build();
 
     final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
     final ComponentAPI<Health> health = world.getComponentByType( Health.class );
     final ComponentAPI<Attack> attack = world.getComponentByType( Attack.class );
 
-    final int armourId = armour.getId();
-    final int healthId = health.getId();
-    final int attackId = attack.getId();
+    final int entityId1 = createEntity( world, Armour.class, Health.class );
+    final int entityId2 = createEntity( world, Health.class, Attack.class );
 
     final EntityManager entityManager = world.getEntityManager();
-
-    final BitSet componentIds1 = set();
-    componentIds1.set( armourId );
-    componentIds1.set( healthId );
-
-    final BitSet componentIds2 = set();
-    componentIds2.set( healthId );
-    componentIds2.set( attackId );
-
-    final Entity entity1 = entityManager.createEntity( componentIds1 );
-    final Entity entity2 = entityManager.createEntity( componentIds2 );
-
-    assertEquals( entityManager.getEntityById( entity1.getId() ), entity1 );
-    assertEquals( entityManager.getEntityById( entity2.getId() ), entity2 );
+    final Entity entity1 = entityManager.getEntityById( entityId1 );
+    final Entity entity2 = entityManager.getEntityById( entityId2 );
+    assertEquals( entity1.getId(), entityId1 );
+    assertEquals( entity2.getId(), entityId2 );
 
     // entities should be marked as alive
     assertTrue( entity1.isAlive() );
     assertTrue( entity2.isAlive() );
 
     // We know ids are allocated sequentially
-    assertEquals( entity1.getId(), 0 );
-    assertEquals( entity2.getId(), 1 );
+    assertEquals( entityId1, 0 );
+    assertEquals( entityId2, 1 );
 
     // Component 1 components
-    assertEquals( entity1.getComponentIds(), componentIds1 );
-    run( world, () -> assertTrue( armour.has( entity1.getId() ) ) );
-    run( world, () -> assertTrue( health.has( entity1.getId() ) ) );
-    run( world, () -> assertFalse( attack.has( entity1.getId() ) ) );
+    assertEquals( entity1.getComponentIds(), set( 0, 1 ) );
+    run( world, () -> assertTrue( armour.has( entityId1 ) ) );
+    run( world, () -> assertTrue( health.has( entityId1 ) ) );
+    run( world, () -> assertFalse( attack.has( entityId1 ) ) );
 
     // Component 2 components
-    assertEquals( entity2.getComponentIds(), componentIds2 );
-    run( world, () -> assertFalse( armour.has( entity2.getId() ) ) );
-    run( world, () -> assertTrue( health.has( entity2.getId() ) ) );
-    run( world, () -> assertTrue( attack.has( entity2.getId() ) ) );
+    assertEquals( entity2.getComponentIds(), set( 1, 2 ) );
+    run( world, () -> assertFalse( armour.has( entityId2 ) ) );
+    run( world, () -> assertTrue( health.has( entityId2 ) ) );
+    run( world, () -> assertTrue( attack.has( entityId2 ) ) );
   }
 
   @Test
@@ -100,112 +87,91 @@ public class EntityManagerTest
   {
     final World world = Worlds.world()
       .initialEntityCount( 3 )
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
-      .component( Attack.class, Attack::new )
+      .component( Armour.class )
+      .component( Health.class )
+      .component( Attack.class )
       .build();
 
     final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
     final ComponentAPI<Health> health = world.getComponentByType( Health.class );
     final ComponentAPI<Attack> attack = world.getComponentByType( Attack.class );
 
-    final int armourId = armour.getId();
-    final int healthId = health.getId();
-    final int attackId = attack.getId();
-
-    final EntityManager entityManager = world.getEntityManager();
-
-    final BitSet componentIds1 = set();
-    componentIds1.set( armourId );
-    componentIds1.set( healthId );
-
-    final BitSet componentIds2 = set();
-    componentIds2.set( healthId );
-    componentIds2.set( attackId );
-
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
-    final Entity entity1 = entityManager.createEntity( componentIds1 );
-    final Entity entity2 = entityManager.createEntity( componentIds2 );
+    final int entityId1 = createEntity( world, Armour.class, Health.class );
+    final int entityId2 = createEntity( world, Health.class, Attack.class );
 
-    assertEquals( entityManager.getEntityById( entity1.getId() ), entity1 );
-    assertEquals( entityManager.getEntityById( entity2.getId() ), entity2 );
+    final EntityManager entityManager = world.getEntityManager();
+    final Entity entity1 = entityManager.getEntityById( entityId1 );
+    final Entity entity2 = entityManager.getEntityById( entityId2 );
+    assertEquals( entity1.getId(), entityId1 );
+    assertEquals( entity2.getId(), entityId2 );
 
     // entities should be marked as alive
     assertTrue( entity1.isAlive() );
     assertTrue( entity2.isAlive() );
 
     // We know ids are allocated sequentially
-    assertEquals( entity1.getId(), 0 );
-    assertEquals( entity2.getId(), 1 );
+    assertEquals( entityId1, 0 );
+    assertEquals( entityId2, 1 );
 
     // Component 1 components
-    assertEquals( entity1.getComponentIds(), componentIds1 );
-    run( world, () -> assertTrue( armour.has( entity1.getId() ) ) );
-    run( world, () -> assertTrue( health.has( entity1.getId() ) ) );
-    run( world, () -> assertFalse( attack.has( entity1.getId() ) ) );
+    assertEquals( entity1.getComponentIds(), set( 0, 1 ) );
+    run( world, () -> assertTrue( armour.has( entityId1 ) ) );
+    run( world, () -> assertTrue( health.has( entityId1 ) ) );
+    run( world, () -> assertFalse( attack.has( entityId1 ) ) );
 
     // Component 2 components
-    assertEquals( entity2.getComponentIds(), componentIds2 );
-    run( world, () -> assertFalse( armour.has( entity2.getId() ) ) );
-    run( world, () -> assertTrue( health.has( entity2.getId() ) ) );
-    run( world, () -> assertTrue( attack.has( entity2.getId() ) ) );
+    assertEquals( entity2.getComponentIds(), set( 1, 2 ) );
+    run( world, () -> assertFalse( armour.has( entityId2 ) ) );
+    run( world, () -> assertTrue( health.has( entityId2 ) ) );
+    run( world, () -> assertTrue( attack.has( entityId2 ) ) );
 
     handler.unsubscribe();
 
     handler.assertEventCount( 4 );
     handler.assertNextEvent( EntityAddStartEvent.class, e -> {
       assertEquals( e.getWorld(), world );
-      assertEquals( e.getComponentIds(), componentIds1 );
+      assertEquals( e.getComponentIds(), set( 0, 1 ) );
     } );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
-      assertEquals( e.getEntityId(), entity1.getId() );
-      assertEquals( e.getComponentIds(), componentIds1 );
+      assertEquals( e.getEntityId(), entityId1 );
+      assertEquals( e.getComponentIds(), set( 0, 1 ) );
     } );
     handler.assertNextEvent( EntityAddStartEvent.class, e -> {
       assertEquals( e.getWorld(), world );
-      assertEquals( e.getComponentIds(), componentIds2 );
+      assertEquals( e.getComponentIds(), set( 1, 2 ) );
     } );
     handler.assertNextEvent( EntityAddCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
-      assertEquals( e.getEntityId(), entity2.getId() );
-      assertEquals( e.getComponentIds(), componentIds2 );
+      assertEquals( e.getEntityId(), entityId2 );
+      assertEquals( e.getComponentIds(), set( 1, 2 ) );
     } );
   }
 
   @Test
   public void disposeEntity()
   {
-    final int initialEntityCount = 5;
     final World world = Worlds.world()
-      .initialEntityCount( initialEntityCount )
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
+      .component( Armour.class )
+      .component( Health.class )
+      .component( Attack.class )
       .build();
 
     final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
     final ComponentAPI<Health> health = world.getComponentByType( Health.class );
 
-    final int armourId = armour.getId();
-    final int healthId = health.getId();
+    final int entityId = createEntity( world, Armour.class, Health.class );
 
-    final EntityManager entityManager = world.getEntityManager();
-
-    final BitSet componentIds1 = set();
-    componentIds1.set( armourId );
-    componentIds1.set( healthId );
-
-    final Entity entity = entityManager.createEntity( componentIds1 );
-    final int entityId = entity.getId();
-
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
     assertTrue( entity.isAlive() );
 
-    assertEquals( entity.getComponentIds(), componentIds1 );
+    assertEquals( entity.getComponentIds(), set( 0, 1 ) );
     run( world, () -> assertTrue( armour.has( entityId ) ) );
     run( world, () -> assertTrue( health.has( entityId ) ) );
 
-    run( world, () -> entityManager.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -214,35 +180,22 @@ public class EntityManagerTest
   @Test
   public void disposeEntity_WithSpyEnabled()
   {
-    final int initialEntityCount = 5;
     final World world = Worlds.world()
-      .initialEntityCount( initialEntityCount )
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
+      .component( Armour.class )
+      .component( Health.class )
+      .component( Attack.class )
       .build();
 
-    final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
-    final ComponentAPI<Health> health = world.getComponentByType( Health.class );
+    final int entityId = createEntity( world, Armour.class, Health.class );
 
-    final int armourId = armour.getId();
-    final int healthId = health.getId();
-
-    final EntityManager entityManager = world.getEntityManager();
-
-    final BitSet componentIds1 = set();
-    componentIds1.set( armourId );
-    componentIds1.set( healthId );
-
-    final Entity entity = entityManager.createEntity( componentIds1 );
-    final int entityId = entity.getId();
-
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
     assertTrue( entity.isAlive() );
 
-    assertEquals( entity.getComponentIds(), componentIds1 );
+    assertEquals( entity.getComponentIds(), set( 0, 1 ) );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
-    run( world, () -> entityManager.disposeEntity( entityId ) );
+    run( world, () -> world.disposeEntity( entityId ) );
 
     assertTrue( entity.getComponentIds().isEmpty() );
     assertFalse( entity.isAlive() );
@@ -251,12 +204,12 @@ public class EntityManagerTest
     handler.assertNextEvent( EntityRemoveStartEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
-      assertEquals( e.getComponentIds(), componentIds1 );
+      assertEquals( e.getComponentIds(), set( 0, 1 ) );
     } );
     handler.assertNextEvent( EntityRemoveCompleteEvent.class, e -> {
       assertEquals( e.getWorld(), world );
       assertEquals( e.getEntityId(), entityId );
-      assertEquals( e.getComponentIds(), componentIds1 );
+      assertEquals( e.getComponentIds(), set( 0, 1 ) );
     } );
   }
 
@@ -296,14 +249,13 @@ public class EntityManagerTest
   {
     final World world = Worlds.world().build();
 
-    final EntityManager entityManager = world.getEntityManager();
-    final Entity entity = entityManager.createEntity( set() );
+    final int entityId = createEntity( world );
 
-    assertEquals( entityManager.getEntityById( entity.getId() ), entity );
+    final Entity entity = world.getEntityManager().getEntityById( entityId );
 
     entity.clearAlive();
 
-    assertInvariantFailure( () -> run( world, () -> entityManager.disposeEntity( entity.getId() ) ),
+    assertInvariantFailure( () -> run( world, () -> world.disposeEntity( entityId ) ),
                             "Galdr-0059: Attempting to dispose entity 0 and entity is allocated but not alive." );
   }
 
@@ -323,23 +275,23 @@ public class EntityManagerTest
 
     assertEquals( entityManager.capacity(), 4 );
 
-    run( world, () -> entityManager.disposeEntity( entityId1 ) );
+    run( world, () -> world.disposeEntity( entityId1 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.createEntity( set() );
+    createEntity( world );
 
     assertEquals( entityManager.capacity(), 4 );
 
-    run( world, () -> entityManager.disposeEntity( entityId2 ) );
-    run( world, () -> entityManager.disposeEntity( entityId3 ) );
-    run( world, () -> entityManager.disposeEntity( entityId4 ) );
+    run( world, () -> world.disposeEntity( entityId2 ) );
+    run( world, () -> world.disposeEntity( entityId3 ) );
+    run( world, () -> world.disposeEntity( entityId4 ) );
 
     assertEquals( entityManager.capacity(), 4 );
 
-    entityManager.createEntity( set() );
-    entityManager.createEntity( set() );
-    entityManager.createEntity( set() );
+    createEntity( world );
+    createEntity( world );
+    createEntity( world );
 
     assertEquals( entityManager.capacity(), 4 );
   }
@@ -426,9 +378,9 @@ public class EntityManagerTest
 
     final EntityManager entityManager = world.getEntityManager();
 
-    final Entity entity = entityManager.createEntity( set() );
+    final int entityId = createEntity( world );
+    final Entity entity = entityManager.getEntityById( entityId );
 
-    assertEquals( entityManager.getEntityById( entity.getId() ), entity );
     entity.clearAlive();
     assertInvariantFailure( () -> entityManager.getEntityById( entity.getId() ),
                             "Galdr-0078: Attempting to get entity 0 but entity is allocated but not alive." );
@@ -449,8 +401,8 @@ public class EntityManagerTest
   public void createEntity_badComponentId()
   {
     final World world = Worlds.world()
-      .component( Armour.class, Armour::new )
-      .component( Health.class, Health::new )
+      .component( Armour.class )
+      .component( Health.class )
       .build();
 
     final EntityManager entityManager = world.getEntityManager();
