@@ -34,10 +34,10 @@ public class ComponentIdSetTest
     final BitSet componentIds2 = set( 1 );
     final BitSet componentIds3 = set( 0, 1 );
 
-    assertEquals( componentIdSet0.getComponentIds(), componentIds0 );
-    assertEquals( componentIdSet1.getComponentIds(), componentIds1 );
-    assertEquals( componentIdSet2.getComponentIds(), componentIds2 );
-    assertEquals( componentIdSet3.getComponentIds(), componentIds3 );
+    assertEquals( componentIdSet0.getBitSet(), componentIds0 );
+    assertEquals( componentIdSet1.getBitSet(), componentIds1 );
+    assertEquals( componentIdSet2.getBitSet(), componentIds2 );
+    assertEquals( componentIdSet3.getBitSet(), componentIds3 );
 
     assertEquals( componentIdSet0, componentIdSet0 );
     assertEquals( componentIdSet0, componentIdSet0b );

@@ -28,7 +28,7 @@ public final class ComponentIdSet
    * @return the underlying BitSet.
    */
   @Nonnull
-  BitSet getComponentIds()
+  BitSet getBitSet()
   {
     return _componentIds;
   }

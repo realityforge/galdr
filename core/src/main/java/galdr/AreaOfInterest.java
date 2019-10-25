@@ -17,31 +17,33 @@ public final class AreaOfInterest
    * Components that an entity MUST have to be matched.
    */
   @Nonnull
-  private final BitSet _all;
+  private final ComponentIdSet _all;
   /**
    * Components that an entity MUST have at least one of to be matched.
    */
   @Nonnull
-  private final BitSet _one;
+  private final ComponentIdSet _one;
   /**
    * Components that an entity MUST NOT have to be matched.
    */
   @Nonnull
-  private final BitSet _exclude;
+  private final ComponentIdSet _exclude;
 
-  AreaOfInterest( @Nonnull final BitSet all, @Nonnull final BitSet one, @Nonnull final BitSet exclude )
+  AreaOfInterest( @Nonnull final ComponentIdSet all,
+                  @Nonnull final ComponentIdSet one,
+                  @Nonnull final ComponentIdSet exclude )
   {
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> !all.intersects( one ),
+      invariant( () -> !all.getBitSet().intersects( one.getBitSet() ),
                  () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
-                       "all (" + all + ") and one (" + one + ")." );
-      invariant( () -> !all.intersects( exclude ),
+                       "all (" + all.getBitSet() + ") and one (" + one.getBitSet() + ")." );
+      invariant( () -> !all.getBitSet().intersects( exclude.getBitSet() ),
                  () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
-                       "all (" + all + ") and exclude (" + exclude + ")." );
-      invariant( () -> !one.intersects( exclude ),
+                       "all (" + all.getBitSet() + ") and exclude (" + exclude.getBitSet() + ")." );
+      invariant( () -> !one.getBitSet().intersects( exclude.getBitSet() ),
                  () -> "Galdr-0005: AreaOfInterest passed intersecting BitSets " +
-                       "one (" + one + ") and exclude (" + exclude + ")." );
+                       "one (" + one.getBitSet() + ") and exclude (" + exclude.getBitSet() + ")." );
     }
     _all = Objects.requireNonNull( all );
     _one = Objects.requireNonNull( one );
@@ -56,10 +58,11 @@ public final class AreaOfInterest
    */
   boolean matches( @Nonnull final BitSet componentIds )
   {
+    final BitSet all = _all.getBitSet();
     // This can be implemented MUCH more efficiently by manipulating the underlying words.
     // We should add a containsAll() method to out BitSet implementation
     int current = -1;
-    while ( -1 != ( current = _all.nextSetBit( current + 1 ) ) )
+    while ( -1 != ( current = all.nextSetBit( current + 1 ) ) )
     {
       if ( !componentIds.get( current ) )
       {
@@ -67,24 +70,24 @@ public final class AreaOfInterest
       }
     }
 
-    return ( _one.isEmpty() || _one.intersects( componentIds ) ) &&
-           ( _exclude.isEmpty() || !_exclude.intersects( componentIds ) );
+    return ( _one.getBitSet().isEmpty() || _one.getBitSet().intersects( componentIds ) ) &&
+           ( _exclude.getBitSet().isEmpty() || !_exclude.getBitSet().intersects( componentIds ) );
   }
 
   @Nonnull
-  BitSet getAll()
+  ComponentIdSet getAll()
   {
     return _all;
   }
 
   @Nonnull
-  BitSet getOne()
+  ComponentIdSet getOne()
   {
     return _one;
   }
 
   @Nonnull
-  BitSet getExclude()
+  ComponentIdSet getExclude()
   {
     return _exclude;
   }
@@ -95,7 +98,11 @@ public final class AreaOfInterest
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "AreaOfInterest[all=" + getAll() + ",one=" + getOne() + ",exclude=" + getExclude() + "]";
+      return "AreaOfInterest[" +
+             "all=" + getAll().getBitSet() + "," +
+             "one=" + getOne().getBitSet() + "," +
+             "exclude=" + getExclude().getBitSet() +
+             "]";
     }
     else
     {

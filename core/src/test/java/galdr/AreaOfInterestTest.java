@@ -1,6 +1,8 @@
 package galdr;
 
-import java.util.BitSet;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -8,92 +10,185 @@ import static org.testng.Assert.*;
 public class AreaOfInterestTest
   extends AbstractTest
 {
+  private static class Component1
+  {
+  }
+
+  private static class Component2
+  {
+  }
+
+  private static class Component3
+  {
+  }
+
+  private static class Component4
+  {
+  }
+
+  private static class Component5
+  {
+  }
+
+  private static class Component6
+  {
+  }
+
+  private static class Component7
+  {
+  }
+
   @Test
   public void construct()
   {
-    final BitSet all = set();
-    final BitSet one = set();
-    final BitSet exclude = set();
+    final World world = Worlds.world().component( Component1.class ).build();
 
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( all, one, exclude );
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
 
-    assertEquals( areaOfInterest.getAll(), all );
-    assertEquals( areaOfInterest.getOne(), one );
-    assertEquals( areaOfInterest.getExclude(), exclude );
+    assertEquals( areaOfInterest.getAll().getBitSet(), set( 0 ) );
+    assertEquals( areaOfInterest.getOne().getBitSet(), set() );
+    assertEquals( areaOfInterest.getExclude().getBitSet(), set() );
   }
 
   @Test
   public void construct_overlappingBitsets()
   {
-    final BitSet set0 = set();
-    final BitSet set1 = set( 0, 1, 2 );
-    final BitSet set2 = set( 2, 3, 4 );
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .component( Component3.class )
+      .component( Component4.class )
+      .component( Component5.class )
+      .build();
 
-    assertInvariantFailure( () -> new AreaOfInterest( set1, set2, set0 ),
+    final Collection<Class<?>> set0 = Collections.emptySet();
+    final Collection<Class<?>> set1 = Arrays.asList( Component1.class, Component2.class, Component3.class );
+    final Collection<Class<?>> set2 = Arrays.asList( Component3.class, Component4.class, Component5.class );
+
+    assertInvariantFailure( () -> world.createAreaOfInterest( set1, set2, set0 ),
                             "Galdr-0005: AreaOfInterest passed intersecting BitSets all ({0, 1, 2}) and one ({2, 3, 4})." );
-    assertInvariantFailure( () -> new AreaOfInterest( set1, set0, set2 ),
+    assertInvariantFailure( () -> world.createAreaOfInterest( set1, set0, set2 ),
                             "Galdr-0005: AreaOfInterest passed intersecting BitSets all ({0, 1, 2}) and exclude ({2, 3, 4})." );
-    assertInvariantFailure( () -> new AreaOfInterest( set0, set1, set2 ),
+    assertInvariantFailure( () -> world.createAreaOfInterest( set0, set1, set2 ),
                             "Galdr-0005: AreaOfInterest passed intersecting BitSets one ({0, 1, 2}) and exclude ({2, 3, 4})." );
   }
 
   @Test
   public void matches()
   {
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .component( Component3.class )
+      .component( Component4.class )
+      .component( Component5.class )
+      .component( Component6.class )
+      .component( Component7.class )
+      .build();
+
     // Matches - huzzah
-    assertMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 7 ) );
+    assertMatch( world,
+                 Arrays.asList( Component1.class, Component2.class ),
+                 Arrays.asList( Component3.class, Component4.class ),
+                 Arrays.asList( Component5.class, Component6.class ),
+                 Arrays.asList( Component1.class, Component2.class, Component3.class, Component7.class ) );
 
     // Matches and includes both ones
-    assertMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 3, 7 ) );
+    assertMatch( world,
+                 Arrays.asList( Component1.class, Component2.class ),
+                 Arrays.asList( Component3.class, Component4.class ),
+                 Arrays.asList( Component5.class, Component6.class ),
+                 Arrays.asList( Component1.class,
+                                Component2.class,
+                                Component3.class,
+                                Component4.class,
+                                Component7.class ) );
 
     // Missing all
-    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 1, 2, 7 ) );
+    assertNoMatch( world,
+                   Arrays.asList( Component1.class, Component2.class ),
+                   Arrays.asList( Component3.class, Component4.class ),
+                   Arrays.asList( Component5.class, Component6.class ),
+                   Arrays.asList( Component2.class, Component3.class, Component7.class ) );
 
     // Missing all one's
-    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 7 ) );
+    assertNoMatch( world,
+                   Arrays.asList( Component1.class, Component2.class ),
+                   Arrays.asList( Component3.class, Component4.class ),
+                   Arrays.asList( Component5.class, Component6.class ),
+                   Arrays.asList( Component1.class, Component2.class, Component7.class ) );
 
     // Includes exclude
-    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 4, 7 ) );
+    assertNoMatch( world,
+                   Arrays.asList( Component1.class, Component2.class ),
+                   Arrays.asList( Component3.class, Component4.class ),
+                   Arrays.asList( Component5.class, Component6.class ),
+                   Arrays.asList( Component1.class,
+                                  Component2.class,
+                                  Component3.class,
+                                  Component5.class,
+                                  Component7.class ) );
 
     // Includes multiple excludes
-    assertNoMatch( set( 0, 1 ), set( 2, 3 ), set( 4, 5 ), set( 0, 1, 2, 4, 5, 7 ) );
+    assertNoMatch( world,
+                   Arrays.asList( Component1.class, Component2.class ),
+                   Arrays.asList( Component3.class, Component4.class ),
+                   Arrays.asList( Component5.class, Component6.class ),
+                   Arrays.asList( Component1.class,
+                                  Component2.class,
+                                  Component3.class,
+                                  Component5.class,
+                                  Component6.class,
+                                  Component7.class ) );
   }
 
-  private void assertMatch( @Nonnull final BitSet all,
-                            @Nonnull final BitSet one,
-                            @Nonnull final BitSet exclude,
-                            @Nonnull final BitSet componentIds )
+  private void assertMatch( @Nonnull final World world,
+                            @Nonnull final Collection<Class<?>> all,
+                            @Nonnull final Collection<Class<?>> one,
+                            @Nonnull final Collection<Class<?>> exclude,
+                            @Nonnull final Collection<Class<?>> componentIds )
   {
-    _assertMatch( all, one, exclude, componentIds, true );
+    _assertMatch( world, all, one, exclude, componentIds, true );
   }
 
-  private void assertNoMatch( @Nonnull final BitSet all,
-                              @Nonnull final BitSet one,
-                              @Nonnull final BitSet exclude,
-                              @Nonnull final BitSet componentIds )
+  private void assertNoMatch( @Nonnull final World world,
+                              @Nonnull final Collection<Class<?>> all,
+                              @Nonnull final Collection<Class<?>> one,
+                              @Nonnull final Collection<Class<?>> exclude,
+                              @Nonnull final Collection<Class<?>> componentIds )
   {
-    _assertMatch( all, one, exclude, componentIds, false );
+    _assertMatch( world, all, one, exclude, componentIds, false );
   }
 
-  private void _assertMatch( @Nonnull final BitSet all,
-                             @Nonnull final BitSet one,
-                             @Nonnull final BitSet exclude,
-                             @Nonnull final BitSet componentIds,
+  private void _assertMatch( @Nonnull final World world,
+                             @Nonnull final Collection<Class<?>> all,
+                             @Nonnull final Collection<Class<?>> one,
+                             @Nonnull final Collection<Class<?>> exclude,
+                             @Nonnull final Collection<Class<?>> componentIds,
                              final boolean shouldMatch )
   {
-    assertEquals( new AreaOfInterest( all, one, exclude ).matches( componentIds ), shouldMatch );
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( all, one, exclude );
+    final ComponentIdSet componentIdSet = world.createComponentIdSet( componentIds );
+    assertEquals( areaOfInterest.matches( componentIdSet.getBitSet() ), shouldMatch );
   }
 
   @Test
   public void toString_test()
   {
-    final BitSet all = set( 0, 1, 5, 12 );
-    final BitSet one = set( 2, 4 );
-    final BitSet exclude = set( 14 );
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .component( Component3.class )
+      .component( Component4.class )
+      .build();
 
-    final AreaOfInterest areaOfInterest = new AreaOfInterest( all, one, exclude );
+    final Collection<Class<?>> all = Arrays.asList( Component2.class, Component1.class );
+    final Collection<Class<?>> one = Collections.singletonList( Component3.class );
+    final Collection<Class<?>> exclude = Collections.emptyList();
 
-    assertEquals( areaOfInterest.toString(), "AreaOfInterest[all={0, 1, 5, 12},one={2, 4},exclude={14}]" );
+    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( all, one, exclude );
+
+    assertEquals( areaOfInterest.toString(), "AreaOfInterest[all={0, 1},one={2},exclude={}]" );
 
     GaldrTestUtil.disableDebugToString();
 
@@ -103,14 +198,21 @@ public class AreaOfInterestTest
   @Test
   public void hash_and_equals()
   {
-    final BitSet set1 = set( 1 );
-    final BitSet set2 = set( 2 );
-    final BitSet set3 = set( 3 );
-    final BitSet set4 = set( 4 );
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .component( Component3.class )
+      .component( Component4.class )
+      .build();
 
-    final AreaOfInterest aoi1 = new AreaOfInterest( set1, set2, set3 );
-    final AreaOfInterest aoi2 = new AreaOfInterest( set1, set2, set3 );
-    final AreaOfInterest aoi3 = new AreaOfInterest( set1, set2, set4 );
+    final Collection<Class<?>> set1 = Collections.singletonList( Component1.class );
+    final Collection<Class<?>> set2 = Collections.singletonList( Component2.class );
+    final Collection<Class<?>> set3 = Collections.singletonList( Component3.class );
+    final Collection<Class<?>> set4 = Collections.singletonList( Component4.class );
+
+    final AreaOfInterest aoi1 = world.createAreaOfInterest( set1, set2, set3 );
+    final AreaOfInterest aoi2 = world.createAreaOfInterest( set1, set2, set3 );
+    final AreaOfInterest aoi3 = world.createAreaOfInterest( set1, set2, set4 );
 
     assertEquals( aoi1.hashCode(), aoi1.hashCode() );
     assertEquals( aoi1.hashCode(), aoi2.hashCode() );

@@ -185,7 +185,7 @@ public final class World
   public int createEntity( @Nonnull final ComponentIdSet initialComponentIds )
   {
     ensureCurrentWorldMatches( "createEntity()" );
-    return getEntityManager().createEntity( initialComponentIds.getComponentIds() ).getId();
+    return getEntityManager().createEntity( initialComponentIds.getBitSet() ).getId();
   }
 
   /**
@@ -483,17 +483,9 @@ public final class World
                                               @Nonnull final ComponentIdSet one,
                                               @Nonnull final ComponentIdSet exclude )
   {
-    return createAreaOfInterest( all.getComponentIds(), one.getComponentIds(), exclude.getComponentIds() );
-  }
-
-  @Nonnull
-  private AreaOfInterest createAreaOfInterest( @Nonnull final BitSet all,
-                                               @Nonnull final BitSet one,
-                                               @Nonnull final BitSet exclude )
-  {
-    verifyBitSet( "all", all );
-    verifyBitSet( "one", one );
-    verifyBitSet( "exclude", exclude );
+    verifyBitSet( "all", all.getBitSet() );
+    verifyBitSet( "one", one.getBitSet() );
+    verifyBitSet( "exclude", exclude.getBitSet() );
     return new AreaOfInterest( all, one, exclude );
   }
 
@@ -566,10 +558,11 @@ public final class World
     return collection;
   }
 
-  private void linkCollection( @Nonnull final EntityCollection collection, @Nonnull final BitSet componentIds )
+  private void linkCollection( @Nonnull final EntityCollection collection, @Nonnull final ComponentIdSet componentIds )
   {
+    final BitSet bitSet = componentIds.getBitSet();
     int current = -1;
-    while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+    while ( -1 != ( current = bitSet.nextSetBit( current + 1 ) ) )
     {
       getComponentManagerById( current ).addCollection( collection );
     }
@@ -594,10 +587,11 @@ public final class World
     existing.markAsDisposed();
   }
 
-  private void unlinkCollection( @Nonnull final EntityCollection collection, @Nonnull final BitSet componentIds )
+  private void unlinkCollection( @Nonnull final EntityCollection collection, @Nonnull final ComponentIdSet componentIds )
   {
+    final BitSet bitSet = componentIds.getBitSet();
     int current = -1;
-    while ( -1 != ( current = componentIds.nextSetBit( current + 1 ) ) )
+    while ( -1 != ( current = bitSet.nextSetBit( current + 1 ) ) )
     {
       getComponentManagerById( current ).removeCollection( collection );
     }

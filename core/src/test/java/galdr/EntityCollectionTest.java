@@ -30,9 +30,9 @@ public class EntityCollectionTest
     final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
     assertEquals( world.findCollection( areaOfInterest ), collection );
 
-    assertEquals( areaOfInterest.getAll(), set( 0 ) );
-    assertEquals( areaOfInterest.getOne(), set() );
-    assertEquals( areaOfInterest.getExclude(), set() );
+    assertEquals( areaOfInterest.getAll().getBitSet(), set( 0 ) );
+    assertEquals( areaOfInterest.getOne().getBitSet(), set() );
+    assertEquals( areaOfInterest.getExclude().getBitSet(), set() );
 
     assertEquals( collection.getWorld(), world );
     assertEquals( collection.getAreaOfInterest(), areaOfInterest );
