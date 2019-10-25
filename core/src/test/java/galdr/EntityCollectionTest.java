@@ -289,7 +289,7 @@ public class EntityCollectionTest
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -322,7 +322,7 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -360,7 +360,7 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -407,7 +407,7 @@ public class EntityCollectionTest
     assertEquals( entityId0, 0 );
     assertEquals( entityId9, 9 );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -452,7 +452,7 @@ public class EntityCollectionTest
     final int entityId8 = createEntity( world );
     final int entityId9 = createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -502,7 +502,7 @@ public class EntityCollectionTest
     final int entityId8 = createEntity( world );
     final int entityId9 = createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -554,7 +554,7 @@ public class EntityCollectionTest
     final int entityId2 = createEntity( world );
     final int entityId3 = createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -606,7 +606,7 @@ public class EntityCollectionTest
     final int entityId3 = createEntity( world );
     final int entityId4 = createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -649,7 +649,7 @@ public class EntityCollectionTest
     final int entityId0 = createEntity( world, Component1.class );
     createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -674,7 +674,7 @@ public class EntityCollectionTest
     final int entityId1 = createEntity( world );
     final int entityId2 = createEntity( world, Component1.class );
 
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
 
     beginIteration( world, collection, subscription );
 
@@ -793,14 +793,14 @@ public class EntityCollectionTest
   {
     assertTrue( collection.isIterationInProgress() );
     assertEquals( collection.getCurrentEntityId(), -1 );
-    assertEquals( collection.getSubscription(), subscription );
+    assertEquals( collection.getIteratingSubscription(), subscription );
   }
 
   private void assertCollectionComplete( @Nonnull final EntityCollection collection )
   {
     assertFalse( collection.isIterationInProgress() );
     assertEquals( collection.getCurrentEntityId(), -1 );
-    assertNull( collection.getSubscription() );
+    assertNull( collection.getIteratingSubscription() );
     assertEquals( collection.getNewEntities().cardinality(), 0 );
     assertFalse( collection.hasNewEntities() );
     assertFalse( collection.isProcessingNewEntities() );

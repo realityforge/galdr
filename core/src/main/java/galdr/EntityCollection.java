@@ -50,7 +50,7 @@ final class EntityCollection
    * The subscription that is currently iterating over the collection.
    */
   @Nullable
-  private Subscription _subscription;
+  private Subscription _iteratingSubscription;
   /**
    * A count of how many subscriptions are attached to the collection.
    */
@@ -94,11 +94,11 @@ final class EntityCollection
       invariant( () -> -1 == _currentEntityId,
                  () -> "Galdr-0032: EntityCollection.beginIteration() invoked when _currentEntityId " +
                        "has not been reset. Current value " + _currentEntityId );
-      invariant( () -> null == _subscription,
+      invariant( () -> null == _iteratingSubscription,
                  () -> "Galdr-0022: EntityCollection.beginIteration() invoked with subscription named '" +
                        subscription.getName() + "' but an existing iteration is in progress with subscription named '" +
-                       Objects.requireNonNull( _subscription ).getName() + "'." );
-      _subscription = subscription;
+                       Objects.requireNonNull( _iteratingSubscription ).getName() + "'." );
+      _iteratingSubscription = subscription;
     }
   }
 
@@ -114,13 +114,13 @@ final class EntityCollection
     ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> null != _subscription,
+      invariant( () -> null != _iteratingSubscription,
                  () -> "Galdr-0047: EntityCollection.abortIteration() invoked with subscription named '" +
                        subscription.getName() + "' but no iteration was active." );
-      invariant( () -> subscription == _subscription,
+      invariant( () -> subscription == _iteratingSubscription,
                  () -> "Galdr-0027: EntityCollection.abortIteration() invoked with subscription named '" +
                        subscription.getName() + "' but this does not match the existing subscription named '" +
-                       Objects.requireNonNull( _subscription ).getName() + "'." );
+                       Objects.requireNonNull( _iteratingSubscription ).getName() + "'." );
     }
     _currentEntityId = -1;
     if ( hasNewEntities() )
@@ -128,7 +128,7 @@ final class EntityCollection
       _flags = ( _flags & ~Flags.PROCESSING_NEW_ENTITIES ) & ~Flags.HAS_NEW_ENTITIES;
       _newEntities.clear();
     }
-    _subscription = null;
+    _iteratingSubscription = null;
   }
 
   int nextEntity( @Nonnull final Subscription subscription )
@@ -137,13 +137,13 @@ final class EntityCollection
     ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckInvariants() )
     {
-      invariant( () -> null != _subscription,
+      invariant( () -> null != _iteratingSubscription,
                  () -> "Galdr-0047: EntityCollection.nextEntity() invoked with subscription named '" +
                        subscription.getName() + "' but no iteration was active." );
-      invariant( () -> subscription == _subscription,
+      invariant( () -> subscription == _iteratingSubscription,
                  () -> "Galdr-0025: EntityCollection.nextEntity() invoked with subscription named '" +
                        subscription.getName() + "' but an existing iteration is in progress with subscription " +
-                       "named '" + Objects.requireNonNull( _subscription ).getName() + "'." );
+                       "named '" + Objects.requireNonNull( _iteratingSubscription ).getName() + "'." );
     }
     if ( isProcessingNewEntities() )
     {
@@ -190,7 +190,7 @@ final class EntityCollection
     }
     if ( -1 == _currentEntityId )
     {
-      _subscription = null;
+      _iteratingSubscription = null;
     }
     return _currentEntityId;
   }
@@ -333,7 +333,7 @@ final class EntityCollection
 
   boolean isIterationInProgress()
   {
-    return null != getSubscription();
+    return null != getIteratingSubscription();
   }
 
   @Nonnull
@@ -343,9 +343,9 @@ final class EntityCollection
   }
 
   @Nullable
-  Object getSubscription()
+  Object getIteratingSubscription()
   {
-    return _subscription;
+    return _iteratingSubscription;
   }
 
   @OmitSymbol( unless = "galdr.check_api_invariants" )
