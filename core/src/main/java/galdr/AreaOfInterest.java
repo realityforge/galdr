@@ -51,30 +51,6 @@ public final class AreaOfInterest
   }
 
   /**
-   * Return true if the specified componentIds matches the area of interest requirements.
-   *
-   * @param componentIds the componentIds to test.
-   * @return true if the specified componentIds matches the area of interest requirements.
-   */
-  boolean matches( @Nonnull final BitSet componentIds )
-  {
-    final BitSet all = _all.getBitSet();
-    // This can be implemented MUCH more efficiently by manipulating the underlying words.
-    // We should add a containsAll() method to out BitSet implementation
-    int current = -1;
-    while ( -1 != ( current = all.nextSetBit( current + 1 ) ) )
-    {
-      if ( !componentIds.get( current ) )
-      {
-        return false;
-      }
-    }
-
-    return ( _one.getBitSet().isEmpty() || _one.getBitSet().intersects( componentIds ) ) &&
-           ( _exclude.getBitSet().isEmpty() || !_exclude.getBitSet().intersects( componentIds ) );
-  }
-
-  /**
    * Return the set of component ids that an entity MUST have to be covered by this area of interest.
    *
    * @return the set of component ids that an entity MUST have to be covered by this area of interest.
@@ -143,5 +119,29 @@ public final class AreaOfInterest
   public int hashCode()
   {
     return Objects.hash( _all.hashCode(), _one.hashCode(), _exclude.hashCode() );
+  }
+
+  /**
+   * Return true if the specified componentIds matches the area of interest requirements.
+   *
+   * @param componentIds the componentIds to test.
+   * @return true if the specified componentIds matches the area of interest requirements.
+   */
+  boolean matches( @Nonnull final BitSet componentIds )
+  {
+    final BitSet all = _all.getBitSet();
+    // This can be implemented MUCH more efficiently by manipulating the underlying words.
+    // We should add a containsAll() method to out BitSet implementation
+    int current = -1;
+    while ( -1 != ( current = all.nextSetBit( current + 1 ) ) )
+    {
+      if ( !componentIds.get( current ) )
+      {
+        return false;
+      }
+    }
+
+    return ( _one.getBitSet().isEmpty() || _one.getBitSet().intersects( componentIds ) ) &&
+           ( _exclude.getBitSet().isEmpty() || !_exclude.getBitSet().intersects( componentIds ) );
   }
 }
