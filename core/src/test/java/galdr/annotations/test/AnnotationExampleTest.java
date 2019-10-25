@@ -5,7 +5,6 @@ import galdr.ComponentAPI;
 import galdr.ComponentStorage;
 import galdr.ProcessorStage;
 import galdr.World;
-import galdr.Worlds;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -17,15 +16,10 @@ public class AnnotationExampleTest
   {
     // This is a very basic test that is used to try out the developer experience of
     // using the annotation development driven model
-    final World world =
-      Worlds
-        .world()
-        .component( Health.class, Health::new )
-        .component( MyFlag.class )
-        .stage( "sim", new Galdr_HealthProcessor() )
-        .build();
+    final MyApplication application = MyApplication.create();
+    final World world = application.world();
 
-    final ProcessorStage stage = world.getStageByName( "sim" );
+    final ProcessorStage stage = application.sim();
 
     stage.process( 1 );
 
@@ -33,7 +27,7 @@ public class AnnotationExampleTest
 
     stage.process( 1 );
 
-    final ComponentAPI<Health> api = world.getComponentByType( Health.class );
+    final ComponentAPI<Health> api = application.health();
 
     assertEquals( api.getId(), 0 );
     assertEquals( api.getStorage(), ComponentStorage.ARRAY );
