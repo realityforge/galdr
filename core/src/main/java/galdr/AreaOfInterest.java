@@ -74,20 +74,35 @@ public final class AreaOfInterest
            ( _exclude.getBitSet().isEmpty() || !_exclude.getBitSet().intersects( componentIds ) );
   }
 
+  /**
+   * Return the set of component ids that an entity MUST have to be covered by this area of interest.
+   *
+   * @return the set of component ids that an entity MUST have to be covered by this area of interest.
+   */
   @Nonnull
-  ComponentIdSet getAll()
+  public ComponentIdSet getAll()
   {
     return _all;
   }
 
+  /**
+   * Return the set of component ids that an entity MUST have at least one of to be covered by this area of interest.
+   *
+   * @return the set of component ids that an entity MUST have at least one of to be covered by this area of interest.
+   */
   @Nonnull
-  ComponentIdSet getOne()
+  public ComponentIdSet getOne()
   {
     return _one;
   }
 
+  /**
+   * Return the set of component ids that an entity MUST NOT have to be covered by this area of interest.
+   *
+   * @return the set of component ids that an entity MUST NOT have to be covered by this area of interest.
+   */
   @Nonnull
-  ComponentIdSet getExclude()
+  public ComponentIdSet getExclude()
   {
     return _exclude;
   }
