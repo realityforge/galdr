@@ -1,6 +1,8 @@
 package galdr.spy;
 
+import galdr.AreaOfInterest;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 /**
@@ -63,4 +65,12 @@ public interface Spy
    */
   @Nonnull
   List<ComponentInfo> getComponents();
+
+  /**
+   * Return the entity collections that currently exist in the world.
+   *
+   * @return the entity collections that currently exist in the world.
+   */
+  @Nonnull
+  Map<AreaOfInterest, CollectionInfo> getCollections();
 }

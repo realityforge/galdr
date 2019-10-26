@@ -85,7 +85,6 @@ for systems/processors ahead of time.
 * Move `galdr.Processor` to `galdr.internal.Processor` or similar. To do this we are probably going to have
   to have a way to identify processors by name or id so that we can refer to them in our error handler.
 * `AreaOfInterest` should generate an error if there is no components contained.
-* Add `spy.CollectionInfo` to expose set of current collections to spy layer.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
 * Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html

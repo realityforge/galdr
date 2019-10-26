@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.CollectionInfo;
 import galdr.spy.ComponentInfo;
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
@@ -7,7 +8,9 @@ import galdr.spy.WorldInfo;
 import grim.annotations.OmitType;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
@@ -80,5 +83,17 @@ final class SpyImpl
                                            .stream()
                                            .map( ComponentManager::asInfo )
                                            .collect( Collectors.toList() ) );
+  }
+
+  @Nonnull
+  @Override
+  public Map<AreaOfInterest, CollectionInfo> getCollections()
+  {
+    return Collections.unmodifiableMap( _world.getEntityCollections()
+                                          .values()
+                                          .stream()
+                                          .map( EntityCollection::asInfo )
+                                          .collect( Collectors.toMap( CollectionInfo::getAreaOfInterest,
+                                                                      Function.identity() ) ) );
   }
 }

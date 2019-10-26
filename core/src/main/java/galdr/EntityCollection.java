@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.CollectionInfo;
 import grim.annotations.OmitSymbol;
 import java.util.BitSet;
 import java.util.Objects;
@@ -55,6 +56,13 @@ final class EntityCollection
    * A count of how many subscriptions are attached to the collection.
    */
   private int _refCount;
+  /**
+   * Cached info object associated with element.
+   * This should be null if {@link Galdr#areSpiesEnabled()} is false.
+   */
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nullable
+  private CollectionInfoImpl _info;
 
   EntityCollection( @Nonnull final World world,
                     @Nonnull final AreaOfInterest areaOfInterest,
@@ -88,6 +96,28 @@ final class EntityCollection
     {
       _world.removeCollection( this );
     }
+  }
+
+  /**
+   * Return the info associated with this class.
+   *
+   * @return the info associated with this class.
+   */
+  @SuppressWarnings( "ConstantConditions" )
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nonnull
+  CollectionInfo asInfo()
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areSpiesEnabled,
+                 () -> "Galdr-0040: EntityCollection.asInfo() invoked but Galdr.areSpiesEnabled() returned false." );
+    }
+    if ( Galdr.areSpiesEnabled() && null == _info )
+    {
+      _info = new CollectionInfoImpl( this );
+    }
+    return Galdr.areSpiesEnabled() ? _info : null;
   }
 
   void beginIteration( @Nonnull final Subscription subscription )
