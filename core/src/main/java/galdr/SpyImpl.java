@@ -5,7 +5,10 @@ import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
 import galdr.spy.WorldInfo;
 import grim.annotations.OmitType;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 /**
@@ -67,5 +70,15 @@ final class SpyImpl
   public ComponentInfo getComponentByType( @Nonnull final Class<?> componentType )
   {
     return _world.getComponentManagerByType( componentType ).asInfo();
+  }
+
+  @Nonnull
+  @Override
+  public List<ComponentInfo> getComponents()
+  {
+    return Collections.unmodifiableList( _world.getComponentManagers()
+                                           .stream()
+                                           .map( ComponentManager::asInfo )
+                                           .collect( Collectors.toList() ) );
   }
 }

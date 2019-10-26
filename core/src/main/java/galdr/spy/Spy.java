@@ -1,5 +1,6 @@
 package galdr.spy;
 
+import java.util.List;
 import javax.annotation.Nonnull;
 
 /**
@@ -54,4 +55,12 @@ public interface Spy
    */
   @Nonnull
   ComponentInfo getComponentByType( @Nonnull Class<?> componentType );
+
+  /**
+   * Return the components defined in the world.
+   *
+   * @return the components defined in the world.
+   */
+  @Nonnull
+  List<ComponentInfo> getComponents();
 }

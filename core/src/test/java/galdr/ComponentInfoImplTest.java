@@ -2,6 +2,7 @@ package galdr;
 
 import galdr.spy.ComponentInfo;
 import java.util.Collections;
+import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -33,6 +34,17 @@ public class ComponentInfoImplTest
     assertTrue( info == world.getSpy().getComponentByType( Component1.class ) );
     //noinspection SimplifiedTestNGAssertion
     assertTrue( info == componentManager.asInfo() );
+  }
+
+  @Test
+  public void world_getComponents()
+  {
+    final World world = Worlds.world().component( Component1.class ).component( Component2.class ).build();
+    final List<ComponentInfo> infos = world.getSpy().getComponents();
+
+    assertEquals( infos.size(), 2 );
+    assertEquals( infos.get( 0 ), world.getSpy().getComponentByType( Component1.class ) );
+    assertEquals( infos.get( 1 ), world.getSpy().getComponentByType( Component2.class ) );
   }
 
   @Test
