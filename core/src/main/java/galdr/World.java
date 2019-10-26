@@ -589,7 +589,8 @@ public final class World
     existing.markAsDisposed();
   }
 
-  private void unlinkCollection( @Nonnull final EntityCollection collection, @Nonnull final ComponentIdSet componentIds )
+  private void unlinkCollection( @Nonnull final EntityCollection collection,
+                                 @Nonnull final ComponentIdSet componentIds )
   {
     final BitSet bitSet = componentIds.getBitSet();
     int current = -1;
