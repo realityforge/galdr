@@ -1,5 +1,6 @@
 package galdr;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.testng.annotations.Test;
@@ -64,6 +65,12 @@ public class WorldsTest
     assertEquals( componentTypes.size(), 3 );
     assertTrue( componentTypes.contains( Armour.class ) );
     assertTrue( componentTypes.contains( Health.class ) );
+
+    final List<ComponentManager<?>> componentManagers = world.getComponentManagers();
+    assertEquals( componentManagers.size(), 3 );
+    assertEquals( componentManagers.get( 0 ), world.getComponentManagerByType( Armour.class ) );
+    assertEquals( componentManagers.get( 1 ), world.getComponentManagerByType( Health.class ) );
+    assertEquals( componentManagers.get( 2 ), world.getComponentManagerByType( Attack.class ) );
 
     assertEquals( world.getComponentByType( Armour.class ).getStorage(), ComponentStorage.NONE );
     assertEquals( world.getComponentByType( Health.class ).getStorage(), ComponentStorage.ARRAY );

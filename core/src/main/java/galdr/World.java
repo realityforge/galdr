@@ -5,10 +5,12 @@ import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
 import galdr.spy.WorldInfo;
 import grim.annotations.OmitSymbol;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -665,6 +667,14 @@ public final class World
                        "for type " + type + " but no such component exists." );
     }
     return componentManager;
+  }
+
+  @Nonnull
+  List<ComponentManager<?>> getComponentManagers()
+  {
+    assertWorldConstructed( "World.getComponentManagers()" );
+    assert null != _components;
+    return Arrays.asList( _components );
   }
 
   @OmitSymbol
