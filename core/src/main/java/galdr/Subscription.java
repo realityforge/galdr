@@ -106,7 +106,7 @@ public final class Subscription
   }
 
   @Nonnull
-   EntityCollection getCollection()
+  EntityCollection getCollection()
   {
     return _collection;
   }
