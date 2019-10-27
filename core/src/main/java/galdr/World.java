@@ -38,7 +38,7 @@ public final class World
   @Nullable
   private WorldInfoImpl _info;
   /**
-   * The id used to create the next unnamed subscription.
+   * The id used to create the next subscription.
    */
   private int _nextSubscriptionId = 1;
 
@@ -517,9 +517,9 @@ public final class World
   @Nonnull
   public Subscription createSubscription( @Nullable final String name, @Nonnull final AreaOfInterest areaOfInterest )
   {
-    final String actualName =
-      Galdr.areNamesEnabled() ? null == name ? "Subscription@" + _nextSubscriptionId++ : name : null;
-    return new Subscription( actualName, findOrCreateCollection( areaOfInterest ) );
+    final int id = _nextSubscriptionId++;
+    final String actualName = Galdr.areNamesEnabled() ? null == name ? "Subscription@" + id : name : null;
+    return new Subscription( id, actualName, findOrCreateCollection( areaOfInterest ) );
   }
 
   @Nonnull

@@ -9,6 +9,10 @@ import static org.realityforge.braincheck.Guards.*;
 public final class Subscription
 {
   /**
+   * A unique identifier for the subscription.
+   */
+  private final int _id;
+  /**
    * A human consumable name for Processor. It must be non-null if {@link Galdr#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
@@ -24,7 +28,7 @@ public final class Subscription
    */
   private boolean _disposed;
 
-  Subscription( @Nullable final String name, @Nonnull final EntityCollection collection )
+  Subscription( final int id, @Nullable final String name, @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
@@ -32,9 +36,15 @@ public final class Subscription
                     () -> "Galdr-0052: Subscription passed a name '" + name +
                           "' but Galdr.areNamesEnabled() is false" );
     }
+    _id = id;
     _name = Galdr.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
     _collection = Objects.requireNonNull( collection );
     _collection.incRef();
+  }
+
+  public int getId()
+  {
+    return _id;
   }
 
   public boolean isNotDisposed()
