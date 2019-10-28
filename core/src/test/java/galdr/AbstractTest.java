@@ -1,6 +1,5 @@
 package galdr;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,8 +19,6 @@ public abstract class AbstractTest
   private final Random _random = new Random();
   @Nonnull
   private final TestLogger _logger = new TestLogger();
-  @Nonnull
-  private final ArrayList<String> _errors = new ArrayList<>();
 
   @BeforeMethod
   protected void beforeTest()
