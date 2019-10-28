@@ -80,6 +80,7 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Merge `ComponentAPI` into `ComponentManager`
 * Change `Subscription*Event` to be parameterized by info objects where possible.
 * Add `CollectionCreateStartEvent`, `CollectionCreateCompleteEvent`, `CollectionAttachEvent`, `CollectionDisposeStartEvent` and  `CollectionDisposeCompleteEvent` as spy events.
 * Move `galdr.Processor` to `galdr.internal.Processor` or similar. To do this we are probably going to have
