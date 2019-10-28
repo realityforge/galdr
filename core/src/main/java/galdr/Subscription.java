@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.SubscriptionDisposeCompleteEvent;
+import galdr.spy.SubscriptionDisposeStartEvent;
 import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -8,6 +10,8 @@ import static org.realityforge.braincheck.Guards.*;
 
 public final class Subscription
 {
+  @Nonnull
+  private final World _world;
   /**
    * A unique identifier for the subscription.
    */
@@ -28,7 +32,10 @@ public final class Subscription
    */
   private boolean _disposed;
 
-  Subscription( final int id, @Nullable final String name, @Nonnull final EntityCollection collection )
+  Subscription( @Nonnull final World world,
+                final int id,
+                @Nullable final String name,
+                @Nonnull final EntityCollection collection )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
@@ -36,6 +43,7 @@ public final class Subscription
                     () -> "Galdr-0052: Subscription passed a name '" + name +
                           "' but Galdr.areNamesEnabled() is false" );
     }
+    _world = Objects.requireNonNull( world );
     _id = id;
     _name = Galdr.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
     _collection = Objects.requireNonNull( collection );
@@ -60,8 +68,21 @@ public final class Subscription
   public void dispose()
   {
     ensureNotDisposed();
+    AreaOfInterest areaOfInterest = null;
+    if ( _world.willPropagateSpyEvents() )
+    {
+      assert null != _name;
+      areaOfInterest = _collection.getAreaOfInterest();
+      _world.getSpy().reportSpyEvent( new SubscriptionDisposeStartEvent( _id, _name, areaOfInterest ) );
+    }
     _disposed = true;
     _collection.decRef();
+    if ( _world.willPropagateSpyEvents() )
+    {
+      assert null != _name;
+      assert null != areaOfInterest;
+      _world.getSpy().reportSpyEvent( new SubscriptionDisposeCompleteEvent( _id, _name, areaOfInterest ) );
+    }
   }
 
   public void beginIteration()

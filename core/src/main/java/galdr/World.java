@@ -526,7 +526,7 @@ public final class World
       assert null != actualName;
       getSpy().reportSpyEvent( new SubscriptionCreateStartEvent( id, actualName, areaOfInterest ) );
     }
-    final Subscription subscription = new Subscription( id, actualName, findOrCreateCollection( areaOfInterest ) );
+    final Subscription subscription = new Subscription( this, id, actualName, findOrCreateCollection( areaOfInterest ) );
     if ( willPropagateSpyEvents() )
     {
       assert null != actualName;

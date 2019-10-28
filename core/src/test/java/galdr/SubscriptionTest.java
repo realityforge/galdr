@@ -2,6 +2,8 @@ package galdr;
 
 import galdr.spy.SubscriptionCreateCompleteEvent;
 import galdr.spy.SubscriptionCreateStartEvent;
+import galdr.spy.SubscriptionDisposeCompleteEvent;
+import galdr.spy.SubscriptionDisposeStartEvent;
 import java.util.Collections;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -61,7 +63,7 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     GaldrTestUtil.disableNames();
-    assertInvariantFailure( () -> new Subscription( 23, "MyName", subscription.getCollection() ),
+    assertInvariantFailure( () -> new Subscription( world, 23, "MyName", subscription.getCollection() ),
                             "Galdr-0052: Subscription passed a name 'MyName' but Galdr.areNamesEnabled() is false" );
   }
 
@@ -113,6 +115,40 @@ public class SubscriptionTest
     assertFalse( collection.isDisposed() );
 
     run( world, subscription::dispose );
+
+    assertFalse( subscription.isNotDisposed() );
+    assertTrue( subscription.isDisposed() );
+    assertTrue( collection.isDisposed() );
+  }
+
+  @Test
+  public void dispose_withSpiesEnabled()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
+
+    final EntityCollection collection = subscription.getCollection();
+    final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
+
+    assertTrue( subscription.isNotDisposed() );
+    assertFalse( subscription.isDisposed() );
+    assertFalse( collection.isDisposed() );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    run( world, subscription::dispose );
+    handler.unsubscribe();
+
+    handler.assertEventCount( 2 );
+    handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+    handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
 
     assertFalse( subscription.isNotDisposed() );
     assertTrue( subscription.isDisposed() );
