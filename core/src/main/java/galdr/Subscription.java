@@ -35,7 +35,7 @@ public final class Subscription
   Subscription( @Nonnull final World world,
                 final int id,
                 @Nullable final String name,
-                @Nonnull final EntityCollection collection )
+                @Nonnull final AreaOfInterest areaOfInterest )
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
@@ -46,7 +46,7 @@ public final class Subscription
     _world = Objects.requireNonNull( world );
     _id = id;
     _name = Galdr.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
-    _collection = Objects.requireNonNull( collection );
+    _collection = world.findOrCreateCollection( areaOfInterest );
     _collection.incRef();
   }
 

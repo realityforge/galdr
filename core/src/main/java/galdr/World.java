@@ -531,8 +531,7 @@ public final class World
       assert null != actualName;
       getSpy().reportSpyEvent( new SubscriptionCreateStartEvent( id, actualName, areaOfInterest ) );
     }
-    final Subscription subscription =
-      new Subscription( this, id, actualName, findOrCreateCollection( areaOfInterest ) );
+    final Subscription subscription = new Subscription( this, id, actualName, areaOfInterest );
     if ( willPropagateSpyEvents() )
     {
       assert null != actualName;
@@ -542,7 +541,7 @@ public final class World
   }
 
   @Nonnull
-  private EntityCollection findOrCreateCollection( @Nonnull final AreaOfInterest areaOfInterest )
+  EntityCollection findOrCreateCollection( @Nonnull final AreaOfInterest areaOfInterest )
   {
     final EntityCollection collection = findCollection( areaOfInterest );
     if ( null == collection )

@@ -73,7 +73,10 @@ public class SubscriptionTest
     final World world = Worlds.world().component( Component1.class ).build();
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     GaldrTestUtil.disableNames();
-    assertInvariantFailure( () -> new Subscription( world, 23, "MyName", subscription.getCollection() ),
+    assertInvariantFailure( () -> new Subscription( world,
+                                                    23,
+                                                    "MyName",
+                                                    subscription.getCollection().getAreaOfInterest() ),
                             "Galdr-0052: Subscription passed a name 'MyName' but Galdr.areNamesEnabled() is false" );
   }
 
