@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.CollectionCreateCompleteEvent;
+import galdr.spy.CollectionCreateStartEvent;
 import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
@@ -526,7 +528,8 @@ public final class World
       assert null != actualName;
       getSpy().reportSpyEvent( new SubscriptionCreateStartEvent( id, actualName, areaOfInterest ) );
     }
-    final Subscription subscription = new Subscription( this, id, actualName, findOrCreateCollection( areaOfInterest ) );
+    final Subscription subscription =
+      new Subscription( this, id, actualName, findOrCreateCollection( areaOfInterest ) );
     if ( willPropagateSpyEvents() )
     {
       assert null != actualName;
@@ -566,10 +569,18 @@ public final class World
                  () -> "Galdr-0034: World.createCollection() invoked but collection with matching AreaOfInterest already exists." );
     }
     final EntityCollection collection = new EntityCollection( this, areaOfInterest, getEntityManager().capacity() );
+    if ( willPropagateSpyEvents() )
+    {
+      getSpy().reportSpyEvent( new CollectionCreateStartEvent( collection.asInfo() ) );
+    }
     getEntityCollections().put( areaOfInterest, collection );
     linkCollection( collection, areaOfInterest.getAll() );
     linkCollection( collection, areaOfInterest.getOne() );
     linkCollection( collection, areaOfInterest.getExclude() );
+    if ( willPropagateSpyEvents() )
+    {
+      getSpy().reportSpyEvent( new CollectionCreateCompleteEvent( collection.asInfo() ) );
+    }
     return collection;
   }
 

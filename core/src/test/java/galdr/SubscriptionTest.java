@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.CollectionCreateCompleteEvent;
+import galdr.spy.CollectionCreateStartEvent;
 import galdr.spy.SubscriptionCreateCompleteEvent;
 import galdr.spy.SubscriptionCreateStartEvent;
 import galdr.spy.SubscriptionDisposeCompleteEvent;
@@ -44,11 +46,17 @@ public class SubscriptionTest
     assertEquals( subscription.getName(), "Subscription@1" );
     assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
 
-    handler.assertEventCount( 2 );
+    handler.assertEventCount( 4 );
     handler.assertNextEvent( SubscriptionCreateStartEvent.class, e -> {
       assertEquals( e.getId(), subscription.getId() );
       assertEquals( e.getName(), subscription.getName() );
       assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+    handler.assertNextEvent( CollectionCreateStartEvent.class,
+                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
+    handler.assertNextEvent( CollectionCreateCompleteEvent.class, e -> {
+      assertEquals( e.getCollection().getSubscriptionCount(), 1 );
+      assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest );
     } );
     handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
       assertEquals( e.getId(), subscription.getId() );
