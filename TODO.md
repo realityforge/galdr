@@ -80,7 +80,7 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add `SubscriptionCreateStartEvent`, `SubscriptionCreateCompleteEvent`, `SubscriptionDisposeStartEvent` and  `SubscriptionDisposeCompleteEvent` as spy events.
+* Add `SubscriptionCreateStartEvent`, `SubscriptionCreateCompleteEvent`, `SubscriptionDisposeStartEvent` and  `SubscriptionDisposeCompleteEvent` as spy events. Make sure these are changed to take info objects.
 * Add `CollectionCreateStartEvent`, `CollectionCreateCompleteEvent`, `CollectionAttachEvent`, `CollectionDisposeStartEvent` and  `CollectionDisposeCompleteEvent` as spy events.
 * Move `galdr.Processor` to `galdr.internal.Processor` or similar. To do this we are probably going to have
   to have a way to identify processors by name or id so that we can refer to them in our error handler.
