@@ -84,7 +84,6 @@ for systems/processors ahead of time.
 * Add `SubscriptionInfo`.
 * Change `Subscription*Event` to be parameterized by info objects where possible.
 * Change `CollectionAttachEvent` and `CollectionDetachEvent` to take a `SubscriptionInfo` parameter.
-* Add `CollectionAttachEvent` and `CollectionDetachEvent` spy events.
 * Move `galdr.Processor` to `galdr.internal.Processor` or similar. To do this we are probably going to have
   to have a way to identify processors by name or id so that we can refer to them in our error handler.
 * `AreaOfInterest` should generate an error if there is no components contained.

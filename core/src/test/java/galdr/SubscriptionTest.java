@@ -1,7 +1,9 @@
 package galdr;
 
+import galdr.spy.CollectionAttachEvent;
 import galdr.spy.CollectionCreateCompleteEvent;
 import galdr.spy.CollectionCreateStartEvent;
+import galdr.spy.CollectionDetachEvent;
 import galdr.spy.CollectionDisposeCompleteEvent;
 import galdr.spy.CollectionDisposeStartEvent;
 import galdr.spy.SubscriptionCreateCompleteEvent;
@@ -60,6 +62,38 @@ public class SubscriptionTest
       assertEquals( e.getCollection().getSubscriptionCount(), 1 );
       assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest );
     } );
+    handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+  }
+
+  @Test
+  public void construct_spiesEnabled_whenAttachToExistingCollection()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest =
+      world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
+
+    run( world, () -> world.createSubscription( areaOfInterest ) );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    final Subscription subscription = run( world, () -> world.createSubscription( areaOfInterest ) );
+    handler.unsubscribe();
+
+    assertEquals( subscription.getId(), 2 );
+    assertEquals( subscription.getName(), "Subscription@2" );
+    assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
+
+    handler.assertEventCount( 3 );
+    handler.assertNextEvent( SubscriptionCreateStartEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+    handler.assertNextEvent( CollectionAttachEvent.class,
+                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
       assertEquals( e.getId(), subscription.getId() );
       assertEquals( e.getName(), subscription.getName() );
@@ -193,12 +227,14 @@ public class SubscriptionTest
     run( world, subscription1::dispose );
     handler.unsubscribe();
 
-    handler.assertEventCount( 2 );
+    handler.assertEventCount( 3 );
     handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
       assertEquals( e.getId(), subscription1.getId() );
       assertEquals( e.getName(), subscription1.getName() );
       assertEquals( e.getAreaOfInterest(), areaOfInterest );
     } );
+    handler.assertNextEvent( CollectionDetachEvent.class,
+                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
       assertEquals( e.getId(), subscription1.getId() );
       assertEquals( e.getName(), subscription1.getName() );

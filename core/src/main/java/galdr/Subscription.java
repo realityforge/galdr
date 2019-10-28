@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.CollectionAttachEvent;
+import galdr.spy.CollectionDetachEvent;
 import galdr.spy.SubscriptionDisposeCompleteEvent;
 import galdr.spy.SubscriptionDisposeStartEvent;
 import grim.annotations.OmitSymbol;
@@ -47,6 +49,10 @@ public final class Subscription
     _id = id;
     _name = Galdr.areNamesEnabled() ? Objects.requireNonNull( name ) : null;
     _collection = world.findOrCreateCollection( areaOfInterest );
+    if ( _world.willPropagateSpyEvents() && 0 != _collection.getRefCount() )
+    {
+      _world.getSpy().reportSpyEvent( new CollectionAttachEvent( _collection.asInfo() ) );
+    }
     _collection.incRef();
   }
 
@@ -79,6 +85,10 @@ public final class Subscription
     _collection.decRef();
     if ( _world.willPropagateSpyEvents() )
     {
+      if ( 0 != _collection.getRefCount() )
+      {
+        _world.getSpy().reportSpyEvent( new CollectionDetachEvent( _collection.asInfo() ) );
+      }
       assert null != _name;
       assert null != areaOfInterest;
       _world.getSpy().reportSpyEvent( new SubscriptionDisposeCompleteEvent( _id, _name, areaOfInterest ) );
