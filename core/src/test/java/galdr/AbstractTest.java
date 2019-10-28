@@ -65,24 +65,9 @@ public abstract class AbstractTest
   @Nonnull
   final Subscription createSubscription( @Nonnull final World world, @Nonnull final Collection<Class<?>> all )
   {
-    return createSubscription( world, all, Collections.emptyList() );
-  }
-
-  @Nonnull
-  final Subscription createSubscription( @Nonnull final World world,
-                                         @Nonnull final Collection<Class<?>> all,
-                                         @Nonnull final Collection<Class<?>> one )
-  {
-    return createSubscription( world, all, one, Collections.emptyList() );
-  }
-
-  @Nonnull
-  final Subscription createSubscription( @Nonnull final World world,
-                                         @Nonnull final Collection<Class<?>> all,
-                                         @Nonnull final Collection<Class<?>> one,
-                                         @Nonnull final Collection<Class<?>> exclude )
-  {
-    return run( world, () -> world.createSubscription( world.createAreaOfInterest( all, one, exclude ) ) );
+    return run( world, () -> world.createSubscription( world.createAreaOfInterest( all,
+                                                                                   Collections.emptyList(),
+                                                                                   Collections.emptyList() ) ) );
   }
 
   final void assertDefaultToString( @Nonnull final Object object )
