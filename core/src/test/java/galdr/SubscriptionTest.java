@@ -2,6 +2,8 @@ package galdr;
 
 import galdr.spy.CollectionCreateCompleteEvent;
 import galdr.spy.CollectionCreateStartEvent;
+import galdr.spy.CollectionDisposeCompleteEvent;
+import galdr.spy.CollectionDisposeStartEvent;
 import galdr.spy.SubscriptionCreateCompleteEvent;
 import galdr.spy.SubscriptionCreateStartEvent;
 import galdr.spy.SubscriptionDisposeCompleteEvent;
@@ -146,12 +148,16 @@ public class SubscriptionTest
     run( world, subscription::dispose );
     handler.unsubscribe();
 
-    handler.assertEventCount( 2 );
+    handler.assertEventCount( 4 );
     handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
       assertEquals( e.getId(), subscription.getId() );
       assertEquals( e.getName(), subscription.getName() );
       assertEquals( e.getAreaOfInterest(), areaOfInterest );
     } );
+    handler.assertNextEvent( CollectionDisposeStartEvent.class,
+                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
+    handler.assertNextEvent( CollectionDisposeCompleteEvent.class,
+                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
       assertEquals( e.getId(), subscription.getId() );
       assertEquals( e.getName(), subscription.getName() );
@@ -161,6 +167,44 @@ public class SubscriptionTest
     assertFalse( subscription.isNotDisposed() );
     assertTrue( subscription.isDisposed() );
     assertTrue( collection.isDisposed() );
+  }
+
+  @Test
+  public void dispose_withSpiesEnabled_and_collectionSharedWithAnotherubscription()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final Subscription subscription1 = createSubscription( world, Collections.singletonList( Component1.class ) );
+    final Subscription subscription2 = createSubscription( world, Collections.singletonList( Component1.class ) );
+
+    final EntityCollection collection = subscription1.getCollection();
+    //noinspection SimplifiedTestNGAssertion
+    assertTrue( collection == subscription2.getCollection() );
+
+    final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
+
+    assertTrue( subscription1.isNotDisposed() );
+    assertFalse( subscription1.isDisposed() );
+    assertFalse( collection.isDisposed() );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    run( world, subscription1::dispose );
+    handler.unsubscribe();
+
+    handler.assertEventCount( 2 );
+    handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
+      assertEquals( e.getId(), subscription1.getId() );
+      assertEquals( e.getName(), subscription1.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+    handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
+      assertEquals( e.getId(), subscription1.getId() );
+      assertEquals( e.getName(), subscription1.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+
+    assertFalse( subscription1.isNotDisposed() );
+    assertTrue( subscription1.isDisposed() );
+    assertFalse( collection.isDisposed() );
   }
 
   @Test

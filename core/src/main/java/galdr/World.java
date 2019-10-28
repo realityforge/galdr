@@ -2,6 +2,9 @@ package galdr;
 
 import galdr.spy.CollectionCreateCompleteEvent;
 import galdr.spy.CollectionCreateStartEvent;
+import galdr.spy.CollectionDisposeCompleteEvent;
+import galdr.spy.CollectionDisposeStartEvent;
+import galdr.spy.CollectionInfo;
 import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
@@ -607,10 +610,21 @@ public final class World
                  () -> "Galdr-0041: World.removeCollection() invoked existing collection does not match supplied collection." );
     }
     assert null != existing;
+    CollectionInfo info = null;
+    if ( willPropagateSpyEvents() )
+    {
+      info = collection.asInfo();
+      getSpy().reportSpyEvent( new CollectionDisposeStartEvent( info ) );
+    }
     unlinkCollection( existing, areaOfInterest.getAll() );
     unlinkCollection( existing, areaOfInterest.getOne() );
     unlinkCollection( existing, areaOfInterest.getExclude() );
     existing.markAsDisposed();
+    if ( willPropagateSpyEvents() )
+    {
+      assert null != info;
+      getSpy().reportSpyEvent( new CollectionDisposeCompleteEvent( info ) );
+    }
   }
 
   private void unlinkCollection( @Nonnull final EntityCollection collection,
