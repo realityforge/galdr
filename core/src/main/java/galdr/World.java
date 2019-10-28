@@ -3,6 +3,8 @@ package galdr;
 import galdr.spy.LinkAddCompleteEvent;
 import galdr.spy.LinkAddStartEvent;
 import galdr.spy.Spy;
+import galdr.spy.SubscriptionCreateCompleteEvent;
+import galdr.spy.SubscriptionCreateStartEvent;
 import galdr.spy.WorldInfo;
 import grim.annotations.OmitSymbol;
 import java.util.Arrays;
@@ -519,7 +521,18 @@ public final class World
   {
     final int id = _nextSubscriptionId++;
     final String actualName = Galdr.areNamesEnabled() ? null == name ? "Subscription@" + id : name : null;
-    return new Subscription( id, actualName, findOrCreateCollection( areaOfInterest ) );
+    if ( willPropagateSpyEvents() )
+    {
+      assert null != actualName;
+      getSpy().reportSpyEvent( new SubscriptionCreateStartEvent( id, actualName, areaOfInterest ) );
+    }
+    final Subscription subscription = new Subscription( id, actualName, findOrCreateCollection( areaOfInterest ) );
+    if ( willPropagateSpyEvents() )
+    {
+      assert null != actualName;
+      getSpy().reportSpyEvent( new SubscriptionCreateCompleteEvent( id, actualName, areaOfInterest ) );
+    }
+    return subscription;
   }
 
   @Nonnull

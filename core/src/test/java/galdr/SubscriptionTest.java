@@ -1,5 +1,7 @@
 package galdr;
 
+import galdr.spy.SubscriptionCreateCompleteEvent;
+import galdr.spy.SubscriptionCreateStartEvent;
 import java.util.Collections;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -23,6 +25,34 @@ public class SubscriptionTest
     assertEquals( subscription.getId(), 1 );
     assertEquals( subscription.getName(), "Subscription@1" );
     assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
+  }
+
+  @Test
+  public void construct_spiesEnabled()
+  {
+    final World world = Worlds.world().component( Component1.class ).build();
+    final AreaOfInterest areaOfInterest =
+      world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
+
+    final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
+    final Subscription subscription = run( world, () -> world.createSubscription( areaOfInterest ) );
+    handler.unsubscribe();
+
+    assertEquals( subscription.getId(), 1 );
+    assertEquals( subscription.getName(), "Subscription@1" );
+    assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
+
+    handler.assertEventCount( 2 );
+    handler.assertNextEvent( SubscriptionCreateStartEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
+    handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
+      assertEquals( e.getId(), subscription.getId() );
+      assertEquals( e.getName(), subscription.getName() );
+      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+    } );
   }
 
   @Test
