@@ -62,7 +62,7 @@ final class EntityCollection
    */
   @OmitSymbol( unless = "galdr.enable_spies" )
   @Nullable
-  private CollectionInfoImpl _info;
+  private CollectionInfo _info;
 
   EntityCollection( @Nonnull final World world,
                     @Nonnull final AreaOfInterest areaOfInterest,
