@@ -82,6 +82,7 @@ public final class Subscription
       areaOfInterest = _collection.getAreaOfInterest();
       _world.getSpy().reportSpyEvent( new SubscriptionDisposeStartEvent( _id, _name, areaOfInterest ) );
     }
+    _world.removeSubscription( this );
     _disposed = true;
     _collection.decRef();
     if ( _world.willPropagateSpyEvents() )

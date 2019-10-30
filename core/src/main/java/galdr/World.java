@@ -45,6 +45,13 @@ public final class World
   @Nullable
   private WorldInfoImpl _info;
   /**
+   * Cached list of active subscriptions.
+   * Is only used by the spy subsystem and should be null if {@link Galdr#areSpiesEnabled()} is false.
+   */
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nullable
+  private Map<Integer, Subscription> _subscriptions = Galdr.areSpiesEnabled() ? new HashMap<>() : null;
+  /**
    * The id used to create the next subscription.
    */
   private int _nextSubscriptionId = 1;
@@ -531,12 +538,45 @@ public final class World
       getSpy().reportSpyEvent( new SubscriptionCreateStartEvent( id, actualName, areaOfInterest ) );
     }
     final Subscription subscription = new Subscription( this, id, actualName, areaOfInterest );
+    if ( Galdr.areSpiesEnabled() )
+    {
+      assert null != _subscriptions;
+      _subscriptions.put( id, subscription );
+    }
     if ( willPropagateSpyEvents() )
     {
       assert null != actualName;
       getSpy().reportSpyEvent( new SubscriptionCreateCompleteEvent( id, actualName, areaOfInterest ) );
     }
     return subscription;
+  }
+
+  void removeSubscription( @Nonnull final Subscription subscription )
+  {
+    if ( Galdr.areSpiesEnabled() )
+    {
+      assert null != _subscriptions;
+      final Subscription removed = _subscriptions.remove( subscription.getId() );
+      if ( Galdr.shouldCheckInvariants() )
+      {
+        invariant( () -> removed == subscription,
+                   () -> "Galdr-0048: World.removeSubscription() attempted to remove subscription named '" +
+                         subscription.getName() + "' with id " + subscription.getId() + " but removed " +
+                         "subscription is " + removed );
+      }
+    }
+  }
+
+  @Nonnull
+  Map<Integer, Subscription> getSubscriptions()
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areSpiesEnabled,
+                 () -> "Galdr-0050: World.getSubscriptions() invoked but Galdr.areSpiesEnabled() returns false." );
+    }
+    assert null != _subscriptions;
+    return _subscriptions;
   }
 
   @Nonnull

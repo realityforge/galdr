@@ -235,9 +235,19 @@
     "messagePattern": "EntityCollection.%s() invoked with subscription named '%s' but no iteration was active."
   },
   {
+    "code": 48,
+    "type": "INVARIANT",
+    "messagePattern": "World.removeSubscription() attempted to remove subscription named '%s' with id %s but removed subscription is Subscription[Subscription@%s]"
+  },
+  {
     "code": 49,
     "type": "API_INVARIANT",
     "messagePattern": "A duplicate component named '%s' was passed when attempting to create ComponentIdSet."
+  },
+  {
+    "code": 50,
+    "type": "INVARIANT",
+    "messagePattern": "World.getSubscriptions() invoked but Galdr.areSpiesEnabled() returns false."
   },
   {
     "code": 52,

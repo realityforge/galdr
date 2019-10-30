@@ -28,11 +28,16 @@ public class SubscriptionTest
     final AreaOfInterest areaOfInterest =
       world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
 
+    assertEquals( world.getSubscriptions().size(), 0 );
+
     final Subscription subscription = run( world, () -> world.createSubscription( areaOfInterest ) );
 
     assertEquals( subscription.getId(), 1 );
     assertEquals( subscription.getName(), "Subscription@1" );
     assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
+
+    assertEquals( world.getSubscriptions().size(), 1 );
+    assertEquals( world.getSubscriptions().get( 1 ), subscription );
   }
 
   @Test
@@ -42,6 +47,8 @@ public class SubscriptionTest
     final AreaOfInterest areaOfInterest =
       world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
 
+    assertEquals( world.getSubscriptions().size(), 0 );
+
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
     final Subscription subscription = run( world, () -> world.createSubscription( areaOfInterest ) );
     handler.unsubscribe();
@@ -49,6 +56,9 @@ public class SubscriptionTest
     assertEquals( subscription.getId(), 1 );
     assertEquals( subscription.getName(), "Subscription@1" );
     assertEquals( subscription.getCollection().getAreaOfInterest(), areaOfInterest );
+
+    assertEquals( world.getSubscriptions().size(), 1 );
+    assertEquals( world.getSubscriptions().get( 1 ), subscription );
 
     handler.assertEventCount( 4 );
     handler.assertNextEvent( SubscriptionCreateStartEvent.class, e -> {
@@ -115,6 +125,15 @@ public class SubscriptionTest
   }
 
   @Test
+  public void getSubscriptions_spiesDisabled()
+  {
+    final World world = Worlds.world().build();
+    GaldrTestUtil.disableSpies();
+    assertInvariantFailure( world::getSubscriptions,
+                            "Galdr-0050: World.getSubscriptions() invoked but Galdr.areSpiesEnabled() returns false." );
+  }
+
+  @Test
   public void getName()
   {
     final World world = Worlds.world().component( Component1.class ).build();
@@ -161,7 +180,11 @@ public class SubscriptionTest
     assertFalse( subscription.isDisposed() );
     assertFalse( collection.isDisposed() );
 
+    assertEquals( world.getSubscriptions().size(), 1 );
+
     run( world, subscription::dispose );
+
+    assertEquals( world.getSubscriptions().size(), 0 );
 
     assertFalse( subscription.isNotDisposed() );
     assertTrue( subscription.isDisposed() );
