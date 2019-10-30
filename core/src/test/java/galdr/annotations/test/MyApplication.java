@@ -3,7 +3,7 @@ package galdr.annotations.test;
 import galdr.ComponentManager;
 import galdr.ProcessorStage;
 import galdr.World;
-import galdr.annotations.ComponentRef;
+import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.GaldrApplication;
 import galdr.annotations.StageRef;
 import galdr.annotations.WorldRef;
@@ -26,7 +26,7 @@ abstract class MyApplication
   @Nonnull
   abstract ProcessorStage sim();
 
-  @ComponentRef
+  @ComponentManagerRef
   @Nonnull
   abstract ComponentManager<Health> health();
 }

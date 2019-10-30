@@ -23,6 +23,6 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Target( ElementType.METHOD )
-public @interface ComponentRef
+public @interface ComponentManagerRef
 {
 }

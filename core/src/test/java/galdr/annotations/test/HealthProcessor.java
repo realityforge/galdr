@@ -2,7 +2,7 @@ package galdr.annotations.test;
 
 import galdr.ComponentManager;
 import galdr.World;
-import galdr.annotations.ComponentRef;
+import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.EntityProcessor;
 import galdr.annotations.SubSystem;
 import galdr.annotations.WorldRef;
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 @SubSystem
 abstract class HealthProcessor
 {
-  @ComponentRef
+  @ComponentManagerRef
   @Nonnull
   abstract ComponentManager<Health> health();
 
