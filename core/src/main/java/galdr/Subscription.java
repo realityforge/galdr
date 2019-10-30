@@ -4,6 +4,7 @@ import galdr.spy.CollectionAttachEvent;
 import galdr.spy.CollectionDetachEvent;
 import galdr.spy.SubscriptionDisposeCompleteEvent;
 import galdr.spy.SubscriptionDisposeStartEvent;
+import galdr.spy.SubscriptionInfo;
 import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -25,6 +26,13 @@ public final class Subscription
   @OmitSymbol( unless = "galdr.enable_names" )
   @Nullable
   private final String _name;
+  /**
+   * Cached info object associated with element.
+   * This should be null if {@link Galdr#areSpiesEnabled()} is false.
+   */
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nullable
+  private SubscriptionInfo _info;
   /**
    * The underlying collection that contains the entities.
    */
@@ -132,6 +140,28 @@ public final class Subscription
     }
     assert null != _name;
     return _name;
+  }
+
+  /**
+   * Return the info associated with this class.
+   *
+   * @return the info associated with this class.
+   */
+  @SuppressWarnings( "ConstantConditions" )
+  @OmitSymbol( unless = "galdr.enable_spies" )
+  @Nonnull
+  SubscriptionInfo asInfo()
+  {
+    if ( Galdr.shouldCheckInvariants() )
+    {
+      invariant( Galdr::areSpiesEnabled,
+                 () -> "Galdr-0040: Subscription.asInfo() invoked but Galdr.areSpiesEnabled() returned false." );
+    }
+    if ( Galdr.areSpiesEnabled() && null == _info )
+    {
+      _info = new SubscriptionInfoImpl( this );
+    }
+    return Galdr.areSpiesEnabled() ? _info : null;
   }
 
   @OmitSymbol( unless = "galdr.debug_to_string" )

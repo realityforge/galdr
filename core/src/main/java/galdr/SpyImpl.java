@@ -4,8 +4,10 @@ import galdr.spy.CollectionInfo;
 import galdr.spy.ComponentInfo;
 import galdr.spy.Spy;
 import galdr.spy.SpyEventHandler;
+import galdr.spy.SubscriptionInfo;
 import galdr.spy.WorldInfo;
 import grim.annotations.OmitType;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Spy implementation.
@@ -95,5 +98,24 @@ final class SpyImpl
                                           .map( EntityCollection::asInfo )
                                           .collect( Collectors.toMap( CollectionInfo::getAreaOfInterest,
                                                                       Function.identity() ) ) );
+  }
+
+  @Nullable
+  @Override
+  public SubscriptionInfo findSubscriptionById( final int id )
+  {
+    final Subscription subscription = _world.getSubscriptions().get( id );
+    return null == subscription ? null : subscription.asInfo();
+  }
+
+  @Nonnull
+  @Override
+  public Collection<SubscriptionInfo> getSubscriptions()
+  {
+    return Collections.unmodifiableCollection( _world.getSubscriptions()
+                                                 .values()
+                                                 .stream()
+                                                 .map( Subscription::asInfo )
+                                                 .collect( Collectors.toList() ) );
   }
 }

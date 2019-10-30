@@ -1,9 +1,11 @@
 package galdr.spy;
 
 import galdr.AreaOfInterest;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Interface for interacting with spy subsystem.
@@ -73,4 +75,21 @@ public interface Spy
    */
   @Nonnull
   Map<AreaOfInterest, CollectionInfo> getCollections();
+
+  /**
+   * Return the subscription with the specified id if any.
+   *
+   * @param id the id of the subscription.
+   * @return the subscription with the specified id if any.
+   */
+  @Nullable
+  SubscriptionInfo findSubscriptionById( int id );
+
+  /**
+   * Return the subscriptions.
+   *
+   * @return the subscriptions.
+   */
+  @Nonnull
+  Collection<SubscriptionInfo> getSubscriptions();
 }
