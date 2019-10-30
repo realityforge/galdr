@@ -510,7 +510,6 @@ public final class World
         apiInvariant( () -> isComponentIdValid( id ),
                       () -> "Galdr-0044: World.createAreaOfInterest() passed an invalid component id " +
                             id + " in the " + name + " component set." );
-
       }
     }
   }
