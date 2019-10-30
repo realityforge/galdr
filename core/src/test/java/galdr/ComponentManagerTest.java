@@ -22,41 +22,40 @@ public class ComponentManagerTest
 
     assertEquals( componentManager.getWorld(), world );
     assertEquals( componentManager.getId(), 0 );
-    assertNotNull( componentManager.getApi() );
     assertEquals( componentManager.getType(), Component1.class );
     assertEquals( componentManager.getName(), "Component1" );
     assertEquals( componentManager.toString(), "ComponentManager[Component1=0]" );
     assertEquals( componentManager.hashCode(), 0 );
 
     final int entityId = createEntity( world );
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
-    assertInvariantFailure( () -> componentManager.get( entityId ),
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
+    assertInvariantFailure( () -> run( world, () -> componentManager.get( entityId ) ),
                             "Galdr-0033: The ComponentManager.get() method for the component named " +
                             "'Component1' expected to find a component for entityId " + entityId +
                             " but is unable to locate component." );
 
-    final Component1 component = componentManager.findOrCreate( entityId );
+    final Component1 component = run( world, () -> componentManager.findOrCreate( entityId ) );
     assertNotNull( component );
 
     final int initialValue = randomInt( 456738 );
     component.value = initialValue;
 
-    assertInvariantFailure( () -> componentManager.create( entityId ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.create( entityId ) ),
                             "Galdr-0031: The ComponentManager.create() method invoked but entity " +
                             entityId + " already has the component named 'Component1'." );
 
-    assertTrue( componentManager.has( entityId ) );
-    assertEquals( componentManager.find( entityId ), component );
-    assertEquals( componentManager.get( entityId ), component );
-    assertEquals( componentManager.get( entityId ).value, initialValue );
+    run( world, () -> assertTrue( componentManager.has( entityId ) ) );
+    run( world, () -> assertEquals( componentManager.find( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ).value, initialValue ) );
 
-    componentManager.remove( entityId );
+    run( world, () -> componentManager.remove( entityId ) );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
-    assertInvariantFailure( () -> componentManager.remove( entityId ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.remove( entityId ) ),
                             "Galdr-0030: The ComponentManager.remove() method for the component named " +
                             "'Component1' was invoked but the entity " + entityId + " does not have the component." );
   }
@@ -86,21 +85,21 @@ public class ComponentManagerTest
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
-    final Component1 component = componentManager.findOrCreate( entityId );
+    final Component1 component = run( world, () -> componentManager.findOrCreate( entityId ) );
     assertNotNull( component );
 
     final int initialValue = randomInt( 44 );
     component.value = initialValue;
 
-    assertTrue( componentManager.has( entityId ) );
-    assertEquals( componentManager.find( entityId ), component );
-    assertEquals( componentManager.get( entityId ), component );
-    assertEquals( componentManager.get( entityId ).value, initialValue );
+    run( world, () -> assertTrue( componentManager.has( entityId ) ) );
+    run( world, () -> assertEquals( componentManager.find( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ).value, initialValue ) );
 
-    componentManager.remove( entityId );
+    run( world, () -> componentManager.remove( entityId ) );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
     handler.assertEventCount( 3 );
     handler.assertNextEvent( ComponentAddStartEvent.class, e -> {
@@ -124,7 +123,7 @@ public class ComponentManagerTest
   public void allocate()
   {
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
-    final ComponentAPI<Component1> cm = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> cm = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world );
     assertFalse( run( world, () -> cm.has( entityId ) ) );
@@ -169,15 +168,15 @@ public class ComponentManagerTest
     final World world = Worlds.world().component( Component1.class, Component1::new ).build();
     final ComponentManager<Component1> componentManager = world.getComponentManagerByType( Component1.class );
 
-    assertInvariantFailure( () -> componentManager.has( -23 ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.has( -23 ) ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
-    assertInvariantFailure( () -> componentManager.find( -23 ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.find( -23 ) ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
-    assertInvariantFailure( () -> componentManager.get( -23 ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.get( -23 ) ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
-    assertInvariantFailure( () -> componentManager.create( -23 ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.create( -23 ) ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
-    assertInvariantFailure( () -> componentManager.remove( -23 ),
+    assertInvariantFailure( () -> run( world, () -> componentManager.remove( -23 ) ),
                             "Galdr-0079: Attempting to get entity -23 but entity is not allocated." );
   }
 }

@@ -272,9 +272,9 @@ public final class World
   }
 
   @Nonnull
-  public <T> ComponentAPI<T> getComponentByType( @Nonnull final Class<T> type )
+  public <T> ComponentManager<T> getComponentByType( @Nonnull final Class<T> type )
   {
-    return getComponentManagerByType( type ).getApi();
+    return getComponentManagerByType( type );
   }
 
   @Nonnull
@@ -693,7 +693,7 @@ public final class World
 
   @SuppressWarnings( "unchecked" )
   @Nonnull
-  <T> ComponentManager<T> getComponentManagerByType( @Nonnull final Class<T> type )
+  public <T> ComponentManager<T> getComponentManagerByType( @Nonnull final Class<T> type )
   {
     assertWorldConstructed( "World.getComponentManagerByType()" );
     assert null != _componentByClass;

@@ -1,7 +1,7 @@
 package galdr.annotations.test;
 
 import galdr.AreaOfInterest;
-import galdr.ComponentAPI;
+import galdr.ComponentManager;
 import galdr.Galdr;
 import galdr.Subscription;
 import galdr.World;
@@ -20,7 +20,7 @@ final class Galdr_HealthProcessorImpl
   @Nullable
   private Subscription $galdr$_processHealth_subscription;
   @Nullable
-  private ComponentAPI<Health> $galdrc$_health;
+  private ComponentManager<Health> $galdrc$_health;
   private AreaOfInterest $galdr$_processHealth_areaOfInterest;
 
   Galdr_HealthProcessorImpl( @Nonnull final Galdr_HealthProcessor processor )
@@ -37,7 +37,7 @@ final class Galdr_HealthProcessorImpl
 
   @Nonnull
   @Override
-  ComponentAPI<Health> health()
+  ComponentManager<Health> health()
   {
     assert null != $galdrc$_health;
     return $galdrc$_health;

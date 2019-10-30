@@ -52,9 +52,9 @@ public class EntityManagerTest
       .component( Attack.class )
       .build();
 
-    final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
-    final ComponentAPI<Health> health = world.getComponentByType( Health.class );
-    final ComponentAPI<Attack> attack = world.getComponentByType( Attack.class );
+    final ComponentManager<Armour> armour = world.getComponentByType( Armour.class );
+    final ComponentManager<Health> health = world.getComponentByType( Health.class );
+    final ComponentManager<Attack> attack = world.getComponentByType( Attack.class );
 
     final int entityId1 = createEntity( world, Armour.class, Health.class );
     final int entityId2 = createEntity( world, Health.class, Attack.class );
@@ -96,9 +96,9 @@ public class EntityManagerTest
       .component( Attack.class )
       .build();
 
-    final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
-    final ComponentAPI<Health> health = world.getComponentByType( Health.class );
-    final ComponentAPI<Attack> attack = world.getComponentByType( Attack.class );
+    final ComponentManager<Armour> armour = world.getComponentByType( Armour.class );
+    final ComponentManager<Health> health = world.getComponentByType( Health.class );
+    final ComponentManager<Attack> attack = world.getComponentByType( Attack.class );
 
     final TestSpyEventHandler handler = TestSpyEventHandler.subscribe( world );
 
@@ -163,8 +163,8 @@ public class EntityManagerTest
       .component( Attack.class )
       .build();
 
-    final ComponentAPI<Armour> armour = world.getComponentByType( Armour.class );
-    final ComponentAPI<Health> health = world.getComponentByType( Health.class );
+    final ComponentManager<Armour> armour = world.getComponentByType( Armour.class );
+    final ComponentManager<Health> health = world.getComponentByType( Health.class );
 
     final int entityId = createEntity( world, Armour.class, Health.class );
 

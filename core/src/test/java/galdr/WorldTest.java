@@ -174,9 +174,9 @@ public class WorldTest
 
     run( world, () -> assertTrue( world.isAlive( entityId ) ) );
 
-    final ComponentAPI<Component1> cm1 = world.getComponentByType( Component1.class );
-    final ComponentAPI<Component2> cm2 = world.getComponentByType( Component2.class );
-    final ComponentAPI<Component3> cm3 = world.getComponentByType( Component3.class );
+    final ComponentManager<Component1> cm1 = world.getComponentByType( Component1.class );
+    final ComponentManager<Component2> cm2 = world.getComponentByType( Component2.class );
+    final ComponentManager<Component3> cm3 = world.getComponentByType( Component3.class );
 
     run( world, () -> assertTrue( cm1.has( entityId ) ) );
     run( world, () -> assertFalse( cm2.has( entityId ) ) );

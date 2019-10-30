@@ -80,7 +80,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Merge `ComponentAPI` into `ComponentManager`
 * Add `SubscriptionInfo`.
 * Change `Subscription*Event` to be parameterized by info objects where possible.
 * Change `CollectionAttachEvent` and `CollectionDetachEvent` to take a `SubscriptionInfo` parameter.

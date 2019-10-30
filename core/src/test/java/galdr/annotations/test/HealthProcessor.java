@@ -1,6 +1,6 @@
 package galdr.annotations.test;
 
-import galdr.ComponentAPI;
+import galdr.ComponentManager;
 import galdr.World;
 import galdr.annotations.ComponentRef;
 import galdr.annotations.EntityProcessor;
@@ -13,7 +13,7 @@ abstract class HealthProcessor
 {
   @ComponentRef
   @Nonnull
-  abstract ComponentAPI<Health> health();
+  abstract ComponentManager<Health> health();
 
   @WorldRef
   @Nonnull

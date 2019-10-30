@@ -343,7 +343,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesRemoveEntityLaterInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
@@ -438,7 +438,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesAddEntityLaterInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
@@ -488,7 +488,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionContainingSubsetOfEntitiesAddEntityEarlierInIteration()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
@@ -546,7 +546,7 @@ public class EntityCollectionTest
   public void iterateOverCollectionWithMultiplePassesOverNewEntities()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
@@ -597,7 +597,7 @@ public class EntityCollectionTest
   public void iterateWhereEntityAddedAndRemovedFromNewEntitiesPriorToVisiting()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 
@@ -667,7 +667,7 @@ public class EntityCollectionTest
   public void abortIterationWhenProcessingNewEntitiesList()
   {
     final World world = Worlds.world().component( Component1.class ).build();
-    final ComponentAPI<Component1> componentApi = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentApi = world.getComponentByType( Component1.class );
     final Subscription subscription = createSubscription( world, Collections.singletonList( Component1.class ) );
     final EntityCollection collection = subscription.getCollection();
 

@@ -1,7 +1,7 @@
 package galdr.annotations.test;
 
 import galdr.AbstractTest;
-import galdr.ComponentAPI;
+import galdr.ComponentManager;
 import galdr.ComponentStorage;
 import galdr.ProcessorStage;
 import galdr.World;
@@ -27,7 +27,7 @@ public class AnnotationExampleTest
 
     stage.process( 1 );
 
-    final ComponentAPI<Health> api = application.health();
+    final ComponentManager<Health> api = application.health();
 
     assertEquals( api.getId(), 0 );
     assertEquals( api.getStorage(), ComponentStorage.ARRAY );

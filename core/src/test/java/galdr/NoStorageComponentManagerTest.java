@@ -28,17 +28,17 @@ public class NoStorageComponentManagerTest
 
     final int entityId = createEntity( world );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
-    componentManager.allocate( entityId );
+    run( world, () -> componentManager.allocate( entityId ) );
 
-    assertTrue( componentManager.has( entityId ) );
+    run( world, () -> assertTrue( componentManager.has( entityId ) ) );
 
-    componentManager.remove( entityId );
+    run( world, () -> componentManager.remove( entityId ) );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
   }
 
   @Test
@@ -51,8 +51,8 @@ public class NoStorageComponentManagerTest
 
     final int entityId = createEntity( world );
 
-    assertFalse( cm.has( entityId ) );
-    assertNull( cm.find( entityId ) );
+    run( world, () -> assertFalse( cm.has( entityId ) ) );
+    run( world, () -> assertNull( cm.find( entityId ) ) );
 
     assertInvariantFailure( () -> cm.performCreate( entityId ),
                             "Galdr-0014: The ComponentManager.create() method has been invoked for the component named 'Component1' but the component was registered with ComponentStorage.NONE storage strategy and thus should never be accessed." );
@@ -85,7 +85,7 @@ public class NoStorageComponentManagerTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world );
 
@@ -108,7 +108,7 @@ public class NoStorageComponentManagerTest
 
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentAPI<Component1> componentManager = world.getComponentByType( Component1.class );
+    final ComponentManager<Component1> componentManager = world.getComponentByType( Component1.class );
 
     final int entityId = createEntity( world );
 

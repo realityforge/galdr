@@ -45,22 +45,22 @@ public class FastArrayComponentManagerTest
     final int entityId = createEntity( world );
 
     // entityId is > initial capacity
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
-    final Component1 component = componentManager.create( entityId );
+    final Component1 component = run( world, () -> componentManager.create( entityId ) );
     assertNotNull( component );
 
     assertEquals( componentManager.capacity(), 12 );
 
-    assertTrue( componentManager.has( entityId ) );
-    assertEquals( componentManager.find( entityId ), component );
-    assertEquals( componentManager.get( entityId ), component );
+    run( world, () -> assertTrue( componentManager.has( entityId ) ) );
+    run( world, () -> assertEquals( componentManager.find( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ), component ) );
 
-    componentManager.remove( entityId );
+    run( world, () -> componentManager.remove( entityId ) );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
     // Capacity is not diminished after remove
     assertEquals( componentManager.capacity(), 12 );

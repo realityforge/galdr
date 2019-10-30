@@ -1,7 +1,7 @@
 package galdr.test;
 
 import galdr.AbstractTest;
-import galdr.ComponentAPI;
+import galdr.ComponentManager;
 import galdr.ComponentStorage;
 import galdr.World;
 import galdr.Worlds;
@@ -27,7 +27,7 @@ public class ComponentApiTest
 
     final int entityId = createEntity( world );
 
-    final ComponentAPI<Health> api = world.getComponentByType( Health.class );
+    final ComponentManager<Health> api = world.getComponentByType( Health.class );
 
     assertEquals( api.getId(), 0 );
     assertEquals( api.getStorage(), ComponentStorage.ARRAY );
@@ -58,7 +58,7 @@ public class ComponentApiTest
 
     final int entityId = createEntity( world );
 
-    final ComponentAPI<Health> api = world.getComponentByType( Health.class );
+    final ComponentManager<Health> api = world.getComponentByType( Health.class );
 
     assertEquals( api.getId(), 0 );
 
@@ -91,7 +91,7 @@ public class ComponentApiTest
   {
     final World world = Worlds.world().component( MyFlag.class ).build();
 
-    final ComponentAPI<MyFlag> api = world.getComponentByType( MyFlag.class );
+    final ComponentManager<MyFlag> api = world.getComponentByType( MyFlag.class );
     assertEquals( api.getId(), 0 );
 
     final int entityId = createEntity( world );
@@ -119,9 +119,9 @@ public class ComponentApiTest
     final int entityId1 = createEntity( world1 );
     createEntity( world2 );
 
-    final ComponentAPI<MyFlag> api = world1.getComponentByType( MyFlag.class );
+    final ComponentManager<MyFlag> api = world1.getComponentByType( MyFlag.class );
 
     assertInvariantFailure( () -> run( world2, () -> api.allocate( entityId1 ) ),
-                            "Galdr-0035: ComponentAPI method invoked in the context of the world 'World@2' but the component belongs to the world 'World@1'" );
+                            "Galdr-0035: ComponentManager method invoked in the context of the world 'World@2' but the component belongs to the world 'World@1'" );
   }
 }

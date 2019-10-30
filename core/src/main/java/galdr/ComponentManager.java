@@ -15,8 +15,13 @@ import static org.realityforge.braincheck.Guards.*;
 
 /**
  * The class responsible for storing components of a particular type.
+ * The A
+ * A non-obvious aspect of the API is that the entityId parameter passed into the methods MUST
+ * refer to an allocated and alive Entity instance.
+ *
+ * @param <T> the type of the component.
  */
-abstract class ComponentManager<T>
+public abstract class ComponentManager<T>
 {
   /**
    * The world containing the component.
@@ -39,11 +44,6 @@ abstract class ComponentManager<T>
   @Nonnull
   private final Class<T> _type;
   /**
-   * The Component API exposed to application code.
-   */
-  @Nonnull
-  private final ComponentAPI<T> _api;
-  /**
    * The collections that have an {@link AreaOfInterest} that overlaps with this component.
    */
   @Nonnull
@@ -65,7 +65,6 @@ abstract class ComponentManager<T>
     _id = id;
     _flags = flags;
     _type = Objects.requireNonNull( type );
-    _api = new ComponentAPI<>( this );
   }
 
   /**
@@ -80,30 +79,19 @@ abstract class ComponentManager<T>
   }
 
   /**
-   * Return the API for component type.
-   *
-   * @return the API for the component type.
-   */
-  @Nonnull
-  ComponentAPI<T> getApi()
-  {
-    return _api;
-  }
-
-  /**
    * Return the storage strategy used by the component.
    *
    * @return the storage strategy used by the component.
    */
   @Nonnull
-  abstract ComponentStorage getStorage();
+  public abstract ComponentStorage getStorage();
 
   /**
    * Return the unique id of the component within the containing {@link World}.
    *
    * @return the unique id of the component within the containing {@link World}.
    */
-  int getId()
+  public int getId()
   {
     return _id;
   }
@@ -144,8 +132,9 @@ abstract class ComponentManager<T>
    * @param entityId the id of the entity.
    * @return true if the specified entity has a component contained in this store, false otherwise.
    */
-  final boolean has( final int entityId )
+  public final boolean has( final int entityId )
   {
+    ensureCurrentWorldMatches();
     return getEntityById( entityId ).getComponentIds().get( _id );
   }
 
@@ -162,8 +151,9 @@ abstract class ComponentManager<T>
    * @return the component instance if it exists.
    */
   @Nullable
-  final T find( final int entityId )
+  public final T find( final int entityId )
   {
+    ensureCurrentWorldMatches();
     return has( entityId ) ? performGet( entityId ) : null;
   }
 
@@ -184,8 +174,9 @@ abstract class ComponentManager<T>
    * @return the component instance.
    */
   @Nonnull
-  final T get( final int entityId )
+  public final T get( final int entityId )
   {
+    ensureCurrentWorldMatches();
     if ( Galdr.shouldCheckApiInvariants() )
     {
       final boolean isPresent = has( entityId );
@@ -204,8 +195,9 @@ abstract class ComponentManager<T>
    * @return the component instance.
    */
   @Nonnull
-  final T findOrCreate( final int entityId )
+  public final T findOrCreate( final int entityId )
   {
+    ensureCurrentWorldMatches();
     final T component = find( entityId );
     return null == component ? create( entityId ) : component;
   }
@@ -217,22 +209,24 @@ abstract class ComponentManager<T>
    * @return the component instance.
    */
   @Nonnull
-  final T create( final int entityId )
+  public final T create( final int entityId )
   {
+    ensureCurrentWorldMatches();
     final T component = newComponent( entityId, true );
     assert null != component;
     return component;
   }
 
   /**
-   * Allocate a component to the specified entity.
+   * Allocate a component instance for the specified entity.
    * Unlike the {@link #create(int)} and {@link #findOrCreate(int)}, this method does not return the component.
    * It is expected that this method will be used for components that have no state.
    *
    * @param entityId the id of the entity.
    */
-  final void allocate( final int entityId )
+  public final void allocate( final int entityId )
   {
+    ensureCurrentWorldMatches();
     newComponent( entityId, false );
   }
 
@@ -282,8 +276,9 @@ abstract class ComponentManager<T>
    *
    * @param entityId the id of the entity.
    */
-  final void remove( final int entityId )
+  public final void remove( final int entityId )
   {
+    ensureCurrentWorldMatches();
     final Entity entity = getEntityById( entityId );
     final BitSet componentIds = entity.getComponentIds();
     if ( Galdr.shouldCheckApiInvariants() )
@@ -389,6 +384,20 @@ abstract class ComponentManager<T>
                        getName() + "' was invoked but collection is not registered with ComponentManager." );
     }
     _collections.remove( collection );
+  }
+
+  @OmitSymbol( unless = "galdr.check_api_invariants" )
+  private void ensureCurrentWorldMatches()
+  {
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      final World activeWorld = World.current();
+      final World componentWorld = getWorld();
+      apiInvariant( () -> activeWorld == componentWorld,
+                    () -> "Galdr-0035: ComponentManager method invoked in the context of the world '" +
+                          activeWorld.getName() + "' but the component belongs to the world '" +
+                          componentWorld.getName() + "'" );
+    }
   }
 
   static final class Flags

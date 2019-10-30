@@ -15,7 +15,7 @@ final class NoStorageComponentManager<T>
 
   @Nonnull
   @Override
-  ComponentStorage getStorage()
+  public ComponentStorage getStorage()
   {
     return ComponentStorage.NONE;
   }

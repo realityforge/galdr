@@ -172,7 +172,7 @@
   {
     "code": 35,
     "type": "API_INVARIANT",
-    "messagePattern": "ComponentAPI method invoked in the context of the world '%s' but the component belongs to the world '%s'"
+    "messagePattern": "ComponentManager method invoked in the context of the world '%s' but the component belongs to the world '%s'"
   },
   {
     "code": 36,

@@ -45,25 +45,25 @@ public class MapComponentManagerTest
 
     final int entityId = createEntity( world );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
 
     assertEquals( componentManager.getComponents().size(), 0 );
 
-    final Component1 component = componentManager.create( entityId );
+    final Component1 component = run( world, () -> componentManager.create( entityId ) );
     assertNotNull( component );
 
     assertEquals( componentManager.getComponents().size(), 1 );
 
-    assertTrue( componentManager.has( entityId ) );
-    assertEquals( componentManager.find( entityId ), component );
-    assertEquals( componentManager.get( entityId ), component );
+    run( world, () -> assertTrue( componentManager.has( entityId ) ) );
+    run( world, () -> assertEquals( componentManager.find( entityId ), component ) );
+    run( world, () -> assertEquals( componentManager.get( entityId ), component ) );
 
-    componentManager.remove( entityId );
+    run( world, () -> componentManager.remove( entityId ) );
 
     assertEquals( componentManager.getComponents().size(), 0 );
 
-    assertFalse( componentManager.has( entityId ) );
-    assertNull( componentManager.find( entityId ) );
+    run( world, () -> assertFalse( componentManager.has( entityId ) ) );
+    run( world, () -> assertNull( componentManager.find( entityId ) ) );
   }
 }

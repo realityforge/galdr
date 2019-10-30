@@ -1,6 +1,6 @@
 package galdr.annotations.test;
 
-import galdr.ComponentAPI;
+import galdr.ComponentManager;
 import galdr.ProcessorStage;
 import galdr.World;
 import galdr.Worlds;
@@ -14,7 +14,7 @@ final class Galdr_MyApplication
   @Nonnull
   private final ProcessorStage _sim;
   @Nonnull
-  private final ComponentAPI<Health> _health;
+  private final ComponentManager<Health> _health;
 
   Galdr_MyApplication()
   {
@@ -44,7 +44,7 @@ final class Galdr_MyApplication
 
   @Nonnull
   @Override
-  ComponentAPI<Health> health()
+  ComponentManager<Health> health()
   {
     return _health;
   }
