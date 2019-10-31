@@ -3,6 +3,7 @@ package galdr;
 import galdr.internal.OnActivateFn;
 import galdr.internal.OnDeactivateFn;
 import galdr.internal.PostConstructFn;
+import grim.annotations.OmitSymbol;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 
@@ -107,6 +108,7 @@ public final class ProcessorStage
     return _name;
   }
 
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public String toString()
   {
