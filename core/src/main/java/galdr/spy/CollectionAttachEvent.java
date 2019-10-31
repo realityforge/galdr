@@ -11,27 +11,29 @@ public final class CollectionAttachEvent
   implements SerializableEvent
 {
   /**
-   * The collection.
+   * The subscription.
    */
   @Nonnull
-  private final CollectionInfo _collection;
+  private final SubscriptionInfo _subscription;
 
-  public CollectionAttachEvent( @Nonnull final CollectionInfo collection )
+  public CollectionAttachEvent( @Nonnull final SubscriptionInfo subscription )
   {
-    _collection = Objects.requireNonNull( collection );
+    _subscription = Objects.requireNonNull( subscription );
   }
 
   @Nonnull
-  public CollectionInfo getCollection()
+  public SubscriptionInfo getSubscription()
   {
-    return _collection;
+    return _subscription;
   }
 
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
     map.put( "type", "CollectionAttach" );
+    map.put( "id", _subscription.getId() );
+    map.put( "name", _subscription.getName() );
     // AreaOfInterest will need to be serialized in the future
-    map.put( "areaOfInterest", _collection.getAreaOfInterest() );
+    map.put( "areaOfInterest", _subscription.getCollection().getAreaOfInterest() );
   }
 }

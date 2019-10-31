@@ -60,7 +60,7 @@ public final class Subscription
     _collection = world.findOrCreateCollection( areaOfInterest );
     if ( _world.willPropagateSpyEvents() && 0 != _collection.getRefCount() )
     {
-      _world.getSpy().reportSpyEvent( new CollectionAttachEvent( _collection.asInfo() ) );
+      _world.getSpy().reportSpyEvent( new CollectionAttachEvent( asInfo() ) );
     }
     _collection.incRef();
   }
@@ -94,7 +94,7 @@ public final class Subscription
     {
       if ( 0 != _collection.getRefCount() )
       {
-        _world.getSpy().reportSpyEvent( new CollectionDetachEvent( _collection.asInfo() ) );
+        _world.getSpy().reportSpyEvent( new CollectionDetachEvent( asInfo() ) );
       }
       _world.getSpy().reportSpyEvent( new SubscriptionDisposeCompleteEvent( asInfo() ) );
     }

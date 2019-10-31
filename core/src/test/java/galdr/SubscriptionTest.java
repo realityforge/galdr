@@ -102,8 +102,11 @@ public class SubscriptionTest
       assertEquals( e.getName(), subscription.getName() );
       assertEquals( e.getAreaOfInterest(), areaOfInterest );
     } );
-    handler.assertNextEvent( CollectionAttachEvent.class,
-                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
+    handler.assertNextEvent( CollectionAttachEvent.class, e -> {
+      assertEquals( e.getSubscription().getId(), subscription.getId() );
+      assertEquals( e.getSubscription().getName(), subscription.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
+    } );
     handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
       assertEquals( e.getSubscription().getId(), subscription.getId() );
       assertEquals( e.getSubscription().getName(), subscription.getName() );
@@ -256,8 +259,11 @@ public class SubscriptionTest
       assertEquals( e.getSubscription().getName(), subscription1.getName() );
       assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
-    handler.assertNextEvent( CollectionDetachEvent.class,
-                             e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
+    handler.assertNextEvent( CollectionDetachEvent.class, e -> {
+      assertEquals( e.getSubscription().getId(), subscription1.getId() );
+      assertEquals( e.getSubscription().getName(), subscription1.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
+    } );
     handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
       assertEquals( e.getSubscription().getId(), subscription1.getId() );
       assertEquals( e.getSubscription().getName(), subscription1.getName() );
