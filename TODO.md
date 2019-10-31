@@ -80,18 +80,18 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Consider adding a `default` `AreaOfInterest` either in component layer or in core framework that is merged
-  into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
-  `exclude=Disabled.class` to exclude disabled entities.
 * `AreaOfInterest` should generate an error if there is no components contained.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
-* Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Add API to expose `Link` objects for entities in Spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
+* Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
+* Consider adding a `default` `AreaOfInterest` either in component layer or in core framework that is merged
+  into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
+  `exclude=Disabled.class` to exclude disabled entities.
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
