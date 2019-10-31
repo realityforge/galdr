@@ -428,7 +428,7 @@ public final class World
     return _name;
   }
 
-  @OmitSymbol( unless = "galdr.enable_names" )
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public String toString()
   {
