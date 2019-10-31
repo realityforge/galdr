@@ -80,6 +80,11 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Add annotations that allow hooks for runnning `@Processor` that just runs once per frame rather than once for each matching entity.
+* Add the ability to prioritize `@Processor`, `@EntityProcessor` within a subsystem
+* Write annotation processor that generates the support infrastructure from annotations.
+* Extract useful annotation processor utilities into a separate project.
+* Add the `EntityPlan` element above. 
 * `AreaOfInterest` should generate an error if there is no components contained.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
