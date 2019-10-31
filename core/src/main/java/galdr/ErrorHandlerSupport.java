@@ -72,7 +72,7 @@ final class ErrorHandlerSupport
         {
           final String message =
             GaldrUtil.safeGetString( () -> "Exception when notifying error handler '" + errorHandler + "' of error " +
-                                           "in processor '" + processor + "' in stage '" + stage.getName() + "'." );
+                                           "in processor '" + processor + "' in stage named '" + stage.getName() + "'." );
           GaldrLogger.log( message, nestedError );
         }
         else
