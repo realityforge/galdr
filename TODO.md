@@ -127,7 +127,6 @@ for systems/processors ahead of time.
   the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
 
 * Replace `BitSet` with equivalent variant that is more optimized for our use-case?
-  - It is only exposed in the Spy API `galdr.spy.*Event` and we should jsut replace with `ComponentSetId`
   - a fixed size `BitSet` implementation that implements `hashCode()` and `equals()` and `toString()` as a
     binary bit string ala `00010101001` (if size low enough) or a ordered flag set `(1, 4, 6, 33)` if size is
     too large. This would be used to contain `ComponentIds` as in `AreaOfInterest` or `Entity` and would have
