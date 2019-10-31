@@ -1,5 +1,6 @@
 package galdr;
 
+import grim.annotations.OmitSymbol;
 import java.util.BitSet;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -45,6 +46,7 @@ public final class ComponentIdSet
     return obj instanceof ComponentIdSet && ( (ComponentIdSet) obj )._componentIds.equals( _componentIds );
   }
 
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public String toString()
   {
