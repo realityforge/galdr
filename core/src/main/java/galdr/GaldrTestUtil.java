@@ -42,7 +42,6 @@ public final class GaldrTestUtil
     {
       disableNames();
       disableSpies();
-      disableCopyArraysPassedToConstructors();
       disableDebugToString();
       noEnforceUnmodifiableCollections();
       noCheckInvariants();
@@ -52,7 +51,6 @@ public final class GaldrTestUtil
     {
       enableNames();
       enableSpies();
-      enableCopyArraysPassedToConstructors();
       enableDebugToString();
       enforceUnmodifiableCollections();
       checkInvariants();
@@ -144,32 +142,6 @@ public final class GaldrTestUtil
   private static void setEnableSpies( final boolean value )
   {
     setConstant( "ENABLE_SPIES", value );
-  }
-
-  /**
-   * Set `galdr.copy_arrays_passed_to_constructors` setting to true.
-   */
-  public static void enableCopyArraysPassedToConstructors()
-  {
-    setCopyArraysPassedToConstructors( true );
-  }
-
-  /**
-   * Set `galdr.copy_arrays_passed_to_constructors` setting to false.
-   */
-  public static void disableCopyArraysPassedToConstructors()
-  {
-    setCopyArraysPassedToConstructors( false );
-  }
-
-  /**
-   * Configure the `galdr.copy_arrays_passed_to_constructors` setting.
-   *
-   * @param value the setting.
-   */
-  private static void setCopyArraysPassedToConstructors( final boolean value )
-  {
-    setConstant( "COPY_ARRAYS_PASSED_TO_CONSTRUCTORS", value );
   }
 
   /**

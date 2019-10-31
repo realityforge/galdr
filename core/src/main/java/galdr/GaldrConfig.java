@@ -13,7 +13,6 @@ final class GaldrConfig
   private static final boolean PRODUCTION_MODE = PROVIDER.isProductionMode();
   private static boolean ENABLE_NAMES = PROVIDER.areNamesEnabled();
   private static boolean ENABLE_SPIES = PROVIDER.areSpiesEnabled();
-  private static boolean COPY_ARRAYS_PASSED_TO_CONSTRUCTORS = PROVIDER.shouldCopyArraysPassedToConstructors();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean ENABLE_ERROR_HANDLERS = PROVIDER.areErrorHandlersEnabled();
   private static boolean ENFORCE_UNMODIFIABLE_COLLECTIONS = PROVIDER.enforceUnmodifiableCollections();
@@ -39,11 +38,6 @@ final class GaldrConfig
   static boolean areSpiesEnabled()
   {
     return ENABLE_SPIES;
-  }
-
-  static boolean shouldCopyArraysPassedToConstructors()
-  {
-    return COPY_ARRAYS_PASSED_TO_CONSTRUCTORS;
   }
 
   static boolean areDebugToStringMethodsEnabled()
@@ -99,14 +93,6 @@ final class GaldrConfig
     boolean areSpiesEnabled()
     {
       return "true".equals( System.getProperty( "galdr.enable_spies", isProductionMode() ? "false" : "true" ) );
-    }
-
-    @GwtIncompatible
-    @Override
-    boolean shouldCopyArraysPassedToConstructors()
-    {
-      return "true".equals( System.getProperty( "galdr.copy_arrays_passed_to_constructors",
-                                                isProductionMode() ? "false" : "true" ) );
     }
 
     @GwtIncompatible
@@ -170,11 +156,6 @@ final class GaldrConfig
     boolean areSpiesEnabled()
     {
       return "true" == System.getProperty( "galdr.enable_spies" );
-    }
-
-    boolean shouldCopyArraysPassedToConstructors()
-    {
-      return "true" == System.getProperty( "galdr.copy_arrays_passed_to_constructors" );
     }
 
     boolean areDebugToStringMethodsEnabled()

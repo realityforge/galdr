@@ -32,18 +32,7 @@ public final class ProcessorStage
   {
     _name = Objects.requireNonNull( name );
     _world = Objects.requireNonNull( world );
-    if ( Galdr.shouldCopyArraysPassedToConstructors() )
-    {
-      _processors = new Processor[ processors.length ];
-      for ( int i = 0; i < _processors.length; i++ )
-      {
-        _processors[ i ] = Objects.requireNonNull( processors[ i ] );
-      }
-    }
-    else
-    {
-      _processors = processors;
-    }
+    _processors = Objects.requireNonNull( processors );
   }
 
   void postConstruct()
