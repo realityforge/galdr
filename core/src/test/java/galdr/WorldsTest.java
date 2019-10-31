@@ -84,7 +84,9 @@ public class WorldsTest
     final World world =
       Worlds.world( name )
         .stage( "ABC" )
+        .endStage()
         .stage( "DEF" )
+        .endStage()
         .build();
 
     final Map<String, ProcessorStage> stages = world.getStages();
@@ -98,10 +100,10 @@ public class WorldsTest
   {
     final String name = randomString();
     final Worlds.Builder builder = Worlds.world( name );
-    builder.stage( "DEF" );
-    builder.stage( "ABC" );
+    builder.stage( "DEF" ).endStage();
+    builder.stage( "ABC" ).endStage();
 
-    assertInvariantFailure( () -> builder.stage( "DEF" ),
+    assertInvariantFailure( () -> builder.stage( "DEF" ).endStage(),
                             "Galdr-0087: Attempted to create stage named named 'DEF' but a stage already exists with the specified name. Existing stages include: [ABC, DEF]" );
   }
 
@@ -131,7 +133,7 @@ public class WorldsTest
     final Worlds.Builder builder = Worlds.world();
     builder.build();
 
-    assertInvariantFailure( () -> builder.stage( randomString() ),
+    assertInvariantFailure( () -> builder.stage( randomString() ).endStage(),
                             "Galdr-0019: Attempted to invoke method on WorldBuilder but world has already been constructed" );
   }
 

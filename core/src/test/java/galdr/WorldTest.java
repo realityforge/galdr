@@ -71,8 +71,8 @@ public class WorldTest
     final String name2 = "GHIJK";
     final String name3 = randomString();
     final World world = Worlds.world()
-      .stage( name1, new BasicNoopProcessor() )
-      .stage( name2, new BasicNoopProcessor() )
+      .stage( name1 ).processor( new BasicNoopProcessor() ).endStage()
+      .stage( name2 ).processor( new BasicNoopProcessor() ).endStage()
       .build();
 
     final Map<String, ProcessorStage> stages = world.getStages();
@@ -99,8 +99,8 @@ public class WorldTest
     final String name2 = "GHIJK";
     final String name3 = randomString();
     final World world = Worlds.world()
-      .stage( name1, new BasicNoopProcessor() )
-      .stage( name2, new BasicNoopProcessor() )
+      .stage( name1 ).processor( new BasicNoopProcessor() ).endStage()
+      .stage( name2 ).processor( new BasicNoopProcessor() ).endStage()
       .build();
 
     assertNotNull( world.getStageByName( name1 ) );
@@ -197,10 +197,8 @@ public class WorldTest
   public void errorHandlerLifecycle()
   {
     final String name = randomString();
-    final Worlds.Builder builder = Worlds.world();
     final Processor processor = new BasicNoopProcessor();
-    builder.stage( name, processor );
-    final World world = builder.build();
+    final World world = Worlds.world().stage( name ).processor( processor ).endStage().build();
 
     final ProcessorStage stage = world.getStageByName( name );
     final Throwable throwable = new Throwable();

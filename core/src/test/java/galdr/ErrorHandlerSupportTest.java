@@ -189,7 +189,7 @@ public class ErrorHandlerSupportTest
   private ProcessorStage createStage( @Nonnull final Processor processor )
   {
     final String name = randomString();
-    final World world = Worlds.world().stage( name, processor ).build();
+    final World world = Worlds.world().stage( name ).processor( processor ).endStage().build();
     return world.getStageByName( name );
   }
 }

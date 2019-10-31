@@ -22,7 +22,9 @@ final class Galdr_MyApplication
       .world()
       .component( Health.class, Health::new )
       .component( MyFlag.class )
-      .stage( "sim", new Galdr_HealthProcessor() )
+      .stage( "sim" )
+      .processor( new Galdr_HealthProcessor() )
+      .endStage()
       .build();
     _sim = _world.getStageByName( "sim" );
     _health = _world.getComponentByType( Health.class );

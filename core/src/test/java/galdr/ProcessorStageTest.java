@@ -53,38 +53,11 @@ public class ProcessorStageTest
   {
     final List<String> trace = new ArrayList<>();
     final World world = Worlds.world( "MyWorld" )
-      .stage( "MyStage",
-              new MyProcessor( "A", trace ),
-              new MyProcessor( "B", trace ),
-              new MyProcessor( "C", trace ) )
-      .build();
-
-    final ProcessorStage stage = world.getStageByName( "MyStage" );
-
-    assertEquals( stage.getName(), "MyStage" );
-    assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
-
-    stage.process( 2 );
-
-    assertEquals( String.join( ",", trace ), "A:2,B:2,C:2" );
-
-    stage.process( 3 );
-    stage.process( 7 );
-
-    assertEquals( String.join( ",", trace ), "A:2,B:2,C:2,A:3,B:3,C:3,A:7,B:7,C:7" );
-  }
-
-  @Test
-  public void basicOperation_withArrayNotCopied()
-  {
-    GaldrTestUtil.disableCopyArraysPassedToConstructors();
-
-    final List<String> trace = new ArrayList<>();
-    final World world = Worlds.world( "MyWorld" )
-      .stage( "MyStage",
-              new MyProcessor( "A", trace ),
-              new MyProcessor( "B", trace ),
-              new MyProcessor( "C", trace ) )
+      .stage( "MyStage" )
+      .processor( "A", new MyProcessor( "A", trace ) )
+      .processor( "B", new MyProcessor( "B", trace ) )
+      .processor( "C", new MyProcessor( "C", trace ) )
+      .endStage()
       .build();
 
     final ProcessorStage stage = world.getStageByName( "MyStage" );
@@ -107,10 +80,11 @@ public class ProcessorStageTest
   {
     final List<String> trace = new ArrayList<>();
     final World world = Worlds.world( "MyWorld" )
-      .stage( "MyStage",
-              new MyProcessor( "A", trace ),
-              new MyProcessor( "B", trace ),
-              new MyProcessor( "C", trace ) )
+      .stage( "MyStage" )
+      .processor( "A", new MyProcessor( "A", trace ) )
+      .processor( "B", new MyProcessor( "B", trace ) )
+      .processor( "C", new MyProcessor( "C", trace ) )
+      .endStage()
       .build();
 
     final ProcessorStage stage = world.getStageByName( "MyStage" );
@@ -127,10 +101,11 @@ public class ProcessorStageTest
     final List<String> trace = new ArrayList<>();
     final MyFaultyProcessor faultyProcessor = new MyFaultyProcessor( "B", trace );
     final World world = Worlds.world( "MyWorld" )
-      .stage( "MyStage",
-              new MyProcessor( "A", trace ),
-              faultyProcessor,
-              new MyProcessor( "C", trace ) )
+      .stage( "MyStage" )
+      .processor( "A", new MyProcessor( "A", trace ) )
+      .processor( "B", faultyProcessor )
+      .processor( "C", new MyProcessor( "C", trace ) )
+      .endStage()
       .build();
 
     world.addErrorHandler( ( stage, processor, throwable ) ->

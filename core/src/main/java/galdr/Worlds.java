@@ -145,7 +145,13 @@ public final class Worlds
     }
 
     @Nonnull
-    public Builder stage( @Nonnull final String name, @Nonnull final Processor... processors )
+    public ProcessorStage.Builder stage( @Nonnull final String name )
+    {
+      return new ProcessorStage.Builder( this, name );
+    }
+
+    @Nonnull
+    Builder stage( @Nonnull final String name, @Nonnull final ProcessorEntry... processors )
     {
       ensureWorldNotConstructed();
       if ( Galdr.shouldCheckApiInvariants() )
