@@ -309,6 +309,7 @@ public abstract class ComponentManager<T>
    */
   abstract void performRemove( int entityId );
 
+  @OmitSymbol( unless = "galdr.debug_to_string" )
   @Override
   public String toString()
   {
