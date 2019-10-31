@@ -92,7 +92,6 @@ for systems/processors ahead of time.
 * Add a tool that visualizes `Component` -> `Processor` matrix. Another way to view this rather than via a matrix is
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
-* Change component into an annotation `@Component`
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
