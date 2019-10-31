@@ -85,7 +85,6 @@ for systems/processors ahead of time.
 * `AreaOfInterest` should generate an error if there is no components contained.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
-* Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Add API to expose `Link` objects for entities in Spy infrastructure.
 * Add a suite of "integration" tests that operate at the public API level.
@@ -104,6 +103,7 @@ for systems/processors ahead of time.
     `entityId` => `index` map.
   - A [FlatBuffers](https://google.github.io/flatbuffers/index.html) based implementation for cache friendly
     access patterns.
+  - Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html
 
 * Change the strategy for iteration over `Entity` instances in an `EntityCollection` so that they can be based
   on the `"primary"` component. This would allow `FlatBuffers` and `LookupAndArray` `ComponentManager`
