@@ -142,7 +142,7 @@ public class ErrorHandlerSupportTest
     assertEquals( entries.size(), 1 );
     final TestLogger.LogEntry entry1 = entries.get( 0 );
     assertEquals( entry1.getMessage(),
-                  "Exception when notifying error handler '" + handler2 + "' of error in processor '" +
+                  "Exception when notifying error handler '" + handler2 + "' of error in processor named '" +
                   processor + "' in stage named '" + stage.getName() + "'." );
     assertEquals( entry1.getThrowable(), exception );
 
