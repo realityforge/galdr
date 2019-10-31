@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.internal.CollectionsUtil;
 import galdr.spy.CollectionInfo;
 import galdr.spy.ComponentInfo;
 import galdr.spy.Spy;
@@ -8,7 +9,6 @@ import galdr.spy.SubscriptionInfo;
 import galdr.spy.WorldInfo;
 import grim.annotations.OmitType;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -82,22 +82,22 @@ final class SpyImpl
   @Override
   public List<ComponentInfo> getComponents()
   {
-    return Collections.unmodifiableList( _world.getComponentManagers()
-                                           .stream()
-                                           .map( ComponentManager::asInfo )
-                                           .collect( Collectors.toList() ) );
+    return CollectionsUtil.wrap( _world.getComponentManagers()
+                                   .stream()
+                                   .map( ComponentManager::asInfo )
+                                   .collect( Collectors.toList() ) );
   }
 
   @Nonnull
   @Override
   public Map<AreaOfInterest, CollectionInfo> getCollections()
   {
-    return Collections.unmodifiableMap( _world.getEntityCollections()
-                                          .values()
-                                          .stream()
-                                          .map( EntityCollection::asInfo )
-                                          .collect( Collectors.toMap( CollectionInfo::getAreaOfInterest,
-                                                                      Function.identity() ) ) );
+    return CollectionsUtil.wrap( _world.getEntityCollections()
+                                   .values()
+                                   .stream()
+                                   .map( EntityCollection::asInfo )
+                                   .collect( Collectors.toMap( CollectionInfo::getAreaOfInterest,
+                                                               Function.identity() ) ) );
   }
 
   @Nullable
@@ -112,11 +112,11 @@ final class SpyImpl
   @Override
   public Collection<SubscriptionInfo> getSubscriptions()
   {
-    return Collections.unmodifiableCollection( _world.getSubscriptions()
-                                                 .values()
-                                                 .stream()
-                                                 .map( Subscription::asInfo )
-                                                 .collect( Collectors.toList() ) );
+    return CollectionsUtil.wrap( _world.getSubscriptions()
+                                   .values()
+                                   .stream()
+                                   .map( Subscription::asInfo )
+                                   .collect( Collectors.toList() ) );
   }
 
   @Nonnull

@@ -92,8 +92,6 @@ for systems/processors ahead of time.
   to select a `Processor` in left column and see `Component` highlighted in right column or vice versa.
 * Add a tool that visualizes `Entity` -> `Component` matrix.
 * Change component into an annotation `@Component`
-* Add `CollectionsUtil.unmodifiableMap(Map<K,V> input)` that either returns input or wraps it in a
-  `Collections.unmodifiableMap()` if `Galdr.enforceUnmodifiableCOllections()` returns `true`.
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.

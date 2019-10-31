@@ -16,6 +16,7 @@ final class GaldrConfig
   private static boolean COPY_ARRAYS_PASSED_TO_CONSTRUCTORS = PROVIDER.shouldCopyArraysPassedToConstructors();
   private static boolean DEBUG_TO_STRING = PROVIDER.areDebugToStringMethodsEnabled();
   private static boolean ENABLE_ERROR_HANDLERS = PROVIDER.areErrorHandlersEnabled();
+  private static boolean ENFORCE_UNMODIFIABLE_COLLECTIONS = PROVIDER.enforceUnmodifiableCollections();
   private static boolean CHECK_INVARIANTS = PROVIDER.checkInvariants();
   private static boolean CHECK_API_INVARIANTS = PROVIDER.checkApiInvariants();
   @Nonnull
@@ -53,6 +54,11 @@ final class GaldrConfig
   static boolean areErrorHandlersEnabled()
   {
     return ENABLE_ERROR_HANDLERS;
+  }
+
+  static boolean enforceUnmodifiableCollections()
+  {
+    return ENFORCE_UNMODIFIABLE_COLLECTIONS;
   }
 
   static boolean checkInvariants()
@@ -119,6 +125,14 @@ final class GaldrConfig
 
     @GwtIncompatible
     @Override
+    boolean enforceUnmodifiableCollections()
+    {
+      return "true".equals( System.getProperty( "galdr.enforce_unmodifiable_collections",
+                                                isProductionMode() ? "false" : "true" ) );
+    }
+
+    @GwtIncompatible
+    @Override
     boolean checkInvariants()
     {
       return "true".equals( System.getProperty( "galdr.check_invariants", isProductionMode() ? "false" : "true" ) );
@@ -171,6 +185,11 @@ final class GaldrConfig
     boolean areErrorHandlersEnabled()
     {
       return "true" == System.getProperty( "galdr.enable_error_handlers" );
+    }
+
+    boolean enforceUnmodifiableCollections()
+    {
+      return "true" == System.getProperty( "galdr.enforce_unmodifiable_collections" );
     }
 
     boolean checkInvariants()

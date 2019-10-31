@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.internal.CollectionsUtil;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
@@ -197,13 +198,13 @@ final class Entity
   @Nonnull
   List<Link> getInwardLinks()
   {
-    return null == _inwardLinks ? Collections.emptyList() : Collections.unmodifiableList( _inwardLinks );
+    return null == _inwardLinks ? Collections.emptyList() : CollectionsUtil.wrap( _inwardLinks );
   }
 
   @Nonnull
   List<Link> getOutwardLinks()
   {
-    return null == _outwardLinks ? Collections.emptyList() : Collections.unmodifiableList( _outwardLinks );
+    return null == _outwardLinks ? Collections.emptyList() : CollectionsUtil.wrap( _outwardLinks );
   }
 
   static final class Flags

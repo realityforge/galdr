@@ -26,6 +26,9 @@ galdr.enable_error_handlers = goog.define('galdr.enable_error_handlers', 'true')
 galdr.check_invariants = goog.define('galdr.check_invariants', 'false');
 
 /** @define {string} */
+galdr.enforce_unmodifiable_collections = goog.define('galdr.enforce_unmodifiable_collections', 'false');
+
+/** @define {string} */
 galdr.check_api_invariants = goog.define('galdr.check_api_invariants', 'false');
 
 /** @define {string} */

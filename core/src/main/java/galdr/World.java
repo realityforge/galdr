@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.internal.CollectionsUtil;
 import galdr.spy.CollectionCreateCompleteEvent;
 import galdr.spy.CollectionCreateStartEvent;
 import galdr.spy.CollectionDisposeCompleteEvent;
@@ -313,7 +314,7 @@ public final class World
                              @Nonnull final Map<String, ProcessorStage> stages )
   {
     _entityManager = new EntityManager( this, initialEntityCount );
-    _stages = Collections.unmodifiableMap( new HashMap<>( Objects.requireNonNull( stages ) ) );
+    _stages = CollectionsUtil.wrap( new HashMap<>( Objects.requireNonNull( stages ) ) );
     _collections = new HashMap<>();
     _components = components;
     _componentByClass = buildComponentMap( components );
@@ -339,7 +340,7 @@ public final class World
       }
       map.put( component.getType(), component );
     }
-    return Collections.unmodifiableMap( map );
+    return CollectionsUtil.wrap( map );
   }
 
   /**

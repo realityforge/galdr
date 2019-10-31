@@ -73,6 +73,16 @@ public final class Galdr
   }
 
   /**
+   * Return true if unmodifiable collections will be enforced.
+   *
+   * @return true if unmodifiable collections will be enforced.
+   */
+  public static boolean enforceUnmodifiableCollections()
+  {
+    return GaldrConfig.enforceUnmodifiableCollections();
+  }
+
+  /**
    * Return true if invariants will be checked.
    *
    * @return true if invariants will be checked.

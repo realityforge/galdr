@@ -44,6 +44,7 @@ public final class GaldrTestUtil
       disableSpies();
       disableCopyArraysPassedToConstructors();
       disableDebugToString();
+      noEnforceUnmodifiableCollections();
       noCheckInvariants();
       noCheckApiInvariants();
     }
@@ -53,6 +54,7 @@ public final class GaldrTestUtil
       enableSpies();
       enableCopyArraysPassedToConstructors();
       enableDebugToString();
+      enforceUnmodifiableCollections();
       checkInvariants();
       checkApiInvariants();
     }
@@ -220,6 +222,32 @@ public final class GaldrTestUtil
   private static void setEnableErrorHandlers( final boolean value )
   {
     setConstant( "ENABLE_ERROR_HANDLERS", value );
+  }
+
+  /**
+   * Set `galdr.enforce_unmodifiable_collections` setting to true.
+   */
+  public static void enforceUnmodifiableCollections()
+  {
+    setEnforceUnmodifiableCollections( true );
+  }
+
+  /**
+   * Set the `galdr.enforce_unmodifiable_collections` setting to false.
+   */
+  public static void noEnforceUnmodifiableCollections()
+  {
+    setEnforceUnmodifiableCollections( false );
+  }
+
+  /**
+   * Configure the `galdr.enforce_unmodifiable_collections` setting.
+   *
+   * @param checkInvariants the "check invariants" setting.
+   */
+  private static void setEnforceUnmodifiableCollections( final boolean checkInvariants )
+  {
+    setConstant( "ENFORCE_UNMODIFIABLE_COLLECTIONS", checkInvariants );
   }
 
   /**

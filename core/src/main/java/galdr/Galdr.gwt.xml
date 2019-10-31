@@ -28,6 +28,9 @@
   <define-property name='galdr.enable_error_handlers' values='true,false'/>
   <set-property name='galdr.enable_error_handlers' value='true'/>
 
+  <define-property name='galdr.enforce_unmodifiable_collections' values='true,false'/>
+  <set-property name='galdr.enforce_unmodifiable_collections' value='false'/>
+
   <define-property name='galdr.check_invariants' values='true,false'/>
   <set-property name='galdr.check_invariants' value='false'/>
 
