@@ -83,8 +83,7 @@ for systems/processors ahead of time.
 * Consider adding a `default` `AreaOfInterest` either in component layer or in core framework that is merged
   into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
   `exclude=Disabled.class` to exclude disabled entities.
-* Move `galdr.Processor` to `galdr.internal.Processor` or similar. To do this we are probably going to have
-  to have a way to identify processors by name or id so that we can refer to them in our error handler.
+* Move `galdr.Processor` to `galdr.internal.Processor` or similar.
 * `AreaOfInterest` should generate an error if there is no components contained.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.

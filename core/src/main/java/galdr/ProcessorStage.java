@@ -85,7 +85,7 @@ public final class ProcessorStage
       }
       catch ( final Throwable e )
       {
-        _world.reportError( this, processor, e );
+        _world.reportError( this, Galdr.areNamesEnabled() ? entry.getName() : processor.getClass().getSimpleName(), e );
       }
     }
   }

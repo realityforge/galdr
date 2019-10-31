@@ -681,12 +681,12 @@ public final class World
    * Report an error in processor.
    *
    * @param stage     the stage that contained the processor that generated the error.
-   * @param processor the processor that generated error.
+   * @param processor the name of the processor that generated the error.
    * @param throwable the exception that caused error if any.
    */
   @OmitSymbol( unless = "galdr.enable_error_handlers" )
   void reportError( @Nonnull final ProcessorStage stage,
-                    @Nonnull final Processor processor,
+                    @Nonnull final String processor,
                     @Nonnull final Throwable throwable )
   {
     if ( Galdr.areErrorHandlersEnabled() )

@@ -197,8 +197,9 @@ public class WorldTest
   public void errorHandlerLifecycle()
   {
     final String name = randomString();
-    final Processor processor = new BasicNoopProcessor();
-    final World world = Worlds.world().stage( name ).processor( processor ).endStage().build();
+    final String processorName = randomString();
+    final World world =
+      Worlds.world().stage( name ).processor( processorName, new BasicNoopProcessor() ).endStage().build();
 
     final ProcessorStage stage = world.getStageByName( name );
     final Throwable throwable = new Throwable();
@@ -208,7 +209,7 @@ public class WorldTest
     final ErrorHandler handler = ( s, p, t ) -> {
       callCount.incrementAndGet();
       assertEquals( s, stage );
-      assertEquals( p, processor );
+      assertEquals( p, processorName );
       assertEquals( t, throwable );
     };
 
@@ -219,7 +220,7 @@ public class WorldTest
 
     assertEquals( callCount.get(), 0 );
 
-    world.reportError( stage, processor, throwable );
+    world.reportError( stage, processorName, throwable );
 
     assertEquals( callCount.get(), 1 );
 
@@ -227,7 +228,7 @@ public class WorldTest
 
     assertEquals( world.getErrorHandlerSupport().getHandlers().size(), 0 );
 
-    world.reportError( stage, processor, throwable );
+    world.reportError( stage, processorName, throwable );
 
     assertEquals( callCount.get(), 1 );
   }

@@ -16,25 +16,25 @@ public class ErrorHandlerSupportTest
 
     final Throwable throwable = new Throwable();
 
-    final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = createStage( processor );
+    final String processorName = randomString();
+    final ProcessorStage stage = createStage( processorName );
 
     final AtomicInteger callCount = new AtomicInteger();
 
     final ErrorHandler handler = ( stageArg, processorArg, throwableArg ) -> {
       callCount.incrementAndGet();
       assertEquals( stageArg, stage );
-      assertEquals( processorArg, processor );
+      assertEquals( processorArg, processorName );
       assertEquals( throwableArg, throwable );
     };
     support.addErrorHandler( handler );
     assertEquals( support.getHandlers().size(), 1 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount.get(), 1 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount.get(), 2 );
 
@@ -42,7 +42,7 @@ public class ErrorHandlerSupportTest
 
     assertEquals( support.getHandlers().size(), 0 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     // Not called again
     assertEquals( callCount.get(), 2 );
@@ -80,8 +80,8 @@ public class ErrorHandlerSupportTest
   {
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
-    final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = createStage( processor );
+    final String processorName = randomString();
+    final ProcessorStage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -97,13 +97,13 @@ public class ErrorHandlerSupportTest
 
     assertEquals( support.getHandlers().size(), 3 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount1.get(), 1 );
     assertEquals( callCount2.get(), 1 );
     assertEquals( callCount3.get(), 1 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount1.get(), 2 );
     assertEquals( callCount2.get(), 2 );
@@ -115,8 +115,8 @@ public class ErrorHandlerSupportTest
   {
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
-    final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = createStage( processor );
+    final String processorName = randomString();
+    final ProcessorStage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -133,7 +133,7 @@ public class ErrorHandlerSupportTest
     support.addErrorHandler( handler2 );
     support.addErrorHandler( handler3 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount1.get(), 1 );
     assertEquals( callCount3.get(), 1 );
@@ -143,10 +143,10 @@ public class ErrorHandlerSupportTest
     final TestLogger.LogEntry entry1 = entries.get( 0 );
     assertEquals( entry1.getMessage(),
                   "Exception when notifying error handler '" + handler2 + "' of error in processor named '" +
-                  processor + "' in stage named '" + stage.getName() + "'." );
+                  processorName + "' in stage named '" + stage.getName() + "'." );
     assertEquals( entry1.getThrowable(), exception );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( callCount1.get(), 2 );
     assertEquals( callCount3.get(), 2 );
@@ -161,8 +161,8 @@ public class ErrorHandlerSupportTest
 
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
-    final BasicNoopProcessor processor = new BasicNoopProcessor();
-    final ProcessorStage stage = createStage( processor );
+    final String processorName = randomString();
+    final ProcessorStage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final RuntimeException exception = new RuntimeException( "X" );
@@ -172,7 +172,7 @@ public class ErrorHandlerSupportTest
     };
     support.addErrorHandler( handler2 );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     final ArrayList<TestLogger.LogEntry> entries = getTestLogger().getEntries();
     assertEquals( entries.size(), 1 );
@@ -180,16 +180,17 @@ public class ErrorHandlerSupportTest
     assertEquals( entry1.getMessage(), "Error triggered when invoking ErrorHandler.onError()" );
     assertEquals( entry1.getThrowable(), exception );
 
-    support.onError( stage, processor, throwable );
+    support.onError( stage, processorName, throwable );
 
     assertEquals( getTestLogger().getEntries().size(), 2 );
   }
 
   @Nonnull
-  private ProcessorStage createStage( @Nonnull final Processor processor )
+  private ProcessorStage createStage( @Nonnull final String processorName )
   {
-    final String name = randomString();
-    final World world = Worlds.world().stage( name ).processor( processor ).endStage().build();
-    return world.getStageByName( name );
+    final String stageName = randomString();
+    final World world =
+      Worlds.world().stage( stageName ).processor( processorName, new BasicNoopProcessor() ).endStage().build();
+    return world.getStageByName( stageName );
   }
 }

@@ -57,7 +57,7 @@ final class ErrorHandlerSupport
 
   @Override
   public void onError( @Nonnull final ProcessorStage stage,
-                       @Nonnull final Processor processor,
+                       @Nonnull final String processor,
                        @Nonnull final Throwable throwable )
   {
     for ( final ErrorHandler errorHandler : _handlers )
