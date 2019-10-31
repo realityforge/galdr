@@ -30,7 +30,7 @@ public final class CollectionDetachEvent
   @Override
   public void toMap( @Nonnull final Map<String, Object> map )
   {
-    map.put( "type", "CollectionAttach" );
+    map.put( "type", "CollectionDetach" );
     // AreaOfInterest will need to be serialized in the future
     map.put( "areaOfInterest", _collection.getAreaOfInterest() );
   }
