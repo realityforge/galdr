@@ -118,4 +118,11 @@ final class SpyImpl
                                                  .map( Subscription::asInfo )
                                                  .collect( Collectors.toList() ) );
   }
+
+  @Nonnull
+  @Override
+  public SubscriptionInfo asSubscriptionInfo( @Nonnull final Subscription subscription )
+  {
+    return subscription.asInfo();
+  }
 }

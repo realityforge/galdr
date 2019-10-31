@@ -546,7 +546,7 @@ public final class World
     if ( willPropagateSpyEvents() )
     {
       assert null != actualName;
-      getSpy().reportSpyEvent( new SubscriptionCreateCompleteEvent( id, actualName, areaOfInterest ) );
+      getSpy().reportSpyEvent( new SubscriptionCreateCompleteEvent( subscription.asInfo() ) );
     }
     return subscription;
   }

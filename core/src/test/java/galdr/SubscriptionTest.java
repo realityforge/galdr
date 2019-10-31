@@ -73,9 +73,9 @@ public class SubscriptionTest
       assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest );
     } );
     handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
-      assertEquals( e.getId(), subscription.getId() );
-      assertEquals( e.getName(), subscription.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription.getId() );
+      assertEquals( e.getSubscription().getName(), subscription.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
   }
 
@@ -105,9 +105,9 @@ public class SubscriptionTest
     handler.assertNextEvent( CollectionAttachEvent.class,
                              e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionCreateCompleteEvent.class, e -> {
-      assertEquals( e.getId(), subscription.getId() );
-      assertEquals( e.getName(), subscription.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription.getId() );
+      assertEquals( e.getSubscription().getName(), subscription.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
   }
 
@@ -210,18 +210,18 @@ public class SubscriptionTest
 
     handler.assertEventCount( 4 );
     handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
-      assertEquals( e.getId(), subscription.getId() );
-      assertEquals( e.getName(), subscription.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription.getId() );
+      assertEquals( e.getSubscription().getName(), subscription.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
     handler.assertNextEvent( CollectionDisposeStartEvent.class,
                              e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( CollectionDisposeCompleteEvent.class,
                              e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
-      assertEquals( e.getId(), subscription.getId() );
-      assertEquals( e.getName(), subscription.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription.getId() );
+      assertEquals( e.getSubscription().getName(), subscription.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
 
     assertFalse( subscription.isNotDisposed() );
@@ -252,16 +252,16 @@ public class SubscriptionTest
 
     handler.assertEventCount( 3 );
     handler.assertNextEvent( SubscriptionDisposeStartEvent.class, e -> {
-      assertEquals( e.getId(), subscription1.getId() );
-      assertEquals( e.getName(), subscription1.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription1.getId() );
+      assertEquals( e.getSubscription().getName(), subscription1.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
     handler.assertNextEvent( CollectionDetachEvent.class,
                              e -> assertEquals( e.getCollection().getAreaOfInterest(), areaOfInterest ) );
     handler.assertNextEvent( SubscriptionDisposeCompleteEvent.class, e -> {
-      assertEquals( e.getId(), subscription1.getId() );
-      assertEquals( e.getName(), subscription1.getName() );
-      assertEquals( e.getAreaOfInterest(), areaOfInterest );
+      assertEquals( e.getSubscription().getId(), subscription1.getId() );
+      assertEquals( e.getSubscription().getName(), subscription1.getName() );
+      assertEquals( e.getSubscription().getCollection().getAreaOfInterest(), areaOfInterest );
     } );
 
     assertFalse( subscription1.isNotDisposed() );

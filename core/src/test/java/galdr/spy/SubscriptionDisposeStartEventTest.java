@@ -1,7 +1,6 @@
 package galdr.spy;
 
 import galdr.AbstractTest;
-import galdr.AreaOfInterest;
 import galdr.World;
 import galdr.Worlds;
 import java.util.Collections;
@@ -20,23 +19,19 @@ public class SubscriptionDisposeStartEventTest
   public void basicOperation()
   {
     final World world = Worlds.world().component( Health.class ).build();
-    final int id = randomInt( 100 );
-    final String name = randomString();
-    final AreaOfInterest areaOfInterest = world.createAreaOfInterest( Collections.singletonList( Health.class ) );
-    final SubscriptionDisposeStartEvent event =
-      new SubscriptionDisposeStartEvent( id, name, areaOfInterest );
+    final SubscriptionInfo subscription =
+      world.getSpy().asSubscriptionInfo( createSubscription( world, Collections.singletonList( Health.class ) ) );
+    final SubscriptionDisposeStartEvent event = new SubscriptionDisposeStartEvent( subscription );
 
-    assertEquals( event.getId(), id );
-    assertEquals( event.getName(), name );
-    assertEquals( event.getAreaOfInterest(), areaOfInterest );
+    assertEquals( event.getSubscription(), subscription );
 
     final HashMap<String, Object> data = new HashMap<>();
     event.toMap( data );
 
     assertEquals( data.get( "type" ), "SubscriptionDisposeStart" );
-    assertEquals( data.get( "id" ), id );
-    assertEquals( data.get( "name" ), name );
-    assertEquals( data.get( "areaOfInterest" ), areaOfInterest );
+    assertEquals( data.get( "id" ), subscription.getId() );
+    assertEquals( data.get( "name" ), subscription.getName() );
+    assertEquals( data.get( "areaOfInterest" ), subscription.getCollection().getAreaOfInterest() );
     assertEquals( data.size(), 4 );
   }
 }

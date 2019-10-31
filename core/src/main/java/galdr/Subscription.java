@@ -83,12 +83,9 @@ public final class Subscription
   public void dispose()
   {
     ensureNotDisposed();
-    AreaOfInterest areaOfInterest = null;
     if ( _world.willPropagateSpyEvents() )
     {
-      assert null != _name;
-      areaOfInterest = _collection.getAreaOfInterest();
-      _world.getSpy().reportSpyEvent( new SubscriptionDisposeStartEvent( _id, _name, areaOfInterest ) );
+      _world.getSpy().reportSpyEvent( new SubscriptionDisposeStartEvent( asInfo() ) );
     }
     _world.removeSubscription( this );
     _disposed = true;
@@ -99,9 +96,7 @@ public final class Subscription
       {
         _world.getSpy().reportSpyEvent( new CollectionDetachEvent( _collection.asInfo() ) );
       }
-      assert null != _name;
-      assert null != areaOfInterest;
-      _world.getSpy().reportSpyEvent( new SubscriptionDisposeCompleteEvent( _id, _name, areaOfInterest ) );
+      _world.getSpy().reportSpyEvent( new SubscriptionDisposeCompleteEvent( asInfo() ) );
     }
   }
 

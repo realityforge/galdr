@@ -63,7 +63,7 @@ public abstract class AbstractTest
   }
 
   @Nonnull
-  final Subscription createSubscription( @Nonnull final World world, @Nonnull final Collection<Class<?>> all )
+  protected final Subscription createSubscription( @Nonnull final World world, @Nonnull final Collection<Class<?>> all )
   {
     return run( world, () -> world.createSubscription( world.createAreaOfInterest( all,
                                                                                    Collections.emptyList(),

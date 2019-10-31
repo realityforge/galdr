@@ -1,6 +1,7 @@
 package galdr.spy;
 
 import galdr.AreaOfInterest;
+import galdr.Subscription;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -92,4 +93,13 @@ public interface Spy
    */
   @Nonnull
   Collection<SubscriptionInfo> getSubscriptions();
+
+  /**
+   * Convert the specified Subscription into an SubscriptionInfo.
+   *
+   * @param subscription the Subscription.
+   * @return the SubscriptionInfo.
+   */
+  @Nonnull
+  SubscriptionInfo asSubscriptionInfo( @Nonnull Subscription subscription );
 }
