@@ -80,7 +80,7 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add annotations that allow hooks for runnning `@Processor` that just runs once per frame rather than once for each matching entity.
+* Add annotations that allow hooks for running `@Processor` that just runs once per frame rather than once for each matching entity.
 * Add the ability to prioritize `@Processor`, `@EntityProcessor` within a subsystem
 * Write annotation processor that generates the support infrastructure from annotations.
 * Extract useful annotation processor utilities into a separate project.
