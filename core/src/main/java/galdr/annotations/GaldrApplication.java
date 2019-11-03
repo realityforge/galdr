@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * <li>Must be abstract</li>
  * <li>Must not be final</li>
  * <li>Must not be a non-static nested class</li>
- * <li>Must have at least one method annotated with {@link StageRef} or {@link WorldRef}</li>
+ * <li>Must have at least one method annotated with {@link Stage} or {@link WorldRef}</li>
  * </ul>
  */
 @Documented

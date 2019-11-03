@@ -2,7 +2,7 @@ package galdr.annotations.test;
 
 import galdr.ProcessorStage;
 import galdr.annotations.GaldrApplication;
-import galdr.annotations.StageRef;
+import galdr.annotations.Stage;
 import javax.annotation.Nonnull;
 
 @GaldrApplication
@@ -14,7 +14,7 @@ abstract class MyApplication
     return new Galdr_MyApplication();
   }
 
-  @StageRef
+  @Stage( { BootstrapProcessor.class, HealthProcessor.class } )
   @Nonnull
   abstract ProcessorStage sim();
 }

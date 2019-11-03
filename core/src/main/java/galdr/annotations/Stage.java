@@ -6,7 +6,7 @@ import java.lang.annotation.Target;
 import javax.annotation.Nonnull;
 
 /**
- * Marks a template method that returns the named {@link galdr.ProcessorStage} instance.
+ * Annotation that defines a stage and all the subsystems that are part of the stage.
  * This annotation will be processed on classes annotated by {@link GaldrApplication}.
  *
  * <p>The method that is annotated with this annotation must also comply with the following constraints:</p>
@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  */
 @Documented
 @Target( ElementType.METHOD )
-public @interface StageRef
+public @interface Stage
 {
   /**
    * The name of the stage to return.
@@ -33,4 +33,11 @@ public @interface StageRef
    */
   @Nonnull
   String name() default "<default>";
+
+  /**
+   * Return the set of subsystems that the stage is composed from.
+   *
+   * @return the set of subsystems that the stage is composed from.
+   */
+  Class<?>[] value();
 }
