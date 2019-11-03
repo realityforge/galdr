@@ -58,6 +58,10 @@ define 'galdr' do
           :windowtitle => 'Galdr API Documentation',
           :linksource => true,
           :timestamp => false,
+          :group => {
+            'Core Packages' => 'galdr*',
+            'Annotation Packages' => 'galdr.annotations*'
+          },
           :link => %w(https://docs.oracle.com/javase/8/docs/api http://www.gwtproject.org/javadoc/latest/)
     )
 
