@@ -29,14 +29,6 @@ public @interface SubSystem
   String name() default "<default>";
 
   /**
-   * Return the name of the stage that the processor is added to.
-   *
-   * @return the name of the stage that the processor is added to.
-   */
-  @Nonnull
-  String stage() default "<default>";
-
-  /**
    * Return the priority of the subsystem.
    * Subsystems with lower priority will execute earlier in a stage.
    * Subsystems with the same priority will be ordered based on a dependency analysis or if the subsystems
