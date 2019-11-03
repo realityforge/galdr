@@ -80,7 +80,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add the ability to prioritize `@Processor`, `@EntityProcessor` within a subsystem
 * Write annotation processor that generates the support infrastructure from annotations.
 * Extract useful annotation processor utilities into a separate project.
 * Add the `EntityPlan` element above. 
