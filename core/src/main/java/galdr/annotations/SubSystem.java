@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
  * <li>Must be abstract</li>
  * <li>Must not be final</li>
  * <li>Must not be a non-static nested class</li>
+ * <li>Must contain one and only one method that is annotated with either {@link Processor} or {@link EntityProcessor}.</li>
  * </ul>
  *
  * <p>The annotation processor that handles this annotation will analyze all super classes and super
