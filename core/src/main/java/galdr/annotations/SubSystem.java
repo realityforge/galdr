@@ -36,12 +36,12 @@ public @interface SubSystem
   String stage() default "<default>";
 
   /**
-   * Return the priority of the processor.
-   * Processors with lower priority will execute earlier in a stage.
-   * Processors with the same priority will be ordered based on a dependency analysis or if the processors
+   * Return the priority of the subsystem.
+   * Subsystems with lower priority will execute earlier in a stage.
+   * Subsystems with the same priority will be ordered based on a dependency analysis or if the subsystems
    * are independent then then by the declaration order.
    *
-   * @return the priority of the processor.
+   * @return the priority of the subsystem.
    */
   int priority() default Priority.DEFAULT;
 
