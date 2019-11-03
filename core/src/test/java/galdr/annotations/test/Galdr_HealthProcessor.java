@@ -1,6 +1,6 @@
 package galdr.annotations.test;
 
-import galdr.Processor;
+import galdr.ProcessorFn;
 import galdr.World;
 import galdr.internal.OnDeactivateFn;
 import galdr.internal.OnActivateFn;
@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 @Generated( "galdr" )
 final class Galdr_HealthProcessor
-  implements Processor, PostConstructFn, OnActivateFn, OnDeactivateFn
+  implements ProcessorFn, PostConstructFn, OnActivateFn, OnDeactivateFn
 {
   @Nonnull
   private final Galdr_HealthProcessorImpl _processor = new Galdr_HealthProcessorImpl( this );

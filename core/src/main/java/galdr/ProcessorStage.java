@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * An ordered list of {@link Processor} instances that are explicitly invoked by application code.
+ * An ordered list of subsystems. These stage is explicitly invoked by application code.
  */
 public final class ProcessorStage
 {
@@ -78,7 +78,7 @@ public final class ProcessorStage
   {
     for ( final ProcessorEntry entry : _processors )
     {
-      final Processor processor = entry.getProcessor();
+      final ProcessorFn processor = entry.getProcessor();
       try
       {
         processor.process( delta );
@@ -135,13 +135,13 @@ public final class ProcessorStage
     }
 
     @Nonnull
-    public Builder processor( @Nonnull final Processor processor )
+    public Builder processor( @Nonnull final ProcessorFn processor )
     {
       return processor( null, processor );
     }
 
     @Nonnull
-    public Builder processor( @Nullable final String name, @Nonnull final Processor processor )
+    public Builder processor( @Nullable final String name, @Nonnull final ProcessorFn processor )
     {
       _processors.add( new ProcessorEntry( name, processor ) );
       return this;

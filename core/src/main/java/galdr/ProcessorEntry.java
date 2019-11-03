@@ -22,9 +22,9 @@ final class ProcessorEntry
    * The processor.
    */
   @Nonnull
-  private final Processor _processor;
+  private final ProcessorFn _processor;
 
-  ProcessorEntry( @Nullable final String name, @Nonnull final Processor processor )
+  ProcessorEntry( @Nullable final String name, @Nonnull final ProcessorFn processor )
   {
     _name = Galdr.areNamesEnabled() ? null == name ? processor.getClass().getSimpleName() : name : null;
     _processor = Objects.requireNonNull( processor );
@@ -50,7 +50,7 @@ final class ProcessorEntry
   }
 
   @Nonnull
-  Processor getProcessor()
+  ProcessorFn getProcessor()
   {
     return _processor;
   }

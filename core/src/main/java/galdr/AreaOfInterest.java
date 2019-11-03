@@ -13,7 +13,7 @@ import static org.realityforge.braincheck.Guards.*;
  * components an entity MUST contain at least one of and components that an entity MUST not contain.
  *
  * <p>The AreaOfInterest is used by the {@link Subscription} class to define which {@link galdr.Entity}
- * instances that are part of the subscription and is primarily used by the {@link galdr.Processor} to
+ * instances that are part of the subscription and is primarily used by the processors to
  * select entities for processing.</p>
  */
 public final class AreaOfInterest

@@ -4,7 +4,7 @@ package galdr;
  * Interface implement for elements responsible for updating the state of the world.
  */
 @FunctionalInterface
-public interface Processor
+public interface ProcessorFn
 {
   /**
    * The method called to allow this processor to update the world.

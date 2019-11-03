@@ -11,7 +11,7 @@ public class ProcessorStageTest
   extends AbstractTest
 {
   public static class MyProcessor
-    implements Processor
+    implements ProcessorFn
   {
     @Nonnull
     final String _key;

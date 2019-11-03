@@ -6,7 +6,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a template method that returns a {@link galdr.ComponentManager} instance for a component type.
- * This annotation will be processed on classes annotated by either {@link GaldrApplication} or {@link SubSystem}.
+ * This annotation will be processed on classes annotated by {@link SubSystem}.
  *
  * <p>The method that is annotated with this annotation must also comply with the following constraints:</p>
  * <ul>
