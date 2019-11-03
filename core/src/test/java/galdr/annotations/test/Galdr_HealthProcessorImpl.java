@@ -45,8 +45,6 @@ final class Galdr_HealthProcessorImpl
 
   void $galdr$_process( final int delta )
   {
-    System.out.println( "process(delta=" + delta + ")" );
-    processGlobalActions();
     assert null != $galdr$_processHealth_subscription;
     $galdr$_processHealth_subscription.beginIteration();
     int entityId;
