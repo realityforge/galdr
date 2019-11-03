@@ -65,7 +65,8 @@ final class Galdr_HealthProcessorImpl
   void $galdr$_activate()
   {
     $galdr$_processHealth_subscription =
-      world().createSubscription( Galdr.areNamesEnabled() ? getName() : null, $galdr$_processHealth_areaOfInterest );
+      world().createSubscription( Galdr.areNamesEnabled() ? $galdr$_getName() : null,
+                                  $galdr$_processHealth_areaOfInterest );
   }
 
   void $galdr$_deactivate()
@@ -76,7 +77,7 @@ final class Galdr_HealthProcessorImpl
   }
 
   @Nonnull
-  public final String getName()
+  String $galdr$_getName()
   {
     return "HealthProcessor";
   }
@@ -86,7 +87,7 @@ final class Galdr_HealthProcessorImpl
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "SubSystem[HealthProcessor]";
+      return "SubSystem[" + $galdr$_getName() + "]";
     }
     else
     {
