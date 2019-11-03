@@ -80,6 +80,9 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* `@StageRef` should instead be changed to `@Stage` which will define the stage processors.
+* Why allow `@WorldRef` and `@ComponentManagerRef` on `@GaldrApplication` annotated classes? Logic should
+  always be in processors no?
 * Add annotations that allow hooks for running `@Processor` that just runs once per frame rather than once for each matching entity.
 * Add the ability to prioritize `@Processor`, `@EntityProcessor` within a subsystem
 * Write annotation processor that generates the support infrastructure from annotations.
