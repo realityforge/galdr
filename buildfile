@@ -52,6 +52,56 @@ define 'galdr' do
     test.compile.with :javax_json # Required to support validating invariant messages in tests
   end
 
+  desc 'The Annotation processor'
+  define 'processor' do
+    pom.dependency_filter = Proc.new { |_| false }
+
+    project.enable_annotation_processor = true
+
+    compile.with :autocommon,
+                 :javapoet,
+                 :guava,
+                 :javax_annotation
+
+    test.with :compile_testing,
+              :junit,
+              :hamcrest_core,
+              Java.tools_jar,
+              :truth,
+              project('core').package(:jar),
+              project('core').compile.dependencies
+
+    package(:jar)
+    package(:sources)
+    package(:javadoc)
+
+    package(:jar).enhance do |jar|
+      jar.merge(artifact(:javapoet))
+      jar.merge(artifact(:guava))
+      jar.merge(artifact(:autocommon))
+      jar.enhance do |f|
+        shaded_jar = (f.to_s + '-shaded')
+        Buildr.ant 'shade_jar' do |ant|
+          artifact = Buildr.artifact(:shade_task)
+          artifact.invoke
+          ant.taskdef :name => 'shade', :classname => 'org.realityforge.ant.shade.Shade', :classpath => artifact.to_s
+          ant.shade :jar => f.to_s, :uberJar => shaded_jar do
+            ant.relocation :pattern => 'com.squareup.javapoet', :shadedPattern => 'galdr.processor.vendor.javapoet'
+            ant.relocation :pattern => 'com.google', :shadedPattern => 'galdr.processor.vendor.google'
+          end
+        end
+        FileUtils.mv shaded_jar, f.to_s
+      end
+    end
+
+    test.using :testng
+    test.options[:properties] = { 'galdr.fixture_dir' => _('src/test/fixtures') }
+    test.options[:java_args] = ['-ea']
+
+    iml.test_source_directories << _('src/test/fixtures/input')
+    iml.test_source_directories << _('src/test/fixtures/expected')
+    iml.test_source_directories << _('src/test/fixtures/bad_input')
+  end
 
   doc.from(projects(%w(core))).
     using(:javadoc,
