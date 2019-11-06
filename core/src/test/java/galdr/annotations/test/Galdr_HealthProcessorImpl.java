@@ -75,7 +75,7 @@ final class Galdr_HealthProcessorImpl
   }
 
   @Nonnull
-  String $galdr$_getName()
+  private String $galdr$_getName()
   {
     return "HealthProcessor";
   }
