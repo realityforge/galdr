@@ -27,8 +27,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import static javax.tools.Diagnostic.Kind.*;
 
-@SupportedSourceVersion( SourceVersion.RELEASE_8 )
-@SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved" } )
 abstract class AbstractGaldrProcessor
   extends AbstractProcessor
 {
