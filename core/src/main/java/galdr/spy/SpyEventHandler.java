@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 public interface SpyEventHandler
 {
   /**
-   * Report an event in the Arez system.
+   * Report an event in the Galdr system.
    *
    * @param event the event that occurred.
    */
