@@ -19,6 +19,8 @@ final class Constants
   static final String GENERATED_CLASSNAME = "javax.annotation.Generated";
   static final String JAVA9_GENERATED_CLASSNAME = "javax.annotation.processing.Generated";
 
+  static final String SENTINEL_NAME = "<default>";
+
   private Constants()
   {
   }
