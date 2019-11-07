@@ -61,6 +61,7 @@ define 'galdr' do
     compile.with :autocommon,
                  :javapoet,
                  :guava,
+                 :failureaccess,
                  :javax_annotation
 
     test.with :compile_testing,
@@ -79,6 +80,7 @@ define 'galdr' do
       jar.merge(artifact(:javapoet))
       jar.merge(artifact(:guava))
       jar.merge(artifact(:autocommon))
+      jar.merge(artifact(:failureaccess))
       jar.enhance do |f|
         shaded_jar = (f.to_s + '-shaded')
         Buildr.ant 'shade_jar' do |ant|
