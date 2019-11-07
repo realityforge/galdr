@@ -21,6 +21,6 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Target( ElementType.METHOD )
-public @interface SubSystemNameRef
+public @interface NameRef
 {
 }

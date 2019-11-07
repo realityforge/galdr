@@ -11,7 +11,7 @@ final class Constants
   static final String PROCESSOR_CLASSNAME = "galdr.annotations.Processor";
   static final String STAGE_CLASSNAME = "galdr.annotations.Stage";
   static final String SUB_SYSTEM_CLASSNAME = "galdr.annotations.SubSystem";
-  static final String SUB_SYSTEM_NAME_REF_CLASSNAME = "galdr.annotations.SubSystemNameRef";
+  static final String NAME_REF_CLASSNAME = "galdr.annotations.NameRef";
   static final String WORLD_REF_CLASSNAME = "galdr.annotations.WorldRef";
   static final String NONNULL_CLASSNAME = "javax.annotation.Nonnull";
   static final String NULLABLE_CLASSNAME = "javax.annotation.Nullable";

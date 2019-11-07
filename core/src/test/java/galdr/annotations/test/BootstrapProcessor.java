@@ -4,9 +4,9 @@ import galdr.ComponentManager;
 import galdr.ComponentStorage;
 import galdr.World;
 import galdr.annotations.ComponentManagerRef;
+import galdr.annotations.NameRef;
 import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
-import galdr.annotations.SubSystemNameRef;
 import galdr.annotations.WorldRef;
 import javax.annotation.Nonnull;
 import static org.testng.Assert.*;
@@ -24,7 +24,7 @@ abstract class BootstrapProcessor
   @Nonnull
   abstract World world();
 
-  @SubSystemNameRef
+  @NameRef
   @Nonnull
   abstract String getName();
 
