@@ -6,12 +6,11 @@ import javax.annotation.Nonnull;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 
-@SuppressWarnings( "SameParameterValue" )
+@SuppressWarnings( { "SameParameterValue", "WeakerAccess", "unused" } )
 final class MethodChecks
 {
   private MethodChecks()
@@ -23,11 +22,12 @@ final class MethodChecks
    * The intent is to verify that it can be overridden and wrapped in a sub-class in the same package.
    */
   static void mustBeWrappable( @Nonnull final TypeElement targetType,
+                               @Nonnull final String scopeAnnotationName,
                                @Nonnull final String annotationName,
                                @Nonnull final Element element )
     throws GaldrProcessorException
   {
-    mustBeOverridable( targetType, annotationName, element );
+    mustBeOverridable( targetType, scopeAnnotationName, annotationName, element );
     mustNotBeAbstract( annotationName, element );
   }
 
@@ -36,12 +36,13 @@ final class MethodChecks
    * The intent is to verify that it can be overridden in sub-class in same package.
    */
   static void mustBeOverridable( @Nonnull final TypeElement targetType,
+                                 @Nonnull final String scopeAnnotationName,
                                  @Nonnull final String annotationName,
                                  @Nonnull final Element element )
     throws GaldrProcessorException
   {
     mustNotBeFinal( annotationName, element );
-    mustBeSubclassCallable( targetType, annotationName, element );
+    mustBeSubclassCallable( targetType, scopeAnnotationName, annotationName, element );
   }
 
   /**
@@ -49,31 +50,14 @@ final class MethodChecks
    * The intent is to verify that it can be instance called by sub-class in same package.
    */
   static void mustBeSubclassCallable( @Nonnull final TypeElement targetType,
+                                      @Nonnull final String scopeAnnotationName,
                                       @Nonnull final String annotationName,
                                       @Nonnull final Element element )
     throws GaldrProcessorException
   {
     mustNotBeStatic( annotationName, element );
     mustNotBePrivate( annotationName, element );
-    mustNotBePackageAccessInDifferentPackage( targetType, annotationName, element );
-  }
-
-  /**
-   * Verifies that the method follows conventions of a lifecycle hook.
-   * The intent is to verify that it can be instance called by sub-class in same
-   * package at a lifecycle stage. It should not raise errors, return values or accept
-   * parameters.
-   */
-  static void mustBeLifecycleHook( @Nonnull final TypeElement targetType,
-                                   @Nonnull final String annotationName,
-                                   @Nonnull final ExecutableElement method )
-    throws GaldrProcessorException
-  {
-    mustNotBeAbstract( annotationName, method );
-    mustBeSubclassCallable( targetType, annotationName, method );
-    mustNotHaveAnyParameters( annotationName, method );
-    mustNotReturnAnyValue( annotationName, method );
-    mustNotThrowAnyExceptions( annotationName, method );
+    mustNotBePackageAccessInDifferentPackage( targetType, scopeAnnotationName, annotationName, element );
   }
 
   private static void mustNotBeStatic( @Nonnull final String annotationName, @Nonnull final Element element )
@@ -119,12 +103,13 @@ final class MethodChecks
     }
   }
 
-  static void mustNotBePackageAccessInDifferentPackage( @Nonnull final TypeElement component,
+  static void mustNotBePackageAccessInDifferentPackage( @Nonnull final TypeElement element,
+                                                        @Nonnull final String scopeAnnotationName,
                                                         @Nonnull final String annotationName,
-                                                        @Nonnull final Element element )
+                                                        @Nonnull final Element other )
     throws GaldrProcessorException
   {
-    final Set<Modifier> modifiers = element.getModifiers();
+    final Set<Modifier> modifiers = other.getModifiers();
     final boolean isPackageAccess =
       !modifiers.contains( Modifier.PRIVATE ) &&
       !modifiers.contains( Modifier.PROTECTED ) &&
@@ -132,16 +117,16 @@ final class MethodChecks
 
     if ( isPackageAccess )
     {
-      final PackageElement packageElement = GeneratorUtil.getPackageElement( component );
-      final PackageElement methodPackageElement =
-        GeneratorUtil.getPackageElement( (TypeElement) element.getEnclosingElement() );
-      final Name componentPackageName = packageElement.getQualifiedName();
-      final Name methodPackageName = methodPackageElement.getQualifiedName();
-      if ( !Objects.equals( componentPackageName, methodPackageName ) )
+      final PackageElement packageElement = GeneratorUtil.getPackageElement( element );
+      final PackageElement otherPackageElement =
+        GeneratorUtil.getPackageElement( (TypeElement) other.getEnclosingElement() );
+      if ( !Objects.equals( packageElement.getQualifiedName(), otherPackageElement.getQualifiedName() ) )
       {
         throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) + " target must " +
-                                           "not be package access if the method is in a different package from " +
-                                           "the @GaldrApplication", element );
+                                           "not be package access if the " +
+                                           ( other instanceof ExecutableElement ? "method" : "field" ) +
+                                           " is in a different package from the class annotated with" +
+                                           "@" + ProcessorUtil.toSimpleName( scopeAnnotationName ), other );
       }
     }
   }
