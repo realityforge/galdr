@@ -66,13 +66,6 @@ final class ProcessorUtil
     }
   }
 
-  @SuppressWarnings( "UnstableApiUsage" )
-  @Nonnull
-  static PackageElement getPackageElement( @Nonnull final TypeElement element )
-  {
-    return MoreElements.getPackage( element );
-  }
-
   @Nonnull
   static List<TypeVariableName> getTypeArgumentsAsNames( @Nonnull final DeclaredType declaredType )
   {
