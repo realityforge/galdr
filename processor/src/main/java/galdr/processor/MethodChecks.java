@@ -33,7 +33,7 @@ final class MethodChecks
 
   /**
    * Verifies that the method is not final, static or abstract.
-   * The intent is to verify that it can be overridden in sub-class in same package.
+   * The intent is to verify that it can be overridden in sub-class in the same package.
    */
   static void mustBeOverridable( @Nonnull final TypeElement targetType,
                                  @Nonnull final String scopeAnnotationName,
@@ -47,7 +47,7 @@ final class MethodChecks
 
   /**
    * Verifies that the method is not static, abstract or private.
-   * The intent is to verify that it can be instance called by sub-class in same package.
+   * The intent is to verify that it can be instance called by sub-class in the same package as the targetType.
    */
   static void mustBeSubclassCallable( @Nonnull final TypeElement targetType,
                                       @Nonnull final String scopeAnnotationName,
@@ -60,21 +60,21 @@ final class MethodChecks
     mustNotBePackageAccessInDifferentPackage( targetType, scopeAnnotationName, annotationName, element );
   }
 
-  private static void mustNotBeStatic( @Nonnull final String annotationName, @Nonnull final Element element )
+  static void mustBeStatic( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws GaldrProcessorException
+  {
+    if ( !element.getModifiers().contains( Modifier.STATIC ) )
+    {
+      throw new GaldrProcessorException( must( annotationName, "be static" ), element );
+    }
+  }
+
+  static void mustNotBeStatic( @Nonnull final String annotationName, @Nonnull final Element element )
     throws GaldrProcessorException
   {
     if ( element.getModifiers().contains( Modifier.STATIC ) )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be static", element );
-    }
-  }
-
-  static void mustNotBeAbstract( @Nonnull final String annotationName, @Nonnull final Element element )
-    throws GaldrProcessorException
-  {
-    if ( element.getModifiers().contains( Modifier.ABSTRACT ) )
-    {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be abstract", element );
+      throw new GaldrProcessorException( mustNot( annotationName, "be static" ), element );
     }
   }
 
@@ -83,18 +83,52 @@ final class MethodChecks
   {
     if ( !element.getModifiers().contains( Modifier.ABSTRACT ) )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must be abstract", element );
+      throw new GaldrProcessorException( must( annotationName, "be abstract" ), element );
     }
   }
 
-  private static void mustNotBePrivate( @Nonnull final String annotationName,
-                                        @Nonnull final Element element )
+  static void mustNotBeAbstract( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws GaldrProcessorException
+  {
+    if ( element.getModifiers().contains( Modifier.ABSTRACT ) )
+    {
+      throw new GaldrProcessorException( mustNot( annotationName, "be abstract" ), element );
+    }
+  }
+
+  static void mustBeFinal( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws GaldrProcessorException
+  {
+    if ( !element.getModifiers().contains( Modifier.FINAL ) )
+    {
+      throw new GaldrProcessorException( must( annotationName, "be final" ), element );
+    }
+  }
+
+  static void mustNotBeFinal( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws GaldrProcessorException
+  {
+    if ( element.getModifiers().contains( Modifier.FINAL ) )
+    {
+      throw new GaldrProcessorException( mustNot( annotationName, "be final" ), element );
+    }
+  }
+
+  static void mustBePrivate( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws GaldrProcessorException
+  {
+    if ( !element.getModifiers().contains( Modifier.PRIVATE ) )
+    {
+      throw new GaldrProcessorException( must( annotationName, "be private" ), element );
+    }
+  }
+
+  static void mustNotBePrivate( @Nonnull final String annotationName, @Nonnull final Element element )
     throws GaldrProcessorException
   {
     if ( element.getModifiers().contains( Modifier.PRIVATE ) )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) +
-                                         " target must not be private", element );
+      throw new GaldrProcessorException( mustNot( annotationName, "be private" ), element );
     }
   }
 
@@ -117,31 +151,13 @@ final class MethodChecks
         GeneratorUtil.getPackageElement( (TypeElement) other.getEnclosingElement() );
       if ( !Objects.equals( packageElement.getQualifiedName(), otherPackageElement.getQualifiedName() ) )
       {
-        throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must " +
-                                           "not be package access if the " +
-                                           ( other instanceof ExecutableElement ? "method" : "field" ) +
-                                           " is in a different package from the class annotated with" +
-                                           toSimpleName( scopeAnnotationName ), other );
+        throw new GaldrProcessorException( mustNot( annotationName,
+                                                    "be package access if the " +
+                                                    ( other instanceof ExecutableElement ? "method" : "field" ) +
+                                                    " is in a different package from the class annotated with" +
+                                                    toSimpleName( scopeAnnotationName ) ),
+                                           other );
       }
-    }
-  }
-
-  private static void mustNotBeFinal( @Nonnull final String annotationName, @Nonnull final Element Element )
-    throws GaldrProcessorException
-  {
-    if ( Element.getModifiers().contains( Modifier.FINAL ) )
-    {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be final", Element );
-    }
-  }
-
-  static void mustBeFinal( @Nonnull final String annotationName, @Nonnull final Element element )
-    throws GaldrProcessorException
-  {
-    if ( !element.getModifiers().contains( Modifier.FINAL ) )
-    {
-      throw new GaldrProcessorException( "@" + toSimpleName( annotationName ) + " target must be final",
-                                         element );
     }
   }
 
@@ -150,8 +166,7 @@ final class MethodChecks
   {
     if ( !method.getParameters().isEmpty() )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not have any parameters",
-                                         method );
+      throw new GaldrProcessorException( mustNot( annotationName, "have any parameters" ), method );
     }
   }
 
@@ -160,17 +175,16 @@ final class MethodChecks
   {
     if ( TypeKind.VOID != method.getReturnType().getKind() )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not return a value", method );
+      throw new GaldrProcessorException( mustNot( annotationName, "return a value" ), method );
     }
   }
 
-  static void mustReturnAValue( @Nonnull final String annotationName,
-                                @Nonnull final ExecutableElement method )
+  static void mustReturnAValue( @Nonnull final String annotationName, @Nonnull final ExecutableElement method )
     throws GaldrProcessorException
   {
     if ( TypeKind.VOID == method.getReturnType().getKind() )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must return a value", method );
+      throw new GaldrProcessorException( must( annotationName, "return a value" ), method );
     }
   }
 
@@ -180,9 +194,20 @@ final class MethodChecks
   {
     if ( !method.getThrownTypes().isEmpty() )
     {
-      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not throw any exceptions",
-                                         method );
+      throw new GaldrProcessorException( mustNot( annotationName, "throw any exceptions" ), method );
     }
+  }
+
+  @Nonnull
+  private static String must( @Nonnull final String annotationName, @Nonnull final String message )
+  {
+    return toSimpleName( annotationName ) + " target must " + message;
+  }
+
+  @Nonnull
+  private static String mustNot( @Nonnull final String annotationName, @Nonnull final String message )
+  {
+    return must( annotationName, "not " + message );
   }
 
   @Nonnull
