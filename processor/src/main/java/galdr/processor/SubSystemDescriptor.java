@@ -12,9 +12,7 @@ final class SubSystemDescriptor
   private final String _name;
   private final int _priority;
 
-  SubSystemDescriptor( @Nonnull final TypeElement element,
-                       @Nonnull final String name,
-                       final int priority )
+  SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name, final int priority )
   {
     _element = Objects.requireNonNull( element );
     _name = Objects.requireNonNull( name );
