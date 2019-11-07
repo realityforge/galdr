@@ -65,8 +65,7 @@ final class MethodChecks
   {
     if ( element.getModifiers().contains( Modifier.STATIC ) )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not be static", element );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be static", element );
     }
   }
 
@@ -75,8 +74,7 @@ final class MethodChecks
   {
     if ( element.getModifiers().contains( Modifier.ABSTRACT ) )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not be abstract", element );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be abstract", element );
     }
   }
 
@@ -85,10 +83,7 @@ final class MethodChecks
   {
     if ( !element.getModifiers().contains( Modifier.ABSTRACT ) )
     {
-      throw new GaldrProcessorException( "@" +
-                                         ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must be abstract",
-                                         element );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must be abstract", element );
     }
   }
 
@@ -98,7 +93,7 @@ final class MethodChecks
   {
     if ( element.getModifiers().contains( Modifier.PRIVATE ) )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
+      throw new GaldrProcessorException( toSimpleName( annotationName ) +
                                          " target must not be private", element );
     }
   }
@@ -122,11 +117,11 @@ final class MethodChecks
         GeneratorUtil.getPackageElement( (TypeElement) other.getEnclosingElement() );
       if ( !Objects.equals( packageElement.getQualifiedName(), otherPackageElement.getQualifiedName() ) )
       {
-        throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) + " target must " +
+        throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must " +
                                            "not be package access if the " +
                                            ( other instanceof ExecutableElement ? "method" : "field" ) +
                                            " is in a different package from the class annotated with" +
-                                           "@" + ProcessorUtil.toSimpleName( scopeAnnotationName ), other );
+                                           toSimpleName( scopeAnnotationName ), other );
       }
     }
   }
@@ -136,8 +131,7 @@ final class MethodChecks
   {
     if ( Element.getModifiers().contains( Modifier.FINAL ) )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not be final", Element );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not be final", Element );
     }
   }
 
@@ -146,7 +140,7 @@ final class MethodChecks
   {
     if ( !element.getModifiers().contains( Modifier.FINAL ) )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) + " target must be final",
+      throw new GaldrProcessorException( "@" + toSimpleName( annotationName ) + " target must be final",
                                          element );
     }
   }
@@ -156,8 +150,8 @@ final class MethodChecks
   {
     if ( !method.getParameters().isEmpty() )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not have any parameters", method );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not have any parameters",
+                                         method );
     }
   }
 
@@ -166,8 +160,7 @@ final class MethodChecks
   {
     if ( TypeKind.VOID != method.getReturnType().getKind() )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not return a value", method );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not return a value", method );
     }
   }
 
@@ -177,8 +170,7 @@ final class MethodChecks
   {
     if ( TypeKind.VOID == method.getReturnType().getKind() )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must return a value", method );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must return a value", method );
     }
   }
 
@@ -188,8 +180,14 @@ final class MethodChecks
   {
     if ( !method.getThrownTypes().isEmpty() )
     {
-      throw new GaldrProcessorException( "@" + ProcessorUtil.toSimpleName( annotationName ) +
-                                         " target must not throw any exceptions", method );
+      throw new GaldrProcessorException( toSimpleName( annotationName ) + " target must not throw any exceptions",
+                                         method );
     }
+  }
+
+  @Nonnull
+  private static String toSimpleName( @Nonnull final String annotationName )
+  {
+    return "@" + annotationName.replaceAll( ".*\\.", "" );
   }
 }

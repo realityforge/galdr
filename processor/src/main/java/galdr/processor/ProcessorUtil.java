@@ -350,9 +350,4 @@ final class ProcessorUtil
     return null != findAnnotationByType( typeElement, annotationClassName );
   }
 
-  @Nonnull
-  static String toSimpleName( @Nonnull final String annotationName )
-  {
-    return annotationName.replaceAll( ".*\\.", "" );
-  }
 }
