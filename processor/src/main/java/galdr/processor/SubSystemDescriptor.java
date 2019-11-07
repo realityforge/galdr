@@ -1,5 +1,6 @@
 package galdr.processor;
 
+import com.squareup.javapoet.ClassName;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.TypeElement;
@@ -34,5 +35,17 @@ final class SubSystemDescriptor
   int getPriority()
   {
     return _priority;
+  }
+
+  @Nonnull
+  String getPackageName()
+  {
+    return GeneratorUtil.getQualifiedPackageName( getElement() );
+  }
+
+  @Nonnull
+  ClassName getEnhancedClassName()
+  {
+    return Generator.toGeneratedClassName( getElement() );
   }
 }
