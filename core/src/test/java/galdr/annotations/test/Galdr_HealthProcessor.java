@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated( "galdr" )
-final class Galdr_HealthProcessor
+public final class Galdr_HealthProcessor
   implements ProcessorFn, PostConstructFn, OnActivateFn, OnDeactivateFn
 {
   @Nonnull

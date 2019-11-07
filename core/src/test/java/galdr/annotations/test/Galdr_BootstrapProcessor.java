@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated( "galdr" )
-final class Galdr_BootstrapProcessor
+public final class Galdr_BootstrapProcessor
   implements ProcessorFn, PostConstructFn
 {
   @Nonnull
