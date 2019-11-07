@@ -125,6 +125,9 @@ define 'galdr' do
   ipr.add_testng_configuration('core - update invariant messages',
                                :module => 'core',
                                :jvm_args => '-ea -Dbraincheck.environment=development -Dgaldr.environment=development -Dgaldr.check_diagnostic_messages=true -Dgaldr.output_fixture_data=true -Dgaldr.diagnostic_messages_file=src/test/java/galdr/diagnostic_messages.json')
+  ipr.add_testng_configuration('processor',
+                               :module => 'processor',
+                               :jvm_args => '-ea -Dgaldr.output_fixture_data=false -Dgaldr.fixture_dir=src/test/fixtures')
 
   iml.excluded_directories << project._('tmp')
 
