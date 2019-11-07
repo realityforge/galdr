@@ -13,6 +13,7 @@ import javax.lang.model.element.TypeElement;
  */
 @SupportedAnnotationTypes( Constants.SUB_SYSTEM_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
+@SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved" } )
 public final class SubSystemProcessor
   extends AbstractGaldrProcessor
 {
