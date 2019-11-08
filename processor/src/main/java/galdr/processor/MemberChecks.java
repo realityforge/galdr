@@ -173,10 +173,10 @@ final class MemberChecks
       if ( !Objects.equals( packageElement.getQualifiedName(), otherPackageElement.getQualifiedName() ) )
       {
         throw new ProcessorException( mustNot( annotationName,
-                                                    "be package access if the " +
-                                                    ( other instanceof ExecutableElement ? "method" : "field" ) +
-                                                    " is in a different package from the type annotated with the " +
-                                                    toSimpleName( scopeAnnotationName ) + " annotation" ),
+                                               "be package access if the " +
+                                               ( other instanceof ExecutableElement ? "method" : "field" ) +
+                                               " is in a different package from the type annotated with the " +
+                                               toSimpleName( scopeAnnotationName ) + " annotation" ),
                                       other );
       }
     }
