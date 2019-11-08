@@ -13,27 +13,13 @@ import javax.lang.model.element.TypeElement;
 @SupportedAnnotationTypes( Constants.APPLICATION_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
 public final class ApplicationProcessor
-  extends AbstractGaldrProcessor
+  extends BaseGaldrProcessor
 {
   @Override
   @Nonnull
   String getRootAnnotationClassname()
   {
     return Constants.APPLICATION_CLASSNAME;
-  }
-
-  @Override
-  @Nonnull
-  String getIssueTrackerURL()
-  {
-    return "https://github.com/realityforge/galdr/issues";
-  }
-
-  @Nonnull
-  @Override
-  String getOptionPrefix()
-  {
-    return "galdr";
   }
 
   @Override

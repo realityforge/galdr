@@ -23,27 +23,13 @@ import javax.lang.model.type.TypeMirror;
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
 @SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved" } )
 public final class SubSystemProcessor
-  extends AbstractGaldrProcessor
+  extends BaseGaldrProcessor
 {
   @Override
   @Nonnull
   String getRootAnnotationClassname()
   {
     return Constants.SUB_SYSTEM_CLASSNAME;
-  }
-
-  @Override
-  @Nonnull
-  String getIssueTrackerURL()
-  {
-    return "https://github.com/realityforge/galdr/issues";
-  }
-
-  @Nonnull
-  @Override
-  String getOptionPrefix()
-  {
-    return "galdr";
   }
 
   @Override
