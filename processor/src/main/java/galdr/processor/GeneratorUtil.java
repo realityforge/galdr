@@ -7,6 +7,17 @@ import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
+import com.google.auto.common.MoreElements;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
+import java.io.IOException;
+import javax.annotation.Nonnull;
+import javax.annotation.processing.Filer;
+import javax.lang.model.element.NestingKind;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
+
 final class GeneratorUtil
 {
   private GeneratorUtil()
@@ -53,5 +64,16 @@ final class GeneratorUtil
   static PackageElement getPackageElement( @Nonnull final TypeElement element )
   {
     return MoreElements.getPackage( element );
+  }
+
+  static void emitJavaType( @Nonnull final String packageName,
+                            @Nonnull final TypeSpec typeSpec,
+                            @Nonnull final Filer filer )
+    throws IOException
+  {
+    JavaFile.builder( packageName, typeSpec ).
+      skipJavaLangImports( true ).
+      build().
+      writeTo( filer );
   }
 }

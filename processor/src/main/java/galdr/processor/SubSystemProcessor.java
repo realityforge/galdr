@@ -65,7 +65,9 @@ public final class SubSystemProcessor
       }
     }
 
-    emitTypeSpec( descriptor.getPackageName(), Generator.buildSubSystem( processingEnv, descriptor ) );
+    GeneratorUtil.emitJavaType( descriptor.getPackageName(),
+                                Generator.buildSubSystem( processingEnv, descriptor ),
+                                processingEnv.getFiler() );
   }
 
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )

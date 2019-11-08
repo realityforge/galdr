@@ -1,8 +1,6 @@
 package galdr.processor;
 
 import com.google.auto.common.SuperficialValidation;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.TypeSpec;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -227,13 +225,4 @@ abstract class AbstractGaldrProcessor
 
   abstract void process( @Nonnull final TypeElement element )
     throws IOException, ProcessorException;
-
-  final void emitTypeSpec( @Nonnull final String packageName, @Nonnull final TypeSpec typeSpec )
-    throws IOException
-  {
-    JavaFile.builder( packageName, typeSpec ).
-      skipJavaLangImports( true ).
-      build().
-      writeTo( processingEnv.getFiler() );
-  }
 }
