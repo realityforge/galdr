@@ -24,7 +24,7 @@ public final class ApplicationProcessor
 
   @Override
   final void process( @Nonnull final TypeElement element )
-    throws IOException, GaldrProcessorException
+    throws IOException, ProcessorException
   {
   }
 }

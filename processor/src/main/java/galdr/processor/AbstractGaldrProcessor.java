@@ -119,7 +119,7 @@ abstract class AbstractGaldrProcessor
       {
         reportError( ioe.getMessage(), element );
       }
-      catch ( final GaldrProcessorException e )
+      catch ( final ProcessorException e )
       {
         final Element errorLocation = e.getElement();
         final Element outerElement = getOuterElement( errorLocation );
@@ -226,7 +226,7 @@ abstract class AbstractGaldrProcessor
   }
 
   abstract void process( @Nonnull final TypeElement element )
-    throws IOException, GaldrProcessorException;
+    throws IOException, ProcessorException;
 
   final void emitTypeSpec( @Nonnull final String packageName, @Nonnull final TypeSpec typeSpec )
     throws IOException

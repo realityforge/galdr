@@ -34,19 +34,19 @@ public final class SubSystemProcessor
 
   @Override
   final void process( @Nonnull final TypeElement element )
-    throws IOException, GaldrProcessorException
+    throws IOException, ProcessorException
   {
     if ( ElementKind.CLASS != element.getKind() )
     {
-      throw new GaldrProcessorException( "@SubSystem target must be a class", element );
+      throw new ProcessorException( "@SubSystem target must be a class", element );
     }
     else if ( !element.getModifiers().contains( Modifier.ABSTRACT ) )
     {
-      throw new GaldrProcessorException( "@SubSystem target must be abstract", element );
+      throw new ProcessorException( "@SubSystem target must be abstract", element );
     }
     else if ( NestingKind.TOP_LEVEL != element.getNestingKind() && !element.getModifiers().contains( Modifier.STATIC ) )
     {
-      throw new GaldrProcessorException( "@SubSystem target must not be a non-static nested class", element );
+      throw new ProcessorException( "@SubSystem target must not be a non-static nested class", element );
     }
     final AnnotationMirror annotation = ProcessorUtil.getAnnotationByType( element, Constants.SUB_SYSTEM_CLASSNAME );
     final String name = deriveName( element, annotation );
@@ -82,15 +82,15 @@ public final class SubSystemProcessor
     final TypeMirror returnType = method.getReturnType();
     if ( TypeKind.DECLARED != returnType.getKind() || !String.class.getName().equals( returnType.toString() ) )
     {
-      throw new GaldrProcessorException( "Method annotated with @NameRef must return an instance of java.lang.String",
-                                         method );
+      throw new ProcessorException( "Method annotated with @NameRef must return an instance of java.lang.String",
+                                    method );
     }
     //descriptor.addNameRef(method);
   }
 
   @Nonnull
   private String deriveName( @Nonnull final TypeElement element, @Nonnull final AnnotationMirror annotation )
-    throws GaldrProcessorException
+    throws ProcessorException
   {
     final String name = ProcessorUtil.getAnnotationValue( annotation, "name" );
     return Constants.SENTINEL_NAME.equals( name ) ?
