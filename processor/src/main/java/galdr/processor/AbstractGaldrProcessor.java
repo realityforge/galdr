@@ -26,7 +26,7 @@ abstract class AbstractGaldrProcessor
   extends AbstractProcessor
 {
   @Nonnull
-  private HashSet<TypeElement> _deferred = new HashSet<>();
+  private Set<TypeElement> _deferred = new HashSet<>();
   private int _invalidTypeCount;
   private RoundEnvironment _env;
 
