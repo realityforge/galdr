@@ -33,6 +33,20 @@ public final class SubSystemProcessor
   }
 
   @Override
+  @Nonnull
+  String getIssueTrackerURL()
+  {
+    return "https://github.com/realityforge/galdr/issues";
+  }
+
+  @Nonnull
+  @Override
+  String getOptionPrefix()
+  {
+    return "galdr";
+  }
+
+  @Override
   final void process( @Nonnull final TypeElement element )
     throws IOException, GaldrProcessorException
   {
@@ -85,6 +99,7 @@ public final class SubSystemProcessor
       throw new GaldrProcessorException( "Method annotated with @NameRef must return an instance of java.lang.String",
                                          method );
     }
+    //descriptor.addNameRef(method);
   }
 
   @Nonnull

@@ -17,9 +17,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedOptions;
-import javax.annotation.processing.SupportedSourceVersion;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.PackageElement;
@@ -43,7 +40,7 @@ abstract class AbstractGaldrProcessor
     final Set<TypeElement> elements = (Set<TypeElement>) env.getElementsAnnotatedWith( annotation );
 
     final Map<String, String> options = processingEnv.getOptions();
-    final String deferUnresolvedValue = options.get( "galdr.defer.unresolved" );
+    final String deferUnresolvedValue = options.get( getOptionPrefix() + ".defer.unresolved" );
     final boolean deferUnresolved = null == deferUnresolvedValue || "true".equals( deferUnresolvedValue );
 
     _env = env;
@@ -80,6 +77,12 @@ abstract class AbstractGaldrProcessor
   @Nonnull
   abstract String getRootAnnotationClassname();
 
+  @Nonnull
+  abstract String getIssueTrackerURL();
+
+  @Nonnull
+  abstract String getOptionPrefix();
+
   private void processingErrorMessage( @Nonnull final TypeElement target )
   {
     reportError( getClass().getSimpleName() + " unable to process " + target.getQualifiedName() +
@@ -90,7 +93,7 @@ abstract class AbstractGaldrProcessor
 
   private void reportError( @Nonnull final String message, @Nullable final Element element )
   {
-    final String deferErrorsValue = processingEnv.getOptions().get( "galdr.defer.errors" );
+    final String deferErrorsValue = processingEnv.getOptions().get( getOptionPrefix() + ".defer.errors" );
     final boolean deferErrors = null == deferErrorsValue || "true".equals( deferErrorsValue );
     _invalidTypeCount++;
     if ( !deferErrors || _env.errorRaised() || _env.processingOver() )
@@ -167,7 +170,7 @@ abstract class AbstractGaldrProcessor
           "Unexpected error running the " + getClass().getName() + " processor. This has " +
           "resulted in a failure to process the code and has left the compiler in an invalid " +
           "state. Please report the failure to the developers so that it can be fixed.\n" +
-          " Report the error at: https://github.com/realityforge/galdr/issues\n" +
+          " Report the error at: " + getIssueTrackerURL() + "\n" +
           "\n\n" +
           sw.toString();
         reportError( message, element );
