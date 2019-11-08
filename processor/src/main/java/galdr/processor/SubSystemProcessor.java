@@ -70,14 +70,14 @@ public final class SubSystemProcessor
 
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
-    MethodChecks.mustBeAbstract( Constants.NAME_REF_CLASSNAME, method );
-    MethodChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+    MemberChecks.mustBeAbstract( Constants.NAME_REF_CLASSNAME, method );
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
                                                            Constants.APPLICATION_CLASSNAME,
                                                            Constants.NAME_REF_CLASSNAME,
                                                            method );
-    MethodChecks.mustNotHaveAnyParameters( Constants.NAME_REF_CLASSNAME, method );
-    MethodChecks.mustReturnAValue( Constants.NAME_REF_CLASSNAME, method );
-    MethodChecks.mustNotThrowAnyExceptions( Constants.NAME_REF_CLASSNAME, method );
+    MemberChecks.mustNotHaveAnyParameters( Constants.NAME_REF_CLASSNAME, method );
+    MemberChecks.mustReturnAValue( Constants.NAME_REF_CLASSNAME, method );
+    MemberChecks.mustNotThrowAnyExceptions( Constants.NAME_REF_CLASSNAME, method );
 
     final TypeMirror returnType = method.getReturnType();
     if ( TypeKind.DECLARED != returnType.getKind() || !String.class.getName().equals( returnType.toString() ) )
