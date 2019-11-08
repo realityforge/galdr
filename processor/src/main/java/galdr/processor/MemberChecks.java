@@ -62,6 +62,17 @@ final class MemberChecks
     mustNotBePackageAccessInDifferentPackage( targetType, scopeAnnotationName, annotationName, element );
   }
 
+  static void mustBeStaticallySubclassCallable( @Nonnull final TypeElement targetType,
+                                                @Nonnull final String scopeAnnotationName,
+                                                @Nonnull final String annotationName,
+                                                @Nonnull final Element method )
+    throws ProcessorException
+  {
+    mustBeStatic( annotationName, method );
+    mustNotBePrivate( annotationName, method );
+    mustNotBePackageAccessInDifferentPackage( targetType, scopeAnnotationName, annotationName, method );
+  }
+
   /**
    * Verifies that the method follows conventions of a lifecycle hook.
    * The intent is to verify that it can be instance called by sub-class in same
