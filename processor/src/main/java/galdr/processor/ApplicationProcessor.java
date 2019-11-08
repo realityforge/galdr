@@ -23,6 +23,20 @@ public final class ApplicationProcessor
   }
 
   @Override
+  @Nonnull
+  String getIssueTrackerURL()
+  {
+    return "https://github.com/realityforge/galdr/issues";
+  }
+
+  @Nonnull
+  @Override
+  String getOptionPrefix()
+  {
+    return "galdr";
+  }
+
+  @Override
   final void process( @Nonnull final TypeElement element )
     throws IOException, GaldrProcessorException
   {
