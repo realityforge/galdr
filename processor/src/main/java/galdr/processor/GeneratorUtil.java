@@ -55,4 +55,3 @@ final class GeneratorUtil
     return MoreElements.getPackage( element );
   }
 }
-
