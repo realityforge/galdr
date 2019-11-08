@@ -156,8 +156,8 @@ final class MethodChecks
         throw new GaldrProcessorException( mustNot( annotationName,
                                                     "be package access if the " +
                                                     ( other instanceof ExecutableElement ? "method" : "field" ) +
-                                                    " is in a different package from the class annotated with" +
-                                                    toSimpleName( scopeAnnotationName ) ),
+                                                    " is in a different package from the type annotated with the " +
+                                                    toSimpleName( scopeAnnotationName ) + " annotation" ),
                                            other );
       }
     }
