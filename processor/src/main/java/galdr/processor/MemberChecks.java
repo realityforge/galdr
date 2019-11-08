@@ -146,6 +146,24 @@ final class MemberChecks
     }
   }
 
+  static void mustBePublic( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws ProcessorException
+  {
+    if ( !element.getModifiers().contains( Modifier.PUBLIC ) )
+    {
+      throw new ProcessorException( must( annotationName, "be public" ), element );
+    }
+  }
+
+  static void mustNotBePublic( @Nonnull final String annotationName, @Nonnull final Element element )
+    throws ProcessorException
+  {
+    if ( element.getModifiers().contains( Modifier.PUBLIC ) )
+    {
+      throw new ProcessorException( mustNot( annotationName, "be public" ), element );
+    }
+  }
+
   static void mustBePrivate( @Nonnull final String annotationName, @Nonnull final Element element )
     throws ProcessorException
   {
