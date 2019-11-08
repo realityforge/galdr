@@ -13,7 +13,7 @@ import javax.lang.model.element.TypeElement;
 @SupportedAnnotationTypes( Constants.APPLICATION_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
 public final class ApplicationProcessor
-  extends BaseGaldrProcessor
+  extends AbstractGaldrProcessor
 {
   @Override
   @Nonnull

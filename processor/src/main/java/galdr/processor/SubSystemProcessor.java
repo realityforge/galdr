@@ -23,7 +23,7 @@ import javax.lang.model.type.TypeMirror;
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
 @SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved" } )
 public final class SubSystemProcessor
-  extends BaseGaldrProcessor
+  extends AbstractGaldrProcessor
 {
   @Override
   @Nonnull
