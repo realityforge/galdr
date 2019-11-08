@@ -28,10 +28,9 @@ abstract class AbstractGaldrProcessor
   @Nonnull
   private Set<TypeElement> _deferred = new HashSet<>();
   private int _invalidTypeCount;
-  private RoundEnvironment _env;
 
   @Override
-  public boolean process( final Set<? extends TypeElement> annotations, final RoundEnvironment env )
+  public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
     final TypeElement annotation = processingEnv.getElementUtils().getTypeElement( getRootAnnotationClassname() );
     @SuppressWarnings( "unchecked" )
@@ -41,23 +40,21 @@ abstract class AbstractGaldrProcessor
     final String deferUnresolvedValue = options.get( getOptionPrefix() + ".defer.unresolved" );
     final boolean deferUnresolved = null == deferUnresolvedValue || "true".equals( deferUnresolvedValue );
 
-    _env = env;
-
     if ( deferUnresolved )
     {
       final Collection<TypeElement> elementsToProcess = getElementsToProcess( elements );
-      processElements( elementsToProcess, env );
+      processElements( env, elementsToProcess );
       if ( env.getRootElements().isEmpty() && !_deferred.isEmpty() )
       {
-        _deferred.forEach( this::processingErrorMessage );
+        _deferred.forEach( e -> processingErrorMessage( env, e ) );
         _deferred.clear();
       }
     }
     else
     {
-      processElements( new ArrayList<>( elements ), env );
+      processElements( env, new ArrayList<>( elements ) );
     }
-    if ( _env.processingOver() )
+    if ( env.processingOver() )
     {
       if ( 0 != _invalidTypeCount )
       {
@@ -68,7 +65,6 @@ abstract class AbstractGaldrProcessor
       }
       _invalidTypeCount = 0;
     }
-    _env = null;
     return true;
   }
 
@@ -81,20 +77,23 @@ abstract class AbstractGaldrProcessor
   @Nonnull
   abstract String getOptionPrefix();
 
-  private void processingErrorMessage( @Nonnull final TypeElement target )
+  private void processingErrorMessage( @Nonnull final RoundEnvironment env, @Nonnull final TypeElement target )
   {
-    reportError( getClass().getSimpleName() + " unable to process " + target.getQualifiedName() +
+    reportError( env,
+                 getClass().getSimpleName() + " unable to process " + target.getQualifiedName() +
                  " because not all of its dependencies could be resolved. Check for " +
                  "compilation errors or a circular dependency with generated code.",
                  target );
   }
 
-  private void reportError( @Nonnull final String message, @Nullable final Element element )
+  private void reportError( @Nonnull final RoundEnvironment env,
+                            @Nonnull final String message,
+                            @Nullable final Element element )
   {
     final String deferErrorsValue = processingEnv.getOptions().get( getOptionPrefix() + ".defer.errors" );
     final boolean deferErrors = null == deferErrorsValue || "true".equals( deferErrorsValue );
     _invalidTypeCount++;
-    if ( !deferErrors || _env.errorRaised() || _env.processingOver() )
+    if ( !deferErrors || env.errorRaised() || env.processingOver() )
     {
       processingEnv.getMessager().printMessage( ERROR, message, element );
     }
@@ -104,8 +103,7 @@ abstract class AbstractGaldrProcessor
     }
   }
 
-  private void processElements( @Nonnull final Collection<TypeElement> elements,
-                                @Nonnull final RoundEnvironment env )
+  private void processElements( @Nonnull final RoundEnvironment env, @Nonnull final Collection<TypeElement> elements )
   {
     for ( final TypeElement element : elements )
     {
@@ -115,7 +113,7 @@ abstract class AbstractGaldrProcessor
       }
       catch ( final IOException ioe )
       {
-        reportError( ioe.getMessage(), element );
+        reportError( env, ioe.getMessage(), element );
       }
       catch ( final ProcessorException e )
       {
@@ -153,10 +151,10 @@ abstract class AbstractGaldrProcessor
             "implemented by the element and may not be highlighted by your tooling or IDE. The " +
             "error occurred at " + location + " and may look like:\n" + sw.toString();
 
-          reportError( e.getMessage(), element );
-          reportError( message, null );
+          reportError( env, e.getMessage(), element );
+          reportError( env, message, null );
         }
-        reportError( e.getMessage(), e.getElement() );
+        reportError( env, e.getMessage(), e.getElement() );
       }
       catch ( final Throwable e )
       {
@@ -171,7 +169,7 @@ abstract class AbstractGaldrProcessor
           " Report the error at: " + getIssueTrackerURL() + "\n" +
           "\n\n" +
           sw.toString();
-        reportError( message, element );
+        reportError( env, message, element );
       }
     }
   }
