@@ -23,7 +23,7 @@ public final class Galdr_HealthProcessor
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
   @Nonnull
-  World $galdr$_world()
+  private World $galdr$_world()
   {
     return World.current();
   }
