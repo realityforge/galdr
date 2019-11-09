@@ -52,7 +52,6 @@ public final class Galdr_HealthProcessor
     _subsystem.$galdr$_deactivate();
   }
 
-  @Generated( "galdr" )
   private static final class EnhancedSubSystem
     extends HealthProcessor
   {
