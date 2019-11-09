@@ -15,7 +15,7 @@ public final class Galdr_BootstrapProcessor
   implements ProcessorFn, PostConstructFn
 {
   @Nonnull
-  private final ProcessorImpl _processor = new ProcessorImpl( this );
+  private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
   @Nonnull
   World $galdr$_world()
@@ -26,16 +26,16 @@ public final class Galdr_BootstrapProcessor
   @Override
   public void process( final int delta )
   {
-    _processor.$galdr$_process( delta );
+    _subsystem.$galdr$_process( delta );
   }
 
   @Override
   public void postConstruct()
   {
-    _processor.$galdr$_postConstruct();
+    _subsystem.$galdr$_postConstruct();
   }
 
-  private static final class ProcessorImpl
+  private static final class EnhancedSubSystem
     extends BootstrapProcessor
   {
     @Nonnull
@@ -43,7 +43,7 @@ public final class Galdr_BootstrapProcessor
     @Nullable
     private ComponentManager<Health> $galdrc$_health;
 
-    private ProcessorImpl( @Nonnull final Galdr_BootstrapProcessor processor )
+    private EnhancedSubSystem( @Nonnull final Galdr_BootstrapProcessor processor )
     {
       $galdr$_wrapper = Objects.requireNonNull( processor );
     }

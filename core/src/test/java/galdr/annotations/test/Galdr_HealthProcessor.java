@@ -20,7 +20,7 @@ public final class Galdr_HealthProcessor
   implements ProcessorFn, PostConstructFn, OnActivateFn, OnDeactivateFn
 {
   @Nonnull
-  private final ProcessorImpl _processor = new ProcessorImpl( this );
+  private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
   @Nonnull
   World $galdr$_world()
@@ -31,29 +31,29 @@ public final class Galdr_HealthProcessor
   @Override
   public void process( final int delta )
   {
-    _processor.$galdr$_process( delta );
+    _subsystem.$galdr$_process( delta );
   }
 
   @Override
   public void postConstruct()
   {
-    _processor.$galdr$_postConstruct();
+    _subsystem.$galdr$_postConstruct();
   }
 
   @Override
   public void activate()
   {
-    _processor.$galdr$_activate();
+    _subsystem.$galdr$_activate();
   }
 
   @Override
   public void deactivate()
   {
-    _processor.$galdr$_deactivate();
+    _subsystem.$galdr$_deactivate();
   }
 
   @Generated( "galdr" )
-  private static final class ProcessorImpl
+  private static final class EnhancedSubSystem
     extends HealthProcessor
   {
     @Nonnull
@@ -64,7 +64,7 @@ public final class Galdr_HealthProcessor
     private ComponentManager<Health> $galdrc$_health;
     private AreaOfInterest $galdr$_processHealth_areaOfInterest;
 
-    private ProcessorImpl( @Nonnull final Galdr_HealthProcessor processor )
+    private EnhancedSubSystem( @Nonnull final Galdr_HealthProcessor processor )
     {
       $galdr$_processor = Objects.requireNonNull( processor );
     }
