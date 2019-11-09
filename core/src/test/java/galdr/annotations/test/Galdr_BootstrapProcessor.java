@@ -77,7 +77,13 @@ public final class Galdr_BootstrapProcessor
     @Override
     final String getName()
     {
-      return "BootstrapProcessor";
+      return $galdr$_getName();
+    }
+
+    @Nonnull
+    private String $galdr$_getName()
+    {
+      return "HealthProcessor";
     }
 
     @Override
@@ -85,7 +91,7 @@ public final class Galdr_BootstrapProcessor
     {
       if ( Galdr.areDebugToStringMethodsEnabled() )
       {
-        return "SubSystem[" + getName() + "]";
+        return "SubSystem[" + $galdr$_getName() + "]";
       }
       else
       {
