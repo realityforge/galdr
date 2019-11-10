@@ -13,5 +13,10 @@ public final class Galdr_MultiNameRefSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_MultiNameRefSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "multiNameRefSubSystem";
+    }
   }
 }

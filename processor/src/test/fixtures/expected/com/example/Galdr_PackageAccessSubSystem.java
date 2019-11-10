@@ -13,5 +13,10 @@ public final class Galdr_PackageAccessSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_PackageAccessSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "packageAccessSubSystem";
+    }
   }
 }

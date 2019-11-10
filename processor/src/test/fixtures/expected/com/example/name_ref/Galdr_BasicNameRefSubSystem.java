@@ -13,5 +13,10 @@ public final class Galdr_BasicNameRefSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_BasicNameRefSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "basicNameRefSubSystem";
+    }
   }
 }

@@ -18,6 +18,7 @@ final class Generator
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
   private static final String OUTER_FIELD = FRAMEWORK_INTERNAL_PREFIX + "outer";
+  private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
 
   private Generator()
   {
@@ -55,6 +56,12 @@ final class Generator
                                           .addAnnotation( NONNULL_CLASSNAME )
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
+                         .build() );
+
+    builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
+                         .addAnnotation( NONNULL_CLASSNAME )
+                         .returns( String.class )
+                         .addStatement( "return $S", descriptor.getName() )
                          .build() );
 
     return builder.build();

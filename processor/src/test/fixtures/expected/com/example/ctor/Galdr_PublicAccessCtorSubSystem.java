@@ -13,5 +13,10 @@ public final class Galdr_PublicAccessCtorSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_PublicAccessCtorSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "publicAccessCtorSubSystem";
+    }
   }
 }

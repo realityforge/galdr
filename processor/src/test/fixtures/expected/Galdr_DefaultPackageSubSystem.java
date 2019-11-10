@@ -11,5 +11,10 @@ public final class Galdr_DefaultPackageSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_DefaultPackageSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "defaultPackageSubSystem";
+    }
   }
 }

@@ -13,5 +13,10 @@ public final class Galdr_BasicSubSystem {
     private EnhancedSubSystem(@Nonnull final Galdr_BasicSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
+
+    @Nonnull
+    String $galdr$_getName() {
+      return "basicSubSystem";
+    }
   }
 }
