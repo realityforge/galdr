@@ -10,6 +10,7 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
@@ -59,6 +60,18 @@ final class Generator
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
+
+    for ( final ExecutableElement nameRef : descriptor.getNameRefs() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( nameRef.getSimpleName().toString() )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( String.class )
+          .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
+      ProcessorUtil.copyAccessModifiers( nameRef, method );
+      builder.addMethod( method.build() );
+    }
 
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )

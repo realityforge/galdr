@@ -16,6 +16,16 @@ public final class Galdr_MultiNameRefSubSystem {
     }
 
     @Nonnull
+    String name1() {
+      return $galdr$_getName();
+    }
+
+    @Nonnull
+    String name2() {
+      return $galdr$_getName();
+    }
+
+    @Nonnull
     private String $galdr$_getName() {
       return "MultiNameRefSubSystem";
     }

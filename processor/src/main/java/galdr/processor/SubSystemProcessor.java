@@ -87,7 +87,7 @@ public final class SubSystemProcessor
       throw new ProcessorException( "Method annotated with @NameRef must return an instance of java.lang.String",
                                     method );
     }
-    //descriptor.addNameRef(method);
+    descriptor.addNameRef(method);
   }
 
   @Nonnull

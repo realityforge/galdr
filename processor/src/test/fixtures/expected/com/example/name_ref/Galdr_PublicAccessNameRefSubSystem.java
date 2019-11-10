@@ -16,6 +16,11 @@ public final class Galdr_PublicAccessNameRefSubSystem {
     }
 
     @Nonnull
+    public String name() {
+      return $galdr$_getName();
+    }
+
+    @Nonnull
     private String $galdr$_getName() {
       return "PublicAccessNameRefSubSystem";
     }

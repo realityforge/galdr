@@ -16,6 +16,11 @@ public final class Galdr_BasicNameRefSubSystem {
     }
 
     @Nonnull
+    String name() {
+      return $galdr$_getName();
+    }
+
+    @Nonnull
     private String $galdr$_getName() {
       return "BasicNameRefSubSystem";
     }
