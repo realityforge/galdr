@@ -51,7 +51,7 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.PrivateNameRefSubSystem", "@NameRef target must be abstract" },
         new Object[]{ "com.example.name_ref.StaticNameRefSubSystem", "@NameRef target must be abstract" },
         new Object[]{ "com.example.name_ref.ThrowsExceptionNameRefSubSystem", "@NameRef target must not throw any exceptions" },
-        new Object[]{ "com.example.name_ref.UnreachableNameRefSubSystem", "@NameRef target must not be package access if the method is in a different package from the @GaldrApplication" },
+        new Object[]{ "com.example.name_ref.UnreachableNameRefSubSystem", "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
         new Object[]{ "com.example.ConcreteSubSystem", "@SubSystem target must be abstract" },
         new Object[]{ "com.example.EnumSubSystem", "@SubSystem target must be a class" },
         new Object[]{ "com.example.InterfaceSubSystem", "@SubSystem target must be a class" },
