@@ -75,7 +75,7 @@ public final class Galdr_BootstrapProcessor
 
     @Nonnull
     @Override
-    final String getName()
+    String getName()
     {
       return $galdr$_getName();
     }
