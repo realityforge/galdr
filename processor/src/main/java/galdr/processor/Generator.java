@@ -2,6 +2,7 @@ package galdr.processor;
 
 import com.google.auto.common.GeneratedAnnotationSpecs;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -14,6 +15,7 @@ import javax.lang.model.element.TypeElement;
 
 final class Generator
 {
+  private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
@@ -62,6 +64,20 @@ final class Generator
                          .addAnnotation( NONNULL_CLASSNAME )
                          .returns( String.class )
                          .addStatement( "return $S", descriptor.getName() )
+                         .build() );
+
+    final CodeBlock.Builder toStringBlock = CodeBlock.builder();
+    toStringBlock.beginControlFlow( "if ( $T.areDebugToStringMethodsEnabled() )", GALDR_CLASSNAME );
+    toStringBlock.addStatement( "return $S + $N() + $S", "SubSystem[", NAME_ACCESSOR_METHOD, "]" );
+    toStringBlock.nextControlFlow( "else" );
+    toStringBlock.addStatement( "return super.toString()" );
+    toStringBlock.endControlFlow();
+    builder.addMethod( MethodSpec.methodBuilder( "toString" )
+                         .addAnnotation( NONNULL_CLASSNAME )
+                         .addAnnotation( Override.class )
+                         .addModifiers( Modifier.PUBLIC )
+                         .returns( String.class )
+                         .addCode( toStringBlock.build() )
                          .build() );
 
     return builder.build();

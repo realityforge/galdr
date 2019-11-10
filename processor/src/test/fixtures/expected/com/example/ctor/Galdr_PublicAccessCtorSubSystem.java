@@ -1,5 +1,6 @@
 package com.example.ctor;
 
+import galdr.Galdr;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
@@ -17,6 +18,16 @@ public final class Galdr_PublicAccessCtorSubSystem {
     @Nonnull
     String $galdr$_getName() {
       return "PublicAccessCtorSubSystem";
+    }
+
+    @Nonnull
+    @Override
+    public String toString() {
+      if ( Galdr.areDebugToStringMethodsEnabled() ) {
+        return "SubSystem[" + $galdr$_getName() + "]";
+      } else {
+        return super.toString();
+      }
     }
   }
 }

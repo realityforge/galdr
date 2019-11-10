@@ -1,5 +1,6 @@
 package com.example;
 
+import galdr.Galdr;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
@@ -17,6 +18,16 @@ public final class Galdr_BasicSubSystem {
     @Nonnull
     String $galdr$_getName() {
       return "BasicSubSystem";
+    }
+
+    @Nonnull
+    @Override
+    public String toString() {
+      if ( Galdr.areDebugToStringMethodsEnabled() ) {
+        return "SubSystem[" + $galdr$_getName() + "]";
+      } else {
+        return super.toString();
+      }
     }
   }
 }
