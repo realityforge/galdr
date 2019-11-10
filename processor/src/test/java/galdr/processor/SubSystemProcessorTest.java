@@ -20,7 +20,6 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.PackageAccessNameRefSubSystem" },
         new Object[]{ "com.example.BasicSubSystem" },
         new Object[]{ "com.example.PackageAccessSubSystem" },
-        new Object[]{ "com.example.StaticInnerClassSubSystem" },
         new Object[]{ "DefaultPackageSubSystem" }
       };
   }
@@ -30,6 +29,14 @@ public class SubSystemProcessorTest
     throws Exception
   {
     assertSuccessfulCompile( classname );
+  }
+
+  @Test
+  public void staticInnerClassSubSystem()
+    throws Exception
+  {
+    assertSuccessfulCompile( "input/com/example/StaticInnerClassSubSystem.java",
+                             "expected/com/example/StaticInnerClassSubSystem_Galdr_Foo.java");
   }
 
   @DataProvider( name = "failedCompiles" )
