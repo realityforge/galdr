@@ -16,7 +16,7 @@ public final class Galdr_BasicNameRefSubSystem {
 
     @Nonnull
     String $galdr$_getName() {
-      return "basicNameRefSubSystem";
+      return "BasicNameRefSubSystem";
     }
   }
 }

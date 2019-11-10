@@ -95,8 +95,6 @@ public final class SubSystemProcessor
     throws ProcessorException
   {
     final String name = ProcessorUtil.getAnnotationValue( annotation, "name" );
-    return Constants.SENTINEL_NAME.equals( name ) ?
-           ProcessorUtil.firstCharacterToLowerCase( element.getSimpleName().toString() ) :
-           name;
+    return Constants.SENTINEL_NAME.equals( name ) ? element.getSimpleName().toString() : name;
   }
 }
