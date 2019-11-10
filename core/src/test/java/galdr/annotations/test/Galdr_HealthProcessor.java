@@ -56,23 +56,23 @@ public final class Galdr_HealthProcessor
     extends HealthProcessor
   {
     @Nonnull
-    private final Galdr_HealthProcessor $galdr$_processor;
+    private final Galdr_HealthProcessor $galdr$_outer;
     @Nullable
     private Subscription $galdr$_processHealth_subscription;
     @Nullable
     private ComponentManager<Health> $galdrc$_health;
     private AreaOfInterest $galdr$_processHealth_areaOfInterest;
 
-    private EnhancedSubSystem( @Nonnull final Galdr_HealthProcessor processor )
+    private EnhancedSubSystem( @Nonnull final Galdr_HealthProcessor outer )
     {
-      $galdr$_processor = Objects.requireNonNull( processor );
+      $galdr$_outer = Objects.requireNonNull( outer );
     }
 
     @Nonnull
     @Override
     World world()
     {
-      return $galdr$_processor.$galdr$_world();
+      return $galdr$_outer.$galdr$_world();
     }
 
     @Nonnull
@@ -97,15 +97,15 @@ public final class Galdr_HealthProcessor
     private void $galdr$_postConstruct()
     {
       $galdr$_processHealth_areaOfInterest =
-        $galdr$_processor.$galdr$_world().createAreaOfInterest( Collections.singleton( Health.class ) );
-      $galdrc$_health = $galdr$_processor.$galdr$_world().getComponentByType( Health.class );
+        $galdr$_outer.$galdr$_world().createAreaOfInterest( Collections.singleton( Health.class ) );
+      $galdrc$_health = $galdr$_outer.$galdr$_world().getComponentByType( Health.class );
     }
 
     private void $galdr$_activate()
     {
       $galdr$_processHealth_subscription =
-        $galdr$_processor.$galdr$_world().createSubscription( Galdr.areNamesEnabled() ? $galdr$_getName() : null,
-                                                              $galdr$_processHealth_areaOfInterest );
+        $galdr$_outer.$galdr$_world().createSubscription( Galdr.areNamesEnabled() ? $galdr$_getName() : null,
+                                                          $galdr$_processHealth_areaOfInterest );
     }
 
     private void $galdr$_deactivate()

@@ -39,20 +39,20 @@ public final class Galdr_BootstrapProcessor
     extends BootstrapProcessor
   {
     @Nonnull
-    private final Galdr_BootstrapProcessor $galdr$_wrapper;
+    private final Galdr_BootstrapProcessor $galdr$_outer;
     @Nullable
     private ComponentManager<Health> $galdrc$_health;
 
-    private EnhancedSubSystem( @Nonnull final Galdr_BootstrapProcessor processor )
+    private EnhancedSubSystem( @Nonnull final Galdr_BootstrapProcessor outer )
     {
-      $galdr$_wrapper = Objects.requireNonNull( processor );
+      $galdr$_outer = Objects.requireNonNull( outer );
     }
 
     @Nonnull
     @Override
     World world()
     {
-      return $galdr$_wrapper.$galdr$_world();
+      return $galdr$_outer.$galdr$_world();
     }
 
     @Nonnull
@@ -70,7 +70,7 @@ public final class Galdr_BootstrapProcessor
 
     private void $galdr$_postConstruct()
     {
-      $galdrc$_health = $galdr$_wrapper.$galdr$_world().getComponentByType( Health.class );
+      $galdrc$_health = $galdr$_outer.$galdr$_world().getComponentByType( Health.class );
     }
 
     @Nonnull
