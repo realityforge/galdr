@@ -16,7 +16,7 @@ public final class StaticInnerClassSubSystem_Galdr_Foo {
     }
 
     @Nonnull
-    String $galdr$_getName() {
+    private String $galdr$_getName() {
       return "Foo";
     }
 

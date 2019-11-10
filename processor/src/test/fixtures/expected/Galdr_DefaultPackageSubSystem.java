@@ -14,7 +14,7 @@ public final class Galdr_DefaultPackageSubSystem {
     }
 
     @Nonnull
-    String $galdr$_getName() {
+    private String $galdr$_getName() {
       return "DefaultPackageSubSystem";
     }
 

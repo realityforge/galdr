@@ -16,7 +16,7 @@ public final class Galdr_PackageAccessCtorSubSystem {
     }
 
     @Nonnull
-    String $galdr$_getName() {
+    private String $galdr$_getName() {
       return "PackageAccessCtorSubSystem";
     }
 

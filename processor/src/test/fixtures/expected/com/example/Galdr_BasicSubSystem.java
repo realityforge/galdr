@@ -16,7 +16,7 @@ public final class Galdr_BasicSubSystem {
     }
 
     @Nonnull
-    String $galdr$_getName() {
+    private String $galdr$_getName() {
       return "BasicSubSystem";
     }
 

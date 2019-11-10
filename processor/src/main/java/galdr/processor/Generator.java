@@ -62,6 +62,7 @@ final class Generator
 
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )
+                         .addModifiers( Modifier.PRIVATE )
                          .returns( String.class )
                          .addStatement( "return $S", descriptor.getName() )
                          .build() );
