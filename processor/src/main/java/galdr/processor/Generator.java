@@ -17,11 +17,13 @@ import javax.lang.model.element.TypeElement;
 final class Generator
 {
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
+  private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
   private static final String OUTER_FIELD = FRAMEWORK_INTERNAL_PREFIX + "outer";
   private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
+  private static final String WORLD_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getWorld";
 
   private Generator()
   {
@@ -34,6 +36,13 @@ final class Generator
     final TypeSpec.Builder builder = TypeSpec.classBuilder( descriptor.getEnhancedClassName() );
     addGeneratedAnnotation( processingEnv, builder, SubSystemProcessor.class );
     builder.addModifiers( Modifier.PUBLIC, Modifier.FINAL );
+
+    builder.addMethod( MethodSpec.methodBuilder( WORLD_ACCESSOR_METHOD )
+                         .addAnnotation( NONNULL_CLASSNAME )
+                         .addModifiers( Modifier.PRIVATE )
+                         .returns( WORLD_CLASSNAME )
+                         .addStatement( "return $T.current()", WORLD_CLASSNAME )
+                         .build() );
 
     builder.addType( buildEnhancedSubSystem( processingEnv, descriptor ) );
 

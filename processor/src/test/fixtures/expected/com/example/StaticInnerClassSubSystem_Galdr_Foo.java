@@ -1,12 +1,18 @@
 package com.example;
 
 import galdr.Galdr;
+import galdr.World;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
 public final class StaticInnerClassSubSystem_Galdr_Foo {
+  @Nonnull
+  private World $galdr$_getWorld() {
+    return World.current();
+  }
+
   private static final class EnhancedSubSystem {
     @Nonnull
     final StaticInnerClassSubSystem_Galdr_Foo $galdr$_outer;
