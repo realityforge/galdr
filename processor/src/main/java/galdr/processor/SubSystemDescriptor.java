@@ -17,6 +17,8 @@ final class SubSystemDescriptor
   private final int _priority;
   @Nonnull
   private final List<ExecutableElement> _nameRefs = new ArrayList<>();
+  @Nonnull
+  private final List<ExecutableElement> _worldRefs = new ArrayList<>();
 
   SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name, final int priority )
   {
@@ -63,5 +65,16 @@ final class SubSystemDescriptor
   List<ExecutableElement> getNameRefs()
   {
     return _nameRefs;
+  }
+
+  void addWorldRef( @Nonnull final ExecutableElement method )
+  {
+    _worldRefs.add( Objects.requireNonNull( method ) );
+  }
+
+  @Nonnull
+  List<ExecutableElement> getWorldRefs()
+  {
+    return _worldRefs;
   }
 }

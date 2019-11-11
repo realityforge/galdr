@@ -81,6 +81,18 @@ final class Generator
       builder.addMethod( method.build() );
     }
 
+    for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( worldRef.getSimpleName().toString() )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( WORLD_CLASSNAME )
+          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
+      ProcessorUtil.copyAccessModifiers( worldRef, method );
+      builder.addMethod( method.build() );
+    }
+
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )

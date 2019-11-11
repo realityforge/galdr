@@ -58,10 +58,15 @@ public final class SubSystemProcessor
     for ( final ExecutableElement method : methods )
     {
       final AnnotationMirror nameRef = ProcessorUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
+      final AnnotationMirror worldRef = ProcessorUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != nameRef )
       {
         addNameRef( descriptor, method );
+      }
+      else if ( null != worldRef )
+      {
+        addWorldRef( descriptor, method );
       }
     }
 
@@ -88,6 +93,26 @@ public final class SubSystemProcessor
                                     method );
     }
     descriptor.addNameRef(method);
+  }
+
+  private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
+  {
+    MemberChecks.mustBeAbstract( Constants.WORLD_REF_CLASSNAME, method );
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+                                                           Constants.APPLICATION_CLASSNAME,
+                                                           Constants.WORLD_REF_CLASSNAME,
+                                                           method );
+    MemberChecks.mustNotHaveAnyParameters( Constants.WORLD_REF_CLASSNAME, method );
+    MemberChecks.mustReturnAValue( Constants.WORLD_REF_CLASSNAME, method );
+    MemberChecks.mustNotThrowAnyExceptions( Constants.WORLD_REF_CLASSNAME, method );
+
+    final TypeMirror returnType = method.getReturnType();
+    if ( TypeKind.DECLARED != returnType.getKind() || !Constants.WORLD_CLASSNAME.equals( returnType.toString() ) )
+    {
+      throw new ProcessorException( "Method annotated with @WorldRef must return an instance of galdr.World",
+                                    method );
+    }
+    descriptor.addWorldRef( method );
   }
 
   @Nonnull
