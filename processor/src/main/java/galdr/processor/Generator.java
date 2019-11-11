@@ -44,14 +44,13 @@ final class Generator
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
                          .build() );
 
-    builder.addType( buildEnhancedSubSystem( processingEnv, descriptor ) );
+    builder.addType( buildEnhancedSubSystem( descriptor ) );
 
     return builder.build();
   }
 
   @Nonnull
-  private static TypeSpec buildEnhancedSubSystem( @Nonnull final ProcessingEnvironment processingEnv,
-                                                  @Nonnull final SubSystemDescriptor descriptor )
+  private static TypeSpec buildEnhancedSubSystem( @Nonnull final SubSystemDescriptor descriptor )
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( "EnhancedSubSystem" );
     builder.addModifiers( Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL );
