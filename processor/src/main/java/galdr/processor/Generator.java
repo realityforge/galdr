@@ -54,6 +54,7 @@ final class Generator
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( "EnhancedSubSystem" );
     builder.addModifiers( Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL );
+    //TODO: builder.superclass( TypeName.get( descriptor.getElement().asType() ) );
 
     builder.addField( FieldSpec.builder( descriptor.getEnhancedClassName(), OUTER_FIELD, Modifier.FINAL )
                         .addAnnotation( NONNULL_CLASSNAME )
@@ -74,6 +75,7 @@ final class Generator
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( nameRef.getSimpleName().toString() )
+          //TODO: .addAnnotation( Override.class )
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( String.class )
           .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
@@ -86,6 +88,7 @@ final class Generator
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( worldRef.getSimpleName().toString() )
+          //TODO: .addAnnotation( Override.class )
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( WORLD_CLASSNAME )
           .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
