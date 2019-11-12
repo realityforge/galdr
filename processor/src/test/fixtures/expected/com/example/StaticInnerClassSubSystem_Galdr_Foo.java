@@ -13,7 +13,7 @@ public final class StaticInnerClassSubSystem_Galdr_Foo {
     return World.current();
   }
 
-  private static final class EnhancedSubSystem {
+  private static final class EnhancedSubSystem extends StaticInnerClassSubSystem.Foo {
     @Nonnull
     final StaticInnerClassSubSystem_Galdr_Foo $galdr$_outer;
 

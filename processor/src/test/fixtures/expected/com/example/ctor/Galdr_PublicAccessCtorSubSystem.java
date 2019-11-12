@@ -13,7 +13,7 @@ public final class Galdr_PublicAccessCtorSubSystem {
     return World.current();
   }
 
-  private static final class EnhancedSubSystem {
+  private static final class EnhancedSubSystem extends PublicAccessCtorSubSystem {
     @Nonnull
     final Galdr_PublicAccessCtorSubSystem $galdr$_outer;
 

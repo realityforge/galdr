@@ -11,7 +11,7 @@ public final class Galdr_DefaultPackageSubSystem {
     return World.current();
   }
 
-  private static final class EnhancedSubSystem {
+  private static final class EnhancedSubSystem extends DefaultPackageSubSystem {
     @Nonnull
     final Galdr_DefaultPackageSubSystem $galdr$_outer;
 

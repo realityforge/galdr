@@ -6,6 +6,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -54,7 +55,7 @@ final class Generator
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( "EnhancedSubSystem" );
     builder.addModifiers( Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL );
-    //TODO: builder.superclass( TypeName.get( descriptor.getElement().asType() ) );
+    builder.superclass( TypeName.get( descriptor.getElement().asType() ) );
 
     builder.addField( FieldSpec.builder( descriptor.getEnhancedClassName(), OUTER_FIELD, Modifier.FINAL )
                         .addAnnotation( NONNULL_CLASSNAME )

@@ -13,7 +13,7 @@ public final class Galdr_PackageAccessNameRefSubSystem {
     return World.current();
   }
 
-  private static final class EnhancedSubSystem {
+  private static final class EnhancedSubSystem extends PackageAccessNameRefSubSystem {
     @Nonnull
     final Galdr_PackageAccessNameRefSubSystem $galdr$_outer;
 

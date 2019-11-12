@@ -13,7 +13,7 @@ public final class Galdr_MultiWorldRefSubSystem {
     return World.current();
   }
 
-  private static final class EnhancedSubSystem {
+  private static final class EnhancedSubSystem extends MultiWorldRefSubSystem {
     @Nonnull
     final Galdr_MultiWorldRefSubSystem $galdr$_outer;
 
