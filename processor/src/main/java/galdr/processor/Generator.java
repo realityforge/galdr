@@ -71,6 +71,33 @@ final class Generator
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
 
+    emitWorldAccessors( descriptor, builder );
+    emitNameAccessors( descriptor, builder );
+    emitToString( builder );
+
+    return builder.build();
+  }
+
+  private static void emitWorldAccessors( @Nonnull final SubSystemDescriptor descriptor,
+                                          final TypeSpec.Builder builder )
+  {
+    for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( worldRef.getSimpleName().toString() )
+          .addAnnotation( Override.class )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( WORLD_CLASSNAME )
+          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
+      ProcessorUtil.copyAccessModifiers( worldRef, method );
+      builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitNameAccessors( @Nonnull final SubSystemDescriptor descriptor,
+                                         @Nonnull final TypeSpec.Builder builder )
+  {
     for ( final ExecutableElement nameRef : descriptor.getNameRefs() )
     {
       final MethodSpec.Builder method =
@@ -84,26 +111,16 @@ final class Generator
       builder.addMethod( method.build() );
     }
 
-    for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
-    {
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( worldRef.getSimpleName().toString() )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( WORLD_CLASSNAME )
-          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
-      ProcessorUtil.copyAccessModifiers( worldRef, method );
-      builder.addMethod( method.build() );
-    }
-
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )
                          .returns( String.class )
                          .addStatement( "return $S", descriptor.getName() )
                          .build() );
+  }
 
+  private static void emitToString( @Nonnull final TypeSpec.Builder builder )
+  {
     final CodeBlock.Builder toStringBlock = CodeBlock.builder();
     toStringBlock.beginControlFlow( "if ( $T.areDebugToStringMethodsEnabled() )", GALDR_CLASSNAME );
     toStringBlock.addStatement( "return $S + $N() + $S", "SubSystem[", NAME_ACCESSOR_METHOD, "]" );
@@ -117,8 +134,6 @@ final class Generator
                          .returns( String.class )
                          .addCode( toStringBlock.build() )
                          .build() );
-
-    return builder.build();
   }
 
   private static void addGeneratedAnnotation( @Nonnull final ProcessingEnvironment processingEnv,
