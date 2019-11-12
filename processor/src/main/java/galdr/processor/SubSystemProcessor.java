@@ -53,6 +53,16 @@ public final class SubSystemProcessor
     final int priority = ProcessorUtil.getAnnotationValue( annotation, "priority" );
     final SubSystemDescriptor descriptor = new SubSystemDescriptor( element, name, priority );
 
+    final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
+    if ( constructors.size() > 1 )
+    {
+      throw new ProcessorException( "@SubSystem target has more than one constructor", element );
+    }
+    else if ( !constructors.isEmpty() && constructors.get( 0 ).getModifiers().contains( Modifier.PRIVATE ) )
+    {
+      throw new ProcessorException( "@SubSystem target has a private constructor", element );
+    }
+
     final List<ExecutableElement> methods =
       ProcessorUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
     for ( final ExecutableElement method : methods )

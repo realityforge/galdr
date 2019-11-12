@@ -48,8 +48,8 @@ public class SubSystemProcessorTest
   {
     return new Object[][]
       {
-        new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "XXXXXXXX" },
-        new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "XXXXXXXX" },
+        new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
+        new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
         new Object[]{ "com.example.name_ref.ConcreteNameRefSubSystem", "@NameRef target must be abstract" },
         new Object[]{ "com.example.name_ref.ParameterizedNameRefSubSystem",
                       "@NameRef target must not have any parameters" },
