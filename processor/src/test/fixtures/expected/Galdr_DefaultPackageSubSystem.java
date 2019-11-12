@@ -7,6 +7,9 @@ import javax.annotation.Nonnull;
 @Generated("galdr.processor.SubSystemProcessor")
 public final class Galdr_DefaultPackageSubSystem {
   @Nonnull
+  private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
+
+  @Nonnull
   private World $galdr$_getWorld() {
     return World.current();
   }

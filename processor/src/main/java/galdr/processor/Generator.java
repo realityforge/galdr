@@ -38,6 +38,13 @@ final class Generator
     addGeneratedAnnotation( processingEnv, builder, SubSystemProcessor.class );
     builder.addModifiers( Modifier.PUBLIC, Modifier.FINAL );
 
+    final ClassName enhancedSubSystem = ClassName.bestGuess( "EnhancedSubSystem" );
+    builder.addField( FieldSpec
+                        .builder( enhancedSubSystem, "_subsystem", Modifier.PRIVATE, Modifier.FINAL )
+                        .addAnnotation( NONNULL_CLASSNAME )
+                        .initializer( "new $T( this )", enhancedSubSystem )
+                        .build() );
+
     builder.addMethod( MethodSpec.methodBuilder( WORLD_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )
