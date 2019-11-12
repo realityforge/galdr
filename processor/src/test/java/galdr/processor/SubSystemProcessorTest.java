@@ -83,6 +83,8 @@ public class SubSystemProcessorTest
                       "@ComponentManagerRef target must not throw any exceptions" },
         new Object[]{ "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem",
                       "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
+        new Object[]{ "com.example.component_manager_ref.VoidComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return a value" },
 
         new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
         new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
@@ -104,6 +106,7 @@ public class SubSystemProcessorTest
                       "@NameRef target must not throw any exceptions" },
         new Object[]{ "com.example.name_ref.UnreachableNameRefSubSystem",
                       "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
+        new Object[]{ "com.example.name_ref.VoidNameRefSubSystem", "@NameRef target must return a value" },
 
         new Object[]{ "com.example.ConcreteSubSystem", "@SubSystem target must be abstract" },
         new Object[]{ "com.example.EnumSubSystem", "@SubSystem target must be a class" },
