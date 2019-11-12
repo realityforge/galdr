@@ -1,5 +1,8 @@
 package galdr.processor;
 
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -67,10 +70,16 @@ public final class SubSystemProcessor
       ProcessorUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
     for ( final ExecutableElement method : methods )
     {
+      final AnnotationMirror componentManagerRef =
+        ProcessorUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
       final AnnotationMirror nameRef = ProcessorUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
       final AnnotationMirror worldRef = ProcessorUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
-      if ( null != nameRef )
+      if ( null != componentManagerRef )
+      {
+        addComponentManagerRef( descriptor, method );
+      }
+      else if ( null != nameRef )
       {
         addNameRef( descriptor, method );
       }
@@ -83,6 +92,46 @@ public final class SubSystemProcessor
     GeneratorUtil.emitJavaType( descriptor.getPackageName(),
                                 Generator.buildSubSystem( processingEnv, descriptor ),
                                 processingEnv.getFiler() );
+  }
+
+  private void addComponentManagerRef( @Nonnull final SubSystemDescriptor descriptor,
+                                       @Nonnull final ExecutableElement method )
+  {
+    MemberChecks.mustBeAbstract( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+                                                           Constants.APPLICATION_CLASSNAME,
+                                                           Constants.COMPONENT_MANAGER_REF_CLASSNAME,
+                                                           method );
+    MemberChecks.mustNotHaveAnyParameters( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
+    MemberChecks.mustReturnAValue( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
+    MemberChecks.mustNotThrowAnyExceptions( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
+
+    final TypeMirror returnType = method.getReturnType();
+    final TypeName typeName = TypeName.get( returnType );
+    if ( !( typeName instanceof ParameterizedTypeName ) )
+    {
+      throw newBadBadComponentManagerRefTypeException( method );
+    }
+    final ParameterizedTypeName parameterizedTypeName = (ParameterizedTypeName) typeName;
+    if ( !parameterizedTypeName.rawType.toString().equals( Constants.COMPONENT_MANAGER_CLASSNAME ) )
+    {
+      throw newBadBadComponentManagerRefTypeException( method );
+    }
+    final TypeName typeArgument = parameterizedTypeName.typeArguments.get( 0 );
+    if ( !( typeArgument instanceof ClassName ) )
+    {
+      throw newBadBadComponentManagerRefTypeException( method );
+    }
+    final ClassName componentType = (ClassName) typeArgument;
+    descriptor.addComponentManagerRef( method, componentType );
+  }
+
+  @Nonnull
+  private ProcessorException newBadBadComponentManagerRefTypeException( @Nonnull final ExecutableElement method )
+  {
+    return new ProcessorException( "@ComponentManagerRef target must return the type " +
+                                   Constants.COMPONENT_MANAGER_CLASSNAME + " parameterized with the desired " +
+                                   "component type", method );
   }
 
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )

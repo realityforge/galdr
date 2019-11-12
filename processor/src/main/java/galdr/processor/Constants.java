@@ -18,6 +18,7 @@ final class Constants
   static final String DEPRECATED_CLASSNAME = "java.lang.Deprecated";
   static final String GENERATED_CLASSNAME = "javax.annotation.Generated";
   static final String JAVA9_GENERATED_CLASSNAME = "javax.annotation.processing.Generated";
+  static final String COMPONENT_MANAGER_CLASSNAME = "galdr.ComponentManager";
   static final String WORLD_CLASSNAME = "galdr.World";
 
   static final String SENTINEL_NAME = "<default>";

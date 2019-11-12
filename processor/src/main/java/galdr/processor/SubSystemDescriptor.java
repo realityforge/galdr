@@ -16,6 +16,8 @@ final class SubSystemDescriptor
   private final String _name;
   private final int _priority;
   @Nonnull
+  private final List<ComponentManagerRefDescriptor> _componentManagerRefs = new ArrayList<>();
+  @Nonnull
   private final List<ExecutableElement> _nameRefs = new ArrayList<>();
   @Nonnull
   private final List<ExecutableElement> _worldRefs = new ArrayList<>();
@@ -54,6 +56,17 @@ final class SubSystemDescriptor
   ClassName getEnhancedClassName()
   {
     return Generator.toGeneratedClassName( getElement() );
+  }
+
+  void addComponentManagerRef( @Nonnull final ExecutableElement method, @Nonnull final ClassName componentType )
+  {
+    _componentManagerRefs.add( new ComponentManagerRefDescriptor( method, componentType ) );
+  }
+
+  @Nonnull
+  List<ComponentManagerRefDescriptor> getComponentManagerRefs()
+  {
+    return _componentManagerRefs;
   }
 
   void addNameRef( @Nonnull final ExecutableElement method )

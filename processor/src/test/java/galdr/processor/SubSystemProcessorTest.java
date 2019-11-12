@@ -12,6 +12,12 @@ public class SubSystemProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.component_manager_ref.BasicComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.MultiComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.MultiSameComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
         new Object[]{ "com.example.name_ref.BasicNameRefSubSystem" },
@@ -48,6 +54,28 @@ public class SubSystemProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.component_manager_ref.BadType1ComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return the type galdr.ComponentManager parameterized with the desired component type" },
+        new Object[]{ "com.example.component_manager_ref.BadType2ComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return the type galdr.ComponentManager parameterized with the desired component type" },
+        new Object[]{ "com.example.component_manager_ref.BadType3ComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return the type galdr.ComponentManager parameterized with the desired component type" },
+        new Object[]{ "com.example.component_manager_ref.BadType4ComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return the type galdr.ComponentManager parameterized with the desired component type" },
+        new Object[]{ "com.example.component_manager_ref.BadType5ComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must return the type galdr.ComponentManager parameterized with the desired component type" },
+        new Object[]{ "com.example.component_manager_ref.ConcreteComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must be abstract" },
+        new Object[]{ "com.example.component_manager_ref.ParameterizedComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must not have any parameters" },
+        new Object[]{ "com.example.component_manager_ref.PrivateComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must be abstract" },
+        new Object[]{ "com.example.component_manager_ref.StaticComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must be abstract" },
+        new Object[]{ "com.example.component_manager_ref.ThrowsExceptionComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must not throw any exceptions" },
+        new Object[]{ "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
         new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
         new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
         new Object[]{ "com.example.name_ref.ConcreteNameRefSubSystem", "@NameRef target must be abstract" },

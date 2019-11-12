@@ -6,8 +6,10 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -17,14 +19,18 @@ import javax.lang.model.element.TypeElement;
 
 final class Generator
 {
+  private static final ClassName COMPONENT_MANAGER_CLASSNAME = ClassName.get( "galdr", "ComponentManager" );
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
+  private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
+  private static final String FRAMEWORK_COMPONENT_PREFIX = "$galdrc$_";
   private static final String OUTER_FIELD = FRAMEWORK_INTERNAL_PREFIX + "outer";
   private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
   private static final String WORLD_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getWorld";
+  private static final String POST_CONSTRUCT_METHOD = FRAMEWORK_INTERNAL_PREFIX + "postConstruct";
 
   private Generator()
   {
@@ -51,6 +57,16 @@ final class Generator
                          .returns( WORLD_CLASSNAME )
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
                          .build() );
+
+    if ( !descriptor.getComponentManagerRefs().isEmpty() )
+    {
+      builder.addSuperinterface( POST_CONSTRUCT_FN_CLASSNAME );
+      builder.addMethod( MethodSpec.methodBuilder( "postConstruct" )
+                           .addAnnotation( Override.class )
+                           .addModifiers( Modifier.PUBLIC )
+                           .addStatement( "_subsystem.$N()", POST_CONSTRUCT_METHOD )
+                           .build() );
+    }
 
     builder.addType( buildEnhancedSubSystem( descriptor ) );
 
@@ -80,6 +96,51 @@ final class Generator
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
+    final List<ComponentManagerRefDescriptor> componentManagerRefs = descriptor.getComponentManagerRefs();
+    for ( final ComponentManagerRefDescriptor componentManagerRef : componentManagerRefs )
+    {
+      final ParameterizedTypeName type =
+        ParameterizedTypeName.get( COMPONENT_MANAGER_CLASSNAME, componentManagerRef.getComponentType() );
+      final ExecutableElement methodElement = componentManagerRef.getMethod();
+      final String methodName = methodElement.getSimpleName().toString();
+      final String fieldName = FRAMEWORK_COMPONENT_PREFIX + methodName;
+      builder.addField( FieldSpec.builder( type, fieldName, Modifier.PRIVATE )
+                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .build() );
+
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( methodName )
+          .addAnnotation( Override.class )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( type )
+          .addStatement( "assert null != $N", fieldName )
+          .addStatement( "return $N", fieldName );
+      ProcessorUtil.copyAccessModifiers( methodElement, method );
+      builder.addMethod( method.build() );
+    }
+
+    if ( !componentManagerRefs.isEmpty() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( POST_CONSTRUCT_METHOD )
+          .addModifiers( Modifier.PRIVATE );
+      for ( final ComponentManagerRefDescriptor componentManagerRef : componentManagerRefs )
+      {
+        final ExecutableElement methodElement = componentManagerRef.getMethod();
+        final String methodName = methodElement.getSimpleName().toString();
+        final String fieldName = FRAMEWORK_COMPONENT_PREFIX + methodName;
+
+        method.addStatement( "$N = $N.$N().getComponentByType( $T.class )",
+                             fieldName,
+                             OUTER_FIELD,
+                             WORLD_ACCESSOR_METHOD,
+                             componentManagerRef.getComponentType() );
+      }
+
+      builder.addMethod( method.build() );
+    }
 
     emitWorldAccessors( descriptor, builder );
     emitNameAccessors( descriptor, builder );
