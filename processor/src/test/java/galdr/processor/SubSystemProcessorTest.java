@@ -18,18 +18,23 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" },
+
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
+
         new Object[]{ "com.example.name_ref.BasicNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.MultiNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PublicAccessNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PackageAccessNameRefSubSystem" },
+
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PublicAccessWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
+
         new Object[]{ "com.example.BasicSubSystem" },
         new Object[]{ "com.example.PackageAccessSubSystem" },
+
         new Object[]{ "DefaultPackageSubSystem" }
       };
   }
@@ -76,8 +81,10 @@ public class SubSystemProcessorTest
                       "@ComponentManagerRef target must not throw any exceptions" },
         new Object[]{ "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem",
                       "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
+
         new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
         new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
+
         new Object[]{ "com.example.name_ref.ConcreteNameRefSubSystem", "@NameRef target must be abstract" },
         new Object[]{ "com.example.name_ref.ParameterizedNameRefSubSystem",
                       "@NameRef target must not have any parameters" },
@@ -87,12 +94,13 @@ public class SubSystemProcessorTest
                       "@NameRef target must not throw any exceptions" },
         new Object[]{ "com.example.name_ref.UnreachableNameRefSubSystem",
                       "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
+
         new Object[]{ "com.example.ConcreteSubSystem", "@SubSystem target must be abstract" },
         new Object[]{ "com.example.EnumSubSystem", "@SubSystem target must be a class" },
         new Object[]{ "com.example.InterfaceSubSystem", "@SubSystem target must be a class" },
         new Object[]{ "com.example.NonStaticInnerClassSubSystem",
-                      "@SubSystem target must not be a non-static nested class" },
-        };
+                      "@SubSystem target must not be a non-static nested class" }
+      };
   }
 
   @Test( dataProvider = "failedCompiles" )
