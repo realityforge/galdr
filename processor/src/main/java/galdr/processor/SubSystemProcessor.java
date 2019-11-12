@@ -166,8 +166,7 @@ public final class SubSystemProcessor
     final TypeMirror returnType = method.getReturnType();
     if ( TypeKind.DECLARED != returnType.getKind() || !Constants.WORLD_CLASSNAME.equals( returnType.toString() ) )
     {
-      throw new ProcessorException( "Method annotated with @WorldRef must return an instance of galdr.World",
-                                    method );
+      throw new ProcessorException( "@WorldRef target must return an instance of galdr.World", method );
     }
     descriptor.addWorldRef( method );
   }
