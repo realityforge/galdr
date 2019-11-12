@@ -145,11 +145,9 @@ public final class SubSystemProcessor
     MemberChecks.mustReturnAValue( Constants.NAME_REF_CLASSNAME, method );
     MemberChecks.mustNotThrowAnyExceptions( Constants.NAME_REF_CLASSNAME, method );
 
-    final TypeMirror returnType = method.getReturnType();
-    if ( TypeKind.DECLARED != returnType.getKind() || !String.class.getName().equals( returnType.toString() ) )
+    if ( !String.class.getName().equals( method.getReturnType().toString() ) )
     {
-      throw new ProcessorException( "Method annotated with @NameRef must return an instance of java.lang.String",
-                                    method );
+      throw new ProcessorException( "@NameRef target must return an instance of java.lang.String", method );
     }
     descriptor.addNameRef( method );
   }
