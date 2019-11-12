@@ -25,11 +25,13 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.BasicNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.MultiNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PublicAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.ProtectedAccessNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PackageAccessNameRefSubSystem" },
 
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PublicAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.ProtectedAccessWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
 
         new Object[]{ "com.example.BasicSubSystem" },
