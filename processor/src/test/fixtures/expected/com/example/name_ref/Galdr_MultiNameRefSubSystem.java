@@ -18,7 +18,7 @@ public final class Galdr_MultiNameRefSubSystem {
 
   private static final class EnhancedSubSystem extends MultiNameRefSubSystem {
     @Nonnull
-    final Galdr_MultiNameRefSubSystem $galdr$_outer;
+    private final Galdr_MultiNameRefSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_MultiNameRefSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

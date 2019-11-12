@@ -64,7 +64,10 @@ final class Generator
     builder.addModifiers( Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL );
     builder.superclass( TypeName.get( descriptor.getElement().asType() ) );
 
-    builder.addField( FieldSpec.builder( descriptor.getEnhancedClassName(), OUTER_FIELD, Modifier.FINAL )
+    builder.addField( FieldSpec.builder( descriptor.getEnhancedClassName(),
+                                         OUTER_FIELD,
+                                         Modifier.PRIVATE,
+                                         Modifier.FINAL )
                         .addAnnotation( NONNULL_CLASSNAME )
                         .build() );
 

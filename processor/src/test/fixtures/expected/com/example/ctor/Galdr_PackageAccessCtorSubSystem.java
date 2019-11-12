@@ -18,7 +18,7 @@ public final class Galdr_PackageAccessCtorSubSystem {
 
   private static final class EnhancedSubSystem extends PackageAccessCtorSubSystem {
     @Nonnull
-    final Galdr_PackageAccessCtorSubSystem $galdr$_outer;
+    private final Galdr_PackageAccessCtorSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_PackageAccessCtorSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

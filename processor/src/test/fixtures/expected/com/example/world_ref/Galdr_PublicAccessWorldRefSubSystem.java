@@ -18,7 +18,7 @@ public final class Galdr_PublicAccessWorldRefSubSystem {
 
   private static final class EnhancedSubSystem extends PublicAccessWorldRefSubSystem {
     @Nonnull
-    final Galdr_PublicAccessWorldRefSubSystem $galdr$_outer;
+    private final Galdr_PublicAccessWorldRefSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_PublicAccessWorldRefSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

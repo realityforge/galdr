@@ -16,7 +16,7 @@ public final class Galdr_DefaultPackageSubSystem {
 
   private static final class EnhancedSubSystem extends DefaultPackageSubSystem {
     @Nonnull
-    final Galdr_DefaultPackageSubSystem $galdr$_outer;
+    private final Galdr_DefaultPackageSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_DefaultPackageSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

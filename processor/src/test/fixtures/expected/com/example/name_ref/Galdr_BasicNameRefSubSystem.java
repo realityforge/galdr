@@ -18,7 +18,7 @@ public final class Galdr_BasicNameRefSubSystem {
 
   private static final class EnhancedSubSystem extends BasicNameRefSubSystem {
     @Nonnull
-    final Galdr_BasicNameRefSubSystem $galdr$_outer;
+    private final Galdr_BasicNameRefSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_BasicNameRefSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

@@ -18,7 +18,7 @@ public final class StaticInnerClassSubSystem_Galdr_Foo {
 
   private static final class EnhancedSubSystem extends StaticInnerClassSubSystem.Foo {
     @Nonnull
-    final StaticInnerClassSubSystem_Galdr_Foo $galdr$_outer;
+    private final StaticInnerClassSubSystem_Galdr_Foo $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final StaticInnerClassSubSystem_Galdr_Foo outer) {
       $galdr$_outer = Objects.requireNonNull( outer );

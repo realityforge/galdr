@@ -18,7 +18,7 @@ public final class Galdr_BasicSubSystem {
 
   private static final class EnhancedSubSystem extends BasicSubSystem {
     @Nonnull
-    final Galdr_BasicSubSystem $galdr$_outer;
+    private final Galdr_BasicSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_BasicSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
