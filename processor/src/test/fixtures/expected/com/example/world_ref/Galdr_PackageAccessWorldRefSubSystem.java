@@ -21,6 +21,7 @@ public final class Galdr_PackageAccessWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Override
     @Nonnull
     World world() {
       return $galdr$_outer.$galdr$_getWorld();

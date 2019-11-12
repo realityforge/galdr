@@ -21,6 +21,7 @@ public final class Galdr_PublicAccessNameRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Override
     @Nonnull
     public String name() {
       return $galdr$_getName();

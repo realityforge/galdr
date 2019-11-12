@@ -76,7 +76,7 @@ final class Generator
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( nameRef.getSimpleName().toString() )
-          //TODO: .addAnnotation( Override.class )
+          .addAnnotation( Override.class )
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( String.class )
           .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
@@ -89,7 +89,7 @@ final class Generator
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( worldRef.getSimpleName().toString() )
-          //TODO: .addAnnotation( Override.class )
+          .addAnnotation( Override.class )
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( WORLD_CLASSNAME )
           .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );

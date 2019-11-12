@@ -21,6 +21,7 @@ public final class Galdr_PackageAccessNameRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Override
     @Nonnull
     String name() {
       return $galdr$_getName();

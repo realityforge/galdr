@@ -21,11 +21,13 @@ public final class Galdr_MultiNameRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Override
     @Nonnull
     String name1() {
       return $galdr$_getName();
     }
 
+    @Override
     @Nonnull
     String name2() {
       return $galdr$_getName();

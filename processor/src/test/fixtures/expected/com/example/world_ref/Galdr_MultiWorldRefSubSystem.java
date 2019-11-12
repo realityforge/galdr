@@ -21,11 +21,13 @@ public final class Galdr_MultiWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Override
     @Nonnull
     World world1() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
+    @Override
     @Nonnull
     World world2() {
       return $galdr$_outer.$galdr$_getWorld();
