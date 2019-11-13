@@ -40,6 +40,7 @@ final class Generator
                                   @Nonnull final SubSystemDescriptor descriptor )
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( descriptor.getEnhancedClassName() );
+    GeneratorUtil.addOriginatingTypes( descriptor.getElement(), builder );
     GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, SubSystemProcessor.class.getName() );
     builder.addModifiers( Modifier.PUBLIC, Modifier.FINAL );
 
