@@ -2,10 +2,6 @@ package galdr.processor;
 
 import com.google.auto.common.AnnotationMirrors;
 import com.google.common.collect.ImmutableMap;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
-import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -27,7 +23,6 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
@@ -45,11 +40,10 @@ final class ProcessorUtil
   {
     if ( null != alternativeSuppressWarnings )
     {
-      final AnnotationMirror suppress =
-        ProcessorUtil.findAnnotationByType( element, alternativeSuppressWarnings );
+      final AnnotationMirror suppress = findAnnotationByType( element, alternativeSuppressWarnings );
       if ( null != suppress )
       {
-        final List<AnnotationValue> warnings = ProcessorUtil.getAnnotationValue( suppress, "value" );
+        final List<AnnotationValue> warnings = getAnnotationValue( suppress, "value" );
         for ( final AnnotationValue suppression : warnings )
         {
           if ( warning.equals( suppression.getValue() ) )
