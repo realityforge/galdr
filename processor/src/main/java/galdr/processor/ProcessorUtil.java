@@ -232,14 +232,6 @@ final class ProcessorUtil
       collect( Collectors.toList() );
   }
 
-  static void copyExceptions( @Nonnull final ExecutableType method, @Nonnull final MethodSpec.Builder builder )
-  {
-    for ( final TypeMirror thrownType : method.getThrownTypes() )
-    {
-      builder.addException( TypeName.get( thrownType ) );
-    }
-  }
-
   @Nonnull
   static String firstCharacterToLowerCase( @Nonnull final String name )
   {
