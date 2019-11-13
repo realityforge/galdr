@@ -1,6 +1,5 @@
 package galdr.processor;
 
-import com.google.auto.common.GeneratedAnnotationSpecs;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -41,7 +40,7 @@ final class Generator
                                   @Nonnull final SubSystemDescriptor descriptor )
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( descriptor.getEnhancedClassName() );
-    addGeneratedAnnotation( processingEnv, builder, SubSystemProcessor.class );
+    GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, SubSystemProcessor.class.getName() );
     builder.addModifiers( Modifier.PUBLIC, Modifier.FINAL );
 
     final ClassName enhancedSubSystem = ClassName.bestGuess( "EnhancedSubSystem" );
@@ -211,15 +210,6 @@ final class Generator
                          .returns( String.class )
                          .addCode( toStringBlock.build() )
                          .build() );
-  }
-
-  private static void addGeneratedAnnotation( @Nonnull final ProcessingEnvironment processingEnv,
-                                              @Nonnull final TypeSpec.Builder builder,
-                                              @Nonnull final Class<?> annotationProcessor )
-  {
-    GeneratedAnnotationSpecs
-      .generatedAnnotationSpec( processingEnv.getElementUtils(), processingEnv.getSourceVersion(), annotationProcessor )
-      .ifPresent( builder::addAnnotation );
   }
 
   @Nonnull
