@@ -34,6 +34,7 @@ final class ProcessorUtil
   {
   }
 
+  @SuppressWarnings( "unchecked" )
   static boolean isWarningSuppressed( @Nonnull final Element element,
                                       @Nonnull final String warning,
                                       @Nullable final String alternativeSuppressWarnings )
@@ -43,12 +44,16 @@ final class ProcessorUtil
       final AnnotationMirror suppress = findAnnotationByType( element, alternativeSuppressWarnings );
       if ( null != suppress )
       {
-        final List<AnnotationValue> warnings = getAnnotationValue( suppress, "value" );
-        for ( final AnnotationValue suppression : warnings )
+        final AnnotationValue value = findAnnotationValueNoDefaults( suppress, "value" );
+        if ( null != value )
         {
-          if ( warning.equals( suppression.getValue() ) )
+          final List<AnnotationValue> warnings = (List<AnnotationValue>) value.getValue();
+          for ( final AnnotationValue suppression : warnings )
           {
-            return true;
+            if ( warning.equals( suppression.getValue() ) )
+            {
+              return true;
+            }
           }
         }
       }
