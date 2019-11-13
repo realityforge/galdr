@@ -116,7 +116,7 @@ final class Generator
           .returns( type )
           .addStatement( "assert null != $N", fieldName )
           .addStatement( "return $N", fieldName );
-      ProcessorUtil.copyAccessModifiers( methodElement, method );
+      GeneratorUtil.copyAccessModifiers( methodElement, method );
       builder.addMethod( method.build() );
     }
 
@@ -146,6 +146,12 @@ final class Generator
     emitNameAccessors( descriptor, builder );
     emitToString( builder );
 
+/*
+    private void $galdr$_process( final int delta )
+    {
+      processGlobalActions();
+    }
+* */
     return builder.build();
   }
 
@@ -161,7 +167,7 @@ final class Generator
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( WORLD_CLASSNAME )
           .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
-      ProcessorUtil.copyAccessModifiers( worldRef, method );
+      GeneratorUtil.copyAccessModifiers( worldRef, method );
       builder.addMethod( method.build() );
     }
   }
@@ -178,7 +184,7 @@ final class Generator
           .addAnnotation( NONNULL_CLASSNAME )
           .returns( String.class )
           .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
-      ProcessorUtil.copyAccessModifiers( nameRef, method );
+      GeneratorUtil.copyAccessModifiers( nameRef, method );
       builder.addMethod( method.build() );
     }
 

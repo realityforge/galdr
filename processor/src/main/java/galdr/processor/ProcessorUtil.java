@@ -101,17 +101,6 @@ final class ProcessorUtil
   }
 
   @Nonnull
-  static List<TypeVariableName> getTypeArgumentsAsNames( @Nonnull final DeclaredType declaredType )
-  {
-    final List<TypeVariableName> variables = new ArrayList<>();
-    for ( final TypeMirror argument : declaredType.getTypeArguments() )
-    {
-      variables.add( TypeVariableName.get( (TypeVariable) argument ) );
-    }
-    return variables;
-  }
-
-  @Nonnull
   static List<VariableElement> getFieldElements( @Nonnull final TypeElement element )
   {
     final Map<String, VariableElement> methodMap = new LinkedHashMap<>();
@@ -243,47 +232,11 @@ final class ProcessorUtil
       collect( Collectors.toList() );
   }
 
-  static void copyAccessModifiers( @Nonnull final TypeElement element, @Nonnull final TypeSpec.Builder builder )
-  {
-    if ( element.getModifiers().contains( Modifier.PUBLIC ) )
-    {
-      builder.addModifiers( Modifier.PUBLIC );
-    }
-  }
-
-  static void copyAccessModifiers( @Nonnull final TypeElement element, @Nonnull final MethodSpec.Builder builder )
-  {
-    if ( element.getModifiers().contains( Modifier.PUBLIC ) )
-    {
-      builder.addModifiers( Modifier.PUBLIC );
-    }
-  }
-
-  static void copyAccessModifiers( @Nonnull final ExecutableElement element, @Nonnull final MethodSpec.Builder builder )
-  {
-    if ( element.getModifiers().contains( Modifier.PUBLIC ) )
-    {
-      builder.addModifiers( Modifier.PUBLIC );
-    }
-    else if ( element.getModifiers().contains( Modifier.PROTECTED ) )
-    {
-      builder.addModifiers( Modifier.PROTECTED );
-    }
-  }
-
   static void copyExceptions( @Nonnull final ExecutableType method, @Nonnull final MethodSpec.Builder builder )
   {
     for ( final TypeMirror thrownType : method.getThrownTypes() )
     {
       builder.addException( TypeName.get( thrownType ) );
-    }
-  }
-
-  static void copyTypeParameters( @Nonnull final ExecutableType action, @Nonnull final MethodSpec.Builder builder )
-  {
-    for ( final TypeVariable typeParameter : action.getTypeVariables() )
-    {
-      builder.addTypeVariable( TypeVariableName.get( typeParameter ) );
     }
   }
 
