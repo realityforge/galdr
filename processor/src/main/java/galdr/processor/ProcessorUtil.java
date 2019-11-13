@@ -328,5 +328,4 @@ final class ProcessorUtil
   {
     return null != findAnnotationByType( typeElement, annotationClassName );
   }
-
 }
