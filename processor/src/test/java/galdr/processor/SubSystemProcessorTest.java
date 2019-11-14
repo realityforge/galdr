@@ -53,6 +53,7 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
 
         new Object[]{ "com.example.BasicSubSystem" },
+        new Object[]{ "com.example.CompleteSubSystem" },
         new Object[]{ "com.example.PackageAccessSubSystem" },
 
         new Object[]{ "DefaultPackageSubSystem" }

@@ -1,0 +1,55 @@
+package com.example;
+
+import galdr.ComponentManager;
+import galdr.World;
+import galdr.annotations.ComponentManagerRef;
+import galdr.annotations.NameRef;
+import galdr.annotations.OnActivate;
+import galdr.annotations.Processor;
+import galdr.annotations.SubSystem;
+import galdr.annotations.WorldRef;
+
+@SubSystem
+abstract class CompleteSubSystem
+{
+  static class MyComponent1
+  {
+  }
+
+  static class MyComponent2
+  {
+  }
+
+  @ComponentManagerRef
+  abstract ComponentManager<MyComponent1> cm1();
+
+  @ComponentManagerRef
+  abstract ComponentManager<MyComponent2> cm2();
+
+  @NameRef
+  abstract String name1();
+
+  @NameRef
+  abstract String name2();
+
+  @WorldRef
+  abstract World world1();
+
+  @WorldRef
+  abstract World world2();
+
+  @OnActivate
+  void onActivate1()
+  {
+  }
+
+  @OnActivate
+  void onActivate2()
+  {
+  }
+
+  @Processor
+  final void runFrame()
+  {
+  }
+}
