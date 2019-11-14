@@ -8,7 +8,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -96,8 +95,7 @@ final class Generator
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
-    final List<ComponentManagerRefDescriptor> componentManagerRefs = descriptor.getComponentManagerRefs();
-    for ( final ComponentManagerRefDescriptor componentManagerRef : componentManagerRefs )
+    for ( final ComponentManagerRefDescriptor componentManagerRef : descriptor.getComponentManagerRefs() )
     {
       final ParameterizedTypeName type =
         ParameterizedTypeName.get( COMPONENT_MANAGER_CLASSNAME, componentManagerRef.getComponentType() );
