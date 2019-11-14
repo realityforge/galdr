@@ -21,7 +21,9 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.MultiSameComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.Suppressed1PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed1ProtectedAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed2ProtectedAccessComponentManagerRefSubSystem" },
 
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
