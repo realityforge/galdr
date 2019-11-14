@@ -80,7 +80,10 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Test annotation examples combining all elements in a single class
+* Annotation test example:
+  - One scenario where multiple instances of every multi-annotation in a single class 
+  - One scenario where multiple instances of every multi-annotation in a parent class 
+  - One scenario where multiple instances of every multi-annotation in a parent interface 
 * Write annotation processor that generates the support infrastructure from annotations.
 * Introduce Nullability utility for annotation processing.
 * Extract useful annotation processor utilities into a separate project.
