@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
  * <li>Must be abstract</li>
  * <li>Must not throw any exceptions</li>
  * <li>Must return an instance of {@link galdr.World}.</li>
+ * <li>Must be accessible to the class annotated by the {@link SubSystem} annotation.</li>
  * </ul>
  */
 @Documented
