@@ -107,6 +107,7 @@ public final class SubSystemProcessor
     MemberChecks.mustNotThrowAnyExceptions( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
     MemberChecks.shouldNotBePublic( processingEnv,
                                     method,
+                                    Constants.COMPONENT_MANAGER_REF_CLASSNAME,
                                     Constants.WARNING_PUBLIC_REF_METHOD,
                                     Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
 
