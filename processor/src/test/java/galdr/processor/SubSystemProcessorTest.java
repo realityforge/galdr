@@ -226,8 +226,6 @@ public class SubSystemProcessorTest
                       "@ComponentManagerRef target must be abstract" },
         new Object[]{ "com.example.component_manager_ref.ThrowsExceptionComponentManagerRefSubSystem",
                       "@ComponentManagerRef target must not throw any exceptions" },
-        new Object[]{ "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem",
-                      "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
         new Object[]{ "com.example.component_manager_ref.VoidComponentManagerRefSubSystem",
                       "@ComponentManagerRef target must return a value" },
 
@@ -284,5 +282,16 @@ public class SubSystemProcessorTest
   public void processFailedCompile( @Nonnull final String classname, @Nonnull final String errorMessageFragment )
   {
     assertFailedCompile( classname, errorMessageFragment );
+  }
+
+  @Test
+  public void unreachableComponentManagerRefSubSystem()
+  {
+    final String input1 =
+      toFilename( "bad_input", "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem" );
+    final String input2 =
+      toFilename( "bad_input", "com.example.component_manager_ref.other.BaseUnreachableComponentManagerRefSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 }
