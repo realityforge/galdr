@@ -177,7 +177,7 @@ abstract class AbstractProcessorTest
     final Path outputFile = fixtureDir().resolve( path );
     if ( !Files.exists( outputFile ) )
     {
-      fail( "Output file fixture " + outputFile + " does not exist. Thus can not compare against it." );
+      fail( "Expected fixture file " + outputFile + " does not exist" );
     }
     try
     {
