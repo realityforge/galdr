@@ -30,13 +30,13 @@ public final class Galdr_PackageAccessOnActivateSubSystem implements PostConstru
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    private void $galdr$_postConstruct() {
+      onActivate();
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "PackageAccessOnActivateSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      onActivate();
     }
 
     @Nonnull

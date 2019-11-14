@@ -42,13 +42,13 @@ public final class Galdr_BasicComponentManagerRefSubSystem implements PostConstr
       return $galdrc$_cm;
     }
 
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( BasicComponentManagerRefSubSystem.MyComponent.class );
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "BasicComponentManagerRefSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( BasicComponentManagerRefSubSystem.MyComponent.class );
     }
 
     @Nonnull

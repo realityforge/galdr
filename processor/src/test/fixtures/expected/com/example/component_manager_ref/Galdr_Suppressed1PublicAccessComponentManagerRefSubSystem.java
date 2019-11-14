@@ -43,13 +43,13 @@ public final class Galdr_Suppressed1PublicAccessComponentManagerRefSubSystem imp
       return $galdrc$_cm;
     }
 
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( Suppressed1PublicAccessComponentManagerRefSubSystem.MyComponent.class );
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "Suppressed1PublicAccessComponentManagerRefSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( Suppressed1PublicAccessComponentManagerRefSubSystem.MyComponent.class );
     }
 
     @Nonnull

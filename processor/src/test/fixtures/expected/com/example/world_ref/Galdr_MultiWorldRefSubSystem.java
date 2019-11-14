@@ -24,11 +24,6 @@ public final class Galdr_MultiWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
-    @Nonnull
-    private String $galdr$_getName() {
-      return "MultiWorldRefSubSystem";
-    }
-
     @Override
     @Nonnull
     World world1() {
@@ -39,6 +34,11 @@ public final class Galdr_MultiWorldRefSubSystem {
     @Nonnull
     World world2() {
       return $galdr$_outer.$galdr$_getWorld();
+    }
+
+    @Nonnull
+    private String $galdr$_getName() {
+      return "MultiWorldRefSubSystem";
     }
 
     @Nonnull

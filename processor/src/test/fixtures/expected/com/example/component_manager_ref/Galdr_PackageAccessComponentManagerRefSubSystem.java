@@ -43,13 +43,13 @@ public final class Galdr_PackageAccessComponentManagerRefSubSystem implements Po
       return $galdrc$_cm;
     }
 
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( PackageAccessComponentManagerRefSubSystem.MyComponent.class );
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "PackageAccessComponentManagerRefSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( PackageAccessComponentManagerRefSubSystem.MyComponent.class );
     }
 
     @Nonnull

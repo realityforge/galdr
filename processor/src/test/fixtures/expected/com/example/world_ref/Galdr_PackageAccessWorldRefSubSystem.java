@@ -24,15 +24,15 @@ public final class Galdr_PackageAccessWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
-    @Nonnull
-    private String $galdr$_getName() {
-      return "PackageAccessWorldRefSubSystem";
-    }
-
     @Override
     @Nonnull
     World world() {
       return $galdr$_outer.$galdr$_getWorld();
+    }
+
+    @Nonnull
+    private String $galdr$_getName() {
+      return "PackageAccessWorldRefSubSystem";
     }
 
     @Nonnull

@@ -97,6 +97,7 @@ final class Generator
     emitPostConstruct( descriptor, builder );
 
     // Generate support code
+    emitNativeNameMethod( descriptor, builder );
     emitToString( builder );
 
     return builder.build();
@@ -205,7 +206,11 @@ final class Generator
       GeneratorUtil.copyAccessModifiers( nameRef, method );
       builder.addMethod( method.build() );
     }
+  }
 
+  private static void emitNativeNameMethod( @Nonnull final SubSystemDescriptor descriptor,
+                                            @Nonnull final TypeSpec.Builder builder )
+  {
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
                          .addAnnotation( NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )

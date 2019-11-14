@@ -64,11 +64,6 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
       return $galdr$_getName();
     }
 
-    @Nonnull
-    private String $galdr$_getName() {
-      return "CompleteSubSystem";
-    }
-
     @Override
     @Nonnull
     World world1() {
@@ -86,6 +81,11 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
       $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteSubSystem.MyComponent2.class );
       onActivate1();
       onActivate2();
+    }
+
+    @Nonnull
+    private String $galdr$_getName() {
+      return "CompleteSubSystem";
     }
 
     @Nonnull

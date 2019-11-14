@@ -31,13 +31,13 @@ public final class Galdr_ProtectedAccessFromBaseOnActivateSubSystem implements P
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    private void $galdr$_postConstruct() {
+      onActivate();
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "ProtectedAccessFromBaseOnActivateSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      onActivate();
     }
 
     @Nonnull

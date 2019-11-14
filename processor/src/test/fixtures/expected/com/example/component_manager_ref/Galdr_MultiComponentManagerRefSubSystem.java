@@ -52,14 +52,14 @@ public final class Galdr_MultiComponentManagerRefSubSystem implements PostConstr
       return $galdrc$_cm2;
     }
 
-    @Nonnull
-    private String $galdr$_getName() {
-      return "MultiComponentManagerRefSubSystem";
-    }
-
     private void $galdr$_postConstruct() {
       $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiComponentManagerRefSubSystem.MyComponent1.class );
       $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiComponentManagerRefSubSystem.MyComponent2.class );
+    }
+
+    @Nonnull
+    private String $galdr$_getName() {
+      return "MultiComponentManagerRefSubSystem";
     }
 
     @Nonnull

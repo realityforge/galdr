@@ -44,13 +44,13 @@ public final class Galdr_Suppressed2ProtectedAccessComponentManagerRefSubSystem 
       return $galdrc$_cm;
     }
 
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( Suppressed2ProtectedAccessComponentManagerRefSubSystem.MyComponent.class );
+    }
+
     @Nonnull
     private String $galdr$_getName() {
       return "Suppressed2ProtectedAccessComponentManagerRefSubSystem";
-    }
-
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( Suppressed2ProtectedAccessComponentManagerRefSubSystem.MyComponent.class );
     }
 
     @Nonnull
