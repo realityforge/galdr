@@ -74,6 +74,7 @@ public final class SubSystemProcessor
       final AnnotationMirror componentManagerRef =
         AnnotationsUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
       final AnnotationMirror nameRef = AnnotationsUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
+      final AnnotationMirror onActivate = AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
       final AnnotationMirror worldRef = AnnotationsUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != componentManagerRef )
@@ -83,6 +84,10 @@ public final class SubSystemProcessor
       else if ( null != nameRef )
       {
         addNameRef( descriptor, method );
+      }
+      else if ( null != onActivate )
+      {
+        addOnActivate( descriptor, method );
       }
       else if ( null != worldRef )
       {
@@ -139,6 +144,12 @@ public final class SubSystemProcessor
     descriptor.addNameRef( method );
   }
 
+  private void addOnActivate( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
+  {
+    mustBeLifecycleMethod( descriptor, method, Constants.ON_ACTIVATE_CLASSNAME );
+    descriptor.addOnActivate( method );
+  }
+
   private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     mustBeRefMethod( descriptor, method, Constants.WORLD_REF_CLASSNAME );
@@ -149,6 +160,35 @@ public final class SubSystemProcessor
       throw new ProcessorException( "@WorldRef target must return an instance of galdr.World", method );
     }
     descriptor.addWorldRef( method );
+  }
+
+  private void mustBeLifecycleMethod( @Nonnull final SubSystemDescriptor descriptor,
+                                      @Nonnull final ExecutableElement method,
+                                      @Nonnull final String annotationClassname )
+  {
+    MemberChecks.mustNotBeAbstract( annotationClassname, method );
+    MemberChecks.mustNotBePrivate( annotationClassname, method );
+    MemberChecks.mustNotBeStatic( annotationClassname, method );
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+                                                           Constants.APPLICATION_CLASSNAME,
+                                                           annotationClassname,
+                                                           method );
+    MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
+    MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
+    MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
+    MemberChecks.shouldNotBePublic( processingEnv,
+                                    method,
+                                    annotationClassname,
+                                    Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
+                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    {
+      MemberChecks.shouldNotBeProtected( processingEnv,
+                                         method,
+                                         annotationClassname,
+                                         Constants.WARNING_PROTECTED_LIFECYCLE_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
   }
 
   private void mustBeRefMethod( @Nonnull final SubSystemDescriptor descriptor,

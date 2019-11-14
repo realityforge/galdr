@@ -36,6 +36,14 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.Suppressed2PublicAccessNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.Suppressed2ProtectedAccessNameRefSubSystem" },
 
+        new Object[]{ "com.example.on_activate.BasicOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.MultiOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.PackageAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed1PublicAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed1ProtectedAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed2PublicAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed2ProtectedAccessOnActivateSubSystem" },
+
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
@@ -158,6 +166,50 @@ public class SubSystemProcessorTest
   }
 
   @Test
+  public void publicAccessOnActivate()
+  {
+    final String filename =
+      toFilename( "input", "com.example.on_activate.PublicAccessOnActivateSubSystem" );
+    final String messageFragment =
+      "@OnActivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessOnActivate()
+  {
+    final String filename =
+      toFilename( "input", "com.example.on_activate.ProtectedAccessOnActivateSubSystem" );
+    final String messageFragment =
+      "@OnActivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessOnActivate()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.on_activate.ProtectedAccessFromBaseOnActivateSubSystem" );
+    final String input2 = toFilename( "input", "com.example.on_activate.other.BaseProtectedAccessOnActivateSubSystem" );
+    final String output =
+      toFilename( "expected", "com.example.on_activate.Galdr_ProtectedAccessFromBaseOnActivateSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
   public void publicAccessWorldRef()
   {
     final String fileworld =
@@ -249,6 +301,17 @@ public class SubSystemProcessorTest
                       "@NameRef target must not throw any exceptions" },
         new Object[]{ "com.example.name_ref.VoidNameRefSubSystem", "@NameRef target must return a value" },
 
+        new Object[]{ "com.example.on_activate.AbstractOnActivateSubSystem",
+                      "@OnActivate target must not be abstract" },
+        new Object[]{ "com.example.on_activate.ParameterizedOnActivateSubSystem",
+                      "@OnActivate target must not have any parameters" },
+        new Object[]{ "com.example.on_activate.PrivateOnActivateSubSystem", "@OnActivate target must not be private" },
+        new Object[]{ "com.example.on_activate.ReturnsValueOnActivateSubSystem",
+                      "@OnActivate target must not return a value" },
+        new Object[]{ "com.example.on_activate.StaticOnActivateSubSystem", "@OnActivate target must not be static" },
+        new Object[]{ "com.example.on_activate.ThrowsExceptionOnActivateSubSystem",
+                      "@OnActivate target must not throw any exceptions" },
+
         new Object[]{ "com.example.world_ref.BadType1WorldRefSubSystem",
                       "@WorldRef target must return an instance of galdr.World" },
         new Object[]{ "com.example.world_ref.BadType2WorldRefSubSystem",
@@ -298,6 +361,15 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "bad_input", "com.example.name_ref.other.BaseUnreachableNameRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
+  }
+
+  @Test
+  public void unreachableOnActivateSubSystem()
+  {
+    final String input1 = toFilename( "bad_input", "com.example.on_activate.UnreachableOnActivateSubSystem" );
+    final String input2 = toFilename( "bad_input", "com.example.on_activate.other.BaseUnreachableOnActivateSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@OnActivate target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 
   @Test

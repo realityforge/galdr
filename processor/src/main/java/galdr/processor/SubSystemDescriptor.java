@@ -20,6 +20,8 @@ final class SubSystemDescriptor
   @Nonnull
   private final List<ExecutableElement> _nameRefs = new ArrayList<>();
   @Nonnull
+  private final List<ExecutableElement> _onActivates = new ArrayList<>();
+  @Nonnull
   private final List<ExecutableElement> _worldRefs = new ArrayList<>();
 
   SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name, final int priority )
@@ -78,6 +80,17 @@ final class SubSystemDescriptor
   List<ExecutableElement> getNameRefs()
   {
     return _nameRefs;
+  }
+
+  void addOnActivate( @Nonnull final ExecutableElement method )
+  {
+    _onActivates.add( Objects.requireNonNull( method ) );
+  }
+
+  @Nonnull
+  List<ExecutableElement> getOnActivates()
+  {
+    return _onActivates;
   }
 
   void addWorldRef( @Nonnull final ExecutableElement method )

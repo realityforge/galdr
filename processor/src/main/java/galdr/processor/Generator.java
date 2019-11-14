@@ -58,7 +58,7 @@ final class Generator
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
                          .build() );
 
-    if ( !descriptor.getComponentManagerRefs().isEmpty() )
+    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getOnActivates().isEmpty() )
     {
       builder.addSuperinterface( POST_CONSTRUCT_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "postConstruct" )
@@ -120,7 +120,7 @@ final class Generator
       builder.addMethod( method.build() );
     }
 
-    if ( !componentManagerRefs.isEmpty() )
+    if ( !componentManagerRefs.isEmpty() || !descriptor.getOnActivates().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
@@ -137,6 +137,10 @@ final class Generator
                              OUTER_FIELD,
                              WORLD_ACCESSOR_METHOD,
                              componentManagerRef.getComponentType() );
+      }
+      for ( final ExecutableElement onActivate : descriptor.getOnActivates() )
+      {
+        method.addStatement( "$N()", onActivate.getSimpleName().toString() );
       }
 
       builder.addMethod( method.build() );
