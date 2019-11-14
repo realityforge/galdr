@@ -61,7 +61,7 @@ public class SubSystemProcessorTest
   }
 
   @Test
-  public void unmanagedDisposeNotifierReference()
+  public void publicAccessComponentManagerRef()
   {
     final String filename =
       toFilename( "input", "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" );
