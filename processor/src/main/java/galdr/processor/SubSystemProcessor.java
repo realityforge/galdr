@@ -52,9 +52,9 @@ public final class SubSystemProcessor
     {
       throw new ProcessorException( "@SubSystem target must not be a non-static nested class", element );
     }
-    final AnnotationMirror annotation = ProcessorUtil.getAnnotationByType( element, Constants.SUB_SYSTEM_CLASSNAME );
+    final AnnotationMirror annotation = AnnotationsUtil.getAnnotationByType( element, Constants.SUB_SYSTEM_CLASSNAME );
     final String name = deriveName( element, annotation );
-    final int priority = ProcessorUtil.getAnnotationValue( annotation, "priority" );
+    final int priority = AnnotationsUtil.getAnnotationValue( annotation, "priority" );
     final SubSystemDescriptor descriptor = new SubSystemDescriptor( element, name, priority );
 
     final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
@@ -72,9 +72,9 @@ public final class SubSystemProcessor
     for ( final ExecutableElement method : methods )
     {
       final AnnotationMirror componentManagerRef =
-        ProcessorUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
-      final AnnotationMirror nameRef = ProcessorUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
-      final AnnotationMirror worldRef = ProcessorUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
+        AnnotationsUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
+      final AnnotationMirror nameRef = AnnotationsUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
+      final AnnotationMirror worldRef = AnnotationsUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != componentManagerRef )
       {
@@ -182,7 +182,7 @@ public final class SubSystemProcessor
   private String deriveName( @Nonnull final TypeElement element, @Nonnull final AnnotationMirror annotation )
     throws ProcessorException
   {
-    final String name = ProcessorUtil.getAnnotationValue( annotation, "name" );
+    final String name = AnnotationsUtil.getAnnotationValue( annotation, "name" );
     return Constants.SENTINEL_NAME.equals( name ) ? element.getSimpleName().toString() : name;
   }
 }
