@@ -30,9 +30,11 @@ public class SubSystemProcessorTest
 
         new Object[]{ "com.example.name_ref.BasicNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.MultiNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.PublicAccessNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.ProtectedAccessNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PackageAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed1PublicAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed1ProtectedAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed2PublicAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed2ProtectedAccessNameRefSubSystem" },
 
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
@@ -105,6 +107,50 @@ public class SubSystemProcessorTest
     final String output =
       toFilename( "expected",
                   "com.example.component_manager_ref.Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessNameRef()
+  {
+    final String filename =
+      toFilename( "input", "com.example.name_ref.PublicAccessNameRefSubSystem" );
+    final String messageFragment =
+      "@NameRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessNameRef()
+  {
+    final String filename =
+      toFilename( "input", "com.example.name_ref.ProtectedAccessNameRefSubSystem" );
+    final String messageFragment =
+      "@NameRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessNameRef()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.name_ref.ProtectedAccessFromBaseNameRefSubSystem" );
+    final String input2 = toFilename( "input", "com.example.name_ref.other.BaseProtectedAccessNameRefSubSystem" );
+    final String output =
+      toFilename( "expected", "com.example.name_ref.Galdr_ProtectedAccessFromBaseNameRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }

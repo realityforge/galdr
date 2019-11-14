@@ -158,6 +158,19 @@ public final class SubSystemProcessor
     MemberChecks.mustNotHaveAnyParameters( Constants.NAME_REF_CLASSNAME, method );
     MemberChecks.mustReturnAValue( Constants.NAME_REF_CLASSNAME, method );
     MemberChecks.mustNotThrowAnyExceptions( Constants.NAME_REF_CLASSNAME, method );
+    MemberChecks.shouldNotBePublic( processingEnv,
+                                    method,
+                                    Constants.NAME_REF_CLASSNAME,
+                                    Constants.WARNING_PUBLIC_REF_METHOD,
+                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    {
+      MemberChecks.shouldNotBeProtected( processingEnv,
+                                         method,
+                                         Constants.NAME_REF_CLASSNAME,
+                                         Constants.WARNING_PROTECTED_REF_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
 
     if ( !String.class.getName().equals( method.getReturnType().toString() ) )
     {
