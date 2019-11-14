@@ -266,8 +266,6 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.StaticNameRefSubSystem", "@NameRef target must be abstract" },
         new Object[]{ "com.example.name_ref.ThrowsExceptionNameRefSubSystem",
                       "@NameRef target must not throw any exceptions" },
-        new Object[]{ "com.example.name_ref.UnreachableNameRefSubSystem",
-                      "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" },
         new Object[]{ "com.example.name_ref.VoidNameRefSubSystem", "@NameRef target must return a value" },
 
         new Object[]{ "com.example.ConcreteSubSystem", "@SubSystem target must be abstract" },
@@ -293,5 +291,14 @@ public class SubSystemProcessorTest
       toFilename( "bad_input", "com.example.component_manager_ref.other.BaseUnreachableComponentManagerRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
+  }
+
+  @Test
+  public void unreachableNameRefSubSystem()
+  {
+    final String input1 = toFilename( "bad_input", "com.example.name_ref.UnreachableNameRefSubSystem" );
+    final String input2 = toFilename( "bad_input", "com.example.name_ref.other.BaseUnreachableNameRefSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 }
