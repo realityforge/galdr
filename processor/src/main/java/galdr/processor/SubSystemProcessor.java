@@ -189,6 +189,19 @@ public final class SubSystemProcessor
     MemberChecks.mustNotHaveAnyParameters( Constants.WORLD_REF_CLASSNAME, method );
     MemberChecks.mustReturnAValue( Constants.WORLD_REF_CLASSNAME, method );
     MemberChecks.mustNotThrowAnyExceptions( Constants.WORLD_REF_CLASSNAME, method );
+    MemberChecks.shouldNotBePublic( processingEnv,
+                                    method,
+                                    Constants.WORLD_REF_CLASSNAME,
+                                    Constants.WARNING_PUBLIC_REF_METHOD,
+                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    {
+      MemberChecks.shouldNotBeProtected( processingEnv,
+                                         method,
+                                         Constants.WORLD_REF_CLASSNAME,
+                                         Constants.WARNING_PROTECTED_REF_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
 
     final TypeMirror returnType = method.getReturnType();
     if ( TypeKind.DECLARED != returnType.getKind() || !Constants.WORLD_CLASSNAME.equals( returnType.toString() ) )

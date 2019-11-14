@@ -38,9 +38,11 @@ public class SubSystemProcessorTest
 
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.PublicAccessWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.ProtectedAccessWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
 
         new Object[]{ "com.example.BasicSubSystem" },
         new Object[]{ "com.example.PackageAccessSubSystem" },
@@ -151,6 +153,50 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "input", "com.example.name_ref.other.BaseProtectedAccessNameRefSubSystem" );
     final String output =
       toFilename( "expected", "com.example.name_ref.Galdr_ProtectedAccessFromBaseNameRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessWorldRef()
+  {
+    final String fileworld =
+      toFilename( "input", "com.example.world_ref.PublicAccessWorldRefSubSystem" );
+    final String messageFragment =
+      "@WorldRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( fileworld ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessWorldRef()
+  {
+    final String fileworld =
+      toFilename( "input", "com.example.world_ref.ProtectedAccessWorldRefSubSystem" );
+    final String messageFragment =
+      "@WorldRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( fileworld ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessWorldRef()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.world_ref.ProtectedAccessFromBaseWorldRefSubSystem" );
+    final String input2 = toFilename( "input", "com.example.world_ref.other.BaseProtectedAccessWorldRefSubSystem" );
+    final String output =
+      toFilename( "expected", "com.example.world_ref.Galdr_ProtectedAccessFromBaseWorldRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
