@@ -24,15 +24,15 @@ public final class Galdr_ProtectedAccessFromBaseWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Nonnull
+    private String $galdr$_getName() {
+      return "ProtectedAccessFromBaseWorldRefSubSystem";
+    }
+
     @Override
     @Nonnull
     protected World world() {
       return $galdr$_outer.$galdr$_getWorld();
-    }
-
-    @Nonnull
-    private String $galdr$_getName() {
-      return "ProtectedAccessFromBaseWorldRefSubSystem";
     }
 
     @Nonnull

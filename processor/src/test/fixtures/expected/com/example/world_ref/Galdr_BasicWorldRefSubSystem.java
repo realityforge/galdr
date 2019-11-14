@@ -24,15 +24,15 @@ public final class Galdr_BasicWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Nonnull
+    private String $galdr$_getName() {
+      return "BasicWorldRefSubSystem";
+    }
+
     @Override
     @Nonnull
     World world() {
       return $galdr$_outer.$galdr$_getWorld();
-    }
-
-    @Nonnull
-    private String $galdr$_getName() {
-      return "BasicWorldRefSubSystem";
     }
 
     @Nonnull

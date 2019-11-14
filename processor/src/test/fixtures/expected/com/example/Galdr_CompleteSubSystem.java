@@ -54,18 +54,6 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
 
     @Override
     @Nonnull
-    World world1() {
-      return $galdr$_outer.$galdr$_getWorld();
-    }
-
-    @Override
-    @Nonnull
-    World world2() {
-      return $galdr$_outer.$galdr$_getWorld();
-    }
-
-    @Override
-    @Nonnull
     String name1() {
       return $galdr$_getName();
     }
@@ -79,6 +67,18 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
     @Nonnull
     private String $galdr$_getName() {
       return "CompleteSubSystem";
+    }
+
+    @Override
+    @Nonnull
+    World world1() {
+      return $galdr$_outer.$galdr$_getWorld();
+    }
+
+    @Override
+    @Nonnull
+    World world2() {
+      return $galdr$_outer.$galdr$_getWorld();
     }
 
     private void $galdr$_postConstruct() {

@@ -88,8 +88,8 @@ final class Generator
 
     emitConstructor( descriptor, builder );
     emitComponentManagerAccessors( descriptor, builder );
-    emitWorldAccessors( descriptor, builder );
     emitNameAccessors( descriptor, builder );
+    emitWorldAccessors( descriptor, builder );
     emitPostConstruct( descriptor, builder );
     emitToString( builder );
 

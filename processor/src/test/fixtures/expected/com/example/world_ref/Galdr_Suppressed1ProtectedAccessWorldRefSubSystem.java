@@ -25,15 +25,15 @@ public final class Galdr_Suppressed1ProtectedAccessWorldRefSubSystem {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
+    @Nonnull
+    private String $galdr$_getName() {
+      return "Suppressed1ProtectedAccessWorldRefSubSystem";
+    }
+
     @Override
     @Nonnull
     protected World world() {
       return $galdr$_outer.$galdr$_getWorld();
-    }
-
-    @Nonnull
-    private String $galdr$_getName() {
-      return "Suppressed1ProtectedAccessWorldRefSubSystem";
     }
 
     @Nonnull
