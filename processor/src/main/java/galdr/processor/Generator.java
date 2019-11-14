@@ -125,12 +125,6 @@ final class Generator
     emitPostConstruct( descriptor, builder );
     emitToString( builder );
 
-/*
-    private void $galdr$_process( final int delta )
-    {
-      processGlobalActions();
-    }
-* */
     return builder.build();
   }
 
