@@ -6,15 +6,13 @@ import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
 
 @SubSystem
-public abstract class MultiComponentManagerRefSubSystem
+abstract class MultiComponentManagerRefSubSystem
 {
-  @SuppressWarnings( "WeakerAccess" )
-  public static class MyComponent1
+  static class MyComponent1
   {
   }
 
-  @SuppressWarnings( "WeakerAccess" )
-  public static class MyComponent2
+  static class MyComponent2
   {
   }
 

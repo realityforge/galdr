@@ -8,7 +8,6 @@ import galdr.annotations.SubSystem;
 @SubSystem
 public abstract class Suppressed1ProtectedAccessComponentManagerRefSubSystem
 {
-  @SuppressWarnings( "WeakerAccess" )
   public static class MyComponent
   {
   }

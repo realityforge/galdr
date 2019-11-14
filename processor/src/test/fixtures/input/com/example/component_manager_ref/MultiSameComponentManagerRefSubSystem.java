@@ -6,7 +6,7 @@ import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
 
 @SubSystem
-public abstract class MultiSameComponentManagerRefSubSystem
+abstract class MultiSameComponentManagerRefSubSystem
 {
   @SuppressWarnings( "WeakerAccess" )
   public static class MyComponent1

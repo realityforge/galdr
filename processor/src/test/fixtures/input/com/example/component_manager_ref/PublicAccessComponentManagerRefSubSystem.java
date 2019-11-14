@@ -5,7 +5,6 @@ import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
 
-@SuppressWarnings( "WeakerAccess" )
 @SubSystem
 public abstract class PublicAccessComponentManagerRefSubSystem
 {

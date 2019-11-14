@@ -5,7 +5,7 @@ import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
 
 @SubSystem
-public abstract class ProtectedAccessFromBaseComponentManagerRefSubSystem
+abstract class ProtectedAccessFromBaseComponentManagerRefSubSystem
   extends BaseProtectedAccessComponentManagerRefSubSystem
 {
   @Processor
