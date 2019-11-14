@@ -144,6 +144,40 @@ final class Generator
     }
   }
 
+  private static void emitNameAccessors( @Nonnull final SubSystemDescriptor descriptor,
+                                         @Nonnull final TypeSpec.Builder builder )
+  {
+    for ( final ExecutableElement nameRef : descriptor.getNameRefs() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( nameRef.getSimpleName().toString() )
+          .addAnnotation( Override.class )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( String.class )
+          .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
+      GeneratorUtil.copyAccessModifiers( nameRef, method );
+      builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitWorldAccessors( @Nonnull final SubSystemDescriptor descriptor,
+                                          final TypeSpec.Builder builder )
+  {
+    for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( worldRef.getSimpleName().toString() )
+          .addAnnotation( Override.class )
+          .addAnnotation( NONNULL_CLASSNAME )
+          .returns( WORLD_CLASSNAME )
+          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
+      GeneratorUtil.copyAccessModifiers( worldRef, method );
+      builder.addMethod( method.build() );
+    }
+  }
+
   private static void emitPostConstruct( @Nonnull final SubSystemDescriptor descriptor,
                                          @Nonnull final TypeSpec.Builder builder )
   {
@@ -170,40 +204,6 @@ final class Generator
         method.addStatement( "$N()", onActivate.getSimpleName().toString() );
       }
 
-      builder.addMethod( method.build() );
-    }
-  }
-
-  private static void emitWorldAccessors( @Nonnull final SubSystemDescriptor descriptor,
-                                          final TypeSpec.Builder builder )
-  {
-    for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
-    {
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( worldRef.getSimpleName().toString() )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( WORLD_CLASSNAME )
-          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
-      GeneratorUtil.copyAccessModifiers( worldRef, method );
-      builder.addMethod( method.build() );
-    }
-  }
-
-  private static void emitNameAccessors( @Nonnull final SubSystemDescriptor descriptor,
-                                         @Nonnull final TypeSpec.Builder builder )
-  {
-    for ( final ExecutableElement nameRef : descriptor.getNameRefs() )
-    {
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( nameRef.getSimpleName().toString() )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( String.class )
-          .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
-      GeneratorUtil.copyAccessModifiers( nameRef, method );
       builder.addMethod( method.build() );
     }
   }
