@@ -98,27 +98,7 @@ public final class SubSystemProcessor
   private void addComponentManagerRef( @Nonnull final SubSystemDescriptor descriptor,
                                        @Nonnull final ExecutableElement method )
   {
-    MemberChecks.mustBeAbstract( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
-    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
-                                                           Constants.APPLICATION_CLASSNAME,
-                                                           Constants.COMPONENT_MANAGER_REF_CLASSNAME,
-                                                           method );
-    MemberChecks.mustNotHaveAnyParameters( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
-    MemberChecks.mustReturnAValue( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
-    MemberChecks.mustNotThrowAnyExceptions( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
-    MemberChecks.shouldNotBePublic( processingEnv,
-                                    method,
-                                    Constants.COMPONENT_MANAGER_REF_CLASSNAME,
-                                    Constants.WARNING_PUBLIC_REF_METHOD,
-                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
-    {
-      MemberChecks.shouldNotBeProtected( processingEnv,
-                                         method,
-                                         Constants.COMPONENT_MANAGER_REF_CLASSNAME,
-                                         Constants.WARNING_PROTECTED_REF_METHOD,
-                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
+    mustBeRefMethod( descriptor, method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
 
     final TypeMirror returnType = method.getReturnType();
     final TypeName typeName = TypeName.get( returnType );
@@ -150,27 +130,7 @@ public final class SubSystemProcessor
 
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
-    MemberChecks.mustBeAbstract( Constants.NAME_REF_CLASSNAME, method );
-    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
-                                                           Constants.APPLICATION_CLASSNAME,
-                                                           Constants.NAME_REF_CLASSNAME,
-                                                           method );
-    MemberChecks.mustNotHaveAnyParameters( Constants.NAME_REF_CLASSNAME, method );
-    MemberChecks.mustReturnAValue( Constants.NAME_REF_CLASSNAME, method );
-    MemberChecks.mustNotThrowAnyExceptions( Constants.NAME_REF_CLASSNAME, method );
-    MemberChecks.shouldNotBePublic( processingEnv,
-                                    method,
-                                    Constants.NAME_REF_CLASSNAME,
-                                    Constants.WARNING_PUBLIC_REF_METHOD,
-                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
-    {
-      MemberChecks.shouldNotBeProtected( processingEnv,
-                                         method,
-                                         Constants.NAME_REF_CLASSNAME,
-                                         Constants.WARNING_PROTECTED_REF_METHOD,
-                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
+    mustBeRefMethod( descriptor, method, Constants.NAME_REF_CLASSNAME );
 
     if ( !String.class.getName().equals( method.getReturnType().toString() ) )
     {
@@ -181,27 +141,7 @@ public final class SubSystemProcessor
 
   private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
-    MemberChecks.mustBeAbstract( Constants.WORLD_REF_CLASSNAME, method );
-    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
-                                                           Constants.APPLICATION_CLASSNAME,
-                                                           Constants.WORLD_REF_CLASSNAME,
-                                                           method );
-    MemberChecks.mustNotHaveAnyParameters( Constants.WORLD_REF_CLASSNAME, method );
-    MemberChecks.mustReturnAValue( Constants.WORLD_REF_CLASSNAME, method );
-    MemberChecks.mustNotThrowAnyExceptions( Constants.WORLD_REF_CLASSNAME, method );
-    MemberChecks.shouldNotBePublic( processingEnv,
-                                    method,
-                                    Constants.WORLD_REF_CLASSNAME,
-                                    Constants.WARNING_PUBLIC_REF_METHOD,
-                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
-    {
-      MemberChecks.shouldNotBeProtected( processingEnv,
-                                         method,
-                                         Constants.WORLD_REF_CLASSNAME,
-                                         Constants.WARNING_PROTECTED_REF_METHOD,
-                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
+    mustBeRefMethod( descriptor, method, Constants.WORLD_REF_CLASSNAME );
 
     final TypeMirror returnType = method.getReturnType();
     if ( TypeKind.DECLARED != returnType.getKind() || !Constants.WORLD_CLASSNAME.equals( returnType.toString() ) )
@@ -209,6 +149,33 @@ public final class SubSystemProcessor
       throw new ProcessorException( "@WorldRef target must return an instance of galdr.World", method );
     }
     descriptor.addWorldRef( method );
+  }
+
+  private void mustBeRefMethod( @Nonnull final SubSystemDescriptor descriptor,
+                                @Nonnull final ExecutableElement method,
+                                @Nonnull final String annotationClassname )
+  {
+    MemberChecks.mustBeAbstract( annotationClassname, method );
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+                                                           Constants.APPLICATION_CLASSNAME,
+                                                           annotationClassname,
+                                                           method );
+    MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
+    MemberChecks.mustReturnAValue( annotationClassname, method );
+    MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
+    MemberChecks.shouldNotBePublic( processingEnv,
+                                    method,
+                                    annotationClassname,
+                                    Constants.WARNING_PUBLIC_REF_METHOD,
+                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    {
+      MemberChecks.shouldNotBeProtected( processingEnv,
+                                         method,
+                                         annotationClassname,
+                                         Constants.WARNING_PROTECTED_REF_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
   }
 
   @Nonnull
