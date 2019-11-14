@@ -7,7 +7,11 @@ import java.lang.annotation.Target;
 /**
  * Annotation to identify method invoked before Subsystem begins operation.
  * This annotation will be processed on classes annotated by the {@link SubSystem} annotation and any parent
- * classes or interfaces. At most 1 method should be annotated with this annotation in a class.
+ * classes or interfaces.
+ *
+ * <p>If there are multiple methods annotated with this annotation then the methods declared in parent
+ * classes will be invoked first and multiple methods within a single class will be invoked in declaration
+ * order.</p>
  *
  * <p>The method that is annotated with this annotation must comply with the additional constraints:</p>
  * <ul>
