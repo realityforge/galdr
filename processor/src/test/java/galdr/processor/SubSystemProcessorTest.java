@@ -265,6 +265,17 @@ public class SubSystemProcessorTest
                              Collections.singletonList( output ) );
   }
 
+  @Test
+  public void completeViaInterfaceSubSystem()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.CompleteViaInterfaceSubSystem" );
+    final String input2 = toFilename( "input", "com.example.other.CompleteInterfaceSubSystem" );
+    final String output = toFilename( "expected", "com.example.Galdr_CompleteViaInterfaceSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
   @DataProvider( name = "failedCompiles" )
   public Object[][] failedCompiles()
   {
