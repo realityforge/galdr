@@ -15,14 +15,14 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-@SuppressWarnings( { "SameParameterValue", "WeakerAccess", "unused" } )
+@SuppressWarnings( { "SameParameterValue", "WeakerAccess", "unused", "RedundantSuppression" } )
 final class AnnotationsUtil
 {
   private AnnotationsUtil()
   {
   }
 
-  @SuppressWarnings( { "unchecked", "SameParameterValue" } )
+  @SuppressWarnings( "unchecked" )
   @Nonnull
   static List<TypeMirror> getTypeMirrorsAnnotationParameter( @Nonnull final TypeElement typeElement,
                                                              @Nonnull final String annotationClassName,
@@ -65,7 +65,6 @@ final class AnnotationsUtil
     return values.get( annotationKey );
   }
 
-  @SuppressWarnings( "SameParameterValue" )
   @Nullable
   static AnnotationValue findAnnotationValueNoDefaults( @Nonnull final AnnotationMirror annotation,
                                                         @Nonnull final String parameterName )
@@ -85,7 +84,6 @@ final class AnnotationsUtil
     return (T) value.getValue();
   }
 
-  @SuppressWarnings( "SameParameterValue" )
   @Nonnull
   static AnnotationMirror getAnnotationByType( @Nonnull final Element typeElement,
                                                @Nonnull final String annotationClassName )
