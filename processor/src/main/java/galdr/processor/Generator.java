@@ -87,10 +87,16 @@ final class Generator
                         .build() );
 
     emitConstructor( descriptor, builder );
+
+    // Generate Ref methods
     emitComponentManagerAccessors( descriptor, builder );
     emitNameAccessors( descriptor, builder );
     emitWorldAccessors( descriptor, builder );
+
+    // Generate lifecycle methods
     emitPostConstruct( descriptor, builder );
+
+    // Generate support code
     emitToString( builder );
 
     return builder.build();
