@@ -44,13 +44,13 @@ public final class Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem imp
       return $galdrc$_cm;
     }
 
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( BaseProtectedAccessComponentManagerRefSubSystem.MyComponent.class );
-    }
-
     @Nonnull
     private String $galdr$_getName() {
       return "ProtectedAccessFromBaseComponentManagerRefSubSystem";
+    }
+
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm = $galdr$_outer.$galdr$_getWorld().getComponentByType( BaseProtectedAccessComponentManagerRefSubSystem.MyComponent.class );
     }
 
     @Nonnull

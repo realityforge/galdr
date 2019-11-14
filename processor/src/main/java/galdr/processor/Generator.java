@@ -120,13 +120,30 @@ final class Generator
       builder.addMethod( method.build() );
     }
 
-    if ( !componentManagerRefs.isEmpty() || !descriptor.getOnActivates().isEmpty() )
+    emitWorldAccessors( descriptor, builder );
+    emitNameAccessors( descriptor, builder );
+    emitPostConstruct( descriptor, builder );
+    emitToString( builder );
+
+/*
+    private void $galdr$_process( final int delta )
+    {
+      processGlobalActions();
+    }
+* */
+    return builder.build();
+  }
+
+  private static void emitPostConstruct( @Nonnull final SubSystemDescriptor descriptor,
+                                         @Nonnull final TypeSpec.Builder builder )
+  {
+    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getOnActivates().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( POST_CONSTRUCT_METHOD )
           .addModifiers( Modifier.PRIVATE );
-      for ( final ComponentManagerRefDescriptor componentManagerRef : componentManagerRefs )
+      for ( final ComponentManagerRefDescriptor componentManagerRef : descriptor.getComponentManagerRefs() )
       {
         final ExecutableElement methodElement = componentManagerRef.getMethod();
         final String methodName = methodElement.getSimpleName().toString();
@@ -145,18 +162,6 @@ final class Generator
 
       builder.addMethod( method.build() );
     }
-
-    emitWorldAccessors( descriptor, builder );
-    emitNameAccessors( descriptor, builder );
-    emitToString( builder );
-
-/*
-    private void $galdr$_process( final int delta )
-    {
-      processGlobalActions();
-    }
-* */
-    return builder.build();
   }
 
   private static void emitWorldAccessors( @Nonnull final SubSystemDescriptor descriptor,

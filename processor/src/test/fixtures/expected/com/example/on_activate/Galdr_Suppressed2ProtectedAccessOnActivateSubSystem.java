@@ -31,13 +31,13 @@ public final class Galdr_Suppressed2ProtectedAccessOnActivateSubSystem implement
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
-    private void $galdr$_postConstruct() {
-      onActivate();
-    }
-
     @Nonnull
     private String $galdr$_getName() {
       return "Suppressed2ProtectedAccessOnActivateSubSystem";
+    }
+
+    private void $galdr$_postConstruct() {
+      onActivate();
     }
 
     @Nonnull

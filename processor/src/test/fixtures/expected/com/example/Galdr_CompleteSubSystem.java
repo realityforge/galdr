@@ -52,13 +52,6 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
       return $galdrc$_cm2;
     }
 
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteSubSystem.MyComponent1.class );
-      $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteSubSystem.MyComponent2.class );
-      onActivate1();
-      onActivate2();
-    }
-
     @Override
     @Nonnull
     World world1() {
@@ -86,6 +79,13 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn {
     @Nonnull
     private String $galdr$_getName() {
       return "CompleteSubSystem";
+    }
+
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteSubSystem.MyComponent1.class );
+      $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteSubSystem.MyComponent2.class );
+      onActivate1();
+      onActivate2();
     }
 
     @Nonnull

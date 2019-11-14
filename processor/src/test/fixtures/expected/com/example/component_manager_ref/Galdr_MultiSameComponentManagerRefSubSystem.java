@@ -52,14 +52,14 @@ public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostCo
       return $galdrc$_cm2;
     }
 
-    private void $galdr$_postConstruct() {
-      $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
-      $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
-    }
-
     @Nonnull
     private String $galdr$_getName() {
       return "MultiSameComponentManagerRefSubSystem";
+    }
+
+    private void $galdr$_postConstruct() {
+      $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
+      $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
     }
 
     @Nonnull

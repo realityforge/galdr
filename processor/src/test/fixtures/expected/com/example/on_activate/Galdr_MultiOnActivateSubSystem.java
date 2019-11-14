@@ -30,14 +30,14 @@ public final class Galdr_MultiOnActivateSubSystem implements PostConstructFn {
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
-    private void $galdr$_postConstruct() {
-      onActivate1();
-      onActivate2();
-    }
-
     @Nonnull
     private String $galdr$_getName() {
       return "MultiOnActivateSubSystem";
+    }
+
+    private void $galdr$_postConstruct() {
+      onActivate1();
+      onActivate2();
     }
 
     @Nonnull
