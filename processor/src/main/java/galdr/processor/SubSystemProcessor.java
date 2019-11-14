@@ -5,6 +5,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedOptions;
@@ -110,6 +111,14 @@ public final class SubSystemProcessor
                                     Constants.COMPONENT_MANAGER_REF_CLASSNAME,
                                     Constants.WARNING_PUBLIC_REF_METHOD,
                                     Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    {
+      MemberChecks.shouldNotBeProtected( processingEnv,
+                                         method,
+                                         Constants.COMPONENT_MANAGER_REF_CLASSNAME,
+                                         Constants.WARNING_PROTECTED_REF_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
 
     final TypeMirror returnType = method.getReturnType();
     final TypeName typeName = TypeName.get( returnType );

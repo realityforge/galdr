@@ -1,6 +1,7 @@
 package galdr.processor;
 
 import com.google.testing.compile.JavaSourcesSubjectFactory;
+import java.util.Arrays;
 import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.DataProvider;
@@ -19,7 +20,6 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.MultiComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.MultiSameComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.Suppressed1PublicAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
 
@@ -74,6 +74,37 @@ public class SubSystemProcessorTest
       compilesWithoutError().
       withWarningCount( 1 ).
       withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessComponentManagerRef()
+  {
+    final String filename =
+      toFilename( "input", "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" );
+    final String messageFragment =
+      "@ComponentManagerRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessComponentManagerRef()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.component_manager_ref.ProtectedAccessFromBaseComponentManagerRefSubSystem" );
+    final String input2 =
+      toFilename( "input", "com.example.component_manager_ref.other.BaseProtectedAccessComponentManagerRefSubSystem" );
+    final String output =
+      toFilename( "expected",
+                  "com.example.component_manager_ref.Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
   }
 
   @DataProvider( name = "failedCompiles" )

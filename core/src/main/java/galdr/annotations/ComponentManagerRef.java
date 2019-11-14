@@ -22,6 +22,11 @@ import java.lang.annotation.Target;
  *   be suppressed by the {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key
  *   "Galdr:PublicRefMethod".
  * </li>
+ * <li>
+ *   Should not be protected if in the class annotated with the {@link SubSystem} annotation as the method is not
+ *   expected to be invoked outside the subsystem. A warning will be generated but can be suppressed by the
+ *   {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key "Galdr:ProtectedRefMethod".
+ * </li>
  * </ul>
  */
 @Documented

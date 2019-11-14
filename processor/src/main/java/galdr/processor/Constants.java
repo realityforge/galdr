@@ -24,6 +24,7 @@ final class Constants
 
   static final String SENTINEL_NAME = "<default>";
   static final String WARNING_PUBLIC_REF_METHOD = "Galdr:PublicRefMethod";
+  static final String WARNING_PROTECTED_REF_METHOD = "Galdr:ProtectedRefMethod";
 
   private Constants()
   {
