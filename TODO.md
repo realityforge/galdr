@@ -81,8 +81,6 @@ for systems/processors ahead of time.
 ### Tasks
 
 * Test annotation examples combining all elements in a single class
-* Generate a suppressable warning if any Ref method or lifecycle method is public
-* Generate a suppressable warning if any Ref method or lifecycle method is protected and in class annotated with @SubSystem
 * Write annotation processor that generates the support infrastructure from annotations.
 * Introduce Nullability utility for annotation processing.
 * Extract useful annotation processor utilities into a separate project.
