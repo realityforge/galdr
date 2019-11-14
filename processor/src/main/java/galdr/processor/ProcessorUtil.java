@@ -28,8 +28,6 @@ import javax.lang.model.util.Types;
 
 final class ProcessorUtil
 {
-  static final String SENTINEL_NAME = "<default>";
-
   private ProcessorUtil()
   {
   }
@@ -235,11 +233,6 @@ final class ProcessorUtil
   static String firstCharacterToLowerCase( @Nonnull final String name )
   {
     return Character.toLowerCase( name.charAt( 0 ) ) + name.substring( 1 );
-  }
-
-  static boolean isSentinelName( @Nonnull final String name )
-  {
-    return SENTINEL_NAME.equals( name );
   }
 
   @SuppressWarnings( { "unchecked", "SameParameterValue" } )
