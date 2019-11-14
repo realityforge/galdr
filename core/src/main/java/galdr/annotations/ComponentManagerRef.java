@@ -17,6 +17,11 @@ import java.lang.annotation.Target;
  * <li>Must not throw any exceptions</li>
  * <li>Must be accessible to the class annotated by the {@link SubSystem} annotation.</li>
  * <li>Must return an instance of {@link galdr.ComponentManager} that is parameterized with the type that defines the component.</li>
+ * <li>
+ *   Should not be public as not expected to be invoked outside the subsystem. A warning will be generated bu can
+ *   be suppressed by the {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key
+ *   "Galdr:PublicRefMethod".
+ * </li>
  * </ul>
  */
 @Documented

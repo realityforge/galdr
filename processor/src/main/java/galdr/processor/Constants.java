@@ -13,6 +13,7 @@ final class Constants
   static final String SUB_SYSTEM_CLASSNAME = "galdr.annotations.SubSystem";
   static final String NAME_REF_CLASSNAME = "galdr.annotations.NameRef";
   static final String WORLD_REF_CLASSNAME = "galdr.annotations.WorldRef";
+  static final String SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME = "galdr.annotations.SuppressGaldrWarnings";
   static final String NONNULL_CLASSNAME = "javax.annotation.Nonnull";
   static final String NULLABLE_CLASSNAME = "javax.annotation.Nullable";
   static final String DEPRECATED_CLASSNAME = "java.lang.Deprecated";
@@ -22,6 +23,7 @@ final class Constants
   static final String WORLD_CLASSNAME = "galdr.World";
 
   static final String SENTINEL_NAME = "<default>";
+  static final String WARNING_PUBLIC_REF_METHOD = "Galdr:PublicRefMethod";
 
   private Constants()
   {

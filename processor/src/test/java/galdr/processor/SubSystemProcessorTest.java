@@ -1,8 +1,11 @@
 package galdr.processor;
 
+import com.google.testing.compile.JavaSourcesSubjectFactory;
+import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import static com.google.common.truth.Truth.*;
 
 public class SubSystemProcessorTest
   extends AbstractProcessorTest
@@ -17,7 +20,8 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.MultiSameComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed1PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
 
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
@@ -54,6 +58,22 @@ public class SubSystemProcessorTest
   {
     assertSuccessfulCompile( "input/com/example/StaticInnerClassSubSystem.java",
                              "expected/com/example/StaticInnerClassSubSystem_Galdr_Foo.java" );
+  }
+
+  @Test
+  public void unmanagedDisposeNotifierReference()
+  {
+    final String filename =
+      toFilename( "input", "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" );
+    final String messageFragment =
+      "@ComponentManagerRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
   }
 
   @DataProvider( name = "failedCompiles" )

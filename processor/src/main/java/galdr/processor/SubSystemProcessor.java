@@ -105,6 +105,10 @@ public final class SubSystemProcessor
     MemberChecks.mustNotHaveAnyParameters( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
     MemberChecks.mustReturnAValue( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
     MemberChecks.mustNotThrowAnyExceptions( Constants.COMPONENT_MANAGER_REF_CLASSNAME, method );
+    MemberChecks.shouldNotBePublic( processingEnv,
+                                    method,
+                                    Constants.WARNING_PUBLIC_REF_METHOD,
+                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
 
     final TypeMirror returnType = method.getReturnType();
     final TypeName typeName = TypeName.get( returnType );
