@@ -86,6 +86,19 @@ final class Generator
                         .addAnnotation( NONNULL_CLASSNAME )
                         .build() );
 
+    emitConstructor( descriptor, builder );
+    emitComponentManagerAccessors( descriptor, builder );
+    emitWorldAccessors( descriptor, builder );
+    emitNameAccessors( descriptor, builder );
+    emitPostConstruct( descriptor, builder );
+    emitToString( builder );
+
+    return builder.build();
+  }
+
+  private static void emitConstructor( @Nonnull final SubSystemDescriptor descriptor,
+                                       @Nonnull final TypeSpec.Builder builder )
+  {
     builder.addMethod( MethodSpec.constructorBuilder()
                          .addModifiers( Modifier.PRIVATE )
                          .addParameter( ParameterSpec.builder( descriptor.getEnhancedClassName(),
@@ -95,6 +108,11 @@ final class Generator
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
+  }
+
+  private static void emitComponentManagerAccessors( @Nonnull final SubSystemDescriptor descriptor,
+                                                     @Nonnull final TypeSpec.Builder builder )
+  {
     for ( final ComponentManagerRefDescriptor componentManagerRef : descriptor.getComponentManagerRefs() )
     {
       final ParameterizedTypeName type =
@@ -117,13 +135,6 @@ final class Generator
       GeneratorUtil.copyAccessModifiers( methodElement, method );
       builder.addMethod( method.build() );
     }
-
-    emitWorldAccessors( descriptor, builder );
-    emitNameAccessors( descriptor, builder );
-    emitPostConstruct( descriptor, builder );
-    emitToString( builder );
-
-    return builder.build();
   }
 
   private static void emitPostConstruct( @Nonnull final SubSystemDescriptor descriptor,
