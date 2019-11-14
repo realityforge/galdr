@@ -13,9 +13,6 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>Must not be annotated with any other galdr annotation</li>
  * <li>Must not have any parameters</li>
- * <li>Must not be private</li>
- * <li>Must not be static</li>
- * <li>Must not be final</li>
  * <li>Must be abstract</li>
  * <li>Must not throw any exceptions</li>
  * <li>Must return an instance of {@link galdr.World}.</li>
