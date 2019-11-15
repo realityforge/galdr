@@ -83,7 +83,6 @@ for systems/processors ahead of time.
 * Add support in annotation processor for
   - `@Processor`
   - `@EntityProcessor`
-* Write annotation processor that generates the support infrastructure from annotations.
 * Introduce Nullability utility for annotation processing.
 * Extract useful annotation processor utilities into a separate project.
 * Add the `EntityPlan` element above.
