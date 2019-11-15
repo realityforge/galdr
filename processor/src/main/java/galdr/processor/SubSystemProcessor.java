@@ -74,7 +74,8 @@ public final class SubSystemProcessor
       final AnnotationMirror componentManagerRef =
         AnnotationsUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
       final AnnotationMirror nameRef = AnnotationsUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
-      final AnnotationMirror onActivate = AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
+      final AnnotationMirror onActivate =
+        AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
       final AnnotationMirror worldRef = AnnotationsUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != componentManagerRef )
