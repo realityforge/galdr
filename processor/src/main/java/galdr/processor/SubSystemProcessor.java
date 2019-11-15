@@ -178,11 +178,14 @@ public final class SubSystemProcessor
     MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
     MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
-    MemberChecks.shouldNotBePublic( processingEnv,
-                                    method,
-                                    annotationClassname,
-                                    Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
-                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    if ( doesMethodNotOverrideInterfaceMethod( typeElement, method ) )
+    {
+      MemberChecks.shouldNotBePublic( processingEnv,
+                                      method,
+                                      annotationClassname,
+                                      Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
+                                      Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
     if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
     {
       MemberChecks.shouldNotBeProtected( processingEnv,
@@ -206,11 +209,15 @@ public final class SubSystemProcessor
     MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
     MemberChecks.mustReturnAValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
-    MemberChecks.shouldNotBePublic( processingEnv,
-                                    method,
-                                    annotationClassname,
-                                    Constants.WARNING_PUBLIC_REF_METHOD,
-                                    Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+
+    if ( doesMethodNotOverrideInterfaceMethod( typeElement, method ) )
+    {
+      MemberChecks.shouldNotBePublic( processingEnv,
+                                      method,
+                                      annotationClassname,
+                                      Constants.WARNING_PUBLIC_REF_METHOD,
+                                      Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    }
     if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
     {
       MemberChecks.shouldNotBeProtected( processingEnv,
@@ -219,6 +226,12 @@ public final class SubSystemProcessor
                                          Constants.WARNING_PROTECTED_REF_METHOD,
                                          Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
     }
+  }
+
+  private boolean doesMethodNotOverrideInterfaceMethod( @Nonnull final TypeElement typeElement,
+                                                        @Nonnull final ExecutableElement method )
+  {
+    return !ProcessorUtil.doesMethodOverrideInterfaceMethod( processingEnv.getTypeUtils(), typeElement, method );
   }
 
   @Nonnull

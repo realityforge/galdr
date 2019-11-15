@@ -123,6 +123,20 @@ public class SubSystemProcessorTest
   }
 
   @Test
+  public void publicAccessViaInterfaceComponentManagerRef()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.component_manager_ref.PublicAccessViaInterfaceComponentManagerRefSubSystem" );
+    final String input2 = toFilename( "input", "com.example.component_manager_ref.ComponentManagerRefInterface" );
+    final String output =
+      toFilename( "expected",
+                  "com.example.component_manager_ref.Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
   public void publicAccessNameRef()
   {
     final String filename =
@@ -162,6 +176,18 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "input", "com.example.name_ref.other.BaseProtectedAccessNameRefSubSystem" );
     final String output =
       toFilename( "expected", "com.example.name_ref.Galdr_ProtectedAccessFromBaseNameRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessViaInterfaceWorldRef()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.world_ref.PublicAccessViaInterfaceWorldRefSubSystem" );
+    final String input2 = toFilename( "input", "com.example.world_ref.WorldRefInterface" );
+    final String output =
+      toFilename( "expected", "com.example.world_ref.Galdr_PublicAccessViaInterfaceWorldRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -211,6 +237,18 @@ public class SubSystemProcessorTest
   }
 
   @Test
+  public void publicAccessViaInterfaceOnActivateRef()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.on_activate.PublicAccessViaInterfaceOnActivateSubSystem" );
+    final String input2 = toFilename( "input", "com.example.on_activate.OnActivateInterface" );
+    final String output =
+      toFilename( "expected", "com.example.on_activate.Galdr_PublicAccessViaInterfaceOnActivateSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
   public void publicAccessWorldRef()
   {
     final String fileworld =
@@ -250,6 +288,18 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "input", "com.example.world_ref.other.BaseProtectedAccessWorldRefSubSystem" );
     final String output =
       toFilename( "expected", "com.example.world_ref.Galdr_ProtectedAccessFromBaseWorldRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessViaInterfaceNameRef()
+    throws Exception
+  {
+    final String input1 = toFilename( "input", "com.example.name_ref.PublicAccessViaInterfaceNameRefSubSystem" );
+    final String input2 = toFilename( "input", "com.example.name_ref.NameRefInterface" );
+    final String output =
+      toFilename( "expected", "com.example.name_ref.Galdr_PublicAccessViaInterfaceNameRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }

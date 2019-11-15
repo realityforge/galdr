@@ -256,4 +256,20 @@ final class ProcessorUtil
   {
     return Character.toLowerCase( name.charAt( 0 ) ) + name.substring( 1 );
   }
+
+  static boolean doesMethodOverrideInterfaceMethod( @Nonnull final Types typeUtils,
+                                                    @Nonnull final TypeElement typeElement,
+                                                    @Nonnull final ExecutableElement method )
+  {
+    return getInterfaces( typeElement ).stream()
+      .flatMap( i -> i.getEnclosedElements().stream() )
+      .filter( e1 -> e1 instanceof ExecutableElement )
+      .map( e1 -> (ExecutableElement) e1 )
+      .collect(
+        Collectors.toList() ).stream()
+      .anyMatch( e -> isSubsignature( typeUtils,
+                                      typeElement,
+                                      (ExecutableType) typeUtils.asMemberOf( (DeclaredType) typeElement.asType(), e ),
+                                      method ) );
+  }
 }
