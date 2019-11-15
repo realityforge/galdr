@@ -17,6 +17,16 @@ import java.lang.annotation.Target;
  * <li>Must not throw any exceptions</li>
  * <li>Must return an instance of {@link galdr.World}.</li>
  * <li>Must be accessible to the class annotated by the {@link SubSystem} annotation.</li>
+ * <li>
+ *   Should not be public as not expected to be invoked outside the subsystem. A warning will be generated but can
+ *   be suppressed by the {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key
+ *   "Galdr:PublicRefMethod".
+ * </li>
+ * <li>
+ *   Should not be protected if in the class annotated with the {@link SubSystem} annotation as the method is not
+ *   expected to be invoked outside the subsystem. A warning will be generated but can be suppressed by the
+ *   {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key "Galdr:ProtectedRefMethod".
+ * </li>
  * </ul>
  */
 @Documented
