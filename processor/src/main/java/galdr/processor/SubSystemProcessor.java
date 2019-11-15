@@ -170,7 +170,8 @@ public final class SubSystemProcessor
     MemberChecks.mustNotBeAbstract( annotationClassname, method );
     MemberChecks.mustNotBePrivate( annotationClassname, method );
     MemberChecks.mustNotBeStatic( annotationClassname, method );
-    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+    final TypeElement typeElement = descriptor.getElement();
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( typeElement,
                                                            Constants.APPLICATION_CLASSNAME,
                                                            annotationClassname,
                                                            method );
@@ -182,7 +183,7 @@ public final class SubSystemProcessor
                                     annotationClassname,
                                     Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
                                     Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
     {
       MemberChecks.shouldNotBeProtected( processingEnv,
                                          method,
@@ -197,7 +198,8 @@ public final class SubSystemProcessor
                                 @Nonnull final String annotationClassname )
   {
     MemberChecks.mustBeAbstract( annotationClassname, method );
-    MemberChecks.mustNotBePackageAccessInDifferentPackage( descriptor.getElement(),
+    final TypeElement typeElement = descriptor.getElement();
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( typeElement,
                                                            Constants.APPLICATION_CLASSNAME,
                                                            annotationClassname,
                                                            method );
@@ -209,7 +211,7 @@ public final class SubSystemProcessor
                                     annotationClassname,
                                     Constants.WARNING_PUBLIC_REF_METHOD,
                                     Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    if ( Objects.equals( descriptor.getElement(), method.getEnclosingElement() ) )
+    if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
     {
       MemberChecks.shouldNotBeProtected( processingEnv,
                                          method,
