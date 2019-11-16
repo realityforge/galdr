@@ -4,6 +4,7 @@ import galdr.ComponentManager;
 import galdr.Galdr;
 import galdr.World;
 import galdr.internal.OnActivateFn;
+import galdr.internal.OnDeactivateFn;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
 import javax.annotation.Generated;
@@ -11,7 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_CompleteSubSystem implements PostConstructFn, OnActivateFn {
+public final class Galdr_CompleteSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -28,6 +29,11 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn, OnActivat
   @Override
   public void activate() {
     _subsystem.$galdr$_onActivate();
+  }
+
+  @Override
+  public void deactivate() {
+    _subsystem.$galdr$_onDeactivate();
   }
 
   private static final class EnhancedSubSystem extends CompleteSubSystem {
@@ -90,6 +96,11 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn, OnActivat
     private void $galdr$_onActivate() {
       onActivate1();
       onActivate2();
+    }
+
+    private void $galdr$_onDeactivate() {
+      onDeactivate1();
+      onDeactivate2();
     }
 
     @Nonnull

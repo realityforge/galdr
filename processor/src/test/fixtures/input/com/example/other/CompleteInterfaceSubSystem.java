@@ -5,6 +5,7 @@ import galdr.World;
 import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.NameRef;
 import galdr.annotations.OnActivate;
+import galdr.annotations.OnDeactivate;
 import galdr.annotations.Processor;
 import galdr.annotations.WorldRef;
 
@@ -43,6 +44,16 @@ public interface CompleteInterfaceSubSystem
 
   @OnActivate
   default void onActivate2()
+  {
+  }
+
+  @OnDeactivate
+  default void onDeactivate1()
+  {
+  }
+
+  @OnDeactivate
+  default void onDeactivate2()
   {
   }
 

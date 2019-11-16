@@ -5,6 +5,7 @@ import galdr.World;
 import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.NameRef;
 import galdr.annotations.OnActivate;
+import galdr.annotations.OnDeactivate;
 import galdr.annotations.Processor;
 import galdr.annotations.SubSystem;
 import galdr.annotations.WorldRef;
@@ -44,6 +45,16 @@ public abstract class CompleteBaseSubSystem
 
   @OnActivate
   protected void onActivate2()
+  {
+  }
+
+  @OnDeactivate
+  protected void onDeactivate1()
+  {
+  }
+
+  @OnDeactivate
+  protected void onDeactivate2()
   {
   }
 
