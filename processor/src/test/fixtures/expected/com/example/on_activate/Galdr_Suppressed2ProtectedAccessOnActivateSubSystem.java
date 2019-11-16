@@ -2,13 +2,13 @@ package com.example.on_activate;
 
 import galdr.Galdr;
 import galdr.World;
-import galdr.internal.PostConstructFn;
+import galdr.internal.OnActivateFn;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_Suppressed2ProtectedAccessOnActivateSubSystem implements PostConstructFn {
+public final class Galdr_Suppressed2ProtectedAccessOnActivateSubSystem implements OnActivateFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -18,8 +18,8 @@ public final class Galdr_Suppressed2ProtectedAccessOnActivateSubSystem implement
   }
 
   @Override
-  public void postConstruct() {
-    _subsystem.$galdr$_postConstruct();
+  public void activate() {
+    _subsystem.$galdr$_onActivate();
   }
 
   private static final class EnhancedSubSystem extends Suppressed2ProtectedAccessOnActivateSubSystem {
@@ -31,7 +31,7 @@ public final class Galdr_Suppressed2ProtectedAccessOnActivateSubSystem implement
       $galdr$_outer = Objects.requireNonNull( outer );
     }
 
-    private void $galdr$_postConstruct() {
+    private void $galdr$_onActivate() {
       onActivate();
     }
 

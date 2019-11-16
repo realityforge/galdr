@@ -4,6 +4,7 @@ import com.example.other.CompleteInterfaceSubSystem;
 import galdr.ComponentManager;
 import galdr.Galdr;
 import galdr.World;
+import galdr.internal.OnActivateFn;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
 import javax.annotation.Generated;
@@ -11,7 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_CompleteViaInterfaceSubSystem implements PostConstructFn {
+public final class Galdr_CompleteViaInterfaceSubSystem implements PostConstructFn, OnActivateFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -23,6 +24,11 @@ public final class Galdr_CompleteViaInterfaceSubSystem implements PostConstructF
   @Override
   public void postConstruct() {
     _subsystem.$galdr$_postConstruct();
+  }
+
+  @Override
+  public void activate() {
+    _subsystem.$galdr$_onActivate();
   }
 
   private static final class EnhancedSubSystem extends CompleteViaInterfaceSubSystem {
@@ -80,6 +86,9 @@ public final class Galdr_CompleteViaInterfaceSubSystem implements PostConstructF
     private void $galdr$_postConstruct() {
       $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteInterfaceSubSystem.MyComponent1.class );
       $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( CompleteInterfaceSubSystem.MyComponent2.class );
+    }
+
+    private void $galdr$_onActivate() {
       onActivate1();
       onActivate2();
     }

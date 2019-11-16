@@ -21,6 +21,7 @@ final class Generator
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
   private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
+  private static final ClassName ON_ACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnActivateFn" );
   private static final ClassName ON_DEACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnDeactivateFn" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
@@ -30,6 +31,7 @@ final class Generator
   private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
   private static final String WORLD_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getWorld";
   private static final String POST_CONSTRUCT_METHOD = FRAMEWORK_INTERNAL_PREFIX + "postConstruct";
+  private static final String ON_ACTIVATE_METHOD = FRAMEWORK_INTERNAL_PREFIX + "onActivate";
   private static final String ON_DEACTIVATE_METHOD = FRAMEWORK_INTERNAL_PREFIX + "onDeactivate";
 
   private Generator()
@@ -59,13 +61,23 @@ final class Generator
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
                          .build() );
 
-    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getOnActivates().isEmpty() )
+    if ( !descriptor.getComponentManagerRefs().isEmpty() )
     {
       builder.addSuperinterface( POST_CONSTRUCT_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "postConstruct" )
                            .addAnnotation( Override.class )
                            .addModifiers( Modifier.PUBLIC )
                            .addStatement( "_subsystem.$N()", POST_CONSTRUCT_METHOD )
+                           .build() );
+    }
+
+    if ( !descriptor.getOnActivates().isEmpty() )
+    {
+      builder.addSuperinterface( ON_ACTIVATE_FN_CLASSNAME );
+      builder.addMethod( MethodSpec.methodBuilder( "activate" )
+                           .addAnnotation( Override.class )
+                           .addModifiers( Modifier.PUBLIC )
+                           .addStatement( "_subsystem.$N()", ON_ACTIVATE_METHOD )
                            .build() );
     }
 
@@ -107,6 +119,7 @@ final class Generator
 
     // Generate lifecycle methods
     emitPostConstruct( descriptor, builder );
+    emitOnActivate( descriptor, builder );
     emitOnDeactivate( descriptor, builder );
 
     // Generate support code
@@ -194,7 +207,7 @@ final class Generator
   private static void emitPostConstruct( @Nonnull final SubSystemDescriptor descriptor,
                                          @Nonnull final TypeSpec.Builder builder )
   {
-    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getOnActivates().isEmpty() )
+    if ( !descriptor.getComponentManagerRefs().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
@@ -212,6 +225,20 @@ final class Generator
                              WORLD_ACCESSOR_METHOD,
                              componentManagerRef.getComponentType() );
       }
+
+      builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitOnActivate( @Nonnull final SubSystemDescriptor descriptor,
+                                         @Nonnull final TypeSpec.Builder builder )
+  {
+    if ( !descriptor.getOnActivates().isEmpty() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( ON_ACTIVATE_METHOD )
+          .addModifiers( Modifier.PRIVATE );
       for ( final ExecutableElement onActivate : descriptor.getOnActivates() )
       {
         method.addStatement( "$N()", onActivate.getSimpleName().toString() );
