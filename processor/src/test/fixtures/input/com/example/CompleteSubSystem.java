@@ -60,7 +60,12 @@ abstract class CompleteSubSystem
   }
 
   @Processor
-  final void runFrame()
+  final void runFrame1()
+  {
+  }
+
+  @Processor
+  final void runFrame2()
   {
   }
 }

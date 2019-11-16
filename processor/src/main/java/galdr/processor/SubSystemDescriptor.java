@@ -24,6 +24,8 @@ final class SubSystemDescriptor
   @Nonnull
   private final List<ExecutableElement> _onDeactivates = new ArrayList<>();
   @Nonnull
+  private final List<ExecutableElement> _processors = new ArrayList<>();
+  @Nonnull
   private final List<ExecutableElement> _worldRefs = new ArrayList<>();
 
   SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name, final int priority )
@@ -104,6 +106,17 @@ final class SubSystemDescriptor
   List<ExecutableElement> getOnDeactivates()
   {
     return _onDeactivates;
+  }
+
+  void addProcessor( @Nonnull final ExecutableElement method )
+  {
+    _processors.add( Objects.requireNonNull( method ) );
+  }
+
+  @Nonnull
+  List<ExecutableElement> getProcessors()
+  {
+    return _processors;
   }
 
   void addWorldRef( @Nonnull final ExecutableElement method )

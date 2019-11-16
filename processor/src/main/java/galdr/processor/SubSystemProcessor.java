@@ -17,6 +17,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
@@ -78,6 +79,7 @@ public final class SubSystemProcessor
         AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
       final AnnotationMirror onDeactivate =
         AnnotationsUtil.findAnnotationByType( method, Constants.ON_DEACTIVATE_CLASSNAME );
+      final AnnotationMirror processor = AnnotationsUtil.findAnnotationByType( method, Constants.PROCESSOR_CLASSNAME );
       final AnnotationMirror worldRef = AnnotationsUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != componentManagerRef )
@@ -95,6 +97,10 @@ public final class SubSystemProcessor
       else if ( null != onDeactivate )
       {
         addOnDeactivate( descriptor, method );
+      }
+      else if ( null != processor )
+      {
+        addProcessor( descriptor, method );
       }
       else if ( null != worldRef )
       {
@@ -163,6 +169,18 @@ public final class SubSystemProcessor
     mustBeLifecycleMethod( descriptor, method, Constants.ON_DEACTIVATE_CLASSNAME );
     MemberChecks.mustNotHaveAnyParameters( Constants.ON_DEACTIVATE_CLASSNAME, method );
     descriptor.addOnDeactivate( method );
+  }
+
+  private void addProcessor( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
+  {
+    mustBeLifecycleMethod( descriptor, method, Constants.PROCESSOR_CLASSNAME );
+    final List<? extends VariableElement> parameters = method.getParameters();
+    if ( parameters.size() > 1 || ( 1 == parameters.size() && TypeKind.INT != parameters.get( 0 ).asType().getKind() ) )
+    {
+      throw new ProcessorException( MemberChecks.must( Constants.PROCESSOR_CLASSNAME,
+                                                       "have zero parameters or a single integer parameter" ), method );
+    }
+    descriptor.addProcessor( method );
   }
 
   private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )

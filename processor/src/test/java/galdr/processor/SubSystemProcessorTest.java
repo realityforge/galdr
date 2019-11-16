@@ -52,6 +52,15 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.on_deactivate.Suppressed2PublicAccessOnDeactivateSubSystem" },
         new Object[]{ "com.example.on_deactivate.Suppressed2ProtectedAccessOnDeactivateSubSystem" },
 
+        new Object[]{ "com.example.processor.BasicProcessorSubSystem" },
+        new Object[]{ "com.example.processor.MultiProcessorSubSystem" },
+        new Object[]{ "com.example.processor.PackageAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.ParameterizedProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed1PublicAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed1ProtectedAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed2PublicAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed2ProtectedAccessProcessorSubSystem" },
+
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
@@ -316,6 +325,65 @@ public class SubSystemProcessorTest
   }
 
   @Test
+  public void publicAccessProcessor()
+  {
+    final String filename =
+      toFilename( "input", "com.example.processor.PublicAccessProcessorSubSystem" );
+    final String messageFragment =
+      "@Processor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessProcessor()
+  {
+    final String filename =
+      toFilename( "input", "com.example.processor.ProtectedAccessProcessorSubSystem" );
+    final String messageFragment =
+      "@Processor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessProcessor()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.processor.ProtectedAccessFromBaseProcessorSubSystem" );
+    final String input2 =
+      toFilename( "input", "com.example.processor.other.BaseProtectedAccessProcessorSubSystem" );
+    final String output =
+      toFilename( "expected", "com.example.processor.Galdr_ProtectedAccessFromBaseProcessorSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessViaInterfaceProcessorRef()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.processor.PublicAccessViaInterfaceProcessorSubSystem" );
+    final String input2 = toFilename( "input", "com.example.processor.ProcessorInterface" );
+    final String output =
+      toFilename( "expected", "com.example.processor.Galdr_PublicAccessViaInterfaceProcessorSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
   public void publicAccessWorldRef()
   {
     final String fileworld =
@@ -465,6 +533,21 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.on_deactivate.ThrowsExceptionOnDeactivateSubSystem",
                       "@OnDeactivate target must not throw any exceptions" },
 
+        new Object[]{ "com.example.processor.AbstractProcessorSubSystem",
+                      "@Processor target must not be abstract" },
+        new Object[]{ "com.example.processor.ParameterizedBadCountProcessorSubSystem",
+                      "@Processor target must have zero parameters or a single integer parameter" },
+        new Object[]{ "com.example.processor.ParameterizedBadTypeProcessorSubSystem",
+                      "@Processor target must have zero parameters or a single integer parameter" },
+        new Object[]{ "com.example.processor.PrivateProcessorSubSystem",
+                      "@Processor target must not be private" },
+        new Object[]{ "com.example.processor.ReturnsValueProcessorSubSystem",
+                      "@Processor target must not return a value" },
+        new Object[]{ "com.example.processor.StaticProcessorSubSystem",
+                      "@Processor target must not be static" },
+        new Object[]{ "com.example.processor.ThrowsExceptionProcessorSubSystem",
+                      "@Processor target must not throw any exceptions" },
+
         new Object[]{ "com.example.world_ref.BadType1WorldRefSubSystem",
                       "@WorldRef target must return an instance of galdr.World" },
         new Object[]{ "com.example.world_ref.BadType2WorldRefSubSystem",
@@ -533,6 +616,15 @@ public class SubSystemProcessorTest
       toFilename( "bad_input", "com.example.on_deactivate.other.BaseUnreachableOnDeactivateSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@OnDeactivate target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
+  }
+
+  @Test
+  public void unreachableProcessorSubSystem()
+  {
+    final String input1 = toFilename( "bad_input", "com.example.processor.UnreachableProcessorSubSystem" );
+    final String input2 = toFilename( "bad_input", "com.example.processor.other.BaseUnreachableProcessorSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@Processor target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 
   @Test

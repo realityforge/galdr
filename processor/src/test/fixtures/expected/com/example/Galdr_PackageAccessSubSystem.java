@@ -1,13 +1,14 @@
 package com.example;
 
 import galdr.Galdr;
+import galdr.ProcessorFn;
 import galdr.World;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_PackageAccessSubSystem {
+public final class Galdr_PackageAccessSubSystem implements ProcessorFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -16,12 +17,21 @@ public final class Galdr_PackageAccessSubSystem {
     return World.current();
   }
 
+  @Override
+  public void process(final int delta) {
+    _subsystem.$galdr$_process( delta );
+  }
+
   private static final class EnhancedSubSystem extends PackageAccessSubSystem {
     @Nonnull
     private final Galdr_PackageAccessSubSystem $galdr$_outer;
 
     private EnhancedSubSystem(@Nonnull final Galdr_PackageAccessSubSystem outer) {
       $galdr$_outer = Objects.requireNonNull( outer );
+    }
+
+    private void $galdr$_process(final int delta) {
+      runFrame();
     }
 
     @Nonnull

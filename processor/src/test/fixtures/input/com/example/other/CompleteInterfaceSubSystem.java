@@ -58,7 +58,12 @@ public interface CompleteInterfaceSubSystem
   }
 
   @Processor
-  default void runFrame()
+  default void runFrame1()
+  {
+  }
+
+  @Processor
+  default void runFrame2()
   {
   }
 }

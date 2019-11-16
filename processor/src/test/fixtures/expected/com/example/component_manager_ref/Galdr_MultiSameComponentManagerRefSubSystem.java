@@ -2,6 +2,7 @@ package com.example.component_manager_ref;
 
 import galdr.ComponentManager;
 import galdr.Galdr;
+import galdr.ProcessorFn;
 import galdr.World;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostConstructFn {
+public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostConstructFn, ProcessorFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -22,6 +23,11 @@ public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostCo
   @Override
   public void postConstruct() {
     _subsystem.$galdr$_postConstruct();
+  }
+
+  @Override
+  public void process(final int delta) {
+    _subsystem.$galdr$_process( delta );
   }
 
   private static final class EnhancedSubSystem extends MultiSameComponentManagerRefSubSystem {
@@ -55,6 +61,10 @@ public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostCo
     private void $galdr$_postConstruct() {
       $galdrc$_cm1 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
       $galdrc$_cm2 = $galdr$_outer.$galdr$_getWorld().getComponentByType( MultiSameComponentManagerRefSubSystem.MyComponent1.class );
+    }
+
+    private void $galdr$_process(final int delta) {
+      runFrame();
     }
 
     @Nonnull

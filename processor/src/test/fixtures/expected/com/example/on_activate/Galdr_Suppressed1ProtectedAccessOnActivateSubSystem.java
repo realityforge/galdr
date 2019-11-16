@@ -1,6 +1,7 @@
 package com.example.on_activate;
 
 import galdr.Galdr;
+import galdr.ProcessorFn;
 import galdr.World;
 import galdr.internal.OnActivateFn;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implements OnActivateFn {
+public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implements OnActivateFn, ProcessorFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -22,6 +23,11 @@ public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implement
     _subsystem.$galdr$_onActivate();
   }
 
+  @Override
+  public void process(final int delta) {
+    _subsystem.$galdr$_process( delta );
+  }
+
   private static final class EnhancedSubSystem extends Suppressed1ProtectedAccessOnActivateSubSystem {
     @Nonnull
     private final Galdr_Suppressed1ProtectedAccessOnActivateSubSystem $galdr$_outer;
@@ -33,6 +39,10 @@ public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implement
 
     private void $galdr$_onActivate() {
       onActivate();
+    }
+
+    private void $galdr$_process(final int delta) {
+      runFrame();
     }
 
     @Nonnull

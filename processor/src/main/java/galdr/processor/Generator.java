@@ -23,6 +23,7 @@ final class Generator
   private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
   private static final ClassName ON_ACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnActivateFn" );
   private static final ClassName ON_DEACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnDeactivateFn" );
+  private static final ClassName PROCESSOR_FN_CLASSNAME = ClassName.get( "galdr", "ProcessorFn" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
@@ -33,6 +34,7 @@ final class Generator
   private static final String POST_CONSTRUCT_METHOD = FRAMEWORK_INTERNAL_PREFIX + "postConstruct";
   private static final String ON_ACTIVATE_METHOD = FRAMEWORK_INTERNAL_PREFIX + "onActivate";
   private static final String ON_DEACTIVATE_METHOD = FRAMEWORK_INTERNAL_PREFIX + "onDeactivate";
+  private static final String PROCESS_METHOD = FRAMEWORK_INTERNAL_PREFIX + "process";
 
   private Generator()
   {
@@ -91,6 +93,17 @@ final class Generator
                            .build() );
     }
 
+    if ( !descriptor.getProcessors().isEmpty() )
+    {
+      builder.addSuperinterface( PROCESSOR_FN_CLASSNAME );
+      builder.addMethod( MethodSpec.methodBuilder( "process" )
+                           .addAnnotation( Override.class )
+                           .addModifiers( Modifier.PUBLIC )
+                           .addParameter( TypeName.INT, "delta", Modifier.FINAL )
+                           .addStatement( "_subsystem.$N( delta )", PROCESS_METHOD )
+                           .build() );
+    }
+
     builder.addType( buildEnhancedSubSystem( descriptor ) );
 
     return builder.build();
@@ -121,6 +134,7 @@ final class Generator
     emitPostConstruct( descriptor, builder );
     emitOnActivate( descriptor, builder );
     emitOnDeactivate( descriptor, builder );
+    emitProcess( descriptor, builder );
 
     // Generate support code
     emitNativeNameMethod( descriptor, builder );
@@ -231,7 +245,7 @@ final class Generator
   }
 
   private static void emitOnActivate( @Nonnull final SubSystemDescriptor descriptor,
-                                         @Nonnull final TypeSpec.Builder builder )
+                                      @Nonnull final TypeSpec.Builder builder )
   {
     if ( !descriptor.getOnActivates().isEmpty() )
     {
@@ -249,7 +263,7 @@ final class Generator
   }
 
   private static void emitOnDeactivate( @Nonnull final SubSystemDescriptor descriptor,
-                                         @Nonnull final TypeSpec.Builder builder )
+                                        @Nonnull final TypeSpec.Builder builder )
   {
     if ( !descriptor.getOnDeactivates().isEmpty() )
     {
@@ -260,6 +274,32 @@ final class Generator
       for ( final ExecutableElement onDeactivate : descriptor.getOnDeactivates() )
       {
         method.addStatement( "$N()", onDeactivate.getSimpleName().toString() );
+      }
+
+      builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitProcess( @Nonnull final SubSystemDescriptor descriptor,
+                                   @Nonnull final TypeSpec.Builder builder )
+  {
+    if ( !descriptor.getProcessors().isEmpty() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( PROCESS_METHOD )
+          .addParameter( TypeName.INT, "delta", Modifier.FINAL )
+          .addModifiers( Modifier.PRIVATE );
+      for ( final ExecutableElement process : descriptor.getProcessors() )
+      {
+        if ( process.getParameters().isEmpty() )
+        {
+          method.addStatement( "$N()", process.getSimpleName().toString() );
+        }
+        else
+        {
+          method.addStatement( "$N( delta )", process.getSimpleName().toString() );
+        }
       }
 
       builder.addMethod( method.build() );

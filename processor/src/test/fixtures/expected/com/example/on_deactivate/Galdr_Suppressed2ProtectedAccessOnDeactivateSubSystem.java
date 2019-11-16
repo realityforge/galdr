@@ -1,6 +1,7 @@
 package com.example.on_deactivate;
 
 import galdr.Galdr;
+import galdr.ProcessorFn;
 import galdr.World;
 import galdr.internal.OnDeactivateFn;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_Suppressed2ProtectedAccessOnDeactivateSubSystem implements OnDeactivateFn {
+public final class Galdr_Suppressed2ProtectedAccessOnDeactivateSubSystem implements OnDeactivateFn, ProcessorFn {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
@@ -22,6 +23,11 @@ public final class Galdr_Suppressed2ProtectedAccessOnDeactivateSubSystem impleme
     _subsystem.$galdr$_onDeactivate();
   }
 
+  @Override
+  public void process(final int delta) {
+    _subsystem.$galdr$_process( delta );
+  }
+
   private static final class EnhancedSubSystem extends Suppressed2ProtectedAccessOnDeactivateSubSystem {
     @Nonnull
     private final Galdr_Suppressed2ProtectedAccessOnDeactivateSubSystem $galdr$_outer;
@@ -33,6 +39,10 @@ public final class Galdr_Suppressed2ProtectedAccessOnDeactivateSubSystem impleme
 
     private void $galdr$_onDeactivate() {
       onDeactivate();
+    }
+
+    private void $galdr$_process(final int delta) {
+      runFrame();
     }
 
     @Nonnull

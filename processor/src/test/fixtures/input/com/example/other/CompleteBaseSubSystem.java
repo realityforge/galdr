@@ -59,7 +59,12 @@ public abstract class CompleteBaseSubSystem
   }
 
   @Processor
-  protected void runFrame()
+  protected void runFrame1()
+  {
+  }
+
+  @Processor
+  protected void runFrame2()
   {
   }
 }
