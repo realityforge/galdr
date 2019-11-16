@@ -14,11 +14,6 @@ final class Constants
   static final String NAME_REF_CLASSNAME = "galdr.annotations.NameRef";
   static final String WORLD_REF_CLASSNAME = "galdr.annotations.WorldRef";
   static final String SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME = "galdr.annotations.SuppressGaldrWarnings";
-  static final String NONNULL_CLASSNAME = "javax.annotation.Nonnull";
-  static final String NULLABLE_CLASSNAME = "javax.annotation.Nullable";
-  static final String DEPRECATED_CLASSNAME = "java.lang.Deprecated";
-  static final String GENERATED_CLASSNAME = "javax.annotation.Generated";
-  static final String JAVA9_GENERATED_CLASSNAME = "javax.annotation.processing.Generated";
   static final String COMPONENT_MANAGER_CLASSNAME = "galdr.ComponentManager";
   static final String WORLD_CLASSNAME = "galdr.World";
 
