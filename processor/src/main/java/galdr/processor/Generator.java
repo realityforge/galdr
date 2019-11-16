@@ -21,6 +21,7 @@ final class Generator
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
   private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
+  private static final ClassName ON_DEACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnDeactivateFn" );
   private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
@@ -29,6 +30,7 @@ final class Generator
   private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
   private static final String WORLD_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getWorld";
   private static final String POST_CONSTRUCT_METHOD = FRAMEWORK_INTERNAL_PREFIX + "postConstruct";
+  private static final String ON_DEACTIVATE_METHOD = FRAMEWORK_INTERNAL_PREFIX + "onDeactivate";
 
   private Generator()
   {
@@ -67,6 +69,16 @@ final class Generator
                            .build() );
     }
 
+    if ( !descriptor.getOnDeactivates().isEmpty() )
+    {
+      builder.addSuperinterface( ON_DEACTIVATE_FN_CLASSNAME );
+      builder.addMethod( MethodSpec.methodBuilder( "deactivate" )
+                           .addAnnotation( Override.class )
+                           .addModifiers( Modifier.PUBLIC )
+                           .addStatement( "_subsystem.$N()", ON_DEACTIVATE_METHOD )
+                           .build() );
+    }
+
     builder.addType( buildEnhancedSubSystem( descriptor ) );
 
     return builder.build();
@@ -95,6 +107,7 @@ final class Generator
 
     // Generate lifecycle methods
     emitPostConstruct( descriptor, builder );
+    emitOnDeactivate( descriptor, builder );
 
     // Generate support code
     emitNativeNameMethod( descriptor, builder );
@@ -202,6 +215,24 @@ final class Generator
       for ( final ExecutableElement onActivate : descriptor.getOnActivates() )
       {
         method.addStatement( "$N()", onActivate.getSimpleName().toString() );
+      }
+
+      builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitOnDeactivate( @Nonnull final SubSystemDescriptor descriptor,
+                                         @Nonnull final TypeSpec.Builder builder )
+  {
+    if ( !descriptor.getOnDeactivates().isEmpty() )
+    {
+      final MethodSpec.Builder method =
+        MethodSpec
+          .methodBuilder( ON_DEACTIVATE_METHOD )
+          .addModifiers( Modifier.PRIVATE );
+      for ( final ExecutableElement onDeactivate : descriptor.getOnDeactivates() )
+      {
+        method.addStatement( "$N()", onDeactivate.getSimpleName().toString() );
       }
 
       builder.addMethod( method.build() );

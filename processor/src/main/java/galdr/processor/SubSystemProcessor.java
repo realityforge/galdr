@@ -76,6 +76,8 @@ public final class SubSystemProcessor
       final AnnotationMirror nameRef = AnnotationsUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
       final AnnotationMirror onActivate =
         AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
+      final AnnotationMirror onDeactivate =
+        AnnotationsUtil.findAnnotationByType( method, Constants.ON_DEACTIVATE_CLASSNAME );
       final AnnotationMirror worldRef = AnnotationsUtil.findAnnotationByType( method, Constants.WORLD_REF_CLASSNAME );
 
       if ( null != componentManagerRef )
@@ -89,6 +91,10 @@ public final class SubSystemProcessor
       else if ( null != onActivate )
       {
         addOnActivate( descriptor, method );
+      }
+      else if ( null != onDeactivate )
+      {
+        addOnDeactivate( descriptor, method );
       }
       else if ( null != worldRef )
       {
@@ -149,6 +155,12 @@ public final class SubSystemProcessor
   {
     mustBeLifecycleMethod( descriptor, method, Constants.ON_ACTIVATE_CLASSNAME );
     descriptor.addOnActivate( method );
+  }
+
+  private void addOnDeactivate( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
+  {
+    mustBeLifecycleMethod( descriptor, method, Constants.ON_DEACTIVATE_CLASSNAME );
+    descriptor.addOnDeactivate( method );
   }
 
   private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )

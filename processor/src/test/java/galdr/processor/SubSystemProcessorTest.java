@@ -44,6 +44,14 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.on_activate.Suppressed2PublicAccessOnActivateSubSystem" },
         new Object[]{ "com.example.on_activate.Suppressed2ProtectedAccessOnActivateSubSystem" },
 
+        new Object[]{ "com.example.on_deactivate.BasicOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.MultiOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.PackageAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed1PublicAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed1ProtectedAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed2PublicAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed2ProtectedAccessOnDeactivateSubSystem" },
+
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
@@ -249,6 +257,65 @@ public class SubSystemProcessorTest
   }
 
   @Test
+  public void publicAccessOnDeactivate()
+  {
+    final String filename =
+      toFilename( "input", "com.example.on_deactivate.PublicAccessOnDeactivateSubSystem" );
+    final String messageFragment =
+      "@OnDeactivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessOnDeactivate()
+  {
+    final String filename =
+      toFilename( "input", "com.example.on_deactivate.ProtectedAccessOnDeactivateSubSystem" );
+    final String messageFragment =
+      "@OnDeactivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessOnDeactivate()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.on_deactivate.ProtectedAccessFromBaseOnDeactivateSubSystem" );
+    final String input2 =
+      toFilename( "input", "com.example.on_deactivate.other.BaseProtectedAccessOnDeactivateSubSystem" );
+    final String output =
+      toFilename( "expected", "com.example.on_deactivate.Galdr_ProtectedAccessFromBaseOnDeactivateSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessViaInterfaceOnDeactivateRef()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.on_deactivate.PublicAccessViaInterfaceOnDeactivateSubSystem" );
+    final String input2 = toFilename( "input", "com.example.on_deactivate.OnDeactivateInterface" );
+    final String output =
+      toFilename( "expected", "com.example.on_deactivate.Galdr_PublicAccessViaInterfaceOnDeactivateSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
   public void publicAccessWorldRef()
   {
     final String fileworld =
@@ -385,6 +452,19 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.on_activate.ThrowsExceptionOnActivateSubSystem",
                       "@OnActivate target must not throw any exceptions" },
 
+        new Object[]{ "com.example.on_deactivate.AbstractOnDeactivateSubSystem",
+                      "@OnDeactivate target must not be abstract" },
+        new Object[]{ "com.example.on_deactivate.ParameterizedOnDeactivateSubSystem",
+                      "@OnDeactivate target must not have any parameters" },
+        new Object[]{ "com.example.on_deactivate.PrivateOnDeactivateSubSystem",
+                      "@OnDeactivate target must not be private" },
+        new Object[]{ "com.example.on_deactivate.ReturnsValueOnDeactivateSubSystem",
+                      "@OnDeactivate target must not return a value" },
+        new Object[]{ "com.example.on_deactivate.StaticOnDeactivateSubSystem",
+                      "@OnDeactivate target must not be static" },
+        new Object[]{ "com.example.on_deactivate.ThrowsExceptionOnDeactivateSubSystem",
+                      "@OnDeactivate target must not throw any exceptions" },
+
         new Object[]{ "com.example.world_ref.BadType1WorldRefSubSystem",
                       "@WorldRef target must return an instance of galdr.World" },
         new Object[]{ "com.example.world_ref.BadType2WorldRefSubSystem",
@@ -443,6 +523,16 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "bad_input", "com.example.on_activate.other.BaseUnreachableOnActivateSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@OnActivate target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
+  }
+
+  @Test
+  public void unreachableOnDeactivateSubSystem()
+  {
+    final String input1 = toFilename( "bad_input", "com.example.on_deactivate.UnreachableOnDeactivateSubSystem" );
+    final String input2 =
+      toFilename( "bad_input", "com.example.on_deactivate.other.BaseUnreachableOnDeactivateSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@OnDeactivate target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 
   @Test
