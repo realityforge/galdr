@@ -20,6 +20,17 @@ import javax.annotation.Nonnull;
  * <li>Must not be static</li>
  * <li>Must not be abstract</li>
  * <li>Must not throw exceptions</li>
+ * <li>
+ *   Should not be public as not expected to be invoked outside the subsystem. A warning will be generated but can
+ *   be suppressed by the {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key
+ *   "Galdr:PublicLifecycleMethod". This warning is also suppressed by the annotation processor if it is implementing
+ *   an interface method.
+ * </li>
+ * <li>
+ *   Should not be protected if in the class annotated with the {@link SubSystem} annotation as the method is not
+ *   expected to be invoked outside the subsystem. A warning will be generated but can be suppressed by the
+ *   {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key "Galdr:ProtectedLifecycleMethod".
+ * </li>
  * </ul>
  */
 @Documented
