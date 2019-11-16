@@ -60,8 +60,9 @@ public final class Galdr_HealthProcessor
     @Nullable
     private Subscription $galdr$_processHealth_subscription;
     @Nullable
-    private ComponentManager<Health> $galdrc$_health;
     private AreaOfInterest $galdr$_processHealth_areaOfInterest;
+    @Nullable
+    private ComponentManager<Health> $galdrc$_health;
 
     private EnhancedSubSystem( @Nonnull final Galdr_HealthProcessor outer )
     {
@@ -104,8 +105,9 @@ public final class Galdr_HealthProcessor
     private void $galdr$_activate()
     {
       $galdr$_processHealth_subscription =
-        $galdr$_outer.$galdr$_world().createSubscription( Galdr.areNamesEnabled() ? $galdr$_getName() : null,
-                                                          $galdr$_processHealth_areaOfInterest );
+        $galdr$_outer.$galdr$_world()
+          .createSubscription( Galdr.areNamesEnabled() ? $galdr$_getName() : null,
+                               $galdr$_processHealth_areaOfInterest );
     }
 
     private void $galdr$_deactivate()
