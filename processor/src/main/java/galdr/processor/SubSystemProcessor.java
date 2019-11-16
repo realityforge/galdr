@@ -154,12 +154,14 @@ public final class SubSystemProcessor
   private void addOnActivate( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     mustBeLifecycleMethod( descriptor, method, Constants.ON_ACTIVATE_CLASSNAME );
+    MemberChecks.mustNotHaveAnyParameters( Constants.ON_ACTIVATE_CLASSNAME, method );
     descriptor.addOnActivate( method );
   }
 
   private void addOnDeactivate( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     mustBeLifecycleMethod( descriptor, method, Constants.ON_DEACTIVATE_CLASSNAME );
+    MemberChecks.mustNotHaveAnyParameters( Constants.ON_DEACTIVATE_CLASSNAME, method );
     descriptor.addOnDeactivate( method );
   }
 
@@ -187,7 +189,6 @@ public final class SubSystemProcessor
                                                            Constants.APPLICATION_CLASSNAME,
                                                            annotationClassname,
                                                            method );
-    MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
     MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
     if ( doesMethodNotOverrideInterfaceMethod( typeElement, method ) )
