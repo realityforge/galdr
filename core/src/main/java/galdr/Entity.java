@@ -9,6 +9,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
+/**
+ * An Entity has a unique identifier and contains zero or more Components.
+ * An Entity can also be linked to other components such that if one or the other
+ * is removed then the removal cascades along the link.
+ */
 final class Entity
 {
   private final int _id;
