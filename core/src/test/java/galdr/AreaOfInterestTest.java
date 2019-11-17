@@ -89,6 +89,15 @@ public class AreaOfInterestTest
   }
 
   @Test
+  public void construct_zeroRequirements()
+  {
+    final World world = Worlds.world().build();
+
+    assertInvariantFailure( () -> world.createAreaOfInterest( Collections.emptySet() ),
+                            "Galdr-0053: World.createAreaOfInterest() attempted to create an AreaOfInterest with no requirements." );
+  }
+
+  @Test
   public void matches()
   {
     final World world = Worlds.world()

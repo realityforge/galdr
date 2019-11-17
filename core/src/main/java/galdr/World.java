@@ -509,6 +509,11 @@ public final class World
                     () -> "Galdr-0051: World.createAreaOfInterest() passed a single component in the " +
                           "one component set. This AreaOfInterest must have multiple components in the " +
                           "one component set of the component should be moved to the all component set." );
+      apiInvariant( () -> 0 != all.getBitSet().cardinality() ||
+                          0 != one.getBitSet().cardinality() ||
+                          0 != exclude.getBitSet().cardinality(),
+                    () -> "Galdr-0053: World.createAreaOfInterest() attempted to create an AreaOfInterest " +
+                          "with no requirements." );
     }
 
     return new AreaOfInterest( all, one, exclude );
