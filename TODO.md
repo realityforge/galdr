@@ -149,8 +149,8 @@ for systems/processors ahead of time.
 
 * Make sure that all entities (mobiles, items, spells, and their effects) can be represented in Galdr.
 
-* Make sure `ApplicationAnnotationProcessor` verifies that all `@ComponentManagerRef` in contained subsystems are
-  contained in application.
+* In `ApplicationAnnotationProcessor`
+  - Ensure component types declared in `@ComponentManagerRef` in contained subsystems are present in application.
 
 ### Other ECS Systems
 
