@@ -6,6 +6,7 @@ import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedOptions;
@@ -74,6 +75,8 @@ public final class SubSystemProcessor
     {
       final AnnotationMirror componentManagerRef =
         AnnotationsUtil.findAnnotationByType( method, Constants.COMPONENT_MANAGER_REF_CLASSNAME );
+      final AnnotationMirror entityProcessor =
+        AnnotationsUtil.findAnnotationByType( method, Constants.ENTITY_PROCESSOR_CLASSNAME );
       final AnnotationMirror nameRef = AnnotationsUtil.findAnnotationByType( method, Constants.NAME_REF_CLASSNAME );
       final AnnotationMirror onActivate =
         AnnotationsUtil.findAnnotationByType( method, Constants.ON_ACTIVATE_CLASSNAME );
@@ -85,6 +88,10 @@ public final class SubSystemProcessor
       if ( null != componentManagerRef )
       {
         addComponentManagerRef( descriptor, method );
+      }
+      else if ( null != entityProcessor )
+      {
+        addEntityProcessor( descriptor, method );
       }
       else if ( null != nameRef )
       {
@@ -144,6 +151,95 @@ public final class SubSystemProcessor
     return new ProcessorException( "@ComponentManagerRef target must return the type " +
                                    Constants.COMPONENT_MANAGER_CLASSNAME + " parameterized with the desired " +
                                    "component type", method );
+  }
+
+  private void addEntityProcessor( @Nonnull final SubSystemDescriptor descriptor,
+                                   @Nonnull final ExecutableElement method )
+  {
+    mustBeLifecycleMethod( descriptor, method, Constants.ENTITY_PROCESSOR_CLASSNAME );
+    final List<? extends VariableElement> parameters = method.getParameters();
+    if ( parameters.isEmpty() ||
+         parameters.size() > 2 ||
+         parameters.stream().anyMatch( p -> TypeKind.INT != p.asType().getKind() ) )
+    {
+      throw new ProcessorException( MemberChecks.must( Constants.ENTITY_PROCESSOR_CLASSNAME,
+                                                       "have one or two integer parameters" ),
+                                    method );
+    }
+    final List<TypeName> all = getTypeNameParameterValue( method, "all" );
+    final List<TypeName> one = getTypeNameParameterValue( method, "one" );
+    final List<TypeName> exclude = getTypeNameParameterValue( method, "exclude" );
+
+    for ( final TypeName candidate : all )
+    {
+      for ( final TypeName a : all )
+      {
+        if ( a != candidate && a.equals( candidate ) )
+        {
+          throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                        " multiple times in the 'all' requirement", method );
+        }
+      }
+      if ( one.contains( candidate ) )
+      {
+        throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                      " in the 'all' requirement and the 'one' requirement", method );
+      }
+      if ( exclude.contains( candidate ) )
+      {
+        throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                      " in the 'all' requirement and the 'exclude' requirement", method );
+      }
+    }
+    for ( final TypeName candidate : one )
+    {
+      for ( final TypeName a : one )
+      {
+        if ( a != candidate && a.equals( candidate ) )
+        {
+          throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                        " multiple times in the 'one' requirement", method );
+        }
+      }
+      if ( exclude.contains( candidate ) )
+      {
+        throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                      " in the 'one' requirement and the 'exclude' requirement", method );
+      }
+    }
+
+    for ( final TypeName candidate : exclude )
+    {
+      for ( final TypeName a : exclude )
+      {
+        if ( a != candidate && a.equals( candidate ) )
+        {
+          throw new ProcessorException( "@EntityProcessor target contains the component of type " + candidate +
+                                        " multiple times in the 'exclude' requirement", method );
+        }
+      }
+    }
+    if ( all.isEmpty() && one.isEmpty() && exclude.isEmpty() )
+    {
+      throw new ProcessorException( "@EntityProcessor target must specify at least one component in the 'all', " +
+                                    "'one' or 'exclude' requirements", method );
+    }
+    if ( 1 == one.size() )
+    {
+      throw new ProcessorException( "@EntityProcessor target must have multiple components in the 'one' requirement " +
+                                    "or alternatively the component should be moved to the 'all' requirement", method );
+    }
+    descriptor.addEntityProcessor( method, all, one, exclude );
+  }
+
+  @Nonnull
+  private List<TypeName> getTypeNameParameterValue( @Nonnull final ExecutableElement method,
+                                                    @Nonnull final String parameterName )
+  {
+    return AnnotationsUtil.getTypeMirrorsAnnotationParameter( method,
+                                                              Constants.ENTITY_PROCESSOR_CLASSNAME,
+                                                              parameterName )
+      .stream().map( TypeName::get ).collect( Collectors.toList() );
   }
 
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )

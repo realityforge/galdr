@@ -8,7 +8,12 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.ExecutableElement;
@@ -17,8 +22,10 @@ import javax.lang.model.element.TypeElement;
 
 final class Generator
 {
+  private static final ClassName AREA_OF_INTEREST_CLASSNAME = ClassName.get( "galdr", "AreaOfInterest" );
   private static final ClassName COMPONENT_MANAGER_CLASSNAME = ClassName.get( "galdr", "ComponentManager" );
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
+  private static final ClassName SUBSCRIPTION_CLASSNAME = ClassName.get( "galdr", "Subscription" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
   private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
   private static final ClassName ON_ACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnActivateFn" );
@@ -28,6 +35,8 @@ final class Generator
   private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
   private static final String FRAMEWORK_COMPONENT_PREFIX = "$galdrc$_";
+  private static final String FRAMEWORK_SUBSCRIPTION_PREFIX = "$galdrs$_";
+  private static final String FRAMEWORK_AREA_OF_INTEREST_PREFIX = "$galdraoi$_";
   private static final String OUTER_FIELD = FRAMEWORK_INTERNAL_PREFIX + "outer";
   private static final String NAME_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getName";
   private static final String WORLD_ACCESSOR_METHOD = FRAMEWORK_INTERNAL_PREFIX + "getWorld";
@@ -63,7 +72,7 @@ final class Generator
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
                          .build() );
 
-    if ( !descriptor.getComponentManagerRefs().isEmpty() )
+    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       builder.addSuperinterface( POST_CONSTRUCT_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "postConstruct" )
@@ -73,7 +82,7 @@ final class Generator
                            .build() );
     }
 
-    if ( !descriptor.getOnActivates().isEmpty() )
+    if ( !descriptor.getOnActivates().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       builder.addSuperinterface( ON_ACTIVATE_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "activate" )
@@ -83,7 +92,7 @@ final class Generator
                            .build() );
     }
 
-    if ( !descriptor.getOnDeactivates().isEmpty() )
+    if ( !descriptor.getOnDeactivates().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       builder.addSuperinterface( ON_DEACTIVATE_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "deactivate" )
@@ -93,7 +102,7 @@ final class Generator
                            .build() );
     }
 
-    if ( !descriptor.getProcessors().isEmpty() )
+    if ( !descriptor.getProcessors().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       builder.addSuperinterface( PROCESSOR_FN_CLASSNAME );
       builder.addMethod( MethodSpec.methodBuilder( "process" )
@@ -122,6 +131,21 @@ final class Generator
                                          Modifier.FINAL )
                         .addAnnotation( NONNULL_CLASSNAME )
                         .build() );
+
+    for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
+    {
+      final String name = entityProcessorDescriptor.getMethod().getSimpleName().toString();
+      builder.addField( FieldSpec.builder( SUBSCRIPTION_CLASSNAME,
+                                           FRAMEWORK_SUBSCRIPTION_PREFIX + name,
+                                           Modifier.PRIVATE )
+                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .build() );
+      builder.addField( FieldSpec.builder( AREA_OF_INTEREST_CLASSNAME,
+                                           FRAMEWORK_AREA_OF_INTEREST_PREFIX + name,
+                                           Modifier.PRIVATE )
+                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .build() );
+    }
 
     emitConstructor( descriptor, builder );
 
@@ -221,7 +245,7 @@ final class Generator
   private static void emitPostConstruct( @Nonnull final SubSystemDescriptor descriptor,
                                          @Nonnull final TypeSpec.Builder builder )
   {
-    if ( !descriptor.getComponentManagerRefs().isEmpty() )
+    if ( !descriptor.getComponentManagerRefs().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
@@ -239,20 +263,85 @@ final class Generator
                              WORLD_ACCESSOR_METHOD,
                              componentManagerRef.getComponentType() );
       }
+      for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
+      {
+        final String name = entityProcessorDescriptor.getMethod().getSimpleName().toString();
+        final StringBuilder sb = new StringBuilder( "$N = $N.$N().createAreaOfInterest( " );
+        final List<Object> params = new ArrayList<>();
+        params.add( FRAMEWORK_AREA_OF_INTEREST_PREFIX + name );
+        params.add( OUTER_FIELD );
+        params.add( WORLD_ACCESSOR_METHOD );
+
+        emitTypeCollection( sb, params, entityProcessorDescriptor.getAll() );
+        final List<TypeName> one = entityProcessorDescriptor.getOne();
+        final List<TypeName> exclude = entityProcessorDescriptor.getExclude();
+        if ( !exclude.isEmpty() )
+        {
+          sb.append( ", " );
+          emitTypeCollection( sb, params, one );
+          sb.append( ", " );
+          emitTypeCollection( sb, params, exclude );
+        }
+        else if ( !one.isEmpty() )
+        {
+          sb.append( ", " );
+          emitTypeCollection( sb, params, one );
+        }
+
+        sb.append( " )" );
+        method.addStatement( sb.toString(), params.toArray() );
+      }
 
       builder.addMethod( method.build() );
+    }
+  }
+
+  private static void emitTypeCollection( @Nonnull final StringBuilder sb,
+                                          @Nonnull final List<Object> params,
+                                          @Nonnull final List<TypeName> typeNames )
+  {
+    if ( typeNames.isEmpty() )
+    {
+      sb.append( "$T.emptyList()" );
+      params.add( Collections.class );
+    }
+    else if ( 1 == typeNames.size() )
+    {
+      sb.append( "$T.singleton( $T.class )" );
+      params.add( Collections.class );
+      params.add( typeNames.get( 0 ) );
+    }
+    else
+    {
+      sb.append( "$T.asList( " );
+      params.add( Arrays.class );
+      sb.append( typeNames.stream().map( t -> "$T.class" ).collect( Collectors.joining( "," ) ) );
+      params.addAll( typeNames );
+      sb.append( " )" );
     }
   }
 
   private static void emitOnActivate( @Nonnull final SubSystemDescriptor descriptor,
                                       @Nonnull final TypeSpec.Builder builder )
   {
-    if ( !descriptor.getOnActivates().isEmpty() )
+    if ( !descriptor.getOnActivates().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
           .methodBuilder( ON_ACTIVATE_METHOD )
           .addModifiers( Modifier.PRIVATE );
+      for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
+      {
+        final String name = entityProcessorDescriptor.getMethod().getSimpleName().toString();
+        method.addStatement( "assert null == $N", FRAMEWORK_SUBSCRIPTION_PREFIX + name );
+        method.addStatement( "$N = $N.$N().createSubscription( $T.areNamesEnabled() ? $N() : null, $N )",
+                             FRAMEWORK_SUBSCRIPTION_PREFIX + name,
+                             OUTER_FIELD,
+                             WORLD_ACCESSOR_METHOD,
+                             GALDR_CLASSNAME,
+                             NAME_ACCESSOR_METHOD,
+                             FRAMEWORK_AREA_OF_INTEREST_PREFIX + name );
+      }
       for ( final ExecutableElement onActivate : descriptor.getOnActivates() )
       {
         method.addStatement( "$N()", onActivate.getSimpleName().toString() );
@@ -265,7 +354,7 @@ final class Generator
   private static void emitOnDeactivate( @Nonnull final SubSystemDescriptor descriptor,
                                         @Nonnull final TypeSpec.Builder builder )
   {
-    if ( !descriptor.getOnDeactivates().isEmpty() )
+    if ( !descriptor.getOnDeactivates().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
@@ -275,6 +364,14 @@ final class Generator
       {
         method.addStatement( "$N()", onDeactivate.getSimpleName().toString() );
       }
+      for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
+      {
+        final String name =
+          FRAMEWORK_SUBSCRIPTION_PREFIX + entityProcessorDescriptor.getMethod().getSimpleName().toString();
+        method.addStatement( "assert null != $N", name );
+        method.addStatement( "$N.dispose()", name );
+        method.addStatement( "$N = null", name );
+      }
 
       builder.addMethod( method.build() );
     }
@@ -283,7 +380,7 @@ final class Generator
   private static void emitProcess( @Nonnull final SubSystemDescriptor descriptor,
                                    @Nonnull final TypeSpec.Builder builder )
   {
-    if ( !descriptor.getProcessors().isEmpty() )
+    if ( !descriptor.getProcessors().isEmpty() || !descriptor.getEntityProcessors().isEmpty() )
     {
       final MethodSpec.Builder method =
         MethodSpec
@@ -300,6 +397,28 @@ final class Generator
         {
           method.addStatement( "$N( delta )", process.getSimpleName().toString() );
         }
+      }
+      for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
+      {
+        final ExecutableElement sourceMethod = entityProcessorDescriptor.getMethod();
+        final String name = sourceMethod.getSimpleName().toString();
+        final String subscriptionFieldName = FRAMEWORK_SUBSCRIPTION_PREFIX + name;
+        final String entityId = subscriptionFieldName + "_entityId";
+        method.addStatement( "assert null != $N", subscriptionFieldName );
+        method.addStatement( "$N.beginIteration()", subscriptionFieldName );
+        method.addStatement( "int $N", entityId );
+        final CodeBlock.Builder block = CodeBlock.builder();
+        block.beginControlFlow( "while ( -1 != ( $N = $N.nextEntity() ) )", entityId,subscriptionFieldName );
+        if ( 1 == sourceMethod.getParameters().size() )
+        {
+          block.addStatement( "$N( $N )", name, entityId );
+        }
+        else
+        {
+          block.addStatement( "$N( delta, $N )", name, entityId );
+        }
+        block.endControlFlow();
+        method.addCode( block.build() );
       }
 
       builder.addMethod( method.build() );

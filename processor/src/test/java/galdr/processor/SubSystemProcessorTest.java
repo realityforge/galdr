@@ -25,6 +25,19 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.Suppressed2ProtectedAccessComponentManagerRefSubSystem" },
 
+        new Object[]{ "com.example.entity_processor.BasicEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.ComplexAreaOfInterest1EntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.ComplexAreaOfInterest2EntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.ComplexAreaOfInterest3EntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.ComplexAreaOfInterest4EntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.DeltaParameterEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.MultiEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.PackageAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed1PublicAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed1ProtectedAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed2PublicAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed2ProtectedAccessEntityProcessorSubSystem" },
+
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
 
@@ -149,6 +162,67 @@ public class SubSystemProcessorTest
     final String output =
       toFilename( "expected",
                   "com.example.component_manager_ref.Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessEntityProcessor()
+  {
+    final String filename =
+      toFilename( "input", "com.example.entity_processor.PublicAccessEntityProcessorSubSystem" );
+    final String messageFragment =
+      "@EntityProcessor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void protectedAccessEntityProcessor()
+  {
+    final String filename =
+      toFilename( "input", "com.example.entity_processor.ProtectedAccessEntityProcessorSubSystem" );
+    final String messageFragment =
+      "@EntityProcessor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
+    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
+      that( Collections.singletonList( fixture( filename ) ) ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      processedWith( new SubSystemProcessor() ).
+      compilesWithoutError().
+      withWarningCount( 1 ).
+      withWarningContaining( messageFragment );
+  }
+
+  @Test
+  public void validProtectedAccessEntityProcessor()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.entity_processor.ProtectedAccessFromBaseEntityProcessorSubSystem" );
+    final String input2 =
+      toFilename( "input", "com.example.entity_processor.other.BaseProtectedAccessEntityProcessorSubSystem" );
+    final String output =
+      toFilename( "expected",
+                  "com.example.entity_processor.Galdr_ProtectedAccessFromBaseEntityProcessorSubSystem" );
+    assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                             Collections.singletonList( output ) );
+  }
+
+  @Test
+  public void publicAccessViaInterfaceEntityProcessor()
+    throws Exception
+  {
+    final String input1 =
+      toFilename( "input", "com.example.entity_processor.PublicAccessViaInterfaceEntityProcessorSubSystem" );
+    final String input2 = toFilename( "input", "com.example.entity_processor.EntityProcessorInterface" );
+    final String output =
+      toFilename( "expected",
+                  "com.example.entity_processor.Galdr_PublicAccessViaInterfaceEntityProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -489,6 +563,37 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.VoidComponentManagerRefSubSystem",
                       "@ComponentManagerRef target must return a value" },
 
+        new Object[]{ "com.example.entity_processor.AbstractEntityProcessorSubSystem",
+                      "@EntityProcessor target must not be abstract" },
+        new Object[]{ "com.example.entity_processor.NoAreaOfInterestEntityProcessorSubSystem",
+                      "@EntityProcessor target must specify at least one component in the 'all', 'one' or 'exclude' requirements" },
+        new Object[]{ "com.example.entity_processor.NotParameterizedEntityProcessorSubSystem",
+                      "@EntityProcessor target must have one or two integer parameters" },
+        new Object[]{ "com.example.entity_processor.OverlapAllAllEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapAllAllEntityProcessorSubSystem.MyComponent multiple times in the 'all' requirement" },
+        new Object[]{ "com.example.entity_processor.OverlapAllExcludeEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapAllExcludeEntityProcessorSubSystem.MyComponent in the 'all' requirement and the 'exclude' requirement" },
+        new Object[]{ "com.example.entity_processor.OverlapAllOneEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapAllOneEntityProcessorSubSystem.MyComponent in the 'all' requirement and the 'one' requirement" },
+        new Object[]{ "com.example.entity_processor.OverlapExcludeExcludeEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapExcludeExcludeEntityProcessorSubSystem.MyComponent multiple times in the 'exclude' requirement" },
+        new Object[]{ "com.example.entity_processor.OverlapOneExcludeEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapOneExcludeEntityProcessorSubSystem.MyComponent in the 'one' requirement and the 'exclude' requirement" },
+        new Object[]{ "com.example.entity_processor.OverlapOneOneEntityProcessorSubSystem",
+                      "@EntityProcessor target contains the component of type com.example.entity_processor.OverlapOneOneEntityProcessorSubSystem.MyComponent multiple times in the 'one' requirement" },
+        new Object[]{ "com.example.entity_processor.ParameterizedTooManyEntityProcessorSubSystem",
+                      "@EntityProcessor target must have one or two integer parameters" },
+        new Object[]{ "com.example.entity_processor.PrivateEntityProcessorSubSystem",
+                      "@EntityProcessor target must not be private" },
+        new Object[]{ "com.example.entity_processor.ReturnsValueEntityProcessorSubSystem",
+                      "@EntityProcessor target must not return a value" },
+        new Object[]{ "com.example.entity_processor.SingleOneRequirementEntityProcessorSubSystem",
+                      "@EntityProcessor target must have multiple components in the 'one' requirement or alternatively the component should be moved to the 'all' requirement" },
+        new Object[]{ "com.example.entity_processor.StaticEntityProcessorSubSystem",
+                      "@EntityProcessor target must not be static" },
+        new Object[]{ "com.example.entity_processor.ThrowsExceptionEntityProcessorSubSystem",
+                      "@EntityProcessor target must not throw any exceptions" },
+
         new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
         new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
 
@@ -588,6 +693,16 @@ public class SubSystemProcessorTest
       toFilename( "bad_input", "com.example.component_manager_ref.other.BaseUnreachableComponentManagerRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
+  }
+
+  @Test
+  public void unreachableEntityProcessorSubSystem()
+  {
+    final String input1 = toFilename( "bad_input", "com.example.entity_processor.UnreachableEntityProcessorSubSystem" );
+    final String input2 =
+      toFilename( "bad_input", "com.example.entity_processor.other.BaseUnreachableEntityProcessorSubSystem" );
+    assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
+                                 "@EntityProcessor target must not be package access if the method is in a different package from the type annotated with the @GaldrApplication annotation" );
   }
 
   @Test

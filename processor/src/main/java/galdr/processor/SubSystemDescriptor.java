@@ -1,6 +1,7 @@
 package galdr.processor;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +18,8 @@ final class SubSystemDescriptor
   private final int _priority;
   @Nonnull
   private final List<ComponentManagerRefDescriptor> _componentManagerRefs = new ArrayList<>();
+  @Nonnull
+  private final List<EntityProcessorDescriptor> _entityProcessors = new ArrayList<>();
   @Nonnull
   private final List<ExecutableElement> _nameRefs = new ArrayList<>();
   @Nonnull
@@ -84,6 +87,20 @@ final class SubSystemDescriptor
   List<ExecutableElement> getNameRefs()
   {
     return _nameRefs;
+  }
+
+  void addEntityProcessor( @Nonnull final ExecutableElement method,
+                           @Nonnull final List<TypeName> all,
+                           @Nonnull final List<TypeName> one,
+                           @Nonnull final List<TypeName> exclude )
+  {
+    _entityProcessors.add( new EntityProcessorDescriptor( method, all, one, exclude ) );
+  }
+
+  @Nonnull
+  List<EntityProcessorDescriptor> getEntityProcessors()
+  {
+    return _entityProcessors;
   }
 
   void addOnActivate( @Nonnull final ExecutableElement method )

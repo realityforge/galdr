@@ -80,8 +80,6 @@ for systems/processors ahead of time.
 
 ### Tasks
 
-* Add support in annotation processor for
-  - `@EntityProcessor`
 * Extract useful annotation processor utilities into a separate project.
 * Add the `EntityPlan` element above.
 * `AreaOfInterest` should generate an error if there is no components contained.
