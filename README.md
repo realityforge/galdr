@@ -8,7 +8,19 @@
 ## What is galdr?
 
 `galdr` is an ancient form of sung incantation, intended to have magical effects. Or in more practical
-terms, Galdr is an entity component system implementation.
+terms, Galdr is an implementation of the entity–component–system (ECS) architectural pattern. Elements in a
+world are entities and consist of a unique id and a set of components that are processed by systems. Behaviour of
+an entity is changed by adding, updating and removing components. This architecture is typically used in games and
+is often used to support data-oriented design techniques.
+
+A `Component` instance is a passive data container that can be attached to an `Entity` instance. A typical
+`Component` is a fine-grain data element where all the fields are used to achieve a single logical function.
+i.e. A `Component` may be `Position`, `Velocity`, `Body`, `CameraTransform`, `Health`, `Sprite` etc.
+
+A `System` is responsible for updating the `Component` instances attached to `Entity` instances. A system typically
+selects the `Entity` instances to process based on the set of `Component` instances. i.e. A `RenderSystem` may
+read the `Position` and `Spite` components to render the entity on the screen, a `PhysicsSystem` may read the `Body`,
+`Position` and `Velocity` components and update the `Position` component etc.
 
 ### Getting Started
 
