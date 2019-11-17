@@ -5,6 +5,9 @@ import javax.annotation.Nonnull;
 
 /**
  * A representation of an EntityCollection as exposed by the Spy subsystem.
+ * An EntityCollection is a set of entities maintained by the runtime. The entities match an
+ * {@link AreaOfInterest}. One or more subscribers are subscribed to the collection. At any one
+ * time, a single subscriber may be iterating over the collection.
  */
 public interface CollectionInfo
 {
