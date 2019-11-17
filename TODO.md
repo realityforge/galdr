@@ -81,6 +81,7 @@ for systems/processors ahead of time.
 ### Tasks
 
 * Extract useful annotation processor utilities into a separate project.
+* Create separate `integration-tests` module
 * Add the `EntityPlan` element above.
 * `AreaOfInterest` should generate an error if there is no components contained.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
