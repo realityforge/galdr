@@ -157,6 +157,10 @@ for systems/processors ahead of time.
 * Add error handling for processors. Either allow error handling locally or bubble up to application handlers.
   The error handlers will catch errors generated in user code and pass to error handling code.
 
+* Consider automatically determining the order of `SubSystem` instances within a `Stage` by priority and or
+  declared component dependencies. i.e. If `SubSystem` instances are of the same priority then a `SubSystem`
+  that reads a component should be scheduled after `SubSystem` instances that can write to the same component.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
