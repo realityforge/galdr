@@ -4,80 +4,6 @@ This document is essentially a list of shorthand notes describing work yet to co
 Unfortunately it is not complete enough for other people to pick work off the list and
 complete as there is too much un-said.
 
-### Design
-
-* `World` (a.k.a. a `Context`?)
-  * Contain 0 or more `Entity` instances. These are dynamically added and removed over time.
-  * Contain 1 or more `ProcessorStage` instances. These are statically defined when the `World` is constructed.
-  * Contain 1 or more `ComponentType` instances. These are statically defined when the `World` is constructed.
-
-* `Entity`
-  * A container into which components are added.
-  * Has a unique identifier.
-  * Contains 0 or more `Component` instances.
-
-* `ComponentType`
-  * Represents a type of a `Component` available in the `World`
-
-* `Component`
-  * A passive data container that may be attached to an `Entity` instance.
-  * A typical `Component` is a fine-grain data element where all the fields are used to achieve a single function.
-    e.g. A `Component` may be `Position`, `Velocity`, `Acceleration`, `CameraTransform`, `Health`, `Sprite` etc.
-  * In the early iterations of this toolkit the `Component` instances are expected to be instances of a class
-    but in the future they may instead be views into underlying linear arrays (As provided by toolkits such as
-    [FlatBuffers](https://google.github.io/flatbuffers/index.html)). There may also be separation between a
-    read-only view and a read-write view and the toolkit could use annotation processors to compile away the
-    differences.
-
-* `ProcessorStage`
-  * Contains 1 or more `Processor` instances that are statically defined when the stage is constructed.
-  * Orders the `Processor` instances by user-controlled priority. If processors have the same priority then
-    order the processors based on data dependencies between `Processor` instances. i.e. If a `Processor`
-    reads a `Component` than order it after an `Processor` with the same priority that writes a component.
-  * Applications are expected to explicitly invoke the `ProcessorStage` when they are expected to run.
-
-* `AreaOfInterest`
-  * Declares a set of rules that match components. These rules include which components MUST be present,
-    which components MUST NOT be present and a set of component where at least one component MUST be present.
-
-* `Subscription`
-  * A subscription is a set of entities maintained by the toolkit that match a specific `AreaOfInterest`.
-
-* `AccessControl`
-  * Rules that declare how a `Processor` accesses `Component` instances. This includes whether the `Processor`
-    accesses the component for read or write access and potentially whether the component creates or disposes
-    components or entities.
-
-* `SubSystem` (a.k.a. Systems in other ECS frameworks)
-  * A processor may receive 0 or more event types and applies changes to entities. See the "event" design for
-    further details.
-  * A processor reads and writes to `Entity` instances and may reflect state from entities as side-effects.
-    i.e. The `Renderer` processor probably generates many OpenGL commands to put entities onto the screen.
-  * A processor may declare an `AreaOfInterest` that would result in it being passed `Entity` instances that
-    match the `AreaOfInterest`.
-  * A processor may declare that they only want to receive a entity if an `Component` in the `AreaOfInterest`
-    has changed. This involves more significant architecture around change tracking and may come at a later
-    time.
-  * May operate in parallel or concurrently if `Component` types do not overlap or the `Processor` instances
-    only need to read a component type.
-  * In some cases it may be useful to explicitly declare dependency relationships between `Processor` instances
-    as they may generate side-effects other that manipulating component state as a side-effect and thus you want
-    to order processes explicitly.
-
-The toolkit will use annotation processors to build an efficient representation of component accessors and schedulers
-for systems/processors ahead of time.
-
-* Consider creation of some higher level `Archetype`, `Plan`, `Blueprint`, `Prefab` or `Template` classes that act
-  as a stamp that creates the structure of 1 or more `Entity` instances with specific `Component` instances and
-  `Link` defined between `Entity` instances. There could be two parts of this library - the first part creates
-  the structure and the second part gives the components values. The second part could be done at a higher level
-  subordinate library that reads data from json/xml/whatever to provide values. The first part could also be adapted
-  so that it takes a lambda and thus the components could be populated prior to events being propagated and the rest
-  of the system being made aware of the entities etc. The mechanisms for storing state should be linked in to the
-  same mechanisms used to serialize world state so that both are optimized together. It should also be noted that
-  the templates may be loaded from data files or they could be created in-code. However they should be relatively
-  efficient to represent regardless of how they are used from the application.
-
 ### Tasks
 
 * Rename `ProcessorStage` to `Stage`, rename `@Stage` annotation to `@GaldrStage` or similar.
@@ -96,6 +22,18 @@ for systems/processors ahead of time.
 * Consider adding a `default` `AreaOfInterest` either in component layer or in core framework that is merged
   into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
   `exclude=Disabled.class` to exclude disabled entities.
+
+* Consider creation of some higher level `EntityPlan` (or `Archetype`, `Plan`, `Blueprint`, `Prefab` `Template`)
+  classes that act as a stamp that creates the structure of 1 or more `Entity` instances with specific `Component`
+  instances and `Link` defined between `Entity` instances. There could be two parts of this library - the first part
+  creates the structure and the second part gives the components values. The second part could be done at a higher level
+  subordinate library that reads data from json/xml/whatever to provide values. The first part could also be adapted
+  so that it takes a lambda and thus the components could be populated prior to events being propagated and the rest
+  of the system being made aware of the entities etc. The mechanisms for storing state should be linked in to the
+  same mechanisms used to serialize world state so that both are optimized together. It should also be noted that
+  the templates may be loaded from data files or they could be created in-code. However they should be relatively
+  efficient to represent regardless of how they are used from the application.
+
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
@@ -157,6 +95,27 @@ for systems/processors ahead of time.
 * Consider automatically determining the order of `SubSystem` instances within a `Stage` by priority and or
   declared component dependencies. i.e. If `SubSystem` instances are of the same priority then a `SubSystem`
   that reads a component should be scheduled after `SubSystem` instances that can write to the same component.
+
+* In the current iteration the toolkit the `Component` instances are expected to be instances of a class
+  but in the future they may instead be views into underlying linear arrays (As provided by toolkits such as
+  [FlatBuffers](https://google.github.io/flatbuffers/index.html)). There may also be separation between a
+  read-only view and a read-write view and the toolkit could use annotation processors to compile away the
+  differences.
+
+* Change `@ComponentManagerRef` infrastructure so that it is possible to determine whether the `SubSystem`
+  wants read-only or read-write access to `Component` instances based on the type parameter. This ultimately
+  requires difference interfaces for read-only and read-write of a single component type.
+
+* Once we can determine the type of access required by a `SubSystem`, the framework may be able to operate in
+  parallel or concurrently if `Component` types do not overlap or the `SubSystem` instances only need to read
+  a component type.
+
+* In the future, a `SubSystem` may declare that they only want to receive a entity if a `Component` in the
+  `AreaOfInterest` has changed. This involves more significant architecture around change tracking and will
+  not be implemented unless there is a clear demand.
+
+* A `SubSystem` may declare that they are interested in 0 or more event types. The `SubSystem` will react and
+  to events when they occur. See the "event" design for further details.
 
 ### Other ECS Systems
 
