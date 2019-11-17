@@ -80,6 +80,8 @@ for systems/processors ahead of time.
 
 ### Tasks
 
+* Rename `ProcessorStage` to `Stage`, rename `@Stage` annotation to `@GaldrStage` or similar.
+* Rename `ProcessorFn` to `SubSystem`, rename `@SubSystem` annotation to `@GaldrSubSystem` or similar.
 * Extract useful annotation processor utilities into a separate project.
 * Create separate `integration-tests` module
 * Add the `EntityPlan` element above.
