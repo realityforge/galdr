@@ -148,8 +148,6 @@ for systems/processors ahead of time.
 * Replace usages of `Objects.requireNonNull` with a local `Galdr.requireNonNull()` so that it can be replaced
   with a noop in JRE code.
 
-* Make sure that all entities (mobiles, items, spells, and their effects) can be represented in Galdr.
-
 * In `ApplicationAnnotationProcessor`
   - Ensure component types declared in `@ComponentManagerRef` in contained subsystems are present in application.
   - Ensure component types declared in `@EntityProcess` in contained subsystems are present in application.
