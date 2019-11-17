@@ -20,7 +20,8 @@ i.e. A `Component` may be `Position`, `Velocity`, `Body`, `CameraTransform`, `He
 A `System` is responsible for updating the `Component` instances attached to `Entity` instances. A system typically
 selects the `Entity` instances to process based on the set of `Component` instances. i.e. A `RenderSystem` may
 read the `Position` and `Spite` components to render the entity on the screen, a `PhysicsSystem` may read the `Body`,
-`Position` and `Velocity` components and update the `Position` component etc.
+`Position` and `Velocity` components and update the `Position` component etc. It should be noted that in Galdr, the
+term `SubSystem` is used instead of `System` to avoid a name collision with the `java.lang.System` class. 
 
 ### Getting Started
 
