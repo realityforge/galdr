@@ -11,7 +11,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * An ordered list of subsystems. These stage is explicitly invoked by application code.
+ * A named, ordered list of subsystems. The application code is responsible for explicitly
+ * calling {@link #process(int)} on the stage. This call will then invoke each subsystem in
+ * the specified order.
  */
 public final class ProcessorStage
 {
