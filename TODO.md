@@ -151,6 +151,7 @@ for systems/processors ahead of time.
 
 * In `ApplicationAnnotationProcessor`
   - Ensure component types declared in `@ComponentManagerRef` in contained subsystems are present in application.
+  - Ensure component types declared in `@EntityProcess` in contained subsystems are present in application.
 
 ### Other ECS Systems
 
