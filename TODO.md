@@ -48,7 +48,7 @@ complete as there is too much un-said.
     accesses the component for read or write access and potentially whether the component creates or disposes
     components or entities.
 
-* `Processor` (a.k.a. Systems in other ECS frameworks)
+* `SubSystem` (a.k.a. Systems in other ECS frameworks)
   * A processor may receive 0 or more event types and applies changes to entities. See the "event" design for
     further details.
   * A processor reads and writes to `Entity` instances and may reflect state from entities as side-effects.
