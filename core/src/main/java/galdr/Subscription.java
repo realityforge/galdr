@@ -11,6 +11,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
+/**
+ * A subscription represents the subscription of a particular SubSystem to a set of entities
+ * that match a specific AreaOfInterest.
+ */
 public final class Subscription
 {
   @Nonnull
