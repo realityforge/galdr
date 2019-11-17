@@ -250,6 +250,11 @@
     "messagePattern": "World.getSubscriptions() invoked but Galdr.areSpiesEnabled() returns false."
   },
   {
+    "code": 51,
+    "type": "API_INVARIANT",
+    "messagePattern": "World.createAreaOfInterest() passed a single component in the one component set. This AreaOfInterest must have multiple components in the one component set of the component should be moved to the all component set."
+  },
+  {
     "code": 52,
     "type": "API_INVARIANT",
     "messagePattern": "%s passed a name '%s' but Galdr.areNamesEnabled() is false"

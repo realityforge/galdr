@@ -74,6 +74,21 @@ public class AreaOfInterestTest
   }
 
   @Test
+  public void construct_singleOneRequirement()
+  {
+    final World world = Worlds.world()
+      .component( Component1.class )
+      .component( Component2.class )
+      .build();
+
+    final Collection<Class<?>> set1 = Collections.singletonList( Component1.class );
+    final Collection<Class<?>> set2 = Collections.singletonList( Component2.class );
+
+    assertInvariantFailure( () -> world.createAreaOfInterest( set1, set2 ),
+                            "Galdr-0051: World.createAreaOfInterest() passed a single component in the one component set. This AreaOfInterest must have multiple components in the one component set of the component should be moved to the all component set." );
+  }
+
+  @Test
   public void matches()
   {
     final World world = Worlds.world()
@@ -182,13 +197,13 @@ public class AreaOfInterestTest
       .component( Component4.class )
       .build();
 
-    final Collection<Class<?>> all = Arrays.asList( Component2.class, Component1.class );
-    final Collection<Class<?>> one = Collections.singletonList( Component3.class );
+    final Collection<Class<?>> all = Collections.singletonList( Component3.class );
+    final Collection<Class<?>> one = Arrays.asList( Component2.class, Component1.class );
     final Collection<Class<?>> exclude = Collections.emptyList();
 
     final AreaOfInterest areaOfInterest = world.createAreaOfInterest( all, one, exclude );
 
-    assertEquals( areaOfInterest.toString(), "AreaOfInterest[all={0, 1},one={2},exclude={}]" );
+    assertEquals( areaOfInterest.toString(), "AreaOfInterest[all={2},one={0, 1},exclude={}]" );
 
     GaldrTestUtil.disableDebugToString();
 
@@ -203,10 +218,11 @@ public class AreaOfInterestTest
       .component( Component2.class )
       .component( Component3.class )
       .component( Component4.class )
+      .component( Component5.class )
       .build();
 
     final Collection<Class<?>> set1 = Collections.singletonList( Component1.class );
-    final Collection<Class<?>> set2 = Collections.singletonList( Component2.class );
+    final Collection<Class<?>> set2 = Arrays.asList( Component2.class, Component5.class );
     final Collection<Class<?>> set3 = Collections.singletonList( Component3.class );
     final Collection<Class<?>> set4 = Collections.singletonList( Component4.class );
 

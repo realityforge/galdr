@@ -1,6 +1,7 @@
 package galdr;
 
 import galdr.spy.ComponentInfo;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -59,7 +60,7 @@ public class ComponentInfoImplTest
       world.createAreaOfInterest( Collections.singletonList( Component1.class ) );
     final AreaOfInterest areaOfInterest2 =
       world.createAreaOfInterest( Collections.emptyList(),
-                                  Collections.singletonList( Component1.class ) );
+                                  Arrays.asList( Component1.class, Component2.class ) );
     final AreaOfInterest areaOfInterest3 =
       world.createAreaOfInterest( Collections.emptyList(),
                                   Collections.emptyList(),

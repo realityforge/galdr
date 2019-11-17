@@ -503,6 +503,14 @@ public final class World
     verifyBitSet( "all", all.getBitSet() );
     verifyBitSet( "one", one.getBitSet() );
     verifyBitSet( "exclude", exclude.getBitSet() );
+    if ( Galdr.shouldCheckApiInvariants() )
+    {
+      apiInvariant( () -> 1 != one.getBitSet().cardinality(),
+                    () -> "Galdr-0051: World.createAreaOfInterest() passed a single component in the " +
+                          "one component set. This AreaOfInterest must have multiple components in the " +
+                          "one component set of the component should be moved to the all component set." );
+    }
+
     return new AreaOfInterest( all, one, exclude );
   }
 
