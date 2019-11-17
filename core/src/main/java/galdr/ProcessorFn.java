@@ -1,7 +1,7 @@
 package galdr;
 
 /**
- * Interface implement for elements responsible for updating the state of the world.
+ * Interface implemented by elements responsible for updating the state of the world.
  */
 @FunctionalInterface
 public interface ProcessorFn
