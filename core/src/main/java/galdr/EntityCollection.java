@@ -9,9 +9,9 @@ import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * An EntityCollection is a set of entities that match an {@link AreaOfInterest} that 1 or more
- * subscribers are interested in. A single subscriber may iterate over collection at any
- * one time.
+ * An EntityCollection is a set of entities maintained by the runtime. The entities match an
+ * {@link AreaOfInterest}. One or more subscribers are subscribed to the collection. At any one
+ * time, a single subscriber may be iterating over the collection.
  */
 final class EntityCollection
 {
