@@ -153,6 +153,9 @@ for systems/processors ahead of time.
   - Ensure component types declared in `@ComponentManagerRef` in contained subsystems are present in application.
   - Ensure component types declared in `@EntityProcess` in contained subsystems are present in application.
 
+* Add error handling for processors. Either allow error handling locally or bubble up to application handlers.
+  The error handlers will catch errors generated in user code and pass to error handling code.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
