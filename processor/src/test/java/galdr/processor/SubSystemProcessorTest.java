@@ -114,7 +114,7 @@ public class SubSystemProcessorTest
       "@ComponentManagerRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -130,7 +130,7 @@ public class SubSystemProcessorTest
       "@ComponentManagerRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -175,7 +175,7 @@ public class SubSystemProcessorTest
       "@EntityProcessor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -191,7 +191,7 @@ public class SubSystemProcessorTest
       "@EntityProcessor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -236,7 +236,7 @@ public class SubSystemProcessorTest
       "@NameRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -252,7 +252,7 @@ public class SubSystemProcessorTest
       "@NameRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -292,7 +292,7 @@ public class SubSystemProcessorTest
       "@OnActivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -308,7 +308,7 @@ public class SubSystemProcessorTest
       "@OnActivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -348,7 +348,7 @@ public class SubSystemProcessorTest
       "@OnDeactivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -364,7 +364,7 @@ public class SubSystemProcessorTest
       "@OnDeactivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -407,7 +407,7 @@ public class SubSystemProcessorTest
       "@Processor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -423,7 +423,7 @@ public class SubSystemProcessorTest
       "@Processor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedLifecycleMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -466,7 +466,7 @@ public class SubSystemProcessorTest
       "@WorldRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:PublicRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:PublicRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( fileworld ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
@@ -482,7 +482,7 @@ public class SubSystemProcessorTest
       "@WorldRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \\\"Galdr:ProtectedRefMethod\\\" ) or @SuppressGaldrWarnings( \\\"Galdr:ProtectedRefMethod\\\" )";
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( Collections.singletonList( fixture( fileworld ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:class" ).
+      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
       processedWith( new SubSystemProcessor() ).
       compilesWithoutError().
       withWarningCount( 1 ).
