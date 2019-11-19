@@ -19,7 +19,9 @@ complete as there is too much un-said.
 * Change _cascadeSourceRemoveToTarget and cascadeTargetRemoveToSource on Link to flags and populate spy events with flags.
 * Consider adding a `default` `AreaOfInterest` either in component layer or in core framework that is merged
   into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
-  `exclude=Disabled.class` to exclude disabled entities.
+  `exclude=Disabled.class` to exclude disabled entities. It seems likely that the Component layer is the best place to
+  layer this functionality by adding the `@GaldrApplication.defaultExclude` parameter and the
+  `@GaldrSubSystem.includeDefault` parameter.
 
 * Consider creation of some higher level `EntityPlan` (or `Archetype`, `Plan`, `Blueprint`, `Prefab` `Template`)
   classes that act as a stamp that creates the structure of 1 or more `Entity` instances with specific `Component`
