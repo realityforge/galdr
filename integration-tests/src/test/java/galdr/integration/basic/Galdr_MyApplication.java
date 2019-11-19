@@ -3,8 +3,10 @@ package galdr.integration.basic;
 import galdr.Stage;
 import galdr.World;
 import galdr.Worlds;
+import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
+@Generated( "galdr.processor.SubSystemProcessor" )
 final class Galdr_MyApplication
   extends MyApplication
 {
