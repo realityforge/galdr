@@ -63,7 +63,7 @@ public class StageTest
     final Stage stage = world.getStageByName( "MyStage" );
 
     assertEquals( stage.getName(), "MyStage" );
-    assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
+    assertEquals( stage.toString(), "Stage[MyStage]" );
 
     stage.process( 2 );
 
@@ -88,7 +88,7 @@ public class StageTest
       .build();
 
     final Stage stage = world.getStageByName( "MyStage" );
-    assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
+    assertEquals( stage.toString(), "Stage[MyStage]" );
 
     GaldrTestUtil.disableDebugToString();
 
@@ -114,7 +114,7 @@ public class StageTest
     final Stage stage = world.getStageByName( "MyStage" );
 
     assertEquals( stage.getName(), "MyStage" );
-    assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
+    assertEquals( stage.toString(), "Stage[MyStage]" );
 
     stage.process( 2 );
 
