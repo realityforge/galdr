@@ -1,4 +1,4 @@
-package galdr.annotations.test;
+package galdr.integration.basic;
 
 import galdr.ComponentManager;
 import galdr.ComponentStorage;

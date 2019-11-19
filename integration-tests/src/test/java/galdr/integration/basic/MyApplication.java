@@ -1,4 +1,4 @@
-package galdr.annotations.test;
+package galdr.integration.basic;
 
 import galdr.Stage;
 import galdr.annotations.GaldrApplication;

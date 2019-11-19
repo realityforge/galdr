@@ -105,6 +105,24 @@ define 'galdr' do
     iml.test_source_directories << _('src/test/fixtures/bad_input')
   end
 
+  desc 'Galdr Integration Tests'
+  define 'integration-tests' do
+    test.options[:properties] = GALDR_TEST_OPTIONS.merge('galdr.integration_fixture_dir' => _('src/test/fixtures'))
+    test.options[:java_args] = ['-ea']
+
+    test.using :testng
+    test.compile.with :javax_json,
+                      :jsonassert,
+                      :android_json,
+                      project('core').package(:jar),
+                      project('core').compile.dependencies,
+                      project('processor').package(:jar),
+                      project('processor').compile.dependencies
+
+    # The generators are configured to generate to here.
+    iml.test_source_directories << _('generated/processors/test/java')
+  end
+
   doc.from(projects(%w(core))).
     using(:javadoc,
           :windowtitle => 'Galdr API Documentation',
