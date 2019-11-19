@@ -1,7 +1,7 @@
 package galdr.integration.basic;
 
-import galdr.AbstractTest;
 import galdr.Stage;
+import galdr.integration.AbstractTest;
 import org.testng.annotations.Test;
 
 public class AnnotationExampleTest
