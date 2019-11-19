@@ -245,11 +245,7 @@ public final class SubSystemProcessor
   private void addNameRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     mustBeRefMethod( descriptor, method, Constants.NAME_REF_CLASSNAME );
-
-    if ( !String.class.getName().equals( method.getReturnType().toString() ) )
-    {
-      throw new ProcessorException( "@NameRef target must return an instance of java.lang.String", method );
-    }
+    MemberChecks.mustReturnAnInstanceOf( processingEnv, method, Constants.NAME_REF_CLASSNAME, String.class.getName() );
     descriptor.addNameRef( method );
   }
 
@@ -282,12 +278,10 @@ public final class SubSystemProcessor
   private void addWorldRef( @Nonnull final SubSystemDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     mustBeRefMethod( descriptor, method, Constants.WORLD_REF_CLASSNAME );
-
-    final TypeMirror returnType = method.getReturnType();
-    if ( TypeKind.DECLARED != returnType.getKind() || !Constants.WORLD_CLASSNAME.equals( returnType.toString() ) )
-    {
-      throw new ProcessorException( "@WorldRef target must return an instance of galdr.World", method );
-    }
+    MemberChecks.mustReturnAnInstanceOf( processingEnv,
+                                         method,
+                                         Constants.WORLD_REF_CLASSNAME,
+                                         Constants.WORLD_CLASSNAME );
     descriptor.addWorldRef( method );
   }
 
