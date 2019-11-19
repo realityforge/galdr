@@ -15,7 +15,6 @@ final class SubSystemDescriptor
   private final TypeElement _element;
   @Nonnull
   private final String _name;
-  private final int _priority;
   @Nonnull
   private final List<ComponentManagerRefDescriptor> _componentManagerRefs = new ArrayList<>();
   @Nonnull
@@ -31,11 +30,10 @@ final class SubSystemDescriptor
   @Nonnull
   private final List<ExecutableElement> _worldRefs = new ArrayList<>();
 
-  SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name, final int priority )
+  SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name )
   {
     _element = Objects.requireNonNull( element );
     _name = Objects.requireNonNull( name );
-    _priority = priority;
   }
 
   @Nonnull
@@ -48,11 +46,6 @@ final class SubSystemDescriptor
   String getName()
   {
     return _name;
-  }
-
-  int getPriority()
-  {
-    return _priority;
   }
 
   @Nonnull

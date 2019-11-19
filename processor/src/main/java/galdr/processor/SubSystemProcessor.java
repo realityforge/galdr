@@ -56,8 +56,7 @@ public final class SubSystemProcessor
     }
     final AnnotationMirror annotation = AnnotationsUtil.getAnnotationByType( element, Constants.SUB_SYSTEM_CLASSNAME );
     final String name = deriveName( element, annotation );
-    final int priority = AnnotationsUtil.getAnnotationValue( annotation, "priority" );
-    final SubSystemDescriptor descriptor = new SubSystemDescriptor( element, name, priority );
+    final SubSystemDescriptor descriptor = new SubSystemDescriptor( element, name );
 
     final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
     if ( constructors.size() > 1 )

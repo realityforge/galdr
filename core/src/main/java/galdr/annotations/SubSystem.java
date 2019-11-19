@@ -27,29 +27,4 @@ public @interface SubSystem
    */
   @Nonnull
   String name() default "<default>";
-
-  /**
-   * Return the priority of the subsystem.
-   * Subsystems with lower priority will execute earlier in a stage.
-   * Subsystems with the same priority will be ordered based on a dependency analysis or if the subsystems
-   * are independent then then by the declaration order.
-   *
-   * @return the priority of the subsystem.
-   */
-  int priority() default Priority.DEFAULT;
-
-  /**
-   * The class containing priority constants.
-   */
-  final class Priority
-  {
-    /**
-     * The default priority if no other priority is specified.
-     */
-    public static final int DEFAULT = 1000;
-
-    private Priority()
-    {
-    }
-  }
 }
