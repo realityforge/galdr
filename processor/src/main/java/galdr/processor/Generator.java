@@ -396,7 +396,7 @@ final class Generator
         method.addStatement( "$N.beginIteration()", subscriptionFieldName );
         method.addStatement( "int $N", entityId );
         final CodeBlock.Builder block = CodeBlock.builder();
-        block.beginControlFlow( "while ( -1 != ( $N = $N.nextEntity() ) )", entityId,subscriptionFieldName );
+        block.beginControlFlow( "while ( -1 != ( $N = $N.nextEntity() ) )", entityId, subscriptionFieldName );
         if ( 1 == sourceMethod.getParameters().size() )
         {
           block.addStatement( "$N( $N )", name, entityId );
