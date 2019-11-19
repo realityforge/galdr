@@ -1,11 +1,11 @@
 package com.example;
 
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 
 public class StaticInnerClassSubSystem
 {
-  @SubSystem
+  @GaldrSubSystem
   static abstract class Foo
   {
     @Processor

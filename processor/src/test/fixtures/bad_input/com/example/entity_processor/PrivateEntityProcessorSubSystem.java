@@ -1,10 +1,9 @@
 package com.example.entity_processor;
 
 import galdr.annotations.EntityProcessor;
-import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class PrivateEntityProcessorSubSystem
 {
   public static class MyComponent

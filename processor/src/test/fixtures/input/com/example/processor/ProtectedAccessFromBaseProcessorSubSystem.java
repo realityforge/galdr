@@ -1,9 +1,9 @@
 package com.example.processor;
 
 import com.example.processor.other.BaseProtectedAccessProcessorSubSystem;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class ProtectedAccessFromBaseProcessorSubSystem
   extends BaseProtectedAccessProcessorSubSystem
 {

@@ -1,11 +1,11 @@
 package com.example.name_ref;
 
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.NameRef;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 import galdr.annotations.SuppressGaldrWarnings;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class Suppressed2ProtectedAccessNameRefSubSystem
 {
   // This uses the CLASS retention suppression

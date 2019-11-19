@@ -2,10 +2,10 @@ package com.example.component_manager_ref;
 
 import galdr.ComponentManager;
 import galdr.annotations.ComponentManagerRef;
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class Suppressed1ProtectedAccessComponentManagerRefSubSystem
 {
   public static class MyComponent

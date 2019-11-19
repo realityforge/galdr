@@ -4,11 +4,11 @@ import galdr.ComponentManager;
 import galdr.World;
 import galdr.annotations.ComponentManagerRef;
 import galdr.annotations.EntityProcessor;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.WorldRef;
 import javax.annotation.Nonnull;
 
-@SubSystem
+@GaldrSubSystem
 abstract class HealthProcessor
 {
   @ComponentManagerRef

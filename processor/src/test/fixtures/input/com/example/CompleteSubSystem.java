@@ -3,14 +3,14 @@ package com.example;
 import galdr.ComponentManager;
 import galdr.World;
 import galdr.annotations.ComponentManagerRef;
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.NameRef;
 import galdr.annotations.OnActivate;
 import galdr.annotations.OnDeactivate;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 import galdr.annotations.WorldRef;
 
-@SubSystem
+@GaldrSubSystem
 abstract class CompleteSubSystem
 {
   static class MyComponent1

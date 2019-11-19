@@ -1,10 +1,10 @@
 package com.example.entity_processor;
 
 import galdr.annotations.EntityProcessor;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.SuppressGaldrWarnings;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class Suppressed2ProtectedAccessEntityProcessorSubSystem
 {
   public static class MyComponent

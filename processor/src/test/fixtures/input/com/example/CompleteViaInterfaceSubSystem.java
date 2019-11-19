@@ -1,9 +1,9 @@
 package com.example;
 
 import com.example.other.CompleteInterfaceSubSystem;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 
-@SubSystem
+@GaldrSubSystem
 abstract class CompleteViaInterfaceSubSystem
   implements CompleteInterfaceSubSystem
 {

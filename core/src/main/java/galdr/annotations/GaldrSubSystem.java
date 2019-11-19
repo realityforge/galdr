@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * <p>The annotation processor that handles this annotation will analyze all super classes and super
  * interfaces. This includes analysis of default methods on interfaces.</p>
  */
-public @interface SubSystem
+public @interface GaldrSubSystem
 {
   /**
    * Return the name of the system.

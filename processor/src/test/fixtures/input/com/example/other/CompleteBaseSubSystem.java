@@ -7,7 +7,6 @@ import galdr.annotations.NameRef;
 import galdr.annotations.OnActivate;
 import galdr.annotations.OnDeactivate;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 import galdr.annotations.WorldRef;
 
 public abstract class CompleteBaseSubSystem

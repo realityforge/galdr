@@ -1,9 +1,9 @@
 package com.example;
 
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class BasicSubSystem
 {
   @Processor

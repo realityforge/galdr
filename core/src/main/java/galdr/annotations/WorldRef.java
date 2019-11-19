@@ -6,7 +6,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marks a template method that returns the {@link galdr.World} instance for the processor.
- * This annotation will be processed on classes annotated by the {@link SubSystem} annotation and any parent
+ * This annotation will be processed on classes annotated by the {@link GaldrSubSystem} annotation and any parent
  * classes or interfaces.
  *
  * <p>The method that is annotated with this annotation must also comply with the following constraints:</p>
@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * <li>Must be abstract</li>
  * <li>Must not throw any exceptions</li>
  * <li>Must return an instance of {@link galdr.World}.</li>
- * <li>Must be accessible to the class annotated by the {@link SubSystem} annotation.</li>
+ * <li>Must be accessible to the class annotated by the {@link GaldrSubSystem} annotation.</li>
  * <li>
  *   Should not be public as not expected to be invoked outside the subsystem. A warning will be generated but can
  *   be suppressed by the {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key
@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  *   an interface method.
  * </li>
  * <li>
- *   Should not be protected if in the class annotated with the {@link SubSystem} annotation as the method is not
+ *   Should not be protected if in the class annotated with the {@link GaldrSubSystem} annotation as the method is not
  *   expected to be invoked outside the subsystem. A warning will be generated but can be suppressed by the
  *   {@link SuppressWarnings} or {@link SuppressGaldrWarnings} annotations with a key "Galdr:ProtectedRefMethod".
  * </li>

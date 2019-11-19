@@ -1,8 +1,8 @@
 package com.example;
 
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public enum EnumSubSystem
 {
   A, B

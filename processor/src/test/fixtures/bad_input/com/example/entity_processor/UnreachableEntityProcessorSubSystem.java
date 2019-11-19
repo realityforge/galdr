@@ -1,9 +1,9 @@
 package com.example.entity_processor;
 
 import com.example.entity_processor.other.BaseUnreachableEntityProcessorSubSystem;
-import galdr.annotations.SubSystem;
+import galdr.annotations.GaldrSubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class UnreachableEntityProcessorSubSystem
   extends BaseUnreachableEntityProcessorSubSystem
 {

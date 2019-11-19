@@ -1,10 +1,10 @@
 package com.example.on_deactivate;
 
 import com.example.on_deactivate.other.BaseProtectedAccessOnDeactivateSubSystem;
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class ProtectedAccessFromBaseOnDeactivateSubSystem
   extends BaseProtectedAccessOnDeactivateSubSystem
 {

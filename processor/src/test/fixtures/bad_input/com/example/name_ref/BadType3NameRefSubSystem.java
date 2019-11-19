@@ -1,11 +1,11 @@
 package com.example.name_ref;
 
+import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.NameRef;
 import galdr.annotations.Processor;
-import galdr.annotations.SubSystem;
 import java.io.IOException;
 
-@SubSystem
+@GaldrSubSystem
 public abstract class BadType3NameRefSubSystem
 {
   @NameRef
