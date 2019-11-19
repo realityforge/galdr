@@ -46,14 +46,14 @@ public final class Galdr_MultiComponentManagerRefSubSystem implements PostConstr
 
     @Override
     @Nonnull
-    ComponentManager<MultiComponentManagerRefSubSystem.MyComponent1> cm1() {
+    final ComponentManager<MultiComponentManagerRefSubSystem.MyComponent1> cm1() {
       assert null != $galdrc$_cm1;
       return $galdrc$_cm1;
     }
 
     @Override
     @Nonnull
-    ComponentManager<MultiComponentManagerRefSubSystem.MyComponent2> cm2() {
+    final ComponentManager<MultiComponentManagerRefSubSystem.MyComponent2> cm2() {
       assert null != $galdrc$_cm2;
       return $galdrc$_cm2;
     }

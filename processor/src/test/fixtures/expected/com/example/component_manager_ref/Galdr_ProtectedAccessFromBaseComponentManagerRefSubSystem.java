@@ -45,7 +45,8 @@ public final class Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem imp
 
     @Override
     @Nonnull
-    protected ComponentManager<BaseProtectedAccessComponentManagerRefSubSystem.MyComponent> cm() {
+    protected final ComponentManager<BaseProtectedAccessComponentManagerRefSubSystem.MyComponent> cm(
+        ) {
       assert null != $galdrc$_cm;
       return $galdrc$_cm;
     }

@@ -32,13 +32,13 @@ public final class Galdr_MultiNameRefSubSystem implements ProcessorFn {
 
     @Override
     @Nonnull
-    String name1() {
+    final String name1() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    String name2() {
+    final String name2() {
       return $galdr$_getName();
     }
 

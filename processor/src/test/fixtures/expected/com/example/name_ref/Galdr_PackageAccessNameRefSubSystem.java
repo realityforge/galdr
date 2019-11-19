@@ -32,7 +32,7 @@ public final class Galdr_PackageAccessNameRefSubSystem implements ProcessorFn {
 
     @Override
     @Nonnull
-    String name() {
+    final String name() {
       return $galdr$_getName();
     }
 

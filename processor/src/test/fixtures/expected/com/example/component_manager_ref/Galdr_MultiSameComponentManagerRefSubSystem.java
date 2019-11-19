@@ -46,14 +46,14 @@ public final class Galdr_MultiSameComponentManagerRefSubSystem implements PostCo
 
     @Override
     @Nonnull
-    ComponentManager<MultiSameComponentManagerRefSubSystem.MyComponent1> cm1() {
+    final ComponentManager<MultiSameComponentManagerRefSubSystem.MyComponent1> cm1() {
       assert null != $galdrc$_cm1;
       return $galdrc$_cm1;
     }
 
     @Override
     @Nonnull
-    ComponentManager<MultiSameComponentManagerRefSubSystem.MyComponent1> cm2() {
+    final ComponentManager<MultiSameComponentManagerRefSubSystem.MyComponent1> cm2() {
       assert null != $galdrc$_cm2;
       return $galdrc$_cm2;
     }

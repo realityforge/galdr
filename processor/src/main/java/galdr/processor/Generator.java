@@ -113,13 +113,14 @@ final class Generator
                            .build() );
     }
 
-    builder.addType( buildEnhancedSubSystem( descriptor ) );
+    builder.addType( buildEnhancedSubSystem( processingEnv, descriptor ) );
 
     return builder.build();
   }
 
   @Nonnull
-  private static TypeSpec buildEnhancedSubSystem( @Nonnull final SubSystemDescriptor descriptor )
+  private static TypeSpec buildEnhancedSubSystem( @Nonnull final ProcessingEnvironment processingEnv,
+                                                  @Nonnull final SubSystemDescriptor descriptor )
   {
     final TypeSpec.Builder builder = TypeSpec.classBuilder( "EnhancedSubSystem" );
     builder.addModifiers( Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL );
@@ -150,9 +151,9 @@ final class Generator
     emitConstructor( descriptor, builder );
 
     // Generate Ref methods
-    emitComponentManagerAccessors( descriptor, builder );
-    emitNameAccessors( descriptor, builder );
-    emitWorldAccessors( descriptor, builder );
+    emitComponentManagerAccessors( processingEnv, descriptor, builder );
+    emitNameAccessors( processingEnv, descriptor, builder );
+    emitWorldAccessors( processingEnv, descriptor, builder );
 
     // Generate lifecycle methods
     emitPostConstruct( descriptor, builder );
@@ -181,7 +182,8 @@ final class Generator
                          .build() );
   }
 
-  private static void emitComponentManagerAccessors( @Nonnull final SubSystemDescriptor descriptor,
+  private static void emitComponentManagerAccessors( @Nonnull final ProcessingEnvironment processingEnv,
+                                                     @Nonnull final SubSystemDescriptor descriptor,
                                                      @Nonnull final TypeSpec.Builder builder )
   {
     for ( final ComponentManagerRefDescriptor componentManagerRef : descriptor.getComponentManagerRefs() )
@@ -189,56 +191,42 @@ final class Generator
       final ParameterizedTypeName type =
         ParameterizedTypeName.get( COMPONENT_MANAGER_CLASSNAME, componentManagerRef.getComponentType() );
       final ExecutableElement methodElement = componentManagerRef.getMethod();
-      final String methodName = methodElement.getSimpleName().toString();
-      final String fieldName = FRAMEWORK_COMPONENT_PREFIX + methodName;
+      final String fieldName = FRAMEWORK_COMPONENT_PREFIX + methodElement.getSimpleName().toString();
       builder.addField( FieldSpec.builder( type, fieldName, Modifier.PRIVATE )
                           .addAnnotation( NULLABLE_CLASSNAME )
                           .build() );
 
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( methodName )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( type )
-          .addStatement( "assert null != $N", fieldName )
-          .addStatement( "return $N", fieldName );
-      GeneratorUtil.copyAccessModifiers( methodElement, method );
-      builder.addMethod( method.build() );
+      builder.addMethod( GeneratorUtil
+                           .refMethod( processingEnv, descriptor.getElement(), methodElement )
+                           .addStatement( "assert null != $N", fieldName )
+                           .addStatement( "return $N", fieldName )
+                           .build() );
     }
   }
 
-  private static void emitNameAccessors( @Nonnull final SubSystemDescriptor descriptor,
+  private static void emitNameAccessors( @Nonnull final ProcessingEnvironment processingEnv,
+                                         @Nonnull final SubSystemDescriptor descriptor,
                                          @Nonnull final TypeSpec.Builder builder )
   {
     for ( final ExecutableElement nameRef : descriptor.getNameRefs() )
     {
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( nameRef.getSimpleName().toString() )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( String.class )
-          .addStatement( "return $N()", NAME_ACCESSOR_METHOD );
-      GeneratorUtil.copyAccessModifiers( nameRef, method );
-      builder.addMethod( method.build() );
+      builder.addMethod( GeneratorUtil
+                           .refMethod( processingEnv, descriptor.getElement(), nameRef )
+                           .addStatement( "return $N()", NAME_ACCESSOR_METHOD )
+                           .build() );
     }
   }
 
-  private static void emitWorldAccessors( @Nonnull final SubSystemDescriptor descriptor,
-                                          final TypeSpec.Builder builder )
+  private static void emitWorldAccessors( @Nonnull final ProcessingEnvironment processingEnv,
+                                          @Nonnull final SubSystemDescriptor descriptor,
+                                          @Nonnull final TypeSpec.Builder builder )
   {
     for ( final ExecutableElement worldRef : descriptor.getWorldRefs() )
     {
-      final MethodSpec.Builder method =
-        MethodSpec
-          .methodBuilder( worldRef.getSimpleName().toString() )
-          .addAnnotation( Override.class )
-          .addAnnotation( NONNULL_CLASSNAME )
-          .returns( WORLD_CLASSNAME )
-          .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD );
-      GeneratorUtil.copyAccessModifiers( worldRef, method );
-      builder.addMethod( method.build() );
+      builder.addMethod( GeneratorUtil
+                           .refMethod( processingEnv, descriptor.getElement(), worldRef )
+                           .addStatement( "return $N.$N()", OUTER_FIELD, WORLD_ACCESSOR_METHOD )
+                           .build() );
     }
   }
 

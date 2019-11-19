@@ -32,13 +32,13 @@ public final class Galdr_MultiWorldRefSubSystem implements ProcessorFn {
 
     @Override
     @Nonnull
-    World world1() {
+    final World world1() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
     @Override
     @Nonnull
-    World world2() {
+    final World world2() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

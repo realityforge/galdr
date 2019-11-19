@@ -44,7 +44,8 @@ public final class Galdr_Suppressed2PublicAccessComponentManagerRefSubSystem imp
 
     @Override
     @Nonnull
-    public ComponentManager<Suppressed2PublicAccessComponentManagerRefSubSystem.MyComponent> cm() {
+    public final ComponentManager<Suppressed2PublicAccessComponentManagerRefSubSystem.MyComponent> cm(
+        ) {
       assert null != $galdrc$_cm;
       return $galdrc$_cm;
     }

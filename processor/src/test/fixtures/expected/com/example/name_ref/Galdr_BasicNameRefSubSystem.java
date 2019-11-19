@@ -32,7 +32,7 @@ public final class Galdr_BasicNameRefSubSystem implements ProcessorFn {
 
     @Override
     @Nonnull
-    String name() {
+    final String name() {
       return $galdr$_getName();
     }
 

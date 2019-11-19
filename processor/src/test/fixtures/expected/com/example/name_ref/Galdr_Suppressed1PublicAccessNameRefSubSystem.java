@@ -32,7 +32,7 @@ public final class Galdr_Suppressed1PublicAccessNameRefSubSystem implements Proc
 
     @Override
     @Nonnull
-    public String name() {
+    public final String name() {
       return $galdr$_getName();
     }
 

@@ -59,39 +59,39 @@ public final class Galdr_CompleteViaBaseClassSubSystem implements PostConstructF
 
     @Override
     @Nonnull
-    protected ComponentManager<CompleteBaseSubSystem.MyComponent1> cm1() {
+    protected final ComponentManager<CompleteBaseSubSystem.MyComponent1> cm1() {
       assert null != $galdrc$_cm1;
       return $galdrc$_cm1;
     }
 
     @Override
     @Nonnull
-    protected ComponentManager<CompleteBaseSubSystem.MyComponent2> cm2() {
+    protected final ComponentManager<CompleteBaseSubSystem.MyComponent2> cm2() {
       assert null != $galdrc$_cm2;
       return $galdrc$_cm2;
     }
 
     @Override
     @Nonnull
-    protected String name1() {
+    protected final String name1() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    protected String name2() {
+    protected final String name2() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    protected World world1() {
+    protected final World world1() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
     @Override
     @Nonnull
-    protected World world2() {
+    protected final World world2() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

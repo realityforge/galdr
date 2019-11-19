@@ -32,7 +32,7 @@ public final class Galdr_BasicWorldRefSubSystem implements ProcessorFn {
 
     @Override
     @Nonnull
-    World world() {
+    final World world() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
