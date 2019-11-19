@@ -1,6 +1,6 @@
 package galdr.annotations.test;
 
-import galdr.ProcessorStage;
+import galdr.Stage;
 import galdr.annotations.GaldrApplication;
 import galdr.annotations.GaldrStage;
 import javax.annotation.Nonnull;
@@ -16,5 +16,5 @@ abstract class MyApplication
 
   @GaldrStage( { BootstrapProcessor.class, HealthProcessor.class } )
   @Nonnull
-  abstract ProcessorStage sim();
+  abstract Stage sim();
 }

@@ -1,5 +1,6 @@
 package galdr.annotations;
 
+import galdr.Stage;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -18,7 +19,7 @@ import javax.annotation.Nonnull;
  * <li>Must not be final</li>
  * <li>Must be abstract</li>
  * <li>Must not throw any exceptions</li>
- * <li>Must return an instance of {@link galdr.ProcessorStage}.</li>
+ * <li>Must return an instance of {@link Stage}.</li>
  * </ul>
  */
 @Documented

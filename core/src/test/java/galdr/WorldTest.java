@@ -75,7 +75,7 @@ public class WorldTest
       .stage( name2 ).subSystem( new BasicNoopProcessor() ).endStage()
       .build();
 
-    final Map<String, ProcessorStage> stages = world.getStages();
+    final Map<String, Stage> stages = world.getStages();
     assertEquals( stages.size(), 2 );
     assertTrue( stages.containsKey( name1 ) );
     assertTrue( stages.containsKey( name2 ) );
@@ -201,7 +201,7 @@ public class WorldTest
     final World world =
       Worlds.world().stage( name ).subSystem( processorName, new BasicNoopProcessor() ).endStage().build();
 
-    final ProcessorStage stage = world.getStageByName( name );
+    final Stage stage = world.getStageByName( name );
     final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount = new AtomicInteger();

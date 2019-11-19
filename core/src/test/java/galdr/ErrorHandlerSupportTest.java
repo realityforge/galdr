@@ -17,7 +17,7 @@ public class ErrorHandlerSupportTest
     final Throwable throwable = new Throwable();
 
     final String processorName = randomString();
-    final ProcessorStage stage = createStage( processorName );
+    final Stage stage = createStage( processorName );
 
     final AtomicInteger callCount = new AtomicInteger();
 
@@ -81,7 +81,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final String processorName = randomString();
-    final ProcessorStage stage = createStage( processorName );
+    final Stage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -116,7 +116,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final String processorName = randomString();
-    final ProcessorStage stage = createStage( processorName );
+    final Stage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final AtomicInteger callCount1 = new AtomicInteger();
@@ -162,7 +162,7 @@ public class ErrorHandlerSupportTest
     final ErrorHandlerSupport support = new ErrorHandlerSupport();
 
     final String processorName = randomString();
-    final ProcessorStage stage = createStage( processorName );
+    final Stage stage = createStage( processorName );
     final Throwable throwable = new Throwable();
 
     final RuntimeException exception = new RuntimeException( "X" );
@@ -186,7 +186,7 @@ public class ErrorHandlerSupportTest
   }
 
   @Nonnull
-  private ProcessorStage createStage( @Nonnull final String processorName )
+  private Stage createStage( @Nonnull final String processorName )
   {
     final String stageName = randomString();
     final World world =

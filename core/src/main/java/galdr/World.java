@@ -95,7 +95,7 @@ public final class World
    * The container of stages available in the world.
    */
   @Nullable
-  private Map<String, ProcessorStage> _stages;
+  private Map<String, Stage> _stages;
   /**
    * The collection of entity collections in the world.
    */
@@ -123,7 +123,7 @@ public final class World
   /**
    * Return the current world.
    * A world is marked as current when a SubSystem is being created and for the duration of
-   * the call to {@link ProcessorStage#process(int)}. This method MUST NOT be invoked when a
+   * the call to {@link Stage#process(int)}. This method MUST NOT be invoked when a
    * world is not active.
    *
    * @return the current World.
@@ -286,10 +286,10 @@ public final class World
   }
 
   @Nonnull
-  public ProcessorStage getStageByName( @Nonnull final String name )
+  public Stage getStageByName( @Nonnull final String name )
   {
-    final Map<String, ProcessorStage> stages = getStages();
-    final ProcessorStage stage = stages.get( name );
+    final Map<String, Stage> stages = getStages();
+    final Stage stage = stages.get( name );
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> null != stage,
@@ -302,7 +302,7 @@ public final class World
   }
 
   @Nonnull
-  Map<String, ProcessorStage> getStages()
+  Map<String, Stage> getStages()
   {
     assertWorldConstructed( "World.getStages()" );
     assert null != _stages;
@@ -311,7 +311,7 @@ public final class World
 
   void completeConstruction( final int initialEntityCount,
                              @Nonnull final ComponentManager<?>[] components,
-                             @Nonnull final Map<String, ProcessorStage> stages )
+                             @Nonnull final Map<String, Stage> stages )
   {
     _entityManager = new EntityManager( this, initialEntityCount );
     _stages = CollectionsUtil.wrap( new HashMap<>( Objects.requireNonNull( stages ) ) );
@@ -319,8 +319,8 @@ public final class World
     _components = components;
     _componentByClass = buildComponentMap( components );
 
-    WorldHolder.run( this, () -> _stages.values().forEach( ProcessorStage::postConstruct ) );
-    WorldHolder.run( this, () -> _stages.values().forEach( ProcessorStage::activate ) );
+    WorldHolder.run( this, () -> _stages.values().forEach( Stage::postConstruct ) );
+    WorldHolder.run( this, () -> _stages.values().forEach( Stage::activate ) );
   }
 
   @Nonnull
@@ -698,7 +698,7 @@ public final class World
    * @param throwable     the exception that caused error if any.
    */
   @OmitSymbol( unless = "galdr.enable_error_handlers" )
-  void reportError( @Nonnull final ProcessorStage stage,
+  void reportError( @Nonnull final Stage stage,
                     @Nonnull final String subSystemName,
                     @Nonnull final Throwable throwable )
   {

@@ -1,7 +1,7 @@
 package galdr.annotations.test;
 
 import galdr.AbstractTest;
-import galdr.ProcessorStage;
+import galdr.Stage;
 import org.testng.annotations.Test;
 
 public class AnnotationExampleTest
@@ -14,7 +14,7 @@ public class AnnotationExampleTest
     // using the annotation development driven model
     final MyApplication application = MyApplication.create();
 
-    final ProcessorStage stage = application.sim();
+    final Stage stage = application.sim();
     stage.process( 1 );
     stage.process( 1 );
     stage.process( 1 );

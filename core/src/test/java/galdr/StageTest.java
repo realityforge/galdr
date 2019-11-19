@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
-public class ProcessorStageTest
+public class StageTest
   extends AbstractTest
 {
   public static class MyProcessor
@@ -60,7 +60,7 @@ public class ProcessorStageTest
       .endStage()
       .build();
 
-    final ProcessorStage stage = world.getStageByName( "MyStage" );
+    final Stage stage = world.getStageByName( "MyStage" );
 
     assertEquals( stage.getName(), "MyStage" );
     assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
@@ -87,7 +87,7 @@ public class ProcessorStageTest
       .endStage()
       .build();
 
-    final ProcessorStage stage = world.getStageByName( "MyStage" );
+    final Stage stage = world.getStageByName( "MyStage" );
     assertEquals( stage.toString(), "ProcessorStage[MyStage]" );
 
     GaldrTestUtil.disableDebugToString();
@@ -111,7 +111,7 @@ public class ProcessorStageTest
                              trace.add( "Stage: " + stage.getName() +
                                         ", Processor: " + processor +
                                         ", Error: " + throwable.toString() ) );
-    final ProcessorStage stage = world.getStageByName( "MyStage" );
+    final Stage stage = world.getStageByName( "MyStage" );
 
     assertEquals( stage.getName(), "MyStage" );
     assertEquals( stage.toString(), "ProcessorStage[MyStage]" );

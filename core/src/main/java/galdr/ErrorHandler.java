@@ -17,5 +17,5 @@ public interface ErrorHandler
    * @param subSystemName the name of the {@link SubSystem} that generated the error.
    * @param throwable     the exception that caused the error.
    */
-  void onError( @Nonnull ProcessorStage stage, @Nonnull String subSystemName, @Nonnull Throwable throwable );
+  void onError( @Nonnull Stage stage, @Nonnull String subSystemName, @Nonnull Throwable throwable );
 }

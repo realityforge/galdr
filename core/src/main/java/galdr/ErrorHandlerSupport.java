@@ -56,7 +56,7 @@ final class ErrorHandlerSupport
   }
 
   @Override
-  public void onError( @Nonnull final ProcessorStage stage,
+  public void onError( @Nonnull final Stage stage,
                        @Nonnull final String subSystemName,
                        @Nonnull final Throwable throwable )
   {

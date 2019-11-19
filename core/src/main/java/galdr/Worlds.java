@@ -64,7 +64,7 @@ public final class Worlds
      * The set of components that will be defined in the world.
      */
     @Nonnull
-    private final Map<String, ProcessorStage> _stages = new HashMap<>();
+    private final Map<String, Stage> _stages = new HashMap<>();
     private int _initialEntityCount = DEFAULT_INITIAL_ENTITY_COUNT;
     /**
      * A flag set to true after build is invoked. After the world is constructed it is invalid to invoke construction methods.
@@ -145,9 +145,9 @@ public final class Worlds
     }
 
     @Nonnull
-    public ProcessorStage.Builder stage( @Nonnull final String name )
+    public Stage.Builder stage( @Nonnull final String name )
     {
-      return new ProcessorStage.Builder( this, name );
+      return new Stage.Builder( this, name );
     }
 
     @Nonnull
@@ -162,7 +162,7 @@ public final class Worlds
                             _stages.keySet().stream().sorted().collect( Collectors.toList() ) );
       }
       assert !_stages.containsKey( name );
-      _stages.put( name, new ProcessorStage( name, _world, subSystemEntries ) );
+      _stages.put( name, new Stage( name, _world, subSystemEntries ) );
       return this;
     }
 

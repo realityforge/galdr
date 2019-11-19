@@ -1,5 +1,6 @@
 package galdr.annotations;
 
+import galdr.Stage;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -9,7 +10,7 @@ import javax.annotation.Nonnull;
  * Annotation to identify method invoked to process entities.
  * The method can have one or two parameters. If there is one parameter then the parameter contains the
  * entityId to be processed. If there are two parameters then the first is the delta parameter passed to
- * the {@link galdr.ProcessorStage#process(int)} method that results in this method being invoked.
+ * the {@link Stage#process(int)} method that results in this method being invoked.
  *
  * <p>The method that is annotated with this must comply with the additional constraints:</p>
  * <ul>

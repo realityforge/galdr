@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * calling {@link #process(int)} on the stage. This call will then invoke each subsystem in
  * the specified order.
  */
-public final class ProcessorStage
+public final class Stage
 {
   /**
    * The name of the stage.
@@ -33,7 +33,7 @@ public final class ProcessorStage
   @Nonnull
   private final SubSystemEntry[] _subSystems;
 
-  ProcessorStage( @Nonnull final String name, @Nonnull final World world, @Nonnull final SubSystemEntry... subSystems )
+  Stage( @Nonnull final String name, @Nonnull final World world, @Nonnull final SubSystemEntry... subSystems )
   {
     _name = Objects.requireNonNull( name );
     _world = Objects.requireNonNull( world );
@@ -109,7 +109,7 @@ public final class ProcessorStage
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "ProcessorStage[" + getName() + "]";
+      return "Stage[" + getName() + "]";
     }
     else
     {
@@ -118,7 +118,7 @@ public final class ProcessorStage
   }
 
   /**
-   * A builder class used to create ProcessorStage instances.
+   * A builder class used to create Stage instances.
    * An instance of the builder by invoking {@link Worlds.Builder#stage(String)}.
    */
   public static final class Builder

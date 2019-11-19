@@ -89,7 +89,7 @@ public class WorldsTest
         .endStage()
         .build();
 
-    final Map<String, ProcessorStage> stages = world.getStages();
+    final Map<String, Stage> stages = world.getStages();
     assertEquals( stages.size(), 2 );
     assertTrue( stages.containsKey( "ABC" ) );
     assertTrue( stages.containsKey( "DEF" ) );

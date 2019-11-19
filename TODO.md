@@ -6,7 +6,6 @@ complete as there is too much un-said.
 
 ### Tasks
 
-* Rename `ProcessorStage` to `Stage`.
 * Extract useful annotation processor utilities into a separate project.
 * Create separate `integration-tests` module
 * Add the `EntityPlan` element above.

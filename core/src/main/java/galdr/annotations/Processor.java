@@ -1,5 +1,6 @@
 package galdr.annotations;
 
+import galdr.Stage;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -7,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to identify method invoked to perform logic for subsystem.
  * The method can have zero or one parameters. If there is one parameter then the it is the delta parameter passed to
- * the {@link galdr.ProcessorStage#process(int)} method that results in this method being invoked.
+ * the {@link Stage#process(int)} method that results in this method being invoked.
  *
  * <p>The method that is annotated with this must comply with the additional constraints:</p>
  * <ul>
