@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 abstract class MyApplication
 {
   @Nonnull
-  public static MyApplication create()
+  static MyApplication create()
   {
     return new Galdr_MyApplication();
   }
