@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  */
 @Documented
 @Target( ElementType.METHOD )
-public @interface Stage
+public @interface GaldrStage
 {
   /**
    * The name of the stage to return.
