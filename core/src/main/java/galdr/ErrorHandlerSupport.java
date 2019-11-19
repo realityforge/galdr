@@ -57,14 +57,14 @@ final class ErrorHandlerSupport
 
   @Override
   public void onError( @Nonnull final ProcessorStage stage,
-                       @Nonnull final String processor,
+                       @Nonnull final String subSystemName,
                        @Nonnull final Throwable throwable )
   {
     for ( final ErrorHandler errorHandler : _handlers )
     {
       try
       {
-        errorHandler.onError( stage, processor, throwable );
+        errorHandler.onError( stage, subSystemName, throwable );
       }
       catch ( final Throwable nestedError )
       {
@@ -72,7 +72,8 @@ final class ErrorHandlerSupport
         {
           final String message =
             GaldrUtil.safeGetString( () -> "Exception when notifying error handler '" + errorHandler + "' of error " +
-                                           "in processor named '" + processor + "' in stage named '" + stage.getName() + "'." );
+                                           "in SubSystem named '" + subSystemName + "' in stage named '" +
+                                           stage.getName() + "'." );
           GaldrLogger.log( message, nestedError );
         }
         else

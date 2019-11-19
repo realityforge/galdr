@@ -3,7 +3,7 @@ package com.example;
 import com.example.other.CompleteBaseSubSystem;
 import galdr.ComponentManager;
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.OnActivateFn;
 import galdr.internal.OnDeactivateFn;
@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_CompleteViaBaseClassSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, ProcessorFn {
+public final class Galdr_CompleteViaBaseClassSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

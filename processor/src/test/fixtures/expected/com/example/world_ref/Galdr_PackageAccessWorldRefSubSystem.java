@@ -1,14 +1,14 @@
 package com.example.world_ref;
 
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_PackageAccessWorldRefSubSystem implements ProcessorFn {
+public final class Galdr_PackageAccessWorldRefSubSystem implements SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

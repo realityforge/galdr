@@ -11,7 +11,7 @@ public class ProcessorStageTest
   extends AbstractTest
 {
   public static class MyProcessor
-    implements ProcessorFn
+    implements SubSystem
   {
     @Nonnull
     final String _key;
@@ -54,9 +54,9 @@ public class ProcessorStageTest
     final List<String> trace = new ArrayList<>();
     final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage" )
-      .processor( "A", new MyProcessor( "A", trace ) )
-      .processor( "B", new MyProcessor( "B", trace ) )
-      .processor( "C", new MyProcessor( "C", trace ) )
+      .subSystem( "A", new MyProcessor( "A", trace ) )
+      .subSystem( "B", new MyProcessor( "B", trace ) )
+      .subSystem( "C", new MyProcessor( "C", trace ) )
       .endStage()
       .build();
 
@@ -81,9 +81,9 @@ public class ProcessorStageTest
     final List<String> trace = new ArrayList<>();
     final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage" )
-      .processor( "A", new MyProcessor( "A", trace ) )
-      .processor( "B", new MyProcessor( "B", trace ) )
-      .processor( "C", new MyProcessor( "C", trace ) )
+      .subSystem( "A", new MyProcessor( "A", trace ) )
+      .subSystem( "B", new MyProcessor( "B", trace ) )
+      .subSystem( "C", new MyProcessor( "C", trace ) )
       .endStage()
       .build();
 
@@ -101,9 +101,9 @@ public class ProcessorStageTest
     final List<String> trace = new ArrayList<>();
     final World world = Worlds.world( "MyWorld" )
       .stage( "MyStage" )
-      .processor( "A", new MyProcessor( "A", trace ) )
-      .processor( "B", new MyFaultyProcessor( "B", trace ) )
-      .processor( "C", new MyProcessor( "C", trace ) )
+      .subSystem( "A", new MyProcessor( "A", trace ) )
+      .subSystem( "B", new MyFaultyProcessor( "B", trace ) )
+      .subSystem( "C", new MyProcessor( "C", trace ) )
       .endStage()
       .build();
 

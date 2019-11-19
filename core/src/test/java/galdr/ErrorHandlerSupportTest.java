@@ -142,7 +142,7 @@ public class ErrorHandlerSupportTest
     assertEquals( entries.size(), 1 );
     final TestLogger.LogEntry entry1 = entries.get( 0 );
     assertEquals( entry1.getMessage(),
-                  "Exception when notifying error handler '" + handler2 + "' of error in processor named '" +
+                  "Exception when notifying error handler '" + handler2 + "' of error in SubSystem named '" +
                   processorName + "' in stage named '" + stage.getName() + "'." );
     assertEquals( entry1.getThrowable(), exception );
 
@@ -190,7 +190,7 @@ public class ErrorHandlerSupportTest
   {
     final String stageName = randomString();
     final World world =
-      Worlds.world().stage( stageName ).processor( processorName, new BasicNoopProcessor() ).endStage().build();
+      Worlds.world().stage( stageName ).subSystem( processorName, new BasicNoopProcessor() ).endStage().build();
     return world.getStageByName( stageName );
   }
 }

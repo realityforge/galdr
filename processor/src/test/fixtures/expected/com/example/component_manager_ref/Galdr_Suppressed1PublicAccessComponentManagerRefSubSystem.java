@@ -2,7 +2,7 @@ package com.example.component_manager_ref;
 
 import galdr.ComponentManager;
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_Suppressed1PublicAccessComponentManagerRefSubSystem implements PostConstructFn, ProcessorFn {
+public final class Galdr_Suppressed1PublicAccessComponentManagerRefSubSystem implements PostConstructFn, SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

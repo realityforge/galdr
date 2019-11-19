@@ -5,7 +5,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
- * Marks a template method that returns the {@link galdr.World} instance for the processor.
+ * Marks a template method that returns the {@link galdr.World} instance for the SubSystem.
  * This annotation will be processed on classes annotated by the {@link GaldrSubSystem} annotation and any parent
  * classes or interfaces.
  *

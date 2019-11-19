@@ -7,34 +7,34 @@ import javax.annotation.Nullable;
 import static org.realityforge.braincheck.Guards.*;
 
 /**
- * Container for processor instances.
+ * Container for SubSystem instances.
  */
-final class ProcessorEntry
+final class SubSystemEntry
 {
   /**
-   * A human consumable name for the processor. It must be non-null if {@link Galdr#areNamesEnabled()} returns
+   * A human consumable name for the SubSystem. It must be non-null if {@link Galdr#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
   @OmitSymbol( unless = "galdr.enable_names" )
   @Nullable
   private final String _name;
   /**
-   * The processor.
+   * The SubSystem.
    */
   @Nonnull
-  private final ProcessorFn _processor;
+  private final SubSystem _subSystem;
 
-  ProcessorEntry( @Nullable final String name, @Nonnull final ProcessorFn processor )
+  SubSystemEntry( @Nullable final String name, @Nonnull final SubSystem subSystem )
   {
-    _name = Galdr.areNamesEnabled() ? null == name ? processor.getClass().getSimpleName() : name : null;
-    _processor = Objects.requireNonNull( processor );
+    _name = Galdr.areNamesEnabled() ? null == name ? subSystem.getClass().getSimpleName() : name : null;
+    _subSystem = Objects.requireNonNull( subSystem );
   }
 
   /**
-   * Return the human readable name of the entry.
+   * Return the human readable name of the SubSystem.
    * This method should NOT be invoked unless {@link Galdr#areNamesEnabled()} returns <code>true</code>.
    *
-   * @return the human readable name of the World.
+   * @return the human readable name of the SubSystem.
    */
   @OmitSymbol( unless = "galdr.enable_names" )
   @Nonnull
@@ -43,16 +43,16 @@ final class ProcessorEntry
     if ( Galdr.shouldCheckApiInvariants() )
     {
       apiInvariant( Galdr::areNamesEnabled,
-                    () -> "Galdr-0004: ProcessorEntry.getName() invoked when Galdr.areNamesEnabled() returns false" );
+                    () -> "Galdr-0004: SubSystemEntry.getName() invoked when Galdr.areNamesEnabled() returns false" );
     }
     assert null != _name;
     return _name;
   }
 
   @Nonnull
-  ProcessorFn getProcessor()
+  SubSystem getSubSystem()
   {
-    return _processor;
+    return _subSystem;
   }
 
   @OmitSymbol( unless = "galdr.debug_to_string" )
@@ -61,7 +61,7 @@ final class ProcessorEntry
   {
     if ( Galdr.areDebugToStringMethodsEnabled() )
     {
-      return "Processor[" + getName() + "]";
+      return "SubSystem[" + getName() + "]";
     }
     else
     {

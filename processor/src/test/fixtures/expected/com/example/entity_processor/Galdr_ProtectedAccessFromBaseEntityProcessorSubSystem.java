@@ -3,7 +3,7 @@ package com.example.entity_processor;
 import com.example.entity_processor.other.BaseProtectedAccessEntityProcessorSubSystem;
 import galdr.AreaOfInterest;
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.Subscription;
 import galdr.World;
 import galdr.internal.OnActivateFn;
@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_ProtectedAccessFromBaseEntityProcessorSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, ProcessorFn {
+public final class Galdr_ProtectedAccessFromBaseEntityProcessorSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

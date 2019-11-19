@@ -28,41 +28,41 @@ public final class ProcessorStage
   @Nonnull
   private final World _world;
   /**
-   * The ordered set of processors through which the stage steps.
+   * The ordered set of SubSystems through which the stage steps.
    */
   @Nonnull
-  private final ProcessorEntry[] _processors;
+  private final SubSystemEntry[] _subSystems;
 
-  ProcessorStage( @Nonnull final String name, @Nonnull final World world, @Nonnull final ProcessorEntry... processors )
+  ProcessorStage( @Nonnull final String name, @Nonnull final World world, @Nonnull final SubSystemEntry... subSystems )
   {
     _name = Objects.requireNonNull( name );
     _world = Objects.requireNonNull( world );
-    _processors = Objects.requireNonNull( processors );
+    _subSystems = Objects.requireNonNull( subSystems );
   }
 
   void postConstruct()
   {
-    for ( final ProcessorEntry entry : _processors )
+    for ( final SubSystemEntry entry : _subSystems )
     {
-      PostConstructFn.postConstruct( entry.getProcessor() );
+      PostConstructFn.postConstruct( entry.getSubSystem() );
     }
   }
 
   void activate()
   {
     //TODO: Set flag when invariants enabled and check in other methods when invariant enabled
-    for ( final ProcessorEntry entry : _processors )
+    for ( final SubSystemEntry entry : _subSystems )
     {
-      OnActivateFn.activate( entry.getProcessor() );
+      OnActivateFn.activate( entry.getSubSystem() );
     }
   }
 
   void deactivate()
   {
     //TODO: Set flag when invariants enabled and check in other methods when invariant enabled
-    for ( final ProcessorEntry entry : _processors )
+    for ( final SubSystemEntry entry : _subSystems )
     {
-      OnDeactivateFn.deactivate( entry.getProcessor() );
+      OnDeactivateFn.deactivate( entry.getSubSystem() );
     }
   }
 
@@ -72,22 +72,22 @@ public final class ProcessorStage
   }
 
   /**
-   * Method that invokes each processor in the stage.
+   * Method that invokes each SubSystem in the stage.
    *
-   * @param delta the delta supplied to processors when running stage.
+   * @param delta the delta supplied to SubSystems when running stage.
    */
   private void runStage( final int delta )
   {
-    for ( final ProcessorEntry entry : _processors )
+    for ( final SubSystemEntry entry : _subSystems )
     {
-      final ProcessorFn processor = entry.getProcessor();
+      final SubSystem subSystem = entry.getSubSystem();
       try
       {
-        processor.process( delta );
+        subSystem.process( delta );
       }
       catch ( final Throwable e )
       {
-        _world.reportError( this, Galdr.areNamesEnabled() ? entry.getName() : processor.getClass().getSimpleName(), e );
+        _world.reportError( this, Galdr.areNamesEnabled() ? entry.getName() : subSystem.getClass().getSimpleName(), e );
       }
     }
   }
@@ -128,7 +128,7 @@ public final class ProcessorStage
     @Nonnull
     private final String _name;
     @Nonnull
-    private final List<ProcessorEntry> _processors = new ArrayList<>();
+    private final List<SubSystemEntry> _subSystems = new ArrayList<>();
 
     Builder( @Nonnull final Worlds.Builder parent, @Nonnull final String name )
     {
@@ -137,22 +137,22 @@ public final class ProcessorStage
     }
 
     @Nonnull
-    public Builder processor( @Nonnull final ProcessorFn processor )
+    public Builder subSystem( @Nonnull final SubSystem subSystem )
     {
-      return processor( null, processor );
+      return subSystem( null, subSystem );
     }
 
     @Nonnull
-    public Builder processor( @Nullable final String name, @Nonnull final ProcessorFn processor )
+    public Builder subSystem( @Nullable final String name, @Nonnull final SubSystem subSystem )
     {
-      _processors.add( new ProcessorEntry( name, processor ) );
+      _subSystems.add( new SubSystemEntry( name, subSystem ) );
       return this;
     }
 
     @Nonnull
     public Worlds.Builder endStage()
     {
-      return _parent.stage( _name, _processors.toArray( new ProcessorEntry[ 0 ] ) );
+      return _parent.stage( _name, _subSystems.toArray( new SubSystemEntry[ 0 ] ) );
     }
   }
 }

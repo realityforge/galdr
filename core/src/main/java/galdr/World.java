@@ -102,7 +102,7 @@ public final class World
   @Nullable
   private Map<AreaOfInterest, EntityCollection> _collections;
   /**
-   * Support infrastructure for propagating processor errors.
+   * Support infrastructure for propagating SubSystem errors.
    */
   @OmitSymbol( unless = "galdr.enable_error_handlers" )
   @Nullable
@@ -122,7 +122,7 @@ public final class World
 
   /**
    * Return the current world.
-   * A world is marked as current when a processor is being created and for the duration of
+   * A world is marked as current when a SubSystem is being created and for the duration of
    * the call to {@link ProcessorStage#process(int)}. This method MUST NOT be invoked when a
    * world is not active.
    *
@@ -691,20 +691,20 @@ public final class World
   }
 
   /**
-   * Report an error in processor.
+   * Report an error in a SubSystem.
    *
-   * @param stage     the stage that contained the processor that generated the error.
-   * @param processor the name of the processor that generated the error.
-   * @param throwable the exception that caused error if any.
+   * @param stage         the stage that contained the SubSystem that generated the error.
+   * @param subSystemName the name of the SubSystem that generated the error.
+   * @param throwable     the exception that caused error if any.
    */
   @OmitSymbol( unless = "galdr.enable_error_handlers" )
   void reportError( @Nonnull final ProcessorStage stage,
-                    @Nonnull final String processor,
+                    @Nonnull final String subSystemName,
                     @Nonnull final Throwable throwable )
   {
     if ( Galdr.areErrorHandlersEnabled() )
     {
-      getErrorHandlerSupport().onError( stage, processor, throwable );
+      getErrorHandlerSupport().onError( stage, subSystemName, throwable );
     }
   }
 

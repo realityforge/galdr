@@ -24,7 +24,7 @@ public final class Subscription
    */
   private final int _id;
   /**
-   * A human consumable name for Processor. It must be non-null if {@link Galdr#areNamesEnabled()} returns
+   * A human consumable name for Subscription. It must be non-null if {@link Galdr#areNamesEnabled()} returns
    * true and <tt>null</tt> otherwise.
    */
   @OmitSymbol( unless = "galdr.enable_names" )

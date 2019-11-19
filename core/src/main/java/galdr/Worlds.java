@@ -151,18 +151,18 @@ public final class Worlds
     }
 
     @Nonnull
-    Builder stage( @Nonnull final String name, @Nonnull final ProcessorEntry... processors )
+    Builder stage( @Nonnull final String name, @Nonnull final SubSystemEntry... subSystemEntries )
     {
       ensureWorldNotConstructed();
       if ( Galdr.shouldCheckApiInvariants() )
       {
         apiInvariant( () -> !_stages.containsKey( name ),
-                      () -> "Galdr-0087: Attempted to create stage named named '" +
-                            name + "' but a stage already exists with the specified name. Existing stages include: " +
+                      () -> "Galdr-0087: Attempted to create stage named named '" + name + "' but a stage " +
+                            "already exists with the specified name. Existing stages include: " +
                             _stages.keySet().stream().sorted().collect( Collectors.toList() ) );
       }
       assert !_stages.containsKey( name );
-      _stages.put( name, new ProcessorStage( name, _world, processors ) );
+      _stages.put( name, new ProcessorStage( name, _world, subSystemEntries ) );
       return this;
     }
 

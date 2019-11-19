@@ -1,7 +1,7 @@
 package galdr;
 
 final class BasicNoopProcessor
-  implements ProcessorFn
+  implements SubSystem
 {
   @Override
   public void process( final int delta )

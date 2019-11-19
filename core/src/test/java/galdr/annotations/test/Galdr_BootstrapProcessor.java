@@ -2,7 +2,7 @@ package galdr.annotations.test;
 
 import galdr.ComponentManager;
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 @Generated( "galdr" )
 public final class Galdr_BootstrapProcessor
-  implements ProcessorFn, PostConstructFn
+  implements SubSystem, PostConstructFn
 {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );

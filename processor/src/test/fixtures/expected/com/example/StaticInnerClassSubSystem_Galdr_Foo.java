@@ -1,14 +1,14 @@
 package com.example;
 
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import java.util.Objects;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class StaticInnerClassSubSystem_Galdr_Foo implements ProcessorFn {
+public final class StaticInnerClassSubSystem_Galdr_Foo implements SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

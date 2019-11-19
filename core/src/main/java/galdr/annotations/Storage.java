@@ -13,7 +13,7 @@ public enum Storage
    * Components are never allocated and thus never stored.
    * This strategy is only expected to be used if the component class contains no state but a
    * component is to flag an entity. This strategy is typically used so that entities can be
-   * flagged and efficiently processed by processors.
+   * flagged and efficiently processed by SubSystems.
    *
    * @see galdr.ComponentStorage#NONE
    */

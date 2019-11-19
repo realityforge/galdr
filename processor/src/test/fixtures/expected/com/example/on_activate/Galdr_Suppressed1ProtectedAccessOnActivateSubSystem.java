@@ -1,7 +1,7 @@
 package com.example.on_activate;
 
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.OnActivateFn;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implements OnActivateFn, ProcessorFn {
+public final class Galdr_Suppressed1ProtectedAccessOnActivateSubSystem implements OnActivateFn, SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 

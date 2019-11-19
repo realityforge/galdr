@@ -18,8 +18,8 @@ final class Galdr_MyApplication
       .component( Health.class, Health::new )
       .component( MyFlag.class )
       .stage( "sim" )
-      .processor( new Galdr_BootstrapProcessor() )
-      .processor( new Galdr_HealthProcessor() )
+      .subSystem( new Galdr_BootstrapProcessor() )
+      .subSystem( new Galdr_HealthProcessor() )
       .endStage()
       .build();
     _sim = world.getStageByName( "sim" );

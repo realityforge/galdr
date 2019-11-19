@@ -3,7 +3,7 @@ package com.example.component_manager_ref;
 import com.example.component_manager_ref.other.BaseProtectedAccessComponentManagerRefSubSystem;
 import galdr.ComponentManager;
 import galdr.Galdr;
-import galdr.ProcessorFn;
+import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.PostConstructFn;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Generated("galdr.processor.SubSystemProcessor")
-public final class Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem implements PostConstructFn, ProcessorFn {
+public final class Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem implements PostConstructFn, SubSystem {
   @Nonnull
   private final EnhancedSubSystem _subsystem = new EnhancedSubSystem( this );
 
