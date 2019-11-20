@@ -9,7 +9,7 @@ final class Constants
   static final String ON_ACTIVATE_CLASSNAME = "galdr.annotations.OnActivate";
   static final String ON_DEACTIVATE_CLASSNAME = "galdr.annotations.OnDeactivate";
   static final String PROCESSOR_CLASSNAME = "galdr.annotations.Processor";
-  static final String STAGE_CLASSNAME = "galdr.annotations.Stage";
+  static final String GALDR_STAGE_CLASSNAME = "galdr.annotations.GaldrStage";
   static final String SUB_SYSTEM_CLASSNAME = "galdr.annotations.GaldrSubSystem";
   static final String NAME_REF_CLASSNAME = "galdr.annotations.NameRef";
   static final String WORLD_REF_CLASSNAME = "galdr.annotations.WorldRef";
