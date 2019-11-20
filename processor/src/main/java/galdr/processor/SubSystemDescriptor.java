@@ -10,9 +10,8 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 final class SubSystemDescriptor
+  extends AbstractDescriptor
 {
-  @Nonnull
-  private final TypeElement _element;
   @Nonnull
   private final String _name;
   @Nonnull
@@ -32,32 +31,14 @@ final class SubSystemDescriptor
 
   SubSystemDescriptor( @Nonnull final TypeElement element, @Nonnull final String name )
   {
-    _element = Objects.requireNonNull( element );
+    super( element );
     _name = Objects.requireNonNull( name );
-  }
-
-  @Nonnull
-  TypeElement getElement()
-  {
-    return _element;
   }
 
   @Nonnull
   String getName()
   {
     return _name;
-  }
-
-  @Nonnull
-  String getPackageName()
-  {
-    return GeneratorUtil.getQualifiedPackageName( getElement() );
-  }
-
-  @Nonnull
-  ClassName getEnhancedClassName()
-  {
-    return Generator.toGeneratedClassName( getElement() );
   }
 
   void addComponentManagerRef( @Nonnull final ExecutableElement method, @Nonnull final ClassName componentType )
