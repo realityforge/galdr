@@ -7,13 +7,13 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated( "galdr.processor.SubSystemProcessor" )
-final class Galdr_MyApplication
+final class Galdr_MyApplication_Example
   extends MyApplication
 {
   @Nonnull
   private final Stage _sim;
 
-  Galdr_MyApplication()
+  Galdr_MyApplication_Example()
   {
     final World world = Worlds
       .world()

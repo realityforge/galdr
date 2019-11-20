@@ -11,7 +11,7 @@ abstract class MyApplication
   @Nonnull
   static MyApplication create()
   {
-    return new Galdr_MyApplication();
+    return new Galdr_MyApplication_Example();
   }
 
   @GaldrStage( { BootstrapProcessor.class, HealthProcessor.class } )
