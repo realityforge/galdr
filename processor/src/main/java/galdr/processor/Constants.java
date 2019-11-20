@@ -15,6 +15,7 @@ final class Constants
   static final String WORLD_REF_CLASSNAME = "galdr.annotations.WorldRef";
   static final String SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME = "galdr.annotations.SuppressGaldrWarnings";
   static final String COMPONENT_MANAGER_CLASSNAME = "galdr.ComponentManager";
+  static final String STAGE_CLASSNAME = "galdr.Stage";
   static final String WORLD_CLASSNAME = "galdr.World";
 
   static final String SENTINEL_NAME = "<default>";
