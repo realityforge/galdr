@@ -6,7 +6,7 @@ import galdr.Worlds;
 import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
-@Generated( "galdr.processor.SubSystemProcessor" )
+@Generated( "galdr.processor.ApplicationProcessor" )
 final class Galdr_MyApplication_Example
   extends MyApplication
 {
