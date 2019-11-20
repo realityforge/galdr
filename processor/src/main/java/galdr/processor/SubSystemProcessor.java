@@ -296,7 +296,7 @@ public final class SubSystemProcessor
     MemberChecks.mustNotBeStatic( annotationClassname, method );
     final TypeElement typeElement = descriptor.getElement();
     MemberChecks.mustNotBePackageAccessInDifferentPackage( typeElement,
-                                                           Constants.APPLICATION_CLASSNAME,
+                                                           Constants.SUB_SYSTEM_CLASSNAME,
                                                            annotationClassname,
                                                            method );
     MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
@@ -326,7 +326,7 @@ public final class SubSystemProcessor
     MemberChecks.mustBeAbstract( annotationClassname, method );
     final TypeElement typeElement = descriptor.getElement();
     MemberChecks.mustNotBePackageAccessInDifferentPackage( typeElement,
-                                                           Constants.APPLICATION_CLASSNAME,
+                                                           Constants.SUB_SYSTEM_CLASSNAME,
                                                            annotationClassname,
                                                            method );
     MemberChecks.mustNotHaveAnyParameters( annotationClassname, method );
