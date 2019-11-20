@@ -594,8 +594,10 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.entity_processor.ThrowsExceptionEntityProcessorSubSystem",
                       "@EntityProcessor target must not throw any exceptions" },
 
-        new Object[]{ "com.example.ctor.MultipleCtorSubSystem", "@SubSystem target has more than one constructor" },
-        new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem", "@SubSystem target has a private constructor" },
+        new Object[]{ "com.example.ctor.MultipleCtorSubSystem",
+                      "@GaldrSubSystem target must have no more than one constructor" },
+        new Object[]{ "com.example.ctor.PrivateAccessCtorSubSystem",
+                      "@GaldrSubSystem target must not have a private constructor" },
 
         new Object[]{ "com.example.name_ref.BadType1NameRefSubSystem",
                       "@NameRef target must return an instance of java.lang.String" },
@@ -670,11 +672,11 @@ public class SubSystemProcessorTest
                       "@WorldRef target must not throw any exceptions" },
         new Object[]{ "com.example.world_ref.VoidWorldRefSubSystem", "@WorldRef target must return a value" },
 
-        new Object[]{ "com.example.ConcreteSubSystem", "@SubSystem target must be abstract" },
-        new Object[]{ "com.example.EnumSubSystem", "@SubSystem target must be a class" },
-        new Object[]{ "com.example.InterfaceSubSystem", "@SubSystem target must be a class" },
+        new Object[]{ "com.example.ConcreteSubSystem", "@GaldrSubSystem target must be abstract" },
+        new Object[]{ "com.example.EnumSubSystem", "@GaldrSubSystem target must be a class" },
+        new Object[]{ "com.example.InterfaceSubSystem", "@GaldrSubSystem target must be a class" },
         new Object[]{ "com.example.NonStaticInnerClassSubSystem",
-                      "@SubSystem target must not be a non-static nested class" }
+                      "@GaldrSubSystem target must not be a non-static nested class" }
       };
   }
 

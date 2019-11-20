@@ -44,15 +44,16 @@ public final class SubSystemProcessor
   {
     if ( ElementKind.CLASS != element.getKind() )
     {
-      throw new ProcessorException( "@SubSystem target must be a class", element );
+      throw new ProcessorException( MemberChecks.must( Constants.SUB_SYSTEM_CLASSNAME, "be a class" ), element );
     }
     else if ( !element.getModifiers().contains( Modifier.ABSTRACT ) )
     {
-      throw new ProcessorException( "@SubSystem target must be abstract", element );
+      throw new ProcessorException( MemberChecks.must( Constants.SUB_SYSTEM_CLASSNAME, "be abstract" ), element );
     }
     else if ( NestingKind.TOP_LEVEL != element.getNestingKind() && !element.getModifiers().contains( Modifier.STATIC ) )
     {
-      throw new ProcessorException( "@SubSystem target must not be a non-static nested class", element );
+      final String message = MemberChecks.mustNot( Constants.SUB_SYSTEM_CLASSNAME, "be a non-static nested class" );
+      throw new ProcessorException( message, element );
     }
     final AnnotationMirror annotation = AnnotationsUtil.getAnnotationByType( element, Constants.SUB_SYSTEM_CLASSNAME );
     final String name = deriveName( element, annotation );
@@ -61,11 +62,13 @@ public final class SubSystemProcessor
     final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
     if ( constructors.size() > 1 )
     {
-      throw new ProcessorException( "@SubSystem target has more than one constructor", element );
+      final String message = MemberChecks.must( Constants.SUB_SYSTEM_CLASSNAME, "have no more than one constructor" );
+      throw new ProcessorException( message, element );
     }
     else if ( !constructors.isEmpty() && constructors.get( 0 ).getModifiers().contains( Modifier.PRIVATE ) )
     {
-      throw new ProcessorException( "@SubSystem target has a private constructor", element );
+      final String message = MemberChecks.mustNot( Constants.SUB_SYSTEM_CLASSNAME, "have a private constructor" );
+      throw new ProcessorException( message, element );
     }
 
     final List<ExecutableElement> methods =
