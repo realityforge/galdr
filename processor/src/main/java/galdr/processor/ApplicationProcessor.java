@@ -10,7 +10,7 @@ import javax.lang.model.element.TypeElement;
 /**
  * Annotation processor that generates application implementations.
  */
-@SupportedAnnotationTypes( Constants.APPLICATION_CLASSNAME )
+@SupportedAnnotationTypes( Constants.GALDR_APPLICATION_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
 public final class ApplicationProcessor
   extends AbstractGaldrProcessor
@@ -19,7 +19,7 @@ public final class ApplicationProcessor
   @Nonnull
   String getRootAnnotationClassname()
   {
-    return Constants.APPLICATION_CLASSNAME;
+    return Constants.GALDR_APPLICATION_CLASSNAME;
   }
 
   @Override

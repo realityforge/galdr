@@ -5,7 +5,7 @@ final class Constants
   static final String COMPONENT_CLASSNAME = "galdr.annotations.Component";
   static final String COMPONENT_MANAGER_REF_CLASSNAME = "galdr.annotations.ComponentManagerRef";
   static final String ENTITY_PROCESSOR_CLASSNAME = "galdr.annotations.EntityProcessor";
-  static final String APPLICATION_CLASSNAME = "galdr.annotations.GaldrApplication";
+  static final String GALDR_APPLICATION_CLASSNAME = "galdr.annotations.GaldrApplication";
   static final String ON_ACTIVATE_CLASSNAME = "galdr.annotations.OnActivate";
   static final String ON_DEACTIVATE_CLASSNAME = "galdr.annotations.OnDeactivate";
   static final String PROCESSOR_CLASSNAME = "galdr.annotations.Processor";
