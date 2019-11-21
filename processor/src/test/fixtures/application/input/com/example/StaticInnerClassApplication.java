@@ -25,5 +25,4 @@ final class StaticInnerClassApplication
     @Nonnull
     abstract Stage sim();
   }
-
 }
