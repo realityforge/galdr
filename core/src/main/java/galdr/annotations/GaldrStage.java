@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
  * <li>Must be abstract</li>
  * <li>Must not throw any exceptions</li>
  * <li>Must return an instance of {@link Stage}.</li>
+ * <li>Must be accessible to the class annotated by the {@link GaldrApplication} annotation.</li>
  * </ul>
  */
 @Documented
