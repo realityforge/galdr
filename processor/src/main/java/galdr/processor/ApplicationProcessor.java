@@ -92,5 +92,18 @@ public final class ApplicationProcessor
                          @Nonnull final ExecutableElement method,
                          @Nonnull final AnnotationMirror stage )
   {
+    MemberChecks.mustBeAbstract( Constants.GALDR_STAGE_CLASSNAME, method );
+    final TypeElement typeElement = descriptor.getElement();
+    MemberChecks.mustNotBePackageAccessInDifferentPackage( typeElement,
+                                                           Constants.GALDR_APPLICATION_CLASSNAME,
+                                                           Constants.GALDR_STAGE_CLASSNAME,
+                                                           method );
+    MemberChecks.mustNotHaveAnyParameters( Constants.GALDR_STAGE_CLASSNAME, method );
+    MemberChecks.mustReturnAValue( Constants.GALDR_STAGE_CLASSNAME, method );
+    MemberChecks.mustNotThrowAnyExceptions( Constants.GALDR_STAGE_CLASSNAME, method );
+    MemberChecks.mustReturnAnInstanceOf( processingEnv,
+                                         method,
+                                         Constants.GALDR_STAGE_CLASSNAME,
+                                         Constants.STAGE_CLASSNAME );
   }
 }
