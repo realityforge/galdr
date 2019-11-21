@@ -27,6 +27,7 @@ final class Generator
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName SUBSCRIPTION_CLASSNAME = ClassName.get( "galdr", "Subscription" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
+  private static final ClassName WORLDS_CLASSNAME = ClassName.get( "galdr", "Worlds" );
   private static final ClassName POST_CONSTRUCT_FN_CLASSNAME = ClassName.get( "galdr.internal", "PostConstructFn" );
   private static final ClassName ON_ACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnActivateFn" );
   private static final ClassName ON_DEACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnDeactivateFn" );
@@ -58,6 +59,16 @@ final class Generator
     GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, ApplicationProcessor.class.getName() );
     builder.addModifiers( Modifier.FINAL );
 
+    final MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
+    final StringBuilder sb = new StringBuilder(  );
+    final List<Object> params = new ArrayList<>(  );
+    sb.append( "final $T world = $T" );
+    params.add( WORLD_CLASSNAME );
+    params.add( WORLDS_CLASSNAME );
+    sb.append( "\n.world()" );
+    sb.append( "\n.build()" );
+    constructor.addStatement( sb.toString(), params.toArray() );
+    builder.addMethod( constructor.build() );
     return builder.build();
   }
 
