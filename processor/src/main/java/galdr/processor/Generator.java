@@ -25,6 +25,7 @@ final class Generator
   private static final ClassName AREA_OF_INTEREST_CLASSNAME = ClassName.get( "galdr", "AreaOfInterest" );
   private static final ClassName COMPONENT_MANAGER_CLASSNAME = ClassName.get( "galdr", "ComponentManager" );
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
+  private static final ClassName STAGE_CLASSNAME = ClassName.get( "galdr", "Stage" );
   private static final ClassName SUBSCRIPTION_CLASSNAME = ClassName.get( "galdr", "Subscription" );
   private static final ClassName WORLD_CLASSNAME = ClassName.get( "galdr", "World" );
   private static final ClassName WORLDS_CLASSNAME = ClassName.get( "galdr", "Worlds" );
@@ -59,17 +60,67 @@ final class Generator
     GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, ApplicationProcessor.class.getName() );
     builder.addModifiers( Modifier.FINAL );
 
+    emitStageFields( descriptor, builder );
+    emitConstructor( descriptor, builder );
+    emitStageMethods( descriptor, builder );
+
+    return builder.build();
+  }
+
+  private static void emitStageFields( @Nonnull final ApplicationDescriptor descriptor,
+                                       @Nonnull final TypeSpec.Builder builder )
+  {
+    for ( final StageDescriptor stage : descriptor.getStages() )
+    {
+      builder.addField( FieldSpec
+                          .builder( STAGE_CLASSNAME, "_" + stage.getName(), Modifier.FINAL, Modifier.PRIVATE )
+                          .addAnnotation( NONNULL_CLASSNAME )
+                          .build() );
+    }
+  }
+
+  private static void emitConstructor( @Nonnull final ApplicationDescriptor descriptor,
+                                       @Nonnull final TypeSpec.Builder builder )
+  {
     final MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
-    final StringBuilder sb = new StringBuilder(  );
-    final List<Object> params = new ArrayList<>(  );
+    final StringBuilder sb = new StringBuilder();
+    final List<Object> params = new ArrayList<>();
     sb.append( "final $T world = $T" );
     params.add( WORLD_CLASSNAME );
     params.add( WORLDS_CLASSNAME );
     sb.append( "\n.world()" );
+
+    for ( final StageDescriptor stage : descriptor.getStages() )
+    {
+      sb.append( "\n.stage( $S )" );
+      params.add( stage.getName() );
+      for ( final ClassName subSystemType : stage.getSubSystemTypes() )
+      {
+        sb.append( "\n.subSystem( new $T() )" );
+        params.add( subSystemType );
+      }
+      sb.append( "\n.endStage()" );
+    }
     sb.append( "\n.build()" );
     constructor.addStatement( sb.toString(), params.toArray() );
+
+    for ( final StageDescriptor stage : descriptor.getStages() )
+    {
+      constructor.addStatement( "$N = world.getStageByName( $S )", "_" + stage.getName(), stage.getName() );
+    }
     builder.addMethod( constructor.build() );
-    return builder.build();
+  }
+
+  private static void emitStageMethods( @Nonnull final ApplicationDescriptor descriptor,
+                                        @Nonnull final TypeSpec.Builder builder )
+  {
+    for ( final StageDescriptor stage : descriptor.getStages() )
+    {
+      final MethodSpec.Builder method = MethodSpec.overriding( stage.getMethod() );
+      method.addAnnotation( NONNULL_CLASSNAME );
+      method.addStatement( "return $N", "_" + stage.getName() );
+      builder.addMethod( method.build() );
+    }
   }
 
   @Nonnull
