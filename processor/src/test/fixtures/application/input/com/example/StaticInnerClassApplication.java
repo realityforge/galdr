@@ -7,10 +7,10 @@ import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
 import javax.annotation.Nonnull;
 
-public class StaticInnerClassApplication
+final class StaticInnerClassApplication
 {
   @GaldrApplication
-  public static abstract class BasicApplication
+  static abstract class BasicApplication
   {
     @GaldrSubSystem
     static abstract class MySubSystem

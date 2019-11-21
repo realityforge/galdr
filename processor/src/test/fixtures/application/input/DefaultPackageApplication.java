@@ -6,7 +6,7 @@ import galdr.annotations.Processor;
 import javax.annotation.Nonnull;
 
 @GaldrApplication
-public abstract class DefaultPackageApplication
+abstract class DefaultPackageApplication
 {
   @GaldrSubSystem
   static abstract class MySubSystem

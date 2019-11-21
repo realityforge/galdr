@@ -8,7 +8,7 @@ import galdr.annotations.Processor;
 import javax.annotation.Nonnull;
 
 @GaldrApplication
-public abstract class CompleteApplication
+abstract class CompleteApplication
 {
   @GaldrSubSystem
   static abstract class MySubSystem1
