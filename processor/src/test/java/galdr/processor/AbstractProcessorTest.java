@@ -71,7 +71,7 @@ abstract class AbstractProcessorTest
     {
       final Compilation compilation =
         Compiler.javac()
-          .withProcessors( processor() )
+          .withProcessors( new SubSystemProcessor(), new ApplicationProcessor() )
           .withOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" )
           .compile( inputs );
 
@@ -136,16 +136,10 @@ abstract class AbstractProcessorTest
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
       withCompilerOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" ).
-      processedWith( processor() ).
+      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
       compilesWithoutWarnings().
       and().
       generatesSources( firstExpected, restExpected );
-  }
-
-  @Nonnull
-  private Processor processor()
-  {
-    return processorType() == ProcessorType.SUBSYSTEM ? new SubSystemProcessor() : new ApplicationProcessor();
   }
 
   final void assertFailedCompile( @Nonnull final String classname, @Nonnull final String errorMessageFragment )
@@ -179,7 +173,7 @@ abstract class AbstractProcessorTest
   {
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
-      processedWith( processor() ).
+      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
       failsToCompile().
       withWarningContaining( errorMessageFragment );
   }
