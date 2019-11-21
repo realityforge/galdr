@@ -50,6 +50,18 @@ final class Generator
   }
 
   @Nonnull
+  static TypeSpec buildApplication( @Nonnull final ProcessingEnvironment processingEnv,
+                                    @Nonnull final ApplicationDescriptor descriptor )
+  {
+    final TypeSpec.Builder builder = TypeSpec.classBuilder( descriptor.getEnhancedClassName() );
+    GeneratorUtil.addOriginatingTypes( descriptor.getElement(), builder );
+    GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, ApplicationProcessor.class.getName() );
+    builder.addModifiers( Modifier.FINAL );
+
+    return builder.build();
+  }
+
+  @Nonnull
   static TypeSpec buildSubSystem( @Nonnull final ProcessingEnvironment processingEnv,
                                   @Nonnull final SubSystemDescriptor descriptor )
   {
