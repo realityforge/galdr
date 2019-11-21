@@ -64,7 +64,7 @@ abstract class AbstractProcessorTest
     {
       final Compilation compilation =
         Compiler.javac()
-          .withProcessors( new SubSystemProcessor() )
+          .withProcessors( new SubSystemProcessor(), new ApplicationProcessor() )
           .withOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" )
           .compile( inputs );
 
@@ -129,7 +129,7 @@ abstract class AbstractProcessorTest
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
       withCompilerOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" ).
-      processedWith( new SubSystemProcessor() ).
+      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
       compilesWithoutWarnings().
       and().
       generatesSources( firstExpected, restExpected );
@@ -166,7 +166,7 @@ abstract class AbstractProcessorTest
   {
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
-      processedWith( new SubSystemProcessor() ).
+      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
       failsToCompile().
       withWarningContaining( errorMessageFragment );
   }
