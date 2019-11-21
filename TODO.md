@@ -6,6 +6,7 @@ complete as there is too much un-said.
 
 ### Tasks
 
+* Separate fixture dirs for application and subsystem processors
 * Extract useful annotation processor utilities into a separate project.
 * Add the `EntityPlan` element above.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
