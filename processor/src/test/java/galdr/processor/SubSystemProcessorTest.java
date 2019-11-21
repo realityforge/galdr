@@ -752,4 +752,11 @@ public class SubSystemProcessorTest
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@WorldRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
+
+  @Nonnull
+  @Override
+  ProcessorType processorType()
+  {
+    return ProcessorType.SUBSYSTEM;
+  }
 }

@@ -97,12 +97,18 @@ define 'galdr' do
     end
 
     test.using :testng
-    test.options[:properties] = { 'galdr.fixture_dir' => _('src/test/fixtures') }
+    test.options[:properties] = {
+      'galdr.subsystem.fixture_dir' => _('src/test/fixtures/subsystem'),
+      'galdr.application.fixture_dir' => _('src/test/fixtures/application')
+    }
     test.options[:java_args] = ['-ea']
 
-    iml.test_source_directories << _('src/test/fixtures/input')
-    iml.test_source_directories << _('src/test/fixtures/expected')
-    iml.test_source_directories << _('src/test/fixtures/bad_input')
+    iml.test_source_directories << _('src/test/fixtures/application/input')
+    iml.test_source_directories << _('src/test/fixtures/application/expected')
+    iml.test_source_directories << _('src/test/fixtures/application/bad_input')
+    iml.test_source_directories << _('src/test/fixtures/subsystem/input')
+    iml.test_source_directories << _('src/test/fixtures/subsystem/expected')
+    iml.test_source_directories << _('src/test/fixtures/subsystem/bad_input')
   end
 
   desc 'Galdr Integration Tests'
@@ -145,7 +151,7 @@ define 'galdr' do
                                :jvm_args => '-ea -Dbraincheck.environment=development -Dgaldr.environment=development -Dgaldr.check_diagnostic_messages=true -Dgaldr.output_fixture_data=true -Dgaldr.diagnostic_messages_file=src/test/java/galdr/diagnostic_messages.json')
   ipr.add_testng_configuration('processor',
                                :module => 'processor',
-                               :jvm_args => '-ea -Dgaldr.output_fixture_data=false -Dgaldr.fixture_dir=src/test/fixtures')
+                               :jvm_args => '-ea -Dgaldr.output_fixture_data=false -Dgaldr.subsystem.fixture_dir=src/test/fixtures/subsystem -Dgaldr.subsystem.fixture_dir=src/test/fixtures/application')
 
   iml.excluded_directories << project._('tmp')
 

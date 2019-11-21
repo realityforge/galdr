@@ -16,12 +16,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Processor;
 import javax.tools.JavaFileObject;
 import static com.google.common.truth.Truth.*;
 import static org.testng.Assert.*;
 
 abstract class AbstractProcessorTest
 {
+  enum ProcessorType
+  {
+    SUBSYSTEM,
+    APPLICATION
+  }
+
   void assertSuccessfulCompile( @Nonnull final String classname )
     throws Exception
   {
@@ -64,7 +71,7 @@ abstract class AbstractProcessorTest
     {
       final Compilation compilation =
         Compiler.javac()
-          .withProcessors( new SubSystemProcessor(), new ApplicationProcessor() )
+          .withProcessors( processor() )
           .withOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" )
           .compile( inputs );
 
@@ -129,10 +136,16 @@ abstract class AbstractProcessorTest
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
       withCompilerOptions( "-Xlint:all,-processing", "-implicit:none", "-Agaldr.defer.errors=false" ).
-      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
+      processedWith( processor() ).
       compilesWithoutWarnings().
       and().
       generatesSources( firstExpected, restExpected );
+  }
+
+  @Nonnull
+  private Processor processor()
+  {
+    return processorType() == ProcessorType.SUBSYSTEM ? new SubSystemProcessor() : new ApplicationProcessor();
   }
 
   final void assertFailedCompile( @Nonnull final String classname, @Nonnull final String errorMessageFragment )
@@ -166,7 +179,7 @@ abstract class AbstractProcessorTest
   {
     assert_().about( JavaSourcesSubjectFactory.javaSources() ).
       that( inputs ).
-      processedWith( new SubSystemProcessor(), new ApplicationProcessor() ).
+      processedWith( processor() ).
       failsToCompile().
       withWarningContaining( errorMessageFragment );
   }
@@ -192,10 +205,14 @@ abstract class AbstractProcessorTest
   @Nonnull
   private Path fixtureDir()
   {
-    final String fixtureDir = System.getProperty( "galdr.fixture_dir" );
-    assertNotNull( fixtureDir, "Expected System.getProperty( \"galdr.fixture_dir\" ) to return fixture directory" );
+    final String key = "galdr." + processorType().name().toLowerCase() + ".fixture_dir";
+    final String fixtureDir = System.getProperty( key );
+    assertNotNull( fixtureDir, "Expected System.getProperty( \"" + key + "\" ) to return fixture directory" );
     return new File( fixtureDir ).toPath();
   }
+
+  @Nonnull
+  abstract ProcessorType processorType();
 
   private boolean outputFiles()
   {
