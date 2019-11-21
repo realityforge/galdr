@@ -1,6 +1,8 @@
 package galdr.processor;
 
+import com.squareup.javapoet.ClassName;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -105,5 +107,8 @@ public final class ApplicationProcessor
                                          method,
                                          Constants.GALDR_STAGE_CLASSNAME,
                                          Constants.STAGE_CLASSNAME );
+    final String name = method.getSimpleName().toString();
+    final List<ClassName> subSystemTypes = new ArrayList<>();
+    descriptor.addStage( new StageDescriptor( name, method, subSystemTypes ) );
   }
 }

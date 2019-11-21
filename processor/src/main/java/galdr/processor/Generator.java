@@ -59,6 +59,7 @@ final class Generator
     GeneratorUtil.addOriginatingTypes( descriptor.getElement(), builder );
     GeneratorUtil.addGeneratedAnnotation( processingEnv, builder, ApplicationProcessor.class.getName() );
     builder.addModifiers( Modifier.FINAL );
+    builder.superclass( TypeName.get( descriptor.getElement().asType() ) );
 
     emitStageFields( descriptor, builder );
     emitConstructor( descriptor, builder );
