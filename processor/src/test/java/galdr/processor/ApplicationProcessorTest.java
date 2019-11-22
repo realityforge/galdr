@@ -14,6 +14,9 @@ public class ApplicationProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.stage.CustomNameStage" },
+        new Object[]{ "com.example.stage.NonStandardMethodNameStage" },
+
         new Object[]{ "com.example.BasicApplication" },
         new Object[]{ "com.example.CompleteApplication" },
         new Object[]{ "com.example.PackageAccessApplication" },
@@ -65,6 +68,11 @@ public class ApplicationProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.stage.BadName1Stage",
+                      "@GaldrStage target specified an invalid value '-1-' for the parameter name. The value must be a valid java identifier" },
+        new Object[]{ "com.example.stage.BadName2Stage",
+                      "@GaldrStage target specified an invalid value 'int' for the parameter name. The value must not be a java keyword" },
+
         new Object[]{ "com.example.ConcreteApplication", "@GaldrApplication target must be abstract" },
         new Object[]{ "com.example.EnumApplication", "@GaldrApplication target must be a class" },
         new Object[]{ "com.example.InterfaceApplication", "@GaldrApplication target must be a class" },

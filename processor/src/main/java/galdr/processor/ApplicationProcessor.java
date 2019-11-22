@@ -107,7 +107,12 @@ public final class ApplicationProcessor
                                          method,
                                          Constants.GALDR_STAGE_CLASSNAME,
                                          Constants.STAGE_CLASSNAME );
-    final String name = method.getSimpleName().toString();
+    final String name =
+      AnnotationsUtil.extractName( method,
+                   m -> method.getSimpleName().toString(),
+                                   Constants.GALDR_STAGE_CLASSNAME,
+                                   "name",
+                                   Constants.SENTINEL_NAME );
     final List<ClassName> subSystemTypes = new ArrayList<>();
     descriptor.addStage( new StageDescriptor( name, method, subSystemTypes ) );
   }
