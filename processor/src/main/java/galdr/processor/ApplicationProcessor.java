@@ -50,8 +50,6 @@ public final class ApplicationProcessor
         MemberChecks.mustNot( Constants.GALDR_APPLICATION_CLASSNAME, "be a non-static nested class" );
       throw new ProcessorException( message, element );
     }
-    final AnnotationMirror annotation =
-      AnnotationsUtil.getAnnotationByType( element, Constants.GALDR_APPLICATION_CLASSNAME );
     final ApplicationDescriptor descriptor = new ApplicationDescriptor( element );
 
     final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
