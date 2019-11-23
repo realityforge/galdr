@@ -72,6 +72,8 @@ public class ApplicationProcessorTest
                       "@GaldrStage target specified an invalid value '-1-' for the parameter name. The value must be a valid java identifier" },
         new Object[]{ "com.example.stage.BadName2Stage",
                       "@GaldrStage target specified an invalid value 'int' for the parameter name. The value must not be a java keyword" },
+        new Object[]{ "com.example.stage.DuplicateNameStage",
+                      "@GaldrStage target must not have the same name as any other stage but the stage defined by the method named sim has the same name" },
 
         new Object[]{ "com.example.ConcreteApplication", "@GaldrApplication target must be abstract" },
         new Object[]{ "com.example.EnumApplication", "@GaldrApplication target must be a class" },

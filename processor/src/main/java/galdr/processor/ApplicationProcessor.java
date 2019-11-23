@@ -113,6 +113,18 @@ public final class ApplicationProcessor
                                    Constants.GALDR_STAGE_CLASSNAME,
                                    "name",
                                    Constants.SENTINEL_NAME );
+    for ( final StageDescriptor other : descriptor.getStages() )
+    {
+      if ( other.getName().equals( name ) )
+      {
+        throw new ProcessorException( MemberChecks.mustNot( Constants.GALDR_STAGE_CLASSNAME,
+                                                            "have the same name as any other stage but " +
+                                                            "the stage defined by the method named " +
+                                                            other.getMethod().getSimpleName().toString() + " has " +
+                                                            "the same name" ),
+                                      method );
+      }
+    }
     final List<ClassName> subSystemTypes = new ArrayList<>();
     descriptor.addStage( new StageDescriptor( name, method, subSystemTypes ) );
   }
