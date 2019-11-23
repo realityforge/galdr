@@ -1,4 +1,4 @@
-package com.example;
+package com.example.component;
 
 import galdr.Stage;
 import galdr.World;
@@ -7,16 +7,16 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.ApplicationProcessor")
-final class Galdr_PublicAccessApplication extends PublicAccessApplication {
+final class Galdr_ExplicitArrayComponentTypeApplication extends ExplicitArrayComponentTypeApplication {
   @Nonnull
   private final Stage _sim;
 
-  Galdr_PublicAccessApplication() {
+  Galdr_ExplicitArrayComponentTypeApplication() {
     final World world = Worlds
         .world()
-        .component( PublicAccessApplication.MyComponent.class )
+        .component( ExplicitArrayComponentTypeApplication.MyComponent.class, ExplicitArrayComponentTypeApplication.MyComponent::new )
         .stage( "sim" )
-        .subSystem( new PublicAccessApplication_Galdr_MySubSystem() )
+        .subSystem( new ExplicitArrayComponentTypeApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );
@@ -24,7 +24,7 @@ final class Galdr_PublicAccessApplication extends PublicAccessApplication {
 
   @Override
   @Nonnull
-  public Stage sim() {
+  Stage sim() {
     return _sim;
   }
 }

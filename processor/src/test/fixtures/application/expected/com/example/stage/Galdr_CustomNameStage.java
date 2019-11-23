@@ -14,6 +14,7 @@ final class Galdr_CustomNameStage extends CustomNameStage {
   Galdr_CustomNameStage() {
     final World world = Worlds
         .world()
+        .component( CustomNameStage.MyComponent.class )
         .stage( "monkey" )
         .subSystem( new CustomNameStage_Galdr_MySubSystem() )
         .endStage()

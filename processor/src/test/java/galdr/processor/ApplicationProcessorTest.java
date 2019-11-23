@@ -14,6 +14,14 @@ public class ApplicationProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.component.AutodetectArrayComponentTypeApplication" },
+        new Object[]{ "com.example.component.AutodetectFlagComponentTypeApplication" },
+        new Object[]{ "com.example.component.ExplicitArrayComponentTypeApplication" },
+        new Object[]{ "com.example.component.ExplicitAutodetectComponentTypeApplication" },
+        new Object[]{ "com.example.component.ExplicitFlagComponentTypeApplication" },
+        new Object[]{ "com.example.component.ExplicitMapComponentTypeApplication" },
+        new Object[]{ "com.example.component.MultipleComponentApplication" },
+
         new Object[]{ "com.example.stage.CustomNameStage" },
         new Object[]{ "com.example.stage.NonStandardMethodNameStage" },
 
@@ -68,6 +76,17 @@ public class ApplicationProcessorTest
   {
     return new Object[][]
       {
+        new Object[]{ "com.example.component.BadComponentType1Application",
+                      "@GaldrApplication target must have a components parameter that references classes annotated by @Component but references the type com.example.component.BadComponentType1Application.MyComponent that is not annotated appropriately" },
+        new Object[]{ "com.example.component.BadComponentType2Application",
+                      "@GaldrApplication target must have a components parameter that references classes annotated by @Component but references the type java.lang.String that is not annotated appropriately" },
+        new Object[]{ "com.example.component.BadComponentType3Application",
+                      "@GaldrApplication target must have a components parameter that references classes annotated by @Component but references the type int that is not annotated appropriately" },
+        new Object[]{ "com.example.component.DuplicateComponentTypeApplication",
+                      "@GaldrApplication target must not have a duplicate type in the components parameter. The type com.example.component.DuplicateComponentTypeApplication.MyComponent1 appears multiple times" },
+        new Object[]{ "com.example.component.NoComponentApplication",
+                      "@GaldrApplication target must have at least one Component defined by the components parameter" },
+
         new Object[]{ "com.example.stage.BadName1Stage",
                       "@GaldrStage target specified an invalid value '-1-' for the parameter name. The value must be a valid java identifier" },
         new Object[]{ "com.example.stage.BadName2Stage",

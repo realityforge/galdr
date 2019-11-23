@@ -14,6 +14,7 @@ final class StaticInnerClassApplication_Galdr_BasicApplication extends StaticInn
   StaticInnerClassApplication_Galdr_BasicApplication() {
     final World world = Worlds
         .world()
+        .component( StaticInnerClassApplication.MyComponent.class )
         .stage( "sim" )
         .subSystem( new StaticInnerClassApplication_BasicApplication_Galdr_MySubSystem() )
         .endStage()

@@ -14,6 +14,7 @@ final class Galdr_NonStandardMethodNameStage extends NonStandardMethodNameStage 
   Galdr_NonStandardMethodNameStage() {
     final World world = Worlds
         .world()
+        .component( NonStandardMethodNameStage.MyComponent.class )
         .stage( "$4v3" )
         .subSystem( new NonStandardMethodNameStage_Galdr_MySubSystem() )
         .endStage()

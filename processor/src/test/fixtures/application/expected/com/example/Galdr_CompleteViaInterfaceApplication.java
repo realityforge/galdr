@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.other.CompleteInterfaceApplication;
 import com.example.other.CompleteInterfaceApplication_Galdr_MySubSystem1;
 import com.example.other.CompleteInterfaceApplication_Galdr_MySubSystem2;
 import com.example.other.CompleteInterfaceApplication_Galdr_MySubSystem3;
@@ -20,6 +21,7 @@ final class Galdr_CompleteViaInterfaceApplication extends CompleteViaInterfaceAp
   Galdr_CompleteViaInterfaceApplication() {
     final World world = Worlds
         .world()
+        .component( CompleteInterfaceApplication.MyComponent.class )
         .stage( "sim" )
         .subSystem( new CompleteInterfaceApplication_Galdr_MySubSystem1() )
         .subSystem( new CompleteInterfaceApplication_Galdr_MySubSystem2() )

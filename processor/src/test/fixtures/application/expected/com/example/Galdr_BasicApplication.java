@@ -14,6 +14,7 @@ final class Galdr_BasicApplication extends BasicApplication {
   Galdr_BasicApplication() {
     final World world = Worlds
         .world()
+        .component( BasicApplication.MyComponent.class )
         .stage( "sim" )
         .subSystem( new BasicApplication_Galdr_MySubSystem() )
         .endStage()

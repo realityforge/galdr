@@ -17,6 +17,7 @@ final class Galdr_CompleteApplication extends CompleteApplication {
   Galdr_CompleteApplication() {
     final World world = Worlds
         .world()
+        .component( CompleteApplication.MyComponent.class )
         .stage( "sim" )
         .subSystem( new CompleteApplication_Galdr_MySubSystem1() )
         .subSystem( new CompleteApplication_Galdr_MySubSystem2() )

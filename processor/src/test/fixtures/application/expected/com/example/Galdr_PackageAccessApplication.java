@@ -14,6 +14,7 @@ final class Galdr_PackageAccessApplication extends PackageAccessApplication {
   Galdr_PackageAccessApplication() {
     final World world = Worlds
         .world()
+        .component( PackageAccessApplication.MyComponent.class )
         .stage( "sim" )
         .subSystem( new PackageAccessApplication_Galdr_MySubSystem() )
         .endStage()

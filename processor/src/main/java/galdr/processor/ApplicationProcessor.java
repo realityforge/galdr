@@ -14,6 +14,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
 /**
@@ -52,6 +53,49 @@ public final class ApplicationProcessor
     }
     final ApplicationDescriptor descriptor = new ApplicationDescriptor( element );
 
+    final List<TypeMirror> components =
+      AnnotationsUtil.getTypeMirrorsAnnotationParameter( element, Constants.GALDR_APPLICATION_CLASSNAME, "components" );
+    final List<ClassName> componentTypes = new ArrayList<>();
+    for ( final TypeMirror component : components )
+    {
+      final TypeElement componentType = (TypeElement) processingEnv.getTypeUtils().asElement( component );
+      if ( null == componentType ||
+           !AnnotationsUtil.hasAnnotationOfType( componentType, Constants.COMPONENT_CLASSNAME ) )
+      {
+        throw new ProcessorException( MemberChecks.must( Constants.GALDR_APPLICATION_CLASSNAME,
+                                                         "have a components parameter that references classes annotated by " +
+                                                         MemberChecks.toSimpleName( Constants.COMPONENT_CLASSNAME ) +
+                                                         " but references the type " + component + " that is not " +
+                                                         "annotated appropriately" ),
+                                      element );
+      }
+      final ClassName className = ClassName.get( componentType );
+      if ( componentTypes.contains( className ) )
+      {
+        throw new ProcessorException( MemberChecks.mustNot( Constants.GALDR_APPLICATION_CLASSNAME,
+                                                            "have a duplicate type in the components " +
+                                                            "parameter. The type " + component + " appears " +
+                                                            "multiple times" ),
+                                      element );
+      }
+      componentTypes.add( className );
+      final VariableElement parameter = (VariableElement)
+        AnnotationsUtil
+          .getAnnotationValue( componentType, Constants.COMPONENT_CLASSNAME, "storage" )
+          .getValue();
+      final String storageName = parameter.getSimpleName().toString();
+      final StorageType storageType =
+        "AUTODETECT".equals( storageName ) ?
+        autoDetectComponentStorage( componentType ) :
+        StorageType.valueOf( storageName );
+      descriptor.addComponent( new ComponentDescriptor( component, storageType ) );
+    }
+    if ( componentTypes.isEmpty() )
+    {
+      throw new ProcessorException( MemberChecks.must( Constants.GALDR_APPLICATION_CLASSNAME,
+                                                       "have at least one Component defined by the components parameter" ),
+                                    element );
+    }
     final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
     if ( constructors.size() > 1 )
     {
@@ -87,6 +131,13 @@ public final class ApplicationProcessor
     GeneratorUtil.emitJavaType( descriptor.getPackageName(),
                                 Generator.buildApplication( processingEnv, descriptor ),
                                 processingEnv.getFiler() );
+  }
+
+  @Nonnull
+  private StorageType autoDetectComponentStorage( @Nonnull final TypeElement componentType )
+  {
+    final List<VariableElement> fields = ProcessorUtil.getFieldElements( componentType );
+    return fields.isEmpty() ? StorageType.NONE : StorageType.ARRAY;
   }
 
   private void addStage( @Nonnull final ApplicationDescriptor descriptor, @Nonnull final ExecutableElement method )

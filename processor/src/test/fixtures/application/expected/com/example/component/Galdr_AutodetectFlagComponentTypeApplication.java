@@ -1,4 +1,4 @@
-package com.example;
+package com.example.component;
 
 import galdr.Stage;
 import galdr.World;
@@ -7,16 +7,16 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.ApplicationProcessor")
-final class Galdr_PublicAccessApplication extends PublicAccessApplication {
+final class Galdr_AutodetectFlagComponentTypeApplication extends AutodetectFlagComponentTypeApplication {
   @Nonnull
   private final Stage _sim;
 
-  Galdr_PublicAccessApplication() {
+  Galdr_AutodetectFlagComponentTypeApplication() {
     final World world = Worlds
         .world()
-        .component( PublicAccessApplication.MyComponent.class )
+        .component( AutodetectFlagComponentTypeApplication.MyComponent.class )
         .stage( "sim" )
-        .subSystem( new PublicAccessApplication_Galdr_MySubSystem() )
+        .subSystem( new AutodetectFlagComponentTypeApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );
@@ -24,7 +24,7 @@ final class Galdr_PublicAccessApplication extends PublicAccessApplication {
 
   @Override
   @Nonnull
-  public Stage sim() {
+  Stage sim() {
     return _sim;
   }
 }

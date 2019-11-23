@@ -1,3 +1,5 @@
+package com.example.component;
+
 import galdr.Stage;
 import galdr.World;
 import galdr.Worlds;
@@ -5,16 +7,16 @@ import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 
 @Generated("galdr.processor.ApplicationProcessor")
-final class Galdr_DefaultPackageApplication extends DefaultPackageApplication {
+final class Galdr_AutodetectArrayComponentTypeApplication extends AutodetectArrayComponentTypeApplication {
   @Nonnull
   private final Stage _sim;
 
-  Galdr_DefaultPackageApplication() {
+  Galdr_AutodetectArrayComponentTypeApplication() {
     final World world = Worlds
         .world()
-        .component( DefaultPackageApplication.MyComponent.class )
+        .component( AutodetectArrayComponentTypeApplication.MyComponent.class, AutodetectArrayComponentTypeApplication.MyComponent::new )
         .stage( "sim" )
-        .subSystem( new DefaultPackageApplication_Galdr_MySubSystem() )
+        .subSystem( new AutodetectArrayComponentTypeApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );
