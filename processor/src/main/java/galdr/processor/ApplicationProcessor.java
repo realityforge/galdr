@@ -82,7 +82,7 @@ public final class ApplicationProcessor
 
       if ( null != stage )
       {
-        addStage( descriptor, method, stage );
+        addStage( descriptor, method );
       }
     }
 
@@ -91,9 +91,7 @@ public final class ApplicationProcessor
                                 processingEnv.getFiler() );
   }
 
-  private void addStage( @Nonnull final ApplicationDescriptor descriptor,
-                         @Nonnull final ExecutableElement method,
-                         @Nonnull final AnnotationMirror stage )
+  private void addStage( @Nonnull final ApplicationDescriptor descriptor, @Nonnull final ExecutableElement method )
   {
     MemberChecks.mustBeAbstract( Constants.GALDR_STAGE_CLASSNAME, method );
     final TypeElement typeElement = descriptor.getElement();
