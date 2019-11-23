@@ -109,7 +109,7 @@ public final class ApplicationProcessor
                                          Constants.STAGE_CLASSNAME );
     final String name =
       AnnotationsUtil.extractName( method,
-                   m -> method.getSimpleName().toString(),
+                                   m -> method.getSimpleName().toString(),
                                    Constants.GALDR_STAGE_CLASSNAME,
                                    "name",
                                    Constants.SENTINEL_NAME );
