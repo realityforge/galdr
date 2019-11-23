@@ -19,7 +19,7 @@ abstract class BadName1Stage
     }
   }
 
-  @GaldrStage( value = MySubSystem.class, name = "-1-")
+  @GaldrStage( value = MySubSystem.class, name = "-1-" )
   @Nonnull
   abstract Stage sim();
 }
