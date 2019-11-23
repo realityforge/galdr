@@ -24,6 +24,7 @@ final class Generator
 {
   private static final ClassName AREA_OF_INTEREST_CLASSNAME = ClassName.get( "galdr", "AreaOfInterest" );
   private static final ClassName COMPONENT_MANAGER_CLASSNAME = ClassName.get( "galdr", "ComponentManager" );
+  private static final ClassName COMPONENT_STORAGE_CLASSNAME = ClassName.get( "galdr", "ComponentStorage" );
   private static final ClassName GALDR_CLASSNAME = ClassName.get( "galdr", "Galdr" );
   private static final ClassName STAGE_CLASSNAME = ClassName.get( "galdr", "Stage" );
   private static final ClassName SUBSCRIPTION_CLASSNAME = ClassName.get( "galdr", "Subscription" );
@@ -90,6 +91,30 @@ final class Generator
     params.add( WORLD_CLASSNAME );
     params.add( WORLDS_CLASSNAME );
     sb.append( "\n.world()" );
+
+    for ( final ComponentDescriptor component : descriptor.getComponents() )
+    {
+      final StorageType storageType = component.getStorageType();
+      if ( StorageType.NONE == storageType )
+      {
+        sb.append( "\n.component( $T.class )" );
+        params.add( component.getComponent() );
+      }
+      else if ( StorageType.ARRAY == storageType )
+      {
+        sb.append( "\n.component( $T.class, $T::new )" );
+        params.add( component.getComponent() );
+        params.add( component.getComponent() );
+      }
+      else
+      {
+        assert StorageType.MAP == storageType;
+        sb.append( "\n.component( $T.class, $T::new, $T.MAP )" );
+        params.add( component.getComponent() );
+        params.add( component.getComponent() );
+        params.add( COMPONENT_STORAGE_CLASSNAME );
+      }
+    }
 
     for ( final StageDescriptor stage : descriptor.getStages() )
     {
