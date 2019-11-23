@@ -1,6 +1,7 @@
 package com.example;
 
 import galdr.Stage;
+import galdr.annotations.Component;
 import galdr.annotations.GaldrApplication;
 import galdr.annotations.GaldrStage;
 import galdr.annotations.GaldrSubSystem;
@@ -9,7 +10,12 @@ import javax.annotation.Nonnull;
 
 final class StaticInnerClassApplication
 {
-  @GaldrApplication
+  @Component
+  static class MyComponent
+  {
+  }
+
+  @GaldrApplication( components = MyComponent.class )
   static abstract class BasicApplication
   {
     @GaldrSubSystem

@@ -1,7 +1,7 @@
 package com.example.other;
 
 import galdr.Stage;
-import galdr.annotations.GaldrApplication;
+import galdr.annotations.Component;
 import galdr.annotations.GaldrStage;
 import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
@@ -9,6 +9,11 @@ import javax.annotation.Nonnull;
 
 public interface CompleteInterfaceApplication
 {
+  @Component
+  class MyComponent
+  {
+  }
+
   @GaldrSubSystem
   abstract class MySubSystem1
   {

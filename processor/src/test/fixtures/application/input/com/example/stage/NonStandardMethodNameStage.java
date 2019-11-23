@@ -1,15 +1,21 @@
 package com.example.stage;
 
 import galdr.Stage;
+import galdr.annotations.Component;
 import galdr.annotations.GaldrApplication;
 import galdr.annotations.GaldrStage;
 import galdr.annotations.GaldrSubSystem;
 import galdr.annotations.Processor;
 import javax.annotation.Nonnull;
 
-@GaldrApplication
+@GaldrApplication( components = NonStandardMethodNameStage.MyComponent.class )
 abstract class NonStandardMethodNameStage
 {
+  @Component
+  static class MyComponent
+  {
+  }
+
   @GaldrSubSystem
   static abstract class MySubSystem
   {

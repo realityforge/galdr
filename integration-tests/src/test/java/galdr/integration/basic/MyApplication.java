@@ -5,7 +5,7 @@ import galdr.annotations.GaldrApplication;
 import galdr.annotations.GaldrStage;
 import javax.annotation.Nonnull;
 
-@GaldrApplication
+@GaldrApplication( components = { Health.class, MyFlag.class } )
 abstract class MyApplication
 {
   @Nonnull

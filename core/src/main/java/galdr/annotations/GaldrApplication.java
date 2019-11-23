@@ -21,4 +21,10 @@ import java.lang.annotation.Target;
 @Target( ElementType.TYPE )
 public @interface GaldrApplication
 {
+  /**
+   * Return the set of component types that the application is composed from.
+   *
+   * @return the set of component types that the application is composed from.
+   */
+  Class<?>[] components();
 }
