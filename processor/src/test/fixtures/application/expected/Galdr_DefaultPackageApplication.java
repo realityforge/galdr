@@ -13,6 +13,7 @@ final class Galdr_DefaultPackageApplication extends DefaultPackageApplication {
     final World world = Worlds
         .world()
         .stage( "sim" )
+        .subSystem( new DefaultPackageApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );

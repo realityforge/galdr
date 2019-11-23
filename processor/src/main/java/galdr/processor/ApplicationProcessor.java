@@ -14,6 +14,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 
 /**
  * Annotation processor that generates application implementations.
@@ -125,7 +126,39 @@ public final class ApplicationProcessor
                                       method );
       }
     }
+    final List<TypeMirror> subSystems =
+      AnnotationsUtil.getTypeMirrorsAnnotationParameter( method, Constants.GALDR_STAGE_CLASSNAME, "value" );
+
     final List<ClassName> subSystemTypes = new ArrayList<>();
+    for ( final TypeMirror subSystem : subSystems )
+    {
+      final TypeElement subSystemType = (TypeElement) processingEnv.getTypeUtils().asElement( subSystem );
+      if ( null == subSystemType ||
+           !AnnotationsUtil.hasAnnotationOfType( subSystemType, Constants.SUB_SYSTEM_CLASSNAME ) )
+      {
+        throw new ProcessorException( MemberChecks.must( Constants.GALDR_STAGE_CLASSNAME,
+                                                         "have a value parameter that references classes annotated by " +
+                                                         MemberChecks.toSimpleName( Constants.SUB_SYSTEM_CLASSNAME ) +
+                                                         " but references the type " + subSystem + " that is not " +
+                                                         "annotated appropriately" ),
+                                      method );
+      }
+      final ClassName className = Generator.toGeneratedClassName( subSystemType );
+      if ( subSystemTypes.contains( className ) )
+      {
+        throw new ProcessorException( MemberChecks.mustNot( Constants.GALDR_STAGE_CLASSNAME,
+                                                            "have a duplicate type in the value parameter. " +
+                                                            "The type " + subSystem + " appears multiple times" ),
+                                      method );
+      }
+      subSystemTypes.add( className );
+    }
+    if ( subSystemTypes.isEmpty() )
+    {
+      throw new ProcessorException( MemberChecks.must( Constants.GALDR_STAGE_CLASSNAME,
+                                                       "have at least one SubSystem defined by the value parameter" ),
+                                    method );
+    }
     descriptor.addStage( new StageDescriptor( name, method, subSystemTypes ) );
   }
 }

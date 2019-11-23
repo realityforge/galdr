@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.other.CompleteBaseApplication_Galdr_MySubSystem1;
+import com.example.other.CompleteBaseApplication_Galdr_MySubSystem2;
+import com.example.other.CompleteBaseApplication_Galdr_MySubSystem3;
 import galdr.Stage;
 import galdr.World;
 import galdr.Worlds;
@@ -18,8 +21,11 @@ final class Galdr_CompleteViaBaseClassApplication extends CompleteViaBaseClassAp
     final World world = Worlds
         .world()
         .stage( "sim" )
+        .subSystem( new CompleteBaseApplication_Galdr_MySubSystem1() )
+        .subSystem( new CompleteBaseApplication_Galdr_MySubSystem2() )
         .endStage()
         .stage( "render" )
+        .subSystem( new CompleteBaseApplication_Galdr_MySubSystem3() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );

@@ -15,6 +15,7 @@ final class Galdr_NonStandardMethodNameStage extends NonStandardMethodNameStage 
     final World world = Worlds
         .world()
         .stage( "$4v3" )
+        .subSystem( new NonStandardMethodNameStage_Galdr_MySubSystem() )
         .endStage()
         .build();
     _$4v3 = world.getStageByName( "$4v3" );

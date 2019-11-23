@@ -15,6 +15,7 @@ final class Galdr_BasicApplication extends BasicApplication {
     final World world = Worlds
         .world()
         .stage( "sim" )
+        .subSystem( new BasicApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );

@@ -15,6 +15,7 @@ final class StaticInnerClassApplication_Galdr_BasicApplication extends StaticInn
     final World world = Worlds
         .world()
         .stage( "sim" )
+        .subSystem( new StaticInnerClassApplication_BasicApplication_Galdr_MySubSystem() )
         .endStage()
         .build();
     _sim = world.getStageByName( "sim" );
