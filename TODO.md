@@ -33,7 +33,6 @@ complete as there is too much un-said.
   the templates may be loaded from data files or they could be created in-code. However they should be relatively
   efficient to represent regardless of how they are used from the application.
 
-
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
   - `CopyOnWrite` implementation that uses a global shared component instance until write occurs.  This may be
