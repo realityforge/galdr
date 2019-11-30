@@ -32,7 +32,7 @@ The Maven dependency is:
 <dependency>
   <groupId>org.realityforge.galdr</groupId>
   <artifactId>galdr</artifactId>
-  <version>0.00</version>
+  <version>0.01</version>
 </dependency>
 ```
 
