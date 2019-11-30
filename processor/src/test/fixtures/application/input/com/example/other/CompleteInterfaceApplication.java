@@ -48,6 +48,4 @@ public interface CompleteInterfaceApplication
   @GaldrStage( MySubSystem3.class )
   @Nonnull
   Stage render();
-
-  //TODO: Add Components to example
 }

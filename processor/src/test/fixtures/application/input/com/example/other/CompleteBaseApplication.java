@@ -48,6 +48,4 @@ public abstract class CompleteBaseApplication
   @GaldrStage( MySubSystem3.class )
   @Nonnull
   protected abstract Stage render();
-
-  //TODO: Add Components to example
 }
