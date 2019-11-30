@@ -1,5 +1,6 @@
 package galdr;
 
+import galdr.spy.ComponentInfo;
 import java.util.Collections;
 import javax.annotation.Nonnull;
 import org.testng.annotations.Test;
@@ -17,15 +18,15 @@ public class EntityCollectionTest
   {
     final World world = Worlds.world().component( Component1.class ).build();
 
-    final ComponentManager<Component1> component = world.getComponentManagerByType( Component1.class );
+    final ComponentInfo component = world.getSpy().getComponentByType( Component1.class );
     assertEquals( world.getEntityCollections().size(), 0 );
-    //TODO: Change component to componentAPI and use spy to get collections count
-    assertEquals( component.getCollections().size(), 0 );
+    assertEquals( component.getCollectionCount(), 0 );
+
     final EntityCollection collection =
       createSubscription( world, Collections.singletonList( Component1.class ) ).getCollection();
 
     assertEquals( world.getEntityCollections().size(), 1 );
-    assertEquals( component.getCollections().size(), 1 );
+    assertEquals( component.getCollectionCount(), 1 );
 
     final AreaOfInterest areaOfInterest = collection.getAreaOfInterest();
     assertEquals( world.findCollection( areaOfInterest ), collection );
