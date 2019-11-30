@@ -21,7 +21,7 @@ A `System` is responsible for updating the `Component` instances attached to `En
 selects the `Entity` instances to process based on the set of `Component` instances. i.e. A `RenderSystem` may
 read the `Position` and `Spite` components to render the entity on the screen, a `PhysicsSystem` may read the `Body`,
 `Position` and `Velocity` components and update the `Position` component etc. It should be noted that in Galdr, the
-term `SubSystem` is used instead of `System` to avoid a name collision with the `java.lang.System` class. 
+term `SubSystem` is used instead of `System` to avoid a name collision with the `java.lang.System` class.
 
 ### Getting Started
 
