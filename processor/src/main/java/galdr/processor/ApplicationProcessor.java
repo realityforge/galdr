@@ -27,13 +27,13 @@ public final class ApplicationProcessor
 {
   @Override
   @Nonnull
-  String getRootAnnotationClassname()
+  protected String getRootAnnotationClassname()
   {
     return Constants.GALDR_APPLICATION_CLASSNAME;
   }
 
   @Override
-  final void process( @Nonnull final TypeElement element )
+  protected final void process( @Nonnull final TypeElement element )
     throws IOException, ProcessorException
   {
     if ( ElementKind.CLASS != element.getKind() )

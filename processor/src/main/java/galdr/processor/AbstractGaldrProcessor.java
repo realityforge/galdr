@@ -7,14 +7,14 @@ abstract class AbstractGaldrProcessor
 {
   @Override
   @Nonnull
-  final String getIssueTrackerURL()
+  protected final String getIssueTrackerURL()
   {
     return "https://github.com/realityforge/galdr/issues";
   }
 
   @Nonnull
   @Override
-  final String getOptionPrefix()
+  protected final String getOptionPrefix()
   {
     return "galdr";
   }

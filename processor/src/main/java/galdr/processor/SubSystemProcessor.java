@@ -33,13 +33,13 @@ public final class SubSystemProcessor
 {
   @Override
   @Nonnull
-  String getRootAnnotationClassname()
+  protected String getRootAnnotationClassname()
   {
     return Constants.SUB_SYSTEM_CLASSNAME;
   }
 
   @Override
-  final void process( @Nonnull final TypeElement element )
+  protected final void process( @Nonnull final TypeElement element )
     throws IOException, ProcessorException
   {
     if ( ElementKind.CLASS != element.getKind() )
