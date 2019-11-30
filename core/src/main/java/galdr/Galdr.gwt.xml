@@ -1,5 +1,6 @@
 <module>
   <inherits name='org.realityforge.braincheck.BrainCheck'/>
+  <inherits name='grim.annotations.Annotations'/>
 
   <source path='' includes='*.java'/>
   <source path='spy' includes='*.java'/>
