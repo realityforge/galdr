@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Include the location of the problem when generating warnings for unnecessary public or protected access on members.
+
 ### [v0.02](https://github.com/realityforge/galdr/tree/v0.02) (2019-11-30)
 [Full Changelog](https://github.com/realityforge/galdr/compare/v0.01...v0.02)
 
