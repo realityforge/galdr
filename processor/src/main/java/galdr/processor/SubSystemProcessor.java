@@ -300,13 +300,13 @@ public final class SubSystemProcessor
                                                            method );
     MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
-    MemberChecks.mustBeInternalMethod( processingEnv,
-                                       typeElement,
-                                       method,
-                                       annotationClassname,
-                                       Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
-                                       Constants.WARNING_PROTECTED_LIFECYCLE_METHOD,
-                                       Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    MemberChecks.shouldBeInternalMethod( processingEnv,
+                                         typeElement,
+                                         method,
+                                         annotationClassname,
+                                         Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
+                                         Constants.WARNING_PROTECTED_LIFECYCLE_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
   }
 
   private void mustBeRefMethod( @Nonnull final SubSystemDescriptor descriptor,
@@ -323,13 +323,13 @@ public final class SubSystemProcessor
     MemberChecks.mustReturnAValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
 
-    MemberChecks.mustBeInternalMethod( processingEnv,
-                                       typeElement,
-                                       method,
-                                       annotationClassname,
-                                       Constants.WARNING_PUBLIC_REF_METHOD,
-                                       Constants.WARNING_PROTECTED_REF_METHOD,
-                                       Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
+    MemberChecks.shouldBeInternalMethod( processingEnv,
+                                         typeElement,
+                                         method,
+                                         annotationClassname,
+                                         Constants.WARNING_PUBLIC_REF_METHOD,
+                                         Constants.WARNING_PROTECTED_REF_METHOD,
+                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
   }
 
   @Nonnull
