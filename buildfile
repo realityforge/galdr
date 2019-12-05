@@ -152,6 +152,9 @@ define 'galdr' do
   ipr.add_testng_configuration('processor',
                                :module => 'processor',
                                :jvm_args => '-ea -Dgaldr.output_fixture_data=false -Dgaldr.subsystem.fixture_dir=src/test/fixtures/subsystem -Dgaldr.subsystem.fixture_dir=src/test/fixtures/application')
+  ipr.add_testng_configuration('integration-tests',
+                               :module => 'integration-tests',
+                               :jvm_args => '-ea -Dbraincheck.environment=development -Dgaldr.environment=development')
 
   iml.excluded_directories << project._('tmp')
 
