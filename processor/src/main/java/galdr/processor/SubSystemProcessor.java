@@ -5,7 +5,6 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -301,22 +300,13 @@ public final class SubSystemProcessor
                                                            method );
     MemberChecks.mustNotReturnAnyValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
-    if ( doesMethodNotOverrideInterfaceMethod( typeElement, method ) )
-    {
-      MemberChecks.shouldNotBePublic( processingEnv,
-                                      method,
-                                      annotationClassname,
-                                      Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
-                                      Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
-    if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
-    {
-      MemberChecks.shouldNotBeProtected( processingEnv,
-                                         method,
-                                         annotationClassname,
-                                         Constants.WARNING_PROTECTED_LIFECYCLE_METHOD,
-                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
+    MemberChecks.mustBeInternalMethod( processingEnv,
+                                       typeElement,
+                                       method,
+                                       annotationClassname,
+                                       Constants.WARNING_PUBLIC_LIFECYCLE_METHOD,
+                                       Constants.WARNING_PROTECTED_LIFECYCLE_METHOD,
+                                       Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
   }
 
   private void mustBeRefMethod( @Nonnull final SubSystemDescriptor descriptor,
@@ -333,28 +323,13 @@ public final class SubSystemProcessor
     MemberChecks.mustReturnAValue( annotationClassname, method );
     MemberChecks.mustNotThrowAnyExceptions( annotationClassname, method );
 
-    if ( doesMethodNotOverrideInterfaceMethod( typeElement, method ) )
-    {
-      MemberChecks.shouldNotBePublic( processingEnv,
-                                      method,
-                                      annotationClassname,
-                                      Constants.WARNING_PUBLIC_REF_METHOD,
-                                      Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
-    if ( Objects.equals( typeElement, method.getEnclosingElement() ) )
-    {
-      MemberChecks.shouldNotBeProtected( processingEnv,
-                                         method,
-                                         annotationClassname,
-                                         Constants.WARNING_PROTECTED_REF_METHOD,
-                                         Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
-    }
-  }
-
-  private boolean doesMethodNotOverrideInterfaceMethod( @Nonnull final TypeElement typeElement,
-                                                        @Nonnull final ExecutableElement method )
-  {
-    return !ProcessorUtil.doesMethodOverrideInterfaceMethod( processingEnv.getTypeUtils(), typeElement, method );
+    MemberChecks.mustBeInternalMethod( processingEnv,
+                                       typeElement,
+                                       method,
+                                       annotationClassname,
+                                       Constants.WARNING_PUBLIC_REF_METHOD,
+                                       Constants.WARNING_PROTECTED_REF_METHOD,
+                                       Constants.SUPPRESS_GALDR_WARNINGS_ANNOTATION_CLASSNAME );
   }
 
   @Nonnull
