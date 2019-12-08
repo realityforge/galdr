@@ -49,7 +49,8 @@ complete as there is too much un-said.
 
 * Consider adding application-level (i.e. non-spy) events when Entities are created/disposed and when components
   are allocated/removed. These events would remain in production applications and thus able to perform application
-  logic, unlike spy events that would be optimized out in production environments.
+  logic, unlike spy events that would be optimized out in production environments. Also add application events for
+  when a entity attaches to a collection or is removed from a collection.
 
 * Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
   picked up by a processor later in the stage which applies the work items. The later processor could also filter,
