@@ -1,5 +1,7 @@
 package galdr.processor;
 
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
