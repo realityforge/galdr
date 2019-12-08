@@ -272,4 +272,23 @@ final class ProcessorUtil
                                       (ExecutableType) typeUtils.asMemberOf( (DeclaredType) typeElement.asType(), e ),
                                       method ) );
   }
+
+  @Nonnull
+  static TypeName toRawType( @Nonnull final TypeMirror type )
+  {
+    final TypeName typeName = TypeName.get( type );
+    if ( typeName instanceof ParameterizedTypeName )
+    {
+      return ( (ParameterizedTypeName) typeName ).rawType;
+    }
+    else
+    {
+      return typeName;
+    }
+  }
+
+  static boolean anyParametersNamed( @Nonnull final ExecutableElement element, @Nonnull final String name )
+  {
+    return element.getParameters().stream().anyMatch( p -> p.getSimpleName().toString().equals( name ) );
+  }
 }
