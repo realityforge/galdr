@@ -12,7 +12,10 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.processing.Filer;
@@ -41,6 +44,38 @@ final class GeneratorUtil
 {
   private GeneratorUtil()
   {
+  }
+
+  @Nonnull
+  static ClassName getGeneratedClassName( @Nonnull final ClassName className,
+                                          @Nonnull final String prefix,
+                                          @Nonnull final String postfix )
+  {
+    return ClassName.get( className.packageName(), getGeneratedSimpleClassName( className, prefix, postfix ) );
+  }
+
+  @Nonnull
+  static String getGeneratedSimpleClassName( @Nonnull final ClassName className,
+                                             @Nonnull final String prefix,
+                                             @Nonnull final String postfix )
+  {
+    return getNestedClassPrefix( className ) + prefix + className.simpleName() + postfix;
+  }
+
+  @Nonnull
+  private static String getNestedClassPrefix( @Nonnull final ClassName className )
+  {
+    final StringBuilder name = new StringBuilder();
+    final List<String> simpleNames = className.simpleNames();
+    if ( simpleNames.size() > 1 )
+    {
+      for ( final String simpleName : simpleNames.subList( 0, simpleNames.size() - 1 ) )
+      {
+        name.append( simpleName );
+        name.append( "_" );
+      }
+    }
+    return name.toString();
   }
 
   @Nonnull
