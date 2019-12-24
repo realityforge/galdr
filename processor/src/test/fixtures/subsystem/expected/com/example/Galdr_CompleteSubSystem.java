@@ -58,39 +58,39 @@ public final class Galdr_CompleteSubSystem implements PostConstructFn, OnActivat
 
     @Override
     @Nonnull
-    final ComponentManager<CompleteSubSystem.MyComponent1> cm1() {
+    ComponentManager<CompleteSubSystem.MyComponent1> cm1() {
       assert null != $galdrc$_cm1;
       return $galdrc$_cm1;
     }
 
     @Override
     @Nonnull
-    final ComponentManager<CompleteSubSystem.MyComponent2> cm2() {
+    ComponentManager<CompleteSubSystem.MyComponent2> cm2() {
       assert null != $galdrc$_cm2;
       return $galdrc$_cm2;
     }
 
     @Override
     @Nonnull
-    final String name1() {
+    String name1() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    final String name2() {
+    String name2() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    final World world1() {
+    World world1() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
     @Override
     @Nonnull
-    final World world2() {
+    World world2() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

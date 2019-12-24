@@ -32,7 +32,7 @@ public final class Galdr_PackageAccessNameRefSubSystem implements SubSystem {
 
     @Override
     @Nonnull
-    final String name() {
+    String name() {
       return $galdr$_getName();
     }
 

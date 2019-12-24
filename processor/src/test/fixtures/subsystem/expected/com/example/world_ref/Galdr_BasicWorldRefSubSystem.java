@@ -32,7 +32,7 @@ public final class Galdr_BasicWorldRefSubSystem implements SubSystem {
 
     @Override
     @Nonnull
-    final World world() {
+    World world() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

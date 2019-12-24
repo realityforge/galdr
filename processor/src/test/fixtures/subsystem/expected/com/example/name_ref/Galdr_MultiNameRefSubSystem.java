@@ -32,13 +32,13 @@ public final class Galdr_MultiNameRefSubSystem implements SubSystem {
 
     @Override
     @Nonnull
-    final String name1() {
+    String name1() {
       return $galdr$_getName();
     }
 
     @Override
     @Nonnull
-    final String name2() {
+    String name2() {
       return $galdr$_getName();
     }
 

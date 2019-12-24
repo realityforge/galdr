@@ -44,7 +44,7 @@ public final class Galdr_PackageAccessComponentManagerRefSubSystem implements Po
 
     @Override
     @Nonnull
-    final ComponentManager<PackageAccessComponentManagerRefSubSystem.MyComponent> cm() {
+    ComponentManager<PackageAccessComponentManagerRefSubSystem.MyComponent> cm() {
       assert null != $galdrc$_cm;
       return $galdrc$_cm;
     }

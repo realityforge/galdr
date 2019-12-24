@@ -32,13 +32,13 @@ public final class Galdr_MultiWorldRefSubSystem implements SubSystem {
 
     @Override
     @Nonnull
-    final World world1() {
+    World world1() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 
     @Override
     @Nonnull
-    final World world2() {
+    World world2() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

@@ -32,7 +32,7 @@ public final class Galdr_Suppressed2PublicAccessNameRefSubSystem implements SubS
 
     @Override
     @Nonnull
-    public final String name() {
+    public String name() {
       return $galdr$_getName();
     }
 

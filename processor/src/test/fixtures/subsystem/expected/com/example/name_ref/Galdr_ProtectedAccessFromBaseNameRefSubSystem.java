@@ -32,7 +32,7 @@ public final class Galdr_ProtectedAccessFromBaseNameRefSubSystem implements SubS
 
     @Override
     @Nonnull
-    protected final String name() {
+    protected String name() {
       return $galdr$_getName();
     }
 

@@ -32,7 +32,7 @@ public final class Galdr_PublicAccessViaInterfaceNameRefSubSystem implements Sub
 
     @Override
     @Nonnull
-    public final String name() {
+    public String name() {
       return $galdr$_getName();
     }
 

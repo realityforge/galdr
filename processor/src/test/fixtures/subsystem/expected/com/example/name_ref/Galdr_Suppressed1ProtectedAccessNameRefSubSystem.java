@@ -33,7 +33,7 @@ public final class Galdr_Suppressed1ProtectedAccessNameRefSubSystem implements S
 
     @Override
     @Nonnull
-    protected final String name() {
+    protected String name() {
       return $galdr$_getName();
     }
 

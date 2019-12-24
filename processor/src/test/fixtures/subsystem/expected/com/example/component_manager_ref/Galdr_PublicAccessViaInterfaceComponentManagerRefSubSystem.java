@@ -44,7 +44,7 @@ public final class Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem im
 
     @Override
     @Nonnull
-    public final ComponentManager<ComponentManagerRefInterface.MyComponent> cm() {
+    public ComponentManager<ComponentManagerRefInterface.MyComponent> cm() {
       assert null != $galdrc$_cm;
       return $galdrc$_cm;
     }

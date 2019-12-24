@@ -33,7 +33,7 @@ public final class Galdr_Suppressed2ProtectedAccessWorldRefSubSystem implements 
 
     @Override
     @Nonnull
-    protected final World world() {
+    protected World world() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

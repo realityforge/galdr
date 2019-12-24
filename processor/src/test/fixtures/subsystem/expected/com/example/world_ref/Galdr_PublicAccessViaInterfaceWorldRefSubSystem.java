@@ -33,7 +33,7 @@ public final class Galdr_PublicAccessViaInterfaceWorldRefSubSystem implements Su
 
     @Override
     @Nonnull
-    public final World world() {
+    public World world() {
       return $galdr$_outer.$galdr$_getWorld();
     }
 

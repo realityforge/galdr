@@ -43,7 +43,7 @@ public final class Galdr_BasicComponentManagerRefSubSystem implements PostConstr
 
     @Override
     @Nonnull
-    final ComponentManager<BasicComponentManagerRefSubSystem.MyComponent> cm() {
+    ComponentManager<BasicComponentManagerRefSubSystem.MyComponent> cm() {
       assert null != $galdrc$_cm;
       return $galdrc$_cm;
     }
