@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-* Upgrade the `org.realityforge.proton` artifact to version `0.03`.
+* Upgrade the `org.realityforge.proton` artifact to version `0.04`.
 * Include the location of the problem when generating warnings for unnecessary public or protected access on members.
 * Use the `org.realityforge.proton:proton-processor-pack` project for processor utility methods.
 
