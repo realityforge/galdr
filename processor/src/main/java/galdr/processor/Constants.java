@@ -17,7 +17,6 @@ final class Constants
   static final String COMPONENT_MANAGER_CLASSNAME = "galdr.ComponentManager";
   static final String STAGE_CLASSNAME = "galdr.Stage";
   static final String WORLD_CLASSNAME = "galdr.World";
-
   static final String SENTINEL_NAME = "<default>";
   static final String WARNING_PUBLIC_REF_METHOD = "Galdr:PublicRefMethod";
   static final String WARNING_PROTECTED_REF_METHOD = "Galdr:ProtectedRefMethod";
