@@ -5,8 +5,10 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -20,6 +22,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import org.realityforge.proton.AnnotationsUtil;
+import org.realityforge.proton.ElementsUtil;
+import org.realityforge.proton.GeneratorUtil;
+import org.realityforge.proton.MemberChecks;
+import org.realityforge.proton.ProcessorException;
 
 /**
  * Annotation processor that generates subsystem implementations.
@@ -30,11 +37,14 @@ import javax.lang.model.type.TypeMirror;
 public final class SubSystemProcessor
   extends AbstractGaldrProcessor
 {
-  @Override
+  @SuppressWarnings( "unchecked" )
   @Nonnull
-  protected String getRootAnnotationClassname()
+  @Override
+  protected Set<TypeElement> getTypeElementsToProcess( @Nonnull final RoundEnvironment env )
   {
-    return Constants.SUB_SYSTEM_CLASSNAME;
+    final TypeElement annotation =
+      processingEnv.getElementUtils().getTypeElement( Constants.SUB_SYSTEM_CLASSNAME );
+    return (Set<TypeElement>) env.getElementsAnnotatedWith( annotation );
   }
 
   @Override
@@ -58,7 +68,7 @@ public final class SubSystemProcessor
     final String name = deriveName( element, annotation );
     final SubSystemDescriptor descriptor = new SubSystemDescriptor( element, name );
 
-    final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
+    final List<ExecutableElement> constructors = ElementsUtil.getConstructors( element );
     if ( constructors.size() > 1 )
     {
       final String message = MemberChecks.must( Constants.SUB_SYSTEM_CLASSNAME, "have no more than one constructor" );
@@ -71,7 +81,7 @@ public final class SubSystemProcessor
     }
 
     final List<ExecutableElement> methods =
-      ProcessorUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
+      ElementsUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
     for ( final ExecutableElement method : methods )
     {
       final AnnotationMirror componentManagerRef =

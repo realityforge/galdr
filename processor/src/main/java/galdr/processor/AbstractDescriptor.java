@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.lang.model.element.TypeElement;
+import org.realityforge.proton.GeneratorUtil;
 
 abstract class AbstractDescriptor
 {

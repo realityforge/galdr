@@ -4,7 +4,9 @@ import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
@@ -16,6 +18,11 @@ import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
+import org.realityforge.proton.AnnotationsUtil;
+import org.realityforge.proton.ElementsUtil;
+import org.realityforge.proton.GeneratorUtil;
+import org.realityforge.proton.MemberChecks;
+import org.realityforge.proton.ProcessorException;
 
 /**
  * Annotation processor that generates application implementations.
@@ -25,11 +32,14 @@ import javax.lang.model.type.TypeMirror;
 public final class ApplicationProcessor
   extends AbstractGaldrProcessor
 {
-  @Override
+  @SuppressWarnings( "unchecked" )
   @Nonnull
-  protected String getRootAnnotationClassname()
+  @Override
+  protected Set<TypeElement> getTypeElementsToProcess( @Nonnull final RoundEnvironment env )
   {
-    return Constants.GALDR_APPLICATION_CLASSNAME;
+    final TypeElement annotation =
+      processingEnv.getElementUtils().getTypeElement( Constants.GALDR_APPLICATION_CLASSNAME );
+    return (Set<TypeElement>) env.getElementsAnnotatedWith( annotation );
   }
 
   @Override
@@ -96,7 +106,7 @@ public final class ApplicationProcessor
                                                        "have at least one Component defined by the components parameter" ),
                                     element );
     }
-    final List<ExecutableElement> constructors = ProcessorUtil.getConstructors( element );
+    final List<ExecutableElement> constructors = ElementsUtil.getConstructors( element );
     if ( constructors.size() > 1 )
     {
       final String message =
@@ -117,7 +127,7 @@ public final class ApplicationProcessor
     }
 
     final List<ExecutableElement> methods =
-      ProcessorUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
+      ElementsUtil.getMethods( element, processingEnv.getElementUtils(), processingEnv.getTypeUtils() );
     for ( final ExecutableElement method : methods )
     {
       final AnnotationMirror stage = AnnotationsUtil.findAnnotationByType( method, Constants.GALDR_STAGE_CLASSNAME );
@@ -136,7 +146,7 @@ public final class ApplicationProcessor
   @Nonnull
   private StorageType autoDetectComponentStorage( @Nonnull final TypeElement componentType )
   {
-    final List<VariableElement> fields = ProcessorUtil.getFieldElements( componentType );
+    final List<VariableElement> fields = ElementsUtil.getFields( componentType );
     return fields.isEmpty() ? StorageType.NONE : StorageType.ARRAY;
   }
 

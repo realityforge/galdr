@@ -59,6 +59,7 @@ define 'galdr' do
     project.enable_annotation_processor = true
 
     compile.with :autocommon,
+                 :proton_processor_pack,
                  :javapoet,
                  :guava,
                  :failureaccess,
@@ -81,6 +82,7 @@ define 'galdr' do
       jar.merge(artifact(:guava))
       jar.merge(artifact(:autocommon))
       jar.merge(artifact(:failureaccess))
+      jar.merge(artifact(:proton_processor_pack))
       jar.enhance do |f|
         shaded_jar = (f.to_s + '-shaded')
         Buildr.ant 'shade_jar' do |ant|
@@ -90,6 +92,7 @@ define 'galdr' do
           ant.shade :jar => f.to_s, :uberJar => shaded_jar do
             ant.relocation :pattern => 'com.squareup.javapoet', :shadedPattern => 'galdr.processor.vendor.javapoet'
             ant.relocation :pattern => 'com.google', :shadedPattern => 'galdr.processor.vendor.google'
+            ant.relocation :pattern => 'org.realityforge.proton', :shadedPattern => 'galdr.processor.vendor.proton'
           end
         end
         FileUtils.mv shaded_jar, f.to_s

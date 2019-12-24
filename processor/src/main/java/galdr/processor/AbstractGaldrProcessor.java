@@ -1,6 +1,7 @@
 package galdr.processor;
 
 import javax.annotation.Nonnull;
+import org.realityforge.proton.AbstractStandardProcessor;
 
 abstract class AbstractGaldrProcessor
   extends AbstractStandardProcessor
