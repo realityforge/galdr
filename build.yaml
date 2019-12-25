@@ -29,7 +29,7 @@ artifacts:
   guava: com.google.guava:guava:jar:27.1-jre
   failureaccess: com.google.guava:failureaccess:jar:1.0.1
 
-  proton_processor_pack: org.realityforge.proton:proton-processor-pack:jar:0.04
+  proton_processor_pack: org.realityforge.proton:proton-core:jar:0.06
 
   #test deps
   compile_testing: com.google.testing.compile:compile-testing:jar:0.15
