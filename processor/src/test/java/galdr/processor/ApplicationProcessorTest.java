@@ -132,4 +132,11 @@ public class ApplicationProcessorTest
   {
     return new ApplicationProcessor();
   }
+
+  @Nonnull
+  @Override
+  protected Processor[] additionalProcessors()
+  {
+    return new Processor[]{new SubSystemProcessor()};
+  }
 }
