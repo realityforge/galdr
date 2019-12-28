@@ -1,13 +1,11 @@
 package galdr.processor;
 
-import com.google.testing.compile.JavaSourcesSubjectFactory;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.Processor;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import static com.google.common.truth.Truth.*;
 
 public class SubSystemProcessorTest
   extends AbstractGaldrProcessorTest
@@ -79,38 +77,6 @@ public class SubSystemProcessorTest
   }
 
   @Test
-  public void publicAccessComponentManagerRef()
-  {
-    final String filename =
-      toFilename( "input", "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem" );
-    final String messageFragment =
-      "@ComponentManagerRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessComponentManagerRef()
-  {
-    final String filename =
-      toFilename( "input", "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem" );
-    final String messageFragment =
-      "@ComponentManagerRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
   public void validProtectedAccessComponentManagerRef()
     throws Exception
   {
@@ -137,38 +103,6 @@ public class SubSystemProcessorTest
                   "com.example.component_manager_ref.Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
-  }
-
-  @Test
-  public void publicAccessEntityProcessor()
-  {
-    final String filename =
-      toFilename( "input", "com.example.entity_processor.PublicAccessEntityProcessorSubSystem" );
-    final String messageFragment =
-      "@EntityProcessor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessEntityProcessor()
-  {
-    final String filename =
-      toFilename( "input", "com.example.entity_processor.ProtectedAccessEntityProcessorSubSystem" );
-    final String messageFragment =
-      "@EntityProcessor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
   }
 
   @Test
@@ -201,38 +135,6 @@ public class SubSystemProcessorTest
   }
 
   @Test
-  public void publicAccessNameRef()
-  {
-    final String filename =
-      toFilename( "input", "com.example.name_ref.PublicAccessNameRefSubSystem" );
-    final String messageFragment =
-      "@NameRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessNameRef()
-  {
-    final String filename =
-      toFilename( "input", "com.example.name_ref.ProtectedAccessNameRefSubSystem" );
-    final String messageFragment =
-      "@NameRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
   public void validProtectedAccessNameRef()
     throws Exception
   {
@@ -257,38 +159,6 @@ public class SubSystemProcessorTest
   }
 
   @Test
-  public void publicAccessOnActivate()
-  {
-    final String filename =
-      toFilename( "input", "com.example.on_activate.PublicAccessOnActivateSubSystem" );
-    final String messageFragment =
-      "@OnActivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessOnActivate()
-  {
-    final String filename =
-      toFilename( "input", "com.example.on_activate.ProtectedAccessOnActivateSubSystem" );
-    final String messageFragment =
-      "@OnActivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
   public void validProtectedAccessOnActivate()
     throws Exception
   {
@@ -310,38 +180,6 @@ public class SubSystemProcessorTest
       toFilename( "expected", "com.example.on_activate.Galdr_PublicAccessViaInterfaceOnActivateSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
-  }
-
-  @Test
-  public void publicAccessOnDeactivate()
-  {
-    final String filename =
-      toFilename( "input", "com.example.on_deactivate.PublicAccessOnDeactivateSubSystem" );
-    final String messageFragment =
-      "@OnDeactivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessOnDeactivate()
-  {
-    final String filename =
-      toFilename( "input", "com.example.on_deactivate.ProtectedAccessOnDeactivateSubSystem" );
-    final String messageFragment =
-      "@OnDeactivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
   }
 
   @Test
@@ -372,38 +210,6 @@ public class SubSystemProcessorTest
   }
 
   @Test
-  public void publicAccessProcessor()
-  {
-    final String filename =
-      toFilename( "input", "com.example.processor.PublicAccessProcessorSubSystem" );
-    final String messageFragment =
-      "@Processor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessProcessor()
-  {
-    final String filename =
-      toFilename( "input", "com.example.processor.ProtectedAccessProcessorSubSystem" );
-    final String messageFragment =
-      "@Processor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( filename ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
   public void validProtectedAccessProcessor()
     throws Exception
   {
@@ -428,38 +234,6 @@ public class SubSystemProcessorTest
       toFilename( "expected", "com.example.processor.Galdr_PublicAccessViaInterfaceProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
-  }
-
-  @Test
-  public void publicAccessWorldRef()
-  {
-    final String fileworld =
-      toFilename( "input", "com.example.world_ref.PublicAccessWorldRefSubSystem" );
-    final String messageFragment =
-      "@WorldRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( fileworld ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
-  }
-
-  @Test
-  public void protectedAccessWorldRef()
-  {
-    final String fileworld =
-      toFilename( "input", "com.example.world_ref.ProtectedAccessWorldRefSubSystem" );
-    final String messageFragment =
-      "@WorldRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )";
-    assert_().about( JavaSourcesSubjectFactory.javaSources() ).
-      that( Collections.singletonList( fixture( fileworld ) ) ).
-      withCompilerOptions( "-Xlint:-processing", "-implicit:none" ).
-      processedWith( new SubSystemProcessor() ).
-      compilesWithoutError().
-      withWarningCount( 1 ).
-      withWarningContaining( messageFragment );
   }
 
   @Test
@@ -726,6 +500,53 @@ public class SubSystemProcessorTest
                                  "@WorldRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
 
+  @DataProvider( name = "compileWithWarnings" )
+  public Object[][] compileWithWarnings()
+  {
+    return new Object[][]
+      {
+        new Object[]{ "com.example.component_manager_ref.PublicAccessComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )" },
+        new Object[]{ "com.example.component_manager_ref.ProtectedAccessComponentManagerRefSubSystem",
+                      "@ComponentManagerRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )" },
+
+        new Object[]{ "com.example.entity_processor.PublicAccessEntityProcessorSubSystem",
+                      "@EntityProcessor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )" },
+        new Object[]{ "com.example.entity_processor.ProtectedAccessEntityProcessorSubSystem",
+                      "@EntityProcessor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )" },
+
+        new Object[]{ "com.example.name_ref.PublicAccessNameRefSubSystem",
+                      "@NameRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )" },
+        new Object[]{ "com.example.name_ref.ProtectedAccessNameRefSubSystem",
+                      "@NameRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )" },
+
+        new Object[]{ "com.example.on_activate.PublicAccessOnActivateSubSystem",
+                      "@OnActivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )" },
+        new Object[]{ "com.example.on_activate.ProtectedAccessOnActivateSubSystem",
+                      "@OnActivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )" },
+
+        new Object[]{ "com.example.on_deactivate.PublicAccessOnDeactivateSubSystem",
+                      "@OnDeactivate target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )" },
+        new Object[]{ "com.example.on_deactivate.ProtectedAccessOnDeactivateSubSystem",
+                      "@OnDeactivate target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )" },
+
+        new Object[]{ "com.example.processor.PublicAccessProcessorSubSystem",
+                      "@Processor target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicLifecycleMethod\" )" },
+        new Object[]{ "com.example.processor.ProtectedAccessProcessorSubSystem",
+                      "@Processor target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedLifecycleMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedLifecycleMethod\" )" },
+
+        new Object[]{ "com.example.world_ref.PublicAccessWorldRefSubSystem",
+                      "@WorldRef target should not be public. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:PublicRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:PublicRefMethod\" )" },
+        new Object[]{ "com.example.world_ref.ProtectedAccessWorldRefSubSystem",
+                      "@WorldRef target should not be protected. This warning can be suppressed by annotating the element with @SuppressWarnings( \"Galdr:ProtectedRefMethod\" ) or @SuppressGaldrWarnings( \"Galdr:ProtectedRefMethod\" )" }
+      };
+  }
+
+  @Test( dataProvider = "compileWithWarnings" )
+  public void processCompileWithWarnings( @Nonnull final String classname, @Nonnull final String messageFragment )
+  {
+    assertCompilesWithSingleWarning( classname, messageFragment );
+  }
 
   @DataProvider( name = "compileWithoutWarnings" )
   public Object[][] compileWithoutWarnings()
