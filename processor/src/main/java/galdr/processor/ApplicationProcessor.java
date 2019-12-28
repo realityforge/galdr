@@ -21,7 +21,6 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import org.realityforge.proton.AnnotationsUtil;
 import org.realityforge.proton.ElementsUtil;
-import org.realityforge.proton.GeneratorUtil;
 import org.realityforge.proton.MemberChecks;
 import org.realityforge.proton.ProcessorException;
 
@@ -140,9 +139,7 @@ public final class ApplicationProcessor
       }
     }
 
-    GeneratorUtil.emitJavaType( descriptor.getPackageName(),
-                                Generator.buildApplication( processingEnv, descriptor ),
-                                processingEnv.getFiler() );
+    emitTypeSpec( descriptor.getPackageName(), Generator.buildApplication( processingEnv, descriptor ) );
   }
 
   @Nonnull
