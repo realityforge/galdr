@@ -4,6 +4,7 @@
 
 * Use the `org.realityforge.proton:proton` project for processor utility methods.
 * Include the location of the problem when generating warnings for unnecessary public or protected access on members.
+* Decouple the `processor` artifact from the `com.google.auto:auto-common` dependency and thus the `com.google.guava:guava` dependency. This significantly reduces the build time for the processor and the size of the processor artifact.
 
 ### [v0.02](https://github.com/realityforge/galdr/tree/v0.02) (2019-11-30)
 [Full Changelog](https://github.com/realityforge/galdr/compare/v0.01...v0.02)

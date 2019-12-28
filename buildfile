@@ -58,14 +58,13 @@ define 'galdr' do
 
     project.enable_annotation_processor = true
 
-    compile.with :autocommon,
-                 :proton_core,
+    compile.with :proton_core,
                  :javapoet,
-                 :guava,
-                 :failureaccess,
                  :javax_annotation
 
     test.with :compile_testing,
+              :guava,
+              :failureaccess,
               :proton_qa,
               :junit,
               :hamcrest_core,
@@ -80,9 +79,6 @@ define 'galdr' do
 
     package(:jar).enhance do |jar|
       jar.merge(artifact(:javapoet))
-      jar.merge(artifact(:guava))
-      jar.merge(artifact(:autocommon))
-      jar.merge(artifact(:failureaccess))
       jar.merge(artifact(:proton_core))
       jar.enhance do |f|
         shaded_jar = (f.to_s + '-shaded')
@@ -92,7 +88,6 @@ define 'galdr' do
           ant.taskdef :name => 'shade', :classname => 'org.realityforge.ant.shade.Shade', :classpath => artifact.to_s
           ant.shade :jar => f.to_s, :uberJar => shaded_jar do
             ant.relocation :pattern => 'com.squareup.javapoet', :shadedPattern => 'galdr.processor.vendor.javapoet'
-            ant.relocation :pattern => 'com.google', :shadedPattern => 'galdr.processor.vendor.google'
             ant.relocation :pattern => 'org.realityforge.proton', :shadedPattern => 'galdr.processor.vendor.proton'
           end
         end
