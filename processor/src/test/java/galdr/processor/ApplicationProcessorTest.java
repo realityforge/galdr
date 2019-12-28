@@ -119,6 +119,34 @@ public class ApplicationProcessorTest
     assertFailedCompile( classname, errorMessageFragment );
   }
 
+  @DataProvider( name = "compileWithWarnings" )
+  public Object[][] compileWithWarnings()
+  {
+    return new Object[][]
+      {
+      };
+  }
+
+  @Test( dataProvider = "compileWithWarnings" )
+  public void processCompileWithWarnings( @Nonnull final String classname, @Nonnull final String messageFragment )
+  {
+    assertCompilesWithSingleWarning( classname, messageFragment );
+  }
+
+  @DataProvider( name = "compileWithoutWarnings" )
+  public Object[][] compileWithoutWarnings()
+  {
+    return new Object[][]
+      {
+      };
+  }
+
+  @Test( dataProvider = "compileWithoutWarnings" )
+  public void processCompileWithoutWarnings( @Nonnull final String classname )
+  {
+    assertCompilesWithoutWarnings( classname );
+  }
+
   @Nonnull
   @Override
   protected String getFixtureKeyPart()
