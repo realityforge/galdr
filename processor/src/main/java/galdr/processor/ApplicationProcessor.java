@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationMirror;
@@ -29,6 +30,7 @@ import org.realityforge.proton.ProcessorException;
  */
 @SupportedAnnotationTypes( Constants.GALDR_APPLICATION_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
+@SupportedOptions( { "galdr.defer.unresolved", "galdr.defer.errors" } )
 public final class ApplicationProcessor
   extends AbstractGaldrProcessor
 {
