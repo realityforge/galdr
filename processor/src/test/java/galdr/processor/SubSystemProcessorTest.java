@@ -74,7 +74,7 @@ public class SubSystemProcessorTest
   public void staticInnerClassSubSystem()
     throws Exception
   {
-    assertSuccessfulCompile( "com.example.StaticInnerClassSubSystemit ",
+    assertSuccessfulCompile( "com.example.StaticInnerClassSubSystem",
                              "expected/com/example/StaticInnerClassSubSystem_Galdr_Foo.java" );
   }
 
