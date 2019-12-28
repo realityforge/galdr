@@ -4,12 +4,13 @@ import com.google.testing.compile.JavaSourcesSubjectFactory;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Processor;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static com.google.common.truth.Truth.*;
 
 public class SubSystemProcessorTest
-  extends AbstractProcessorTest
+  extends AbstractGaldrProcessorTest
 {
   @DataProvider( name = "successfulCompiles" )
   public Object[][] successfulCompiles()
@@ -101,7 +102,7 @@ public class SubSystemProcessorTest
   public void staticInnerClassSubSystem()
     throws Exception
   {
-    assertSuccessfulCompile( "input/com/example/StaticInnerClassSubSystem.java",
+    assertSuccessfulCompile( "com.example.StaticInnerClassSubSystemit ",
                              "expected/com/example/StaticInnerClassSubSystem_Galdr_Foo.java" );
   }
 
@@ -755,8 +756,15 @@ public class SubSystemProcessorTest
 
   @Nonnull
   @Override
-  ProcessorType processorType()
+  protected String getFixtureKeyPart()
   {
-    return ProcessorType.SUBSYSTEM;
+    return ".subsystem";
+  }
+
+  @Nonnull
+  @Override
+  protected Processor processor()
+  {
+    return new SubSystemProcessor();
   }
 }

@@ -3,11 +3,12 @@ package galdr.processor;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Processor;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ApplicationProcessorTest
-  extends AbstractProcessorTest
+  extends AbstractGaldrProcessorTest
 {
   @DataProvider( name = "successfulCompiles" )
   public Object[][] successfulCompiles()
@@ -45,7 +46,7 @@ public class ApplicationProcessorTest
   public void staticInnerClassApplication()
     throws Exception
   {
-    assertSuccessfulCompile( "input/com/example/StaticInnerClassApplication.java",
+    assertSuccessfulCompile( "com.example.StaticInnerClassApplication",
                              "expected/com/example/StaticInnerClassApplication_Galdr_BasicApplication.java" );
   }
 
@@ -120,8 +121,15 @@ public class ApplicationProcessorTest
 
   @Nonnull
   @Override
-  ProcessorType processorType()
+  protected String getFixtureKeyPart()
   {
-    return ProcessorType.APPLICATION;
+    return ".application";
+  }
+
+  @Nonnull
+  @Override
+  protected Processor processor()
+  {
+    return new ApplicationProcessor();
   }
 }
