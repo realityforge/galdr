@@ -21,10 +21,6 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.component_manager_ref.MultiComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.MultiSameComponentManagerRefSubSystem" },
         new Object[]{ "com.example.component_manager_ref.PackageAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.Suppressed1PublicAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.Suppressed1ProtectedAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
-        new Object[]{ "com.example.component_manager_ref.Suppressed2ProtectedAccessComponentManagerRefSubSystem" },
 
         new Object[]{ "com.example.entity_processor.BasicEntityProcessorSubSystem" },
         new Object[]{ "com.example.entity_processor.ComplexAreaOfInterest1EntityProcessorSubSystem" },
@@ -34,10 +30,6 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.entity_processor.DeltaParameterEntityProcessorSubSystem" },
         new Object[]{ "com.example.entity_processor.MultiEntityProcessorSubSystem" },
         new Object[]{ "com.example.entity_processor.PackageAccessEntityProcessorSubSystem" },
-        new Object[]{ "com.example.entity_processor.Suppressed1PublicAccessEntityProcessorSubSystem" },
-        new Object[]{ "com.example.entity_processor.Suppressed1ProtectedAccessEntityProcessorSubSystem" },
-        new Object[]{ "com.example.entity_processor.Suppressed2PublicAccessEntityProcessorSubSystem" },
-        new Object[]{ "com.example.entity_processor.Suppressed2ProtectedAccessEntityProcessorSubSystem" },
 
         new Object[]{ "com.example.ctor.PackageAccessCtorSubSystem" },
         new Object[]{ "com.example.ctor.PublicAccessCtorSubSystem" },
@@ -45,43 +37,23 @@ public class SubSystemProcessorTest
         new Object[]{ "com.example.name_ref.BasicNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.MultiNameRefSubSystem" },
         new Object[]{ "com.example.name_ref.PackageAccessNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.Suppressed1PublicAccessNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.Suppressed1ProtectedAccessNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.Suppressed2PublicAccessNameRefSubSystem" },
-        new Object[]{ "com.example.name_ref.Suppressed2ProtectedAccessNameRefSubSystem" },
 
         new Object[]{ "com.example.on_activate.BasicOnActivateSubSystem" },
         new Object[]{ "com.example.on_activate.MultiOnActivateSubSystem" },
         new Object[]{ "com.example.on_activate.PackageAccessOnActivateSubSystem" },
-        new Object[]{ "com.example.on_activate.Suppressed1PublicAccessOnActivateSubSystem" },
-        new Object[]{ "com.example.on_activate.Suppressed1ProtectedAccessOnActivateSubSystem" },
-        new Object[]{ "com.example.on_activate.Suppressed2PublicAccessOnActivateSubSystem" },
-        new Object[]{ "com.example.on_activate.Suppressed2ProtectedAccessOnActivateSubSystem" },
 
         new Object[]{ "com.example.on_deactivate.BasicOnDeactivateSubSystem" },
         new Object[]{ "com.example.on_deactivate.MultiOnDeactivateSubSystem" },
         new Object[]{ "com.example.on_deactivate.PackageAccessOnDeactivateSubSystem" },
-        new Object[]{ "com.example.on_deactivate.Suppressed1PublicAccessOnDeactivateSubSystem" },
-        new Object[]{ "com.example.on_deactivate.Suppressed1ProtectedAccessOnDeactivateSubSystem" },
-        new Object[]{ "com.example.on_deactivate.Suppressed2PublicAccessOnDeactivateSubSystem" },
-        new Object[]{ "com.example.on_deactivate.Suppressed2ProtectedAccessOnDeactivateSubSystem" },
 
         new Object[]{ "com.example.processor.BasicProcessorSubSystem" },
         new Object[]{ "com.example.processor.MultiProcessorSubSystem" },
         new Object[]{ "com.example.processor.PackageAccessProcessorSubSystem" },
         new Object[]{ "com.example.processor.ParameterizedProcessorSubSystem" },
-        new Object[]{ "com.example.processor.Suppressed1PublicAccessProcessorSubSystem" },
-        new Object[]{ "com.example.processor.Suppressed1ProtectedAccessProcessorSubSystem" },
-        new Object[]{ "com.example.processor.Suppressed2PublicAccessProcessorSubSystem" },
-        new Object[]{ "com.example.processor.Suppressed2ProtectedAccessProcessorSubSystem" },
 
         new Object[]{ "com.example.world_ref.BasicWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.MultiWorldRefSubSystem" },
         new Object[]{ "com.example.world_ref.PackageAccessWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
-        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
 
         new Object[]{ "com.example.BasicSubSystem" },
         new Object[]{ "com.example.CompleteSubSystem" },
@@ -752,6 +724,55 @@ public class SubSystemProcessorTest
     final String input2 = toFilename( "bad_input", "com.example.world_ref.other.BaseUnreachableWorldRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@WorldRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
+  }
+
+
+  @DataProvider( name = "compileWithoutWarnings" )
+  public Object[][] compileWithoutWarnings()
+  {
+    return new Object[][]
+      {
+        new Object[]{ "com.example.component_manager_ref.Suppressed1PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed1ProtectedAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed2PublicAccessComponentManagerRefSubSystem" },
+        new Object[]{ "com.example.component_manager_ref.Suppressed2ProtectedAccessComponentManagerRefSubSystem" },
+
+        new Object[]{ "com.example.entity_processor.Suppressed1PublicAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed1ProtectedAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed2PublicAccessEntityProcessorSubSystem" },
+        new Object[]{ "com.example.entity_processor.Suppressed2ProtectedAccessEntityProcessorSubSystem" },
+
+        new Object[]{ "com.example.name_ref.Suppressed1PublicAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed1ProtectedAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed2PublicAccessNameRefSubSystem" },
+        new Object[]{ "com.example.name_ref.Suppressed2ProtectedAccessNameRefSubSystem" },
+
+        new Object[]{ "com.example.on_activate.Suppressed1PublicAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed1ProtectedAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed2PublicAccessOnActivateSubSystem" },
+        new Object[]{ "com.example.on_activate.Suppressed2ProtectedAccessOnActivateSubSystem" },
+
+        new Object[]{ "com.example.on_deactivate.Suppressed1PublicAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed1ProtectedAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed2PublicAccessOnDeactivateSubSystem" },
+        new Object[]{ "com.example.on_deactivate.Suppressed2ProtectedAccessOnDeactivateSubSystem" },
+
+        new Object[]{ "com.example.processor.Suppressed1PublicAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed1ProtectedAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed2PublicAccessProcessorSubSystem" },
+        new Object[]{ "com.example.processor.Suppressed2ProtectedAccessProcessorSubSystem" },
+
+        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed1ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" },
+        new Object[]{ "com.example.world_ref.Suppressed2ProtectedAccessWorldRefSubSystem" }
+      };
+  }
+
+  @Test( dataProvider = "compileWithoutWarnings" )
+  public void processCompileWithoutWarnings( @Nonnull final String classname )
+  {
+    assertCompilesWithoutWarnings( classname );
   }
 
   @Nonnull
