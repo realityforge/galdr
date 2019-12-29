@@ -50,6 +50,8 @@ complete as there is too much un-said.
   are allocated/removed. These events would remain in production applications and thus able to perform application
   logic, unlike spy events that would be optimized out in production environments. Also add application events for
   when a entity attaches to a collection or is removed from a collection.
+  - This would essentially be callbacks on processors. This would also allows to do incremental changes so that
+    `@EntityProcessor` could only be called with added entities.
 
 * Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
   picked up by a processor later in the stage which applies the work items. The later processor could also filter,
