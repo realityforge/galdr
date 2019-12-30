@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* Upgrade the `org.realityforge.proton` artifact to version `0.09`.
+
 ### [v0.03](https://github.com/realityforge/galdr/tree/v0.03) (2019-12-29)
 [Full Changelog](https://github.com/realityforge/galdr/compare/v0.02...v0.03)
 

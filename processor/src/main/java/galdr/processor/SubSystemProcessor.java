@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,17 +38,17 @@ public final class SubSystemProcessor
   extends AbstractGaldrProcessor
 {
   @SuppressWarnings( "unchecked" )
-  @Nonnull
   @Override
-  protected Set<TypeElement> getTypeElementsToProcess( @Nonnull final RoundEnvironment env )
+  public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
-    final TypeElement annotation =
-      processingEnv.getElementUtils().getTypeElement( Constants.SUB_SYSTEM_CLASSNAME );
-    return (Set<TypeElement>) env.getElementsAnnotatedWith( annotation );
+    final TypeElement annotation = processingEnv.getElementUtils().getTypeElement( Constants.SUB_SYSTEM_CLASSNAME );
+    final Collection<TypeElement> elementsTo = (Collection<TypeElement>) env.getElementsAnnotatedWith( annotation );
+    processTypeElements( env, elementsTo, this::process );
+    errorIfProcessingOverAndInvalidTypesDetected( env );
+    return true;
   }
 
-  @Override
-  protected final void process( @Nonnull final TypeElement element )
+  private void process( @Nonnull final TypeElement element )
     throws IOException, ProcessorException
   {
     if ( ElementKind.CLASS != element.getKind() )

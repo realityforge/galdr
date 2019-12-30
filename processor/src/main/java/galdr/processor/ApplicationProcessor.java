@@ -3,6 +3,7 @@ package galdr.processor;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -34,17 +35,18 @@ public final class ApplicationProcessor
   extends AbstractGaldrProcessor
 {
   @SuppressWarnings( "unchecked" )
-  @Nonnull
   @Override
-  protected Set<TypeElement> getTypeElementsToProcess( @Nonnull final RoundEnvironment env )
+  public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
     final TypeElement annotation =
       processingEnv.getElementUtils().getTypeElement( Constants.GALDR_APPLICATION_CLASSNAME );
-    return (Set<TypeElement>) env.getElementsAnnotatedWith( annotation );
+    final Collection<TypeElement> elements = (Collection<TypeElement>) env.getElementsAnnotatedWith( annotation );
+    processTypeElements( env, elements, this::process );
+    errorIfProcessingOverAndInvalidTypesDetected( env );
+    return true;
   }
 
-  @Override
-  protected final void process( @Nonnull final TypeElement element )
+  private void process( @Nonnull final TypeElement element )
     throws IOException, ProcessorException
   {
     if ( ElementKind.CLASS != element.getKind() )
