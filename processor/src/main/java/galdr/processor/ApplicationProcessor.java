@@ -16,7 +16,6 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
@@ -58,7 +57,7 @@ public final class ApplicationProcessor
       throw new ProcessorException( MemberChecks.must( Constants.GALDR_APPLICATION_CLASSNAME, "be abstract" ),
                                     element );
     }
-    else if ( NestingKind.TOP_LEVEL != element.getNestingKind() && !element.getModifiers().contains( Modifier.STATIC ) )
+    else if ( ElementsUtil.isNonStaticNestedClass( element ) )
     {
       final String message =
         MemberChecks.mustNot( Constants.GALDR_APPLICATION_CLASSNAME, "be a non-static nested class" );

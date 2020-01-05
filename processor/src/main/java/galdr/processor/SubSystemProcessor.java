@@ -18,7 +18,6 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
@@ -59,7 +58,7 @@ public final class SubSystemProcessor
     {
       throw new ProcessorException( MemberChecks.must( Constants.SUB_SYSTEM_CLASSNAME, "be abstract" ), element );
     }
-    else if ( NestingKind.TOP_LEVEL != element.getNestingKind() && !element.getModifiers().contains( Modifier.STATIC ) )
+    else if ( ElementsUtil.isNonStaticNestedClass( element ) )
     {
       final String message = MemberChecks.mustNot( Constants.SUB_SYSTEM_CLASSNAME, "be a non-static nested class" );
       throw new ProcessorException( message, element );
