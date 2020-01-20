@@ -3,7 +3,7 @@
 ### Unreleased
 
 * Upgrade the `com.squareup` artifact to version `1.12.0`.
-* Upgrade the `org.realityforge.proton` artifacts to version `0.16`.
+* Upgrade the `org.realityforge.proton` artifacts to version `0.17`.
 * Upgrade the `org.realityforge.proton` artifact to version `0.11`.
 
 ### [v0.03](https://github.com/realityforge/galdr/tree/v0.03) (2019-12-29)
