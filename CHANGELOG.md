@@ -6,7 +6,7 @@
 * Upgrade the `com.google.truth` artifact to version `0.44`.
 * Upgrade the `com.google.testing.compile` artifact to version `0.18`.
 * Upgrade the `com.squareup` artifact to version `1.12.0`.
-* Upgrade the `org.realityforge.proton` artifacts to version `0.25`.
+* Upgrade the `org.realityforge.proton` artifacts to version `0.26`.
 * Upgrade the `org.realityforge.proton` artifact to version `0.11`.
 
 ### [v0.03](https://github.com/realityforge/galdr/tree/v0.03) (2019-12-29)
