@@ -31,6 +31,8 @@ complete as there is too much un-said.
   same mechanisms used to serialize world state so that both are optimized together. It should also be noted that
   the templates may be loaded from data files or they could be created in-code. However they should be relatively
   efficient to represent regardless of how they are used from the application.
+  - `EntityPlan` == object structure and relationships between `Entity` instances
+  - `Prefab` or `Assemblage` = `EntityPlan` + `default values` (See [http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript](http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript))
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
