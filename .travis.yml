@@ -6,6 +6,7 @@ jdk:
 rvm:
   - 2.3.1
 install:
+  - rvm install ruby-2.3.1
   - rvm use 2.3.1
   - gem install bundler
   - bundle install
