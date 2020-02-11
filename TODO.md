@@ -50,6 +50,8 @@ complete as there is too much un-said.
     `entityId` => `index` map.
   - A [FlatBuffers](https://google.github.io/flatbuffers/index.html) based implementation for cache friendly
     access patterns.
+  - A variable-sized, stretchy buffer component. Each component instance has a capacity that can be changed over
+    time. Useful when need an array of floats for a mesh etc.
   - Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html
 
 * Change the strategy for iteration over `Entity` instances in an `EntityCollection` so that they can be based
