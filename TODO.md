@@ -56,6 +56,11 @@ complete as there is too much un-said.
   on the `"primary"` component. This would allow `FlatBuffers` and `LookupAndArray` `ComponentManager`
   implementations to optimize cache access patterns.
 
+* Another strategy for scheduling entities is based on "shared components". So some component types would be
+  references to shared assets (like a mesh or a texture). Components that share the assets could be scheduled
+  together. The component could also be shared between components on component state impacts all components.
+  However in this scenario the component state is often immutable.
+
 * Consider adding application-level (i.e. non-spy) events when Entities are created/disposed and when components
   are allocated/removed. These events would remain in production applications and thus able to perform application
   logic, unlike spy events that would be optimized out in production environments. Also add application events for
