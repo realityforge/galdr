@@ -82,6 +82,16 @@ complete as there is too much un-said.
   run when they are able time (i.e. idleTime processors like in browsers) while others care about the delta between
   the current time and next time (render/physics/etc). Should we build in any support for these sorts of systems.
 
+* A lot of different ECS systems have different mechanisms for increasing locality of data access when scheduling
+  entities.
+  - We can increase locality by allocating every entity with the same set of components in one block. And then
+    scheduling processing within systems so that entities are processed in order they appear in each block, one
+    block after another.
+  - Rather than allocating all components in a block we could instead just allocate a cluster of components
+    together if they are usually accessed together.
+  - We could also move to processing a single component at a time but schedule the entity according to the
+    entities that contain that component.
+
 * Replace `BitSet` with equivalent variant that is more optimized for our use-case?
   - a fixed size `BitSet` implementation that implements `hashCode()` and `equals()` and `toString()` as a
     binary bit string ala `00010101001` (if size low enough) or a ordered flag set `(1, 4, 6, 33)` if size is
