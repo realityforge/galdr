@@ -110,7 +110,8 @@ complete as there is too much un-said.
   but in the future they may instead be views into underlying linear arrays (As provided by toolkits such as
   [FlatBuffers](https://google.github.io/flatbuffers/index.html)). There may also be separation between a
   read-only view and a read-write view and the toolkit could use annotation processors to compile away the
-  differences.
+  differences. In an ideal world we could also mark components as not being able to hold references to normal
+  garbage collectable values. In this case we could even guarantee access allowed from multiple workers etc.
 
 * Change `@ComponentManagerRef` infrastructure so that it is possible to determine whether the `SubSystem`
   wants read-only or read-write access to `Component` instances based on the type parameter. This ultimately
