@@ -63,6 +63,12 @@ complete as there is too much un-said.
   - This would essentially be callbacks on processors. This would also allows to do incremental changes so that
     `@EntityProcessor` could only be called with added entities.
 
+* Some useful operations that may want to support when using the toolkit.
+  - `createMultipleEntities()` create N entities given an input `EntityPlan`/`Archetype`
+  - `cloneMultipleEntities()` clone N entities given an input Entity instance. The components from that entity are
+    copied to all the clones including all the data.
+  - `cloneEntity()` create a new entity with all the component types and component data from an existing Entity.
+
 * Some ECS systems have a mechanism for deferring work in a stage. So zero or more processors queue work that is
   picked up by a processor later in the stage which applies the work items. The later processor could also filter,
   drop, reorder or modify the work items as it sees fit, potentially spreading the work over several invocations
