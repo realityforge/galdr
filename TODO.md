@@ -125,6 +125,8 @@ We should investigate other ECS systems in other languages and with other design
 for web platform where there will be different `World` instances, some of which are turn based and some of which
 are "realtime". Inspiration from other frameworks could help move it forward.
 
+* [Ecsy](https://blog.mozvr.com/introducing-ecsy/) an ECS for the web.
+
 * A [Rust ECS](https://www.youtube.com/watch?v=SofC6c9xQv4) talk. It is very interesting as it explicitly calls
   out the different `ComponentStore` implementations for different performance characteristics.
 
