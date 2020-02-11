@@ -34,6 +34,9 @@ complete as there is too much un-said.
   - `EntityPlan` == object structure and relationships between `Entity` instances
   - `Prefab` or `Assemblage` = `EntityPlan` + `default values` (See [http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript](http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript))
 
+* An `Archetype` is actually a description of an `Entity` and the set of components it must have. It has more inline
+  with the normal
+
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
   - `CopyOnWrite` implementation that uses a global shared component instance until write occurs.  This may be
