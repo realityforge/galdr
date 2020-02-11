@@ -35,7 +35,12 @@ complete as there is too much un-said.
   - `Prefab` or `Assemblage` = `EntityPlan` + `default values` (See [http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript](http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript))
 
 * An `Archetype` is actually a description of an `Entity` and the set of components it must have. It has more inline
-  with the normal
+  with the normal definition of archetypes. Some ECS systems also maintain a list of all the different archetypes in
+  the world. Rather than arranging memory layout in components, you layout memory so that all entities with the
+  same archetype are grouped together. It is unclear where the performance benefit is for this other than some
+  components are always accessed together and benefit from locality. (The question is why not make this a single
+  component ... and answer is that maybe it feels like should be different. Maybe we could have subviews of
+  components to support this use case.)
 
 * Add additional `ComponentManager` implementations.
   - `Lazy` implementation that does not allocate the component instance until it is first accessed.
