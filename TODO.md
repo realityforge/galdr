@@ -106,7 +106,9 @@ complete as there is too much un-said.
 
 * Change `@ComponentManagerRef` infrastructure so that it is possible to determine whether the `SubSystem`
   wants read-only or read-write access to `Component` instances based on the type parameter. This ultimately
-  requires difference interfaces for read-only and read-write of a single component type.
+  requires difference interfaces for read-only and read-write of a single component type. (This seems to be the
+  way forward. Generating a `FooView` for every `Foo` component will give us mechanisms for representing
+  read-only views while still being able to optimize away at compile time the overhead)
 
 * Once we can determine the type of access required by a `SubSystem`, the framework may be able to operate in
   parallel or concurrently if `Component` types do not overlap or the `SubSystem` instances only need to read
