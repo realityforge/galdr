@@ -119,6 +119,9 @@ complete as there is too much un-said.
 * A `SubSystem` may declare that they are interested in 0 or more event types. The `SubSystem` will react and
   to events when they occur. See the "event" design for further details.
 
+* NOTE: Some other frameworks use the term `Query` or `Matcher` for the `AreaOfInterest`. Asses whether these
+  are better terms.
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
