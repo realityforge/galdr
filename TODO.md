@@ -54,6 +54,13 @@ complete as there is too much un-said.
     time. Useful when need an array of floats for a mesh etc.
   - Review other storage strategies - See https://slide-rs.github.io/specs/05_storages.html
 
+* Consider adding `GaldrSubSystem.processBefore=[]` and `GaldrSubSystem.processAfter=[]` so can order
+  subsystems in a stage without explicit ordering. But if we are doing that then we should also do the
+  add `GaldrSubSystem.addToStages=[]`... which seems suboptimal. Maybe `GaldrSubSystem.mustBeBefore=[]`
+  style parameters that declare requirements that are checked by annotation processor may be a better
+  approach. We could also do things like `GaldrSubSystem.afterComponentUpdates=[]` to specify that processor
+  expects that writes to a component be completed by the time it runs.
+
 * Change the strategy for iteration over `Entity` instances in an `EntityCollection` so that they can be based
   on the `"primary"` component. This would allow `FlatBuffers` and `LookupAndArray` `ComponentManager`
   implementations to optimize cache access patterns.
@@ -153,8 +160,20 @@ complete as there is too much un-said.
 * A `SubSystem` may declare that they are interested in 0 or more event types. The `SubSystem` will react and
   to events when they occur. See the "event" design for further details.
 
+* Is `@OnActivate` called when a processor transitions to a non-empty entity collection or on construction? Should
+  we have different annotations for processor setup/shutdown (i.e. `@PostConstruct` and `@PreDestroy`) versus
+  transitioning from 0 entities -> non-zero entities and vice cersae (i.e. `@OnActivate` and `@OnDeactivate`)
+
 * NOTE: Some other frameworks use the term `Query` or `Matcher` for the `AreaOfInterest`. Asses whether these
   are better terms.
+
+* If we ever decide to go multi-threaded either within a processor or between processors or between stages then
+  we will need to figure out a way to batch entities to process into a buffer and send them to the separate
+  thread. These command buffers will effectively get read-locks on any components that the processor expects to
+  read from and write locks from any components that will be written to and it is up to the scheduler to make
+  sure they can never collide when entity ids are passed to the workers. It may still be possible for the workers
+  to aquire additional locks if they are following links but the code will need to guard that if it is likely to
+  be a problem.
 
 ### Other ECS Systems
 
