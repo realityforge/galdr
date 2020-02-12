@@ -164,9 +164,6 @@ complete as there is too much un-said.
   we have different annotations for processor setup/shutdown (i.e. `@PostConstruct` and `@PreDestroy`) versus
   transitioning from 0 entities -> non-zero entities and vice cersae (i.e. `@OnActivate` and `@OnDeactivate`)
 
-* NOTE: Some other frameworks use the term `Query` or `Matcher` for the `AreaOfInterest`. Asses whether these
-  are better terms.
-
 * If we ever decide to go multi-threaded either within a processor or between processors or between stages then
   we will need to figure out a way to batch entities to process into a buffer and send them to the separate
   thread. These command buffers will effectively get read-locks on any components that the processor expects to

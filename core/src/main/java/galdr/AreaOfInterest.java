@@ -14,6 +14,9 @@ import static org.realityforge.braincheck.Guards.*;
  * <p>The AreaOfInterest is used by the {@link Subscription} class to define which {@link galdr.Entity}
  * instances that are part of the subscription and is primarily used by the subsystems to select entities
  * for processing.</p>
+ *
+ * <p>It should be noted that different ECS frameworks use different terms for this concept that may be more
+ * familiar. Some other terms in use include: `Query`, `Aspect` and `Matcher`.</p>
  */
 public final class AreaOfInterest
 {
