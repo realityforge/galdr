@@ -6,7 +6,7 @@
 * Upgrade the `com.google.truth` artifact to version `0.45`.
 * Upgrade the `com.google.testing.compile` artifact to version `0.18-rf`.
 * Upgrade the `com.squareup` artifact to version `1.12.0`.
-* Upgrade the `org.realityforge.proton` artifacts to version `0.38`.
+* Upgrade the `org.realityforge.proton` artifacts to version `0.39`.
 * Add the `galdr.debug` annotation option to help debug annotation processing.
 
 ### [v0.03](https://github.com/realityforge/galdr/tree/v0.03) (2019-12-29)
