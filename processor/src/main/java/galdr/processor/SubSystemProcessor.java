@@ -32,7 +32,7 @@ import org.realityforge.proton.ProcessorException;
  */
 @SupportedAnnotationTypes( Constants.SUB_SYSTEM_CLASSNAME )
 @SupportedSourceVersion( SourceVersion.RELEASE_8 )
-@SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved" } )
+@SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved", "galdr.debug" } )
 public final class SubSystemProcessor
   extends AbstractGaldrProcessor
 {
