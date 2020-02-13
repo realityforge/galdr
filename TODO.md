@@ -212,3 +212,10 @@ are "realtime". Inspiration from other frameworks could help move it forward.
   the aspects of a `Behaviour` and a `Facet`. Each tick an Entity will process all received events either directly
   or via facets and then process all other state updates via behaviours. (FWIW it is useful to think of `Behaviour`
   as letting entity interact with the world and the `Facet` which lets whe world interact with our entity.)
+
+* [Unity ECS](https://docs.unity3d.com/Packages/com.unity.entities@0.1/manual/index.html) is integrated into their
+  game engine and is primarily focused on performance and efficiency. So rather than co-locating all components
+  together, the toolkit co-locates entities that have the same components together. Hence an archetype is not
+  just a design or programmer affordance but is integral to how the engine optimizes code as all entities with the
+  same archetype are colocated. Archetypes are allocated to 16kb Chunks. If an entity adds a component then it's
+  archetype changes and it is migrated to a different chunk.
