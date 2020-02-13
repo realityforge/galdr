@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +22,7 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import org.realityforge.proton.AnnotationsUtil;
+import org.realityforge.proton.DeferredElementSet;
 import org.realityforge.proton.ElementsUtil;
 import org.realityforge.proton.MemberChecks;
 import org.realityforge.proton.ProcessorException;
@@ -36,13 +36,13 @@ import org.realityforge.proton.ProcessorException;
 public final class SubSystemProcessor
   extends AbstractGaldrProcessor
 {
-  @SuppressWarnings( "unchecked" )
+  @Nonnull
+  private final DeferredElementSet _deferredTypes = new DeferredElementSet();
+
   @Override
   public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
-    final TypeElement annotation = processingEnv.getElementUtils().getTypeElement( Constants.SUB_SYSTEM_CLASSNAME );
-    final Collection<TypeElement> elementsTo = (Collection<TypeElement>) env.getElementsAnnotatedWith( annotation );
-    processTypeElements( env, elementsTo, this::process );
+    processTypeElements( annotations, env, Constants.SUB_SYSTEM_CLASSNAME, _deferredTypes, this::process );
     errorIfProcessingOverAndInvalidTypesDetected( env );
     return true;
   }
@@ -342,7 +342,7 @@ public final class SubSystemProcessor
   private String deriveName( @Nonnull final TypeElement element, @Nonnull final AnnotationMirror annotation )
     throws ProcessorException
   {
-    final String name = AnnotationsUtil.getAnnotationValue( annotation, "name" );
+    final String name = AnnotationsUtil.getAnnotationValueValue( annotation, "name" );
     return Constants.SENTINEL_NAME.equals( name ) ? element.getSimpleName().toString() : name;
   }
 }

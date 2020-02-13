@@ -3,7 +3,6 @@ package galdr.processor;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -20,6 +19,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 import org.realityforge.proton.AnnotationsUtil;
+import org.realityforge.proton.DeferredElementSet;
 import org.realityforge.proton.ElementsUtil;
 import org.realityforge.proton.MemberChecks;
 import org.realityforge.proton.ProcessorException;
@@ -33,14 +33,13 @@ import org.realityforge.proton.ProcessorException;
 public final class ApplicationProcessor
   extends AbstractGaldrProcessor
 {
-  @SuppressWarnings( "unchecked" )
+  @Nonnull
+  private final DeferredElementSet _deferredTypes = new DeferredElementSet();
+
   @Override
   public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
-    final TypeElement annotation =
-      processingEnv.getElementUtils().getTypeElement( Constants.GALDR_APPLICATION_CLASSNAME );
-    final Collection<TypeElement> elements = (Collection<TypeElement>) env.getElementsAnnotatedWith( annotation );
-    processTypeElements( env, elements, this::process );
+    processTypeElements( annotations, env, Constants.GALDR_APPLICATION_CLASSNAME, _deferredTypes, this::process );
     errorIfProcessingOverAndInvalidTypesDetected( env );
     return true;
   }
