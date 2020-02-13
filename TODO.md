@@ -19,7 +19,8 @@ complete as there is too much un-said.
   into all `AreaOfInterest` unless `includeDefault=false`. This would allow you to do things like add
   `exclude=Disabled.class` to exclude disabled entities. It seems likely that the Component layer is the best place to
   layer this functionality by adding the `@GaldrApplication.defaultExclude` parameter and the
-  `@GaldrSubSystem.includeDefault` parameter.
+  `@GaldrSubSystem.includeDefault` parameter. The `default` will also include the tag component `Archetype`
+  which is used to describe entities that to be used as templates for creating other entities.
 
 * Consider creation of some higher level `EntityPlan` (or `Archetype`, `Plan`, `Blueprint`, `Prefab` `Template`)
   classes that act as a stamp that creates the structure of 1 or more `Entity` instances with specific `Component`
