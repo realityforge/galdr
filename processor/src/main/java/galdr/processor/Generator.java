@@ -35,8 +35,6 @@ final class Generator
   private static final ClassName ON_ACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnActivateFn" );
   private static final ClassName ON_DEACTIVATE_FN_CLASSNAME = ClassName.get( "galdr.internal", "OnDeactivateFn" );
   private static final ClassName PROCESSOR_FN_CLASSNAME = ClassName.get( "galdr", "SubSystem" );
-  private static final ClassName NONNULL_CLASSNAME = ClassName.get( "javax.annotation", "Nonnull" );
-  private static final ClassName NULLABLE_CLASSNAME = ClassName.get( "javax.annotation", "Nullable" );
   private static final String FRAMEWORK_INTERNAL_PREFIX = "$galdr$_";
   private static final String FRAMEWORK_COMPONENT_PREFIX = "$galdrc$_";
   private static final String FRAMEWORK_SUBSCRIPTION_PREFIX = "$galdrs$_";
@@ -77,7 +75,7 @@ final class Generator
     {
       builder.addField( FieldSpec
                           .builder( STAGE_CLASSNAME, "_" + stage.getName(), Modifier.FINAL, Modifier.PRIVATE )
-                          .addAnnotation( NONNULL_CLASSNAME )
+                          .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                           .build() );
     }
   }
@@ -144,7 +142,7 @@ final class Generator
     for ( final StageDescriptor stage : descriptor.getStages() )
     {
       final MethodSpec.Builder method = MethodSpec.overriding( stage.getMethod() );
-      method.addAnnotation( NONNULL_CLASSNAME );
+      method.addAnnotation( GeneratorUtil.NONNULL_CLASSNAME );
       method.addStatement( "return $N", "_" + stage.getName() );
       builder.addMethod( method.build() );
     }
@@ -162,12 +160,12 @@ final class Generator
     final ClassName enhancedSubSystem = ClassName.bestGuess( "EnhancedSubSystem" );
     builder.addField( FieldSpec
                         .builder( enhancedSubSystem, "_subsystem", Modifier.PRIVATE, Modifier.FINAL )
-                        .addAnnotation( NONNULL_CLASSNAME )
+                        .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                         .initializer( "new $T( this )", enhancedSubSystem )
                         .build() );
 
     builder.addMethod( MethodSpec.methodBuilder( WORLD_ACCESSOR_METHOD )
-                         .addAnnotation( NONNULL_CLASSNAME )
+                         .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )
                          .returns( WORLD_CLASSNAME )
                          .addStatement( "return $T.current()", WORLD_CLASSNAME )
@@ -231,7 +229,7 @@ final class Generator
                                          OUTER_FIELD,
                                          Modifier.PRIVATE,
                                          Modifier.FINAL )
-                        .addAnnotation( NONNULL_CLASSNAME )
+                        .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                         .build() );
 
     for ( final EntityProcessorDescriptor entityProcessorDescriptor : descriptor.getEntityProcessors() )
@@ -240,12 +238,12 @@ final class Generator
       builder.addField( FieldSpec.builder( SUBSCRIPTION_CLASSNAME,
                                            FRAMEWORK_SUBSCRIPTION_PREFIX + name,
                                            Modifier.PRIVATE )
-                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .addAnnotation( GeneratorUtil.NULLABLE_CLASSNAME )
                           .build() );
       builder.addField( FieldSpec.builder( AREA_OF_INTEREST_CLASSNAME,
                                            FRAMEWORK_AREA_OF_INTEREST_PREFIX + name,
                                            Modifier.PRIVATE )
-                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .addAnnotation( GeneratorUtil.NULLABLE_CLASSNAME )
                           .build() );
     }
 
@@ -277,7 +275,7 @@ final class Generator
                          .addParameter( ParameterSpec.builder( descriptor.getEnhancedClassName(),
                                                                "outer",
                                                                Modifier.FINAL )
-                                          .addAnnotation( NONNULL_CLASSNAME )
+                                          .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                                           .build() )
                          .addStatement( "$N = $T.requireNonNull( outer )", OUTER_FIELD, Objects.class )
                          .build() );
@@ -294,7 +292,7 @@ final class Generator
       final ExecutableElement methodElement = componentManagerRef.getMethod();
       final String fieldName = FRAMEWORK_COMPONENT_PREFIX + methodElement.getSimpleName().toString();
       builder.addField( FieldSpec.builder( type, fieldName, Modifier.PRIVATE )
-                          .addAnnotation( NULLABLE_CLASSNAME )
+                          .addAnnotation( GeneratorUtil.NULLABLE_CLASSNAME )
                           .build() );
 
       builder.addMethod( GeneratorUtil
@@ -518,7 +516,7 @@ final class Generator
                                             @Nonnull final TypeSpec.Builder builder )
   {
     builder.addMethod( MethodSpec.methodBuilder( NAME_ACCESSOR_METHOD )
-                         .addAnnotation( NONNULL_CLASSNAME )
+                         .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                          .addModifiers( Modifier.PRIVATE )
                          .returns( String.class )
                          .addStatement( "return $S", descriptor.getName() )
@@ -534,7 +532,7 @@ final class Generator
     toStringBlock.addStatement( "return super.toString()" );
     toStringBlock.endControlFlow();
     builder.addMethod( MethodSpec.methodBuilder( "toString" )
-                         .addAnnotation( NONNULL_CLASSNAME )
+                         .addAnnotation( GeneratorUtil.NONNULL_CLASSNAME )
                          .addAnnotation( Override.class )
                          .addModifiers( Modifier.PUBLIC )
                          .returns( String.class )
