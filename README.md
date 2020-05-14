@@ -1,6 +1,6 @@
 # galdr: An ECS implementation
 
-[![Build Status](https://secure.travis-ci.org/realityforge/galdr.svg?branch=master)](http://travis-ci.org/realityforge/galdr)
+[![Build Status](https://api.travis-ci.com/realityforge/galdr.svg?branch=master)](http://travis-ci.org/realityforge/galdr)
 [<img src="https://img.shields.io/maven-central/v/org.realityforge.galdr/galdr.svg?label=latest%20release"/>](https://search.maven.org/search?q=g:org.realityforge.galdr%20a:galdr)
 [![codecov](https://codecov.io/gh/realityforge/galdr/branch/master/graph/badge.svg)](https://codecov.io/gh/realityforge/galdr)
 ![GWT3/J2CL compatible](https://img.shields.io/badge/GWT3/J2CL-compatible-brightgreen.svg)
