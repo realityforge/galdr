@@ -6,7 +6,7 @@
 * Upgrade the `org.realityforge.grim` artifacts to version `0.04`.
 * Upgrade the `com.google.truth` artifact to version `0.45`.
 * Upgrade the `com.google.testing.compile` artifact to version `0.18-rf`.
-* Upgrade the `com.squareup` artifact to version `1.12.0`.
+* Upgrade the `com.squareup` artifact to version `1.13.0`.
 * Upgrade the `org.realityforge.proton` artifacts to version `0.51`.
 * Add the `galdr.debug` annotation option to help debug annotation processing.
 
