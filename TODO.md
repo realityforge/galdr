@@ -6,6 +6,8 @@ complete as there is too much un-said.
 
 ### Tasks
 
+* Derivce functionality from [Bevy](https://bevyengine.org/news/introducing-bevy/)
+
 * Add the `EntityPlan` element above.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
@@ -172,6 +174,15 @@ complete as there is too much un-said.
   sure they can never collide when entity ids are passed to the workers. It may still be possible for the workers
   to aquire additional locks if they are following links but the code will need to guard that if it is likely to
   be a problem.
+
+* A future, future version of this system may have a prebuild step. One input is a list of archetypes and their
+  fields/attributes. Another input is a list of systems which indicate which fields are read, which are written.
+  Another input is the runtime details like the number of instances of each archetype, the number of times a system
+  matches an archetype etc. Other inputs may be whether archetypes are created in bulk or not etc. From this an
+  optimizing compiler will analyze the model and determine what the most efficient mechanism for breaking the
+  application into components is. So N fields that are mostly accessed together may be placed into a single
+  component. Archetypes may include some fields in side-car storage (i.e. hash maps or another lookup storage)
+  while the most frequently used data is collected inline. etc
 
 ### Other ECS Systems
 
