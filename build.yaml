@@ -9,26 +9,26 @@ artifacts:
 
   javax_annotation: org.realityforge.javax.annotation:javax.annotation:jar:1.0.1
 
-  braincheck: org.realityforge.braincheck:braincheck:jar:1.25.0
+  braincheck: org.realityforge.braincheck:braincheck:jar:1.29.0
 
   grim_annotations: org.realityforge.grim:grim-annotations:jar:0.04
   grim_processor: org.realityforge.grim:grim-processor:jar:0.04
 
-  gwt_user: org.realityforge.com.google.gwt:gwt-user:jar:2.8.2-v20191108
-  gwt_dev: org.realityforge.com.google.gwt:gwt-dev:jar:2.8.2-v20191108
+  gwt_user: com.google.gwt:gwt-user:jar:2.9.0
+  gwt_dev: com.google.gwt:gwt-dev:jar:2.9.0
 
-  jsinterop_annotations: org.realityforge.com.google.jsinterop:jsinterop-annotations:jar:2.8.2-v20191108
+  jsinterop_annotations: com.google.jsinterop:jsinterop-annotations:jar:2.0.0
 
   jsinterop_base: com.google.jsinterop:base:jar:1.0.0
 
   javax_json: org.glassfish:javax.json:jar:1.1
 
-  javapoet: com.squareup:javapoet:jar:1.12.0
+  javapoet: com.squareup:javapoet:jar:1.13.0
   guava: com.google.guava:guava:jar:27.1-jre
   failureaccess: com.google.guava:failureaccess:jar:1.0.1
 
-  proton_core: org.realityforge.proton:proton-core:jar:0.38
-  proton_qa: org.realityforge.proton:proton-qa:jar:0.38
+  proton_core: org.realityforge.proton:proton-core:jar:0.51
+  proton_qa: org.realityforge.proton:proton-qa:jar:0.51
 
   #test deps
   compile_testing: com.google.testing.compile:compile-testing:jar:0.18-rf
