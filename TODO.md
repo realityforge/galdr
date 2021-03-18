@@ -184,6 +184,10 @@ complete as there is too much un-said.
   component. Archetypes may include some fields in side-car storage (i.e. hash maps or another lookup storage)
   while the most frequently used data is collected inline. etc
 
+### Games to Experiment with
+
+* A simple BoulderDash clone [Digger](https://github.com/lutzroeder/digger)
+
 ### Other ECS Systems
 
 We should investigate other ECS systems in other languages and with other design constraints. Galdr is designed
