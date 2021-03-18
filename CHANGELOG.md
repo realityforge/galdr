@@ -2,6 +2,7 @@
 
 ### Unreleased
 
+* Upgrade the `au.com.stocksoftware.idea.codestyle` artifact to version `1.17`.
 * Upgrade the `org.realityforge.braincheck` artifact to version `1.29.0`.
 * Upgrade the `org.realityforge.grim` artifacts to version `0.04`.
 * Upgrade the `com.google.truth` artifact to version `0.45`.
