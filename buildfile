@@ -37,7 +37,7 @@ define 'galdr' do
                  :grim_annotations,
                  :braincheck
 
-    project.compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
+    compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
 
     gwt_enhance(project)
 
