@@ -6,6 +6,8 @@ require 'buildr/jacoco'
 require 'buildr/gwt'
 require 'buildr/shade'
 
+Buildr::MavenCentral.define_publish_tasks(:profile_name => 'org.realityforge', :username => 'realityforge')
+
 # JDK options passed to test environment. Essentially turns assertions on.
 GALDR_TEST_OPTIONS =
   {
