@@ -1,5 +1,7 @@
 # Change Log
 
+### Unreleased
+
 ### [v0.04](https://github.com/realityforge/galdr/tree/v0.04) (2021-03-30) · [Full Changelog](https://github.com/realityforge/galdr/compare/v0.03...v0.04)
 
 * Upgrade the `au.com.stocksoftware.idea.codestyle` artifact to version `1.17`.
