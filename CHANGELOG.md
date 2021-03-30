@@ -10,6 +10,7 @@
 * Upgrade the `com.squareup` artifact to version `1.13.0`.
 * Upgrade the `org.realityforge.proton` artifacts to version `0.51`.
 * Add the `galdr.debug` annotation option to help debug annotation processing.
+* Update release process.
 
 ### [v0.03](https://github.com/realityforge/galdr/tree/v0.03) (2019-12-29)
 [Full Changelog](https://github.com/realityforge/galdr/compare/v0.02...v0.03)
