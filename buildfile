@@ -32,12 +32,12 @@ define 'galdr' do
   define 'core' do
     pom.include_transitive_dependencies << artifact(:javax_annotation)
     pom.include_transitive_dependencies << artifact(:jsinterop_annotations)
-    pom.include_transitive_dependencies << artifact(:braincheck)
+    pom.include_transitive_dependencies << artifact(:braincheck_core)
 
     compile.with :javax_annotation,
                  :jsinterop_annotations,
                  :grim_annotations,
-                 :braincheck
+                 :braincheck_core
 
     compile.options[:processor_path] << artifacts(:grim_processor, :javax_json)
 
@@ -52,7 +52,8 @@ define 'galdr' do
     test.options[:properties] =
       GALDR_TEST_OPTIONS.merge('galdr.diagnostic_messages_file' => _('src/test/java/galdr/diagnostic_messages.json'))
 
-    test.compile.with :javax_json # Required to support validating invariant messages in tests
+    test.compile.with :braincheck_testng,
+                      :javax_json # Required to support validating invariant messages in tests
   end
 
   desc 'The Annotation processor'
