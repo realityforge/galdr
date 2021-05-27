@@ -6,6 +6,8 @@ complete as there is too much un-said.
 
 ### Tasks
 
+* Use an entity command buffer to make structural changes. Different buffers exist at different sync points - see unity dots
+
 * Derive functionality from [Bevy](https://bevyengine.org/news/introducing-bevy/)
 
 * Derive functionality from [Hecs](https://github.com/gohyperr/hecs/tree/master/packages/hecs)
