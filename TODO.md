@@ -6,7 +6,7 @@ complete as there is too much un-said.
 
 ### Tasks
 
-* Derivce functionality from [Bevy](https://bevyengine.org/news/introducing-bevy/)
+* Derive functionality from [Bevy](https://bevyengine.org/news/introducing-bevy/)
 
 * Derive functionality from [Hecs](https://github.com/gohyperr/hecs/tree/master/packages/hecs)
 
