@@ -417,7 +417,7 @@ public final class World
    */
   @OmitSymbol( unless = "galdr.enable_names" )
   @Nonnull
-  public final String getName()
+  public String getName()
   {
     if ( Galdr.shouldCheckApiInvariants() )
     {
