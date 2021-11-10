@@ -111,6 +111,7 @@ define 'galdr' do
     test.options[:java_args] = ['-ea']
 
     test.using :testng
+    test.compile.options[:processor] = true
     test.compile.with :javax_json,
                       :jsonassert,
                       :android_json,
