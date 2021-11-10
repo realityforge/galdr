@@ -275,7 +275,7 @@ public class WorldTest
   {
     Worlds.world();
     final World world = WorldHolder.world();
-    final ComponentManager<?>[] components = new ComponentManager[]
+    final ComponentManager<?>[] components = new ComponentManager<?>[]
       {
         new FastArrayComponentManager<>( world, 0, Component1.class, Component1::new, 120 ),
         new FastArrayComponentManager<>( world, 1, Component2.class, Component2::new, 120 ),

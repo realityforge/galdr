@@ -172,7 +172,7 @@ public final class Worlds
       ensureWorldNotConstructed();
       _worldConstructed = true;
       WorldHolder.deactivateWorld( _world );
-      _world.completeConstruction( _initialEntityCount, _components.toArray( new ComponentManager[ 0 ] ), _stages );
+      _world.completeConstruction( _initialEntityCount, _components.toArray( new ComponentManager<?>[ 0 ] ), _stages );
       return _world;
     }
 

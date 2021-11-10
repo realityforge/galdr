@@ -329,7 +329,7 @@ public final class World
     final Map<Class<?>, ComponentManager<?>> map = new HashMap<>();
     for ( int i = 0; i < components.length; i++ )
     {
-      final ComponentManager component = components[ i ];
+      final ComponentManager<?> component = components[ i ];
       if ( Galdr.shouldCheckInvariants() )
       {
         final int index = i;
