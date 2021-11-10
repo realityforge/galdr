@@ -39,8 +39,11 @@ public final class ApplicationProcessor
   @Override
   public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
+    debugAnnotationProcessingRootElements( env );
+    collectRootTypeNames( env );
     processTypeElements( annotations, env, Constants.GALDR_APPLICATION_CLASSNAME, _deferredTypes, this::process );
     errorIfProcessingOverAndInvalidTypesDetected( env );
+    clearRootTypeNamesIfProcessingOver( env );
     return true;
   }
 
