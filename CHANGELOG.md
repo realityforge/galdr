@@ -1,6 +1,8 @@
 # Change Log
 
-### Unreleased
+### [v0.05](https://github.com/realityforge/galdr/tree/v0.05) (2021-11-10) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.04...v0.05)
+
+Changes in this release:
 
 * Upgrade the `org.realityforge.braincheck` artifacts to version `1.31.0`.
 * Upgrade the `org.realityforge.proton` artifacts to version `0.52`. This fixes a crash that occurs with concurrent, incremental builds within the IntelliJ IDE. (This is the crash reported with message `javax.annotation.processing.FilerException: Attempt to recreate a file for type ...`).
