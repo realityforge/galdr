@@ -51,7 +51,7 @@ public final class World
    */
   @OmitSymbol( unless = "galdr.enable_spies" )
   @Nullable
-  private Map<Integer, Subscription> _subscriptions = Galdr.areSpiesEnabled() ? new HashMap<>() : null;
+  private final Map<Integer, Subscription> _subscriptions = Galdr.areSpiesEnabled() ? new HashMap<>() : null;
   /**
    * The id used to create the next subscription.
    */
