@@ -12,6 +12,8 @@ complete as there is too much un-said.
 
 * Derive functionality from [Hecs](https://github.com/gohyperr/hecs/tree/master/packages/hecs)
 
+* Derive functionality from [bitecs](https://github.com/NateTheGreatt/bitecs)
+
 * Add the `EntityPlan` element above.
 * Replace `ComponentStorage` with set of int flags to optimize code size in the context of GWT. We can probably
   use the existing flags on the `ComponentManager` to store this state.
