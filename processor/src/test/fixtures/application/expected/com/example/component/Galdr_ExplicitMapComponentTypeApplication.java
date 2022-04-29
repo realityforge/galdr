@@ -4,8 +4,8 @@ import galdr.ComponentStorage;
 import galdr.Stage;
 import galdr.World;
 import galdr.Worlds;
-import javax.annotation.Generated;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Generated;
 
 @Generated("galdr.processor.ApplicationProcessor")
 final class Galdr_ExplicitMapComponentTypeApplication extends ExplicitMapComponentTypeApplication {

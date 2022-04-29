@@ -10,9 +10,9 @@ import galdr.internal.OnDeactivateFn;
 import galdr.internal.PostConstructFn;
 import java.util.Collections;
 import java.util.Objects;
-import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.processing.Generated;
 
 @Generated("galdr.processor.SubSystemProcessor")
 public final class Galdr_PublicAccessViaInterfaceEntityProcessorSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, SubSystem {

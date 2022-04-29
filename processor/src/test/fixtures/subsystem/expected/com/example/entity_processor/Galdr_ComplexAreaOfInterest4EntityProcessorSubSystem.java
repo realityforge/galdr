@@ -11,9 +11,9 @@ import galdr.internal.PostConstructFn;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
-import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.processing.Generated;
 
 @Generated("galdr.processor.SubSystemProcessor")
 public final class Galdr_ComplexAreaOfInterest4EntityProcessorSubSystem implements PostConstructFn, OnActivateFn, OnDeactivateFn, SubSystem {

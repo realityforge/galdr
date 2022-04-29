@@ -5,8 +5,8 @@ import galdr.SubSystem;
 import galdr.World;
 import galdr.internal.OnDeactivateFn;
 import java.util.Objects;
-import javax.annotation.Generated;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Generated;
 
 @Generated("galdr.processor.SubSystemProcessor")
 public final class Galdr_PackageAccessOnDeactivateSubSystem implements OnDeactivateFn, SubSystem {

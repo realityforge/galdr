@@ -7,8 +7,8 @@ import com.example.other.CompleteBaseApplication_Galdr_MySubSystem3;
 import galdr.Stage;
 import galdr.World;
 import galdr.Worlds;
-import javax.annotation.Generated;
 import javax.annotation.Nonnull;
+import javax.annotation.processing.Generated;
 
 @Generated("galdr.processor.ApplicationProcessor")
 final class Galdr_CompleteViaBaseClassApplication extends CompleteViaBaseClassApplication {
