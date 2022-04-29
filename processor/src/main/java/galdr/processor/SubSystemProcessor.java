@@ -33,7 +33,7 @@ import org.realityforge.proton.StopWatch;
  * Annotation processor that generates subsystem implementations.
  */
 @SupportedAnnotationTypes( Constants.SUB_SYSTEM_CLASSNAME )
-@SupportedSourceVersion( SourceVersion.RELEASE_8 )
+@SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { "galdr.defer.errors", "galdr.defer.unresolved", "galdr.debug" } )
 public final class SubSystemProcessor
   extends AbstractGaldrProcessor

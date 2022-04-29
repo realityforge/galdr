@@ -30,7 +30,7 @@ import org.realityforge.proton.StopWatch;
  * Annotation processor that generates application implementations.
  */
 @SupportedAnnotationTypes( Constants.GALDR_APPLICATION_CLASSNAME )
-@SupportedSourceVersion( SourceVersion.RELEASE_8 )
+@SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { "galdr.defer.unresolved", "galdr.defer.errors", "galdr.debug" } )
 public final class ApplicationProcessor
   extends AbstractGaldrProcessor
