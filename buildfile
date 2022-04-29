@@ -17,8 +17,8 @@ GALDR_TEST_OPTIONS =
 desc 'galdr: An ECS implementation'
 define 'galdr' do
   project.group = 'org.realityforge.galdr'
-  compile.options.source = '1.8'
-  compile.options.target = '1.8'
+  compile.options.source = '17'
+  compile.options.target = '17'
   compile.options.lint = 'all'
 
   project.version = ENV['PRODUCT_VERSION'] if ENV['PRODUCT_VERSION']
