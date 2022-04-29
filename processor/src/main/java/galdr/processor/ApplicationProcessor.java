@@ -3,6 +3,7 @@ package galdr.processor;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
@@ -23,6 +24,7 @@ import org.realityforge.proton.DeferredElementSet;
 import org.realityforge.proton.ElementsUtil;
 import org.realityforge.proton.MemberChecks;
 import org.realityforge.proton.ProcessorException;
+import org.realityforge.proton.StopWatch;
 
 /**
  * Annotation processor that generates application implementations.
@@ -35,13 +37,27 @@ public final class ApplicationProcessor
 {
   @Nonnull
   private final DeferredElementSet _deferredTypes = new DeferredElementSet();
+  @Nonnull
+  private final StopWatch _analyzeApplicationStopWatch = new StopWatch( "Analyze Application" );
+
+  @Override
+  protected void collectStopWatches( @Nonnull final Collection<StopWatch> stopWatches )
+  {
+    stopWatches.add( _analyzeApplicationStopWatch );
+  }
 
   @Override
   public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
     debugAnnotationProcessingRootElements( env );
     collectRootTypeNames( env );
-    processTypeElements( annotations, env, Constants.GALDR_APPLICATION_CLASSNAME, _deferredTypes, this::process );
+    processTypeElements( annotations,
+                         env,
+                         Constants.GALDR_APPLICATION_CLASSNAME,
+                         _deferredTypes,
+                         _analyzeApplicationStopWatch.getName(),
+                         this::process,
+                         _analyzeApplicationStopWatch );
     errorIfProcessingOverAndInvalidTypesDetected( env );
     clearRootTypeNamesIfProcessingOver( env );
     return true;

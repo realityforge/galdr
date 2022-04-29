@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ import org.realityforge.proton.DeferredElementSet;
 import org.realityforge.proton.ElementsUtil;
 import org.realityforge.proton.MemberChecks;
 import org.realityforge.proton.ProcessorException;
+import org.realityforge.proton.StopWatch;
 
 /**
  * Annotation processor that generates subsystem implementations.
@@ -38,13 +40,27 @@ public final class SubSystemProcessor
 {
   @Nonnull
   private final DeferredElementSet _deferredTypes = new DeferredElementSet();
+  @Nonnull
+  private final StopWatch _analyzeSubSystemStopWatch = new StopWatch( "Analyze SubSystem" );
+
+  @Override
+  protected void collectStopWatches( @Nonnull final Collection<StopWatch> stopWatches )
+  {
+    stopWatches.add( _analyzeSubSystemStopWatch );
+  }
 
   @Override
   public boolean process( @Nonnull final Set<? extends TypeElement> annotations, @Nonnull final RoundEnvironment env )
   {
     debugAnnotationProcessingRootElements( env );
     collectRootTypeNames( env );
-    processTypeElements( annotations, env, Constants.SUB_SYSTEM_CLASSNAME, _deferredTypes, this::process );
+    processTypeElements( annotations,
+                         env,
+                         Constants.SUB_SYSTEM_CLASSNAME,
+                         _deferredTypes,
+                         _analyzeSubSystemStopWatch.getName(),
+                         this::process,
+                         _analyzeSubSystemStopWatch );
     errorIfProcessingOverAndInvalidTypesDetected( env );
     clearRootTypeNamesIfProcessingOver( env );
     return true;
