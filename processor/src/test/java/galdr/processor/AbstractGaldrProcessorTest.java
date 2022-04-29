@@ -9,7 +9,7 @@ abstract class AbstractGaldrProcessorTest
   void assertSuccessfulCompile( @Nonnull final String classname )
     throws Exception
   {
-    assertSuccessfulCompile( classname, toFilename( "expected", classname, "Galdr_", ".java" ) );
+    assertSuccessfulCompile( classname, toFilename( classname, "Galdr_", ".java" ) );
   }
 
   @Nonnull

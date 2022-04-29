@@ -63,14 +63,7 @@ define 'galdr' do
                  :javapoet,
                  :javax_annotation
 
-    test.with :compile_testing,
-              :guava,
-              :failureaccess,
-              :proton_qa,
-              :junit,
-              :hamcrest_core,
-              Buildr::Util.tools_jar,
-              :truth,
+    test.with :proton_qa,
               project('core').package(:jar),
               project('core').compile.dependencies
 

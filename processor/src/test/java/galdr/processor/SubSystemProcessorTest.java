@@ -73,7 +73,7 @@ public class SubSystemProcessorTest
     throws Exception
   {
     assertSuccessfulCompile( "com.example.StaticInnerClassSubSystem",
-                             "expected/com/example/StaticInnerClassSubSystem_Galdr_Foo.java" );
+                             "com/example/StaticInnerClassSubSystem_Galdr_Foo.java" );
   }
 
   @Test
@@ -81,12 +81,13 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.component_manager_ref.ProtectedAccessFromBaseComponentManagerRefSubSystem" );
+      "input/" + toFilename( "com.example.component_manager_ref.ProtectedAccessFromBaseComponentManagerRefSubSystem" );
     final String input2 =
-      toFilename( "input", "com.example.component_manager_ref.other.BaseProtectedAccessComponentManagerRefSubSystem" );
+      "input/" +
+      toFilename( "com.example.component_manager_ref.other.BaseProtectedAccessComponentManagerRefSubSystem" );
     final String output =
-      toFilename( "expected",
-                  "com.example.component_manager_ref.Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem" );
+      toFilename(
+        "com.example.component_manager_ref.Galdr_ProtectedAccessFromBaseComponentManagerRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -96,11 +97,11 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.component_manager_ref.PublicAccessViaInterfaceComponentManagerRefSubSystem" );
-    final String input2 = toFilename( "input", "com.example.component_manager_ref.ComponentManagerRefInterface" );
+      "input/" + toFilename( "com.example.component_manager_ref.PublicAccessViaInterfaceComponentManagerRefSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.component_manager_ref.ComponentManagerRefInterface" );
     final String output =
-      toFilename( "expected",
-                  "com.example.component_manager_ref.Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem" );
+      toFilename(
+        "com.example.component_manager_ref.Galdr_PublicAccessViaInterfaceComponentManagerRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -110,12 +111,12 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.entity_processor.ProtectedAccessFromBaseEntityProcessorSubSystem" );
+      "input/" + toFilename( "com.example.entity_processor.ProtectedAccessFromBaseEntityProcessorSubSystem" );
     final String input2 =
-      toFilename( "input", "com.example.entity_processor.other.BaseProtectedAccessEntityProcessorSubSystem" );
+      "input/" + toFilename( "com.example.entity_processor.other.BaseProtectedAccessEntityProcessorSubSystem" );
     final String output =
-      toFilename( "expected",
-                  "com.example.entity_processor.Galdr_ProtectedAccessFromBaseEntityProcessorSubSystem" );
+      toFilename(
+        "com.example.entity_processor.Galdr_ProtectedAccessFromBaseEntityProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -125,11 +126,11 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.entity_processor.PublicAccessViaInterfaceEntityProcessorSubSystem" );
-    final String input2 = toFilename( "input", "com.example.entity_processor.EntityProcessorInterface" );
+      "input/" + toFilename( "com.example.entity_processor.PublicAccessViaInterfaceEntityProcessorSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.entity_processor.EntityProcessorInterface" );
     final String output =
-      toFilename( "expected",
-                  "com.example.entity_processor.Galdr_PublicAccessViaInterfaceEntityProcessorSubSystem" );
+      toFilename(
+        "com.example.entity_processor.Galdr_PublicAccessViaInterfaceEntityProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -138,10 +139,10 @@ public class SubSystemProcessorTest
   public void validProtectedAccessNameRef()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.name_ref.ProtectedAccessFromBaseNameRefSubSystem" );
-    final String input2 = toFilename( "input", "com.example.name_ref.other.BaseProtectedAccessNameRefSubSystem" );
+    final String input1 = "input/" + toFilename( "com.example.name_ref.ProtectedAccessFromBaseNameRefSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.name_ref.other.BaseProtectedAccessNameRefSubSystem" );
     final String output =
-      toFilename( "expected", "com.example.name_ref.Galdr_ProtectedAccessFromBaseNameRefSubSystem" );
+      toFilename( "com.example.name_ref.Galdr_ProtectedAccessFromBaseNameRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -150,10 +151,10 @@ public class SubSystemProcessorTest
   public void publicAccessViaInterfaceWorldRef()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.world_ref.PublicAccessViaInterfaceWorldRefSubSystem" );
-    final String input2 = toFilename( "input", "com.example.world_ref.WorldRefInterface" );
+    final String input1 = "input/" + toFilename( "com.example.world_ref.PublicAccessViaInterfaceWorldRefSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.world_ref.WorldRefInterface" );
     final String output =
-      toFilename( "expected", "com.example.world_ref.Galdr_PublicAccessViaInterfaceWorldRefSubSystem" );
+      toFilename( "com.example.world_ref.Galdr_PublicAccessViaInterfaceWorldRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -162,10 +163,11 @@ public class SubSystemProcessorTest
   public void validProtectedAccessOnActivate()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.on_activate.ProtectedAccessFromBaseOnActivateSubSystem" );
-    final String input2 = toFilename( "input", "com.example.on_activate.other.BaseProtectedAccessOnActivateSubSystem" );
+    final String input1 = "input/" + toFilename( "com.example.on_activate.ProtectedAccessFromBaseOnActivateSubSystem" );
+    final String input2 =
+      "input/" + toFilename( "com.example.on_activate.other.BaseProtectedAccessOnActivateSubSystem" );
     final String output =
-      toFilename( "expected", "com.example.on_activate.Galdr_ProtectedAccessFromBaseOnActivateSubSystem" );
+      toFilename( "com.example.on_activate.Galdr_ProtectedAccessFromBaseOnActivateSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -174,10 +176,11 @@ public class SubSystemProcessorTest
   public void publicAccessViaInterfaceOnActivateRef()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.on_activate.PublicAccessViaInterfaceOnActivateSubSystem" );
-    final String input2 = toFilename( "input", "com.example.on_activate.OnActivateInterface" );
+    final String input1 =
+      "input/" + toFilename( "com.example.on_activate.PublicAccessViaInterfaceOnActivateSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.on_activate.OnActivateInterface" );
     final String output =
-      toFilename( "expected", "com.example.on_activate.Galdr_PublicAccessViaInterfaceOnActivateSubSystem" );
+      toFilename( "com.example.on_activate.Galdr_PublicAccessViaInterfaceOnActivateSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -187,11 +190,11 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.on_deactivate.ProtectedAccessFromBaseOnDeactivateSubSystem" );
+      "input/" + toFilename( "com.example.on_deactivate.ProtectedAccessFromBaseOnDeactivateSubSystem" );
     final String input2 =
-      toFilename( "input", "com.example.on_deactivate.other.BaseProtectedAccessOnDeactivateSubSystem" );
+      "input/" + toFilename( "com.example.on_deactivate.other.BaseProtectedAccessOnDeactivateSubSystem" );
     final String output =
-      toFilename( "expected", "com.example.on_deactivate.Galdr_ProtectedAccessFromBaseOnDeactivateSubSystem" );
+      toFilename( "com.example.on_deactivate.Galdr_ProtectedAccessFromBaseOnDeactivateSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -201,10 +204,10 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.on_deactivate.PublicAccessViaInterfaceOnDeactivateSubSystem" );
-    final String input2 = toFilename( "input", "com.example.on_deactivate.OnDeactivateInterface" );
+      "input/" + toFilename( "com.example.on_deactivate.PublicAccessViaInterfaceOnDeactivateSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.on_deactivate.OnDeactivateInterface" );
     final String output =
-      toFilename( "expected", "com.example.on_deactivate.Galdr_PublicAccessViaInterfaceOnDeactivateSubSystem" );
+      toFilename( "com.example.on_deactivate.Galdr_PublicAccessViaInterfaceOnDeactivateSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -214,11 +217,11 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.processor.ProtectedAccessFromBaseProcessorSubSystem" );
+      "input/" + toFilename( "com.example.processor.ProtectedAccessFromBaseProcessorSubSystem" );
     final String input2 =
-      toFilename( "input", "com.example.processor.other.BaseProtectedAccessProcessorSubSystem" );
+      "input/" + toFilename( "com.example.processor.other.BaseProtectedAccessProcessorSubSystem" );
     final String output =
-      toFilename( "expected", "com.example.processor.Galdr_ProtectedAccessFromBaseProcessorSubSystem" );
+      toFilename( "com.example.processor.Galdr_ProtectedAccessFromBaseProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -228,10 +231,10 @@ public class SubSystemProcessorTest
     throws Exception
   {
     final String input1 =
-      toFilename( "input", "com.example.processor.PublicAccessViaInterfaceProcessorSubSystem" );
-    final String input2 = toFilename( "input", "com.example.processor.ProcessorInterface" );
+      "input/" + toFilename( "com.example.processor.PublicAccessViaInterfaceProcessorSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.processor.ProcessorInterface" );
     final String output =
-      toFilename( "expected", "com.example.processor.Galdr_PublicAccessViaInterfaceProcessorSubSystem" );
+      toFilename( "com.example.processor.Galdr_PublicAccessViaInterfaceProcessorSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -240,10 +243,10 @@ public class SubSystemProcessorTest
   public void validProtectedAccessWorldRef()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.world_ref.ProtectedAccessFromBaseWorldRefSubSystem" );
-    final String input2 = toFilename( "input", "com.example.world_ref.other.BaseProtectedAccessWorldRefSubSystem" );
+    final String input1 = "input/" + toFilename( "com.example.world_ref.ProtectedAccessFromBaseWorldRefSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.world_ref.other.BaseProtectedAccessWorldRefSubSystem" );
     final String output =
-      toFilename( "expected", "com.example.world_ref.Galdr_ProtectedAccessFromBaseWorldRefSubSystem" );
+      toFilename( "com.example.world_ref.Galdr_ProtectedAccessFromBaseWorldRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -252,10 +255,10 @@ public class SubSystemProcessorTest
   public void publicAccessViaInterfaceNameRef()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.name_ref.PublicAccessViaInterfaceNameRefSubSystem" );
-    final String input2 = toFilename( "input", "com.example.name_ref.NameRefInterface" );
+    final String input1 = "input/" + toFilename( "com.example.name_ref.PublicAccessViaInterfaceNameRefSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.name_ref.NameRefInterface" );
     final String output =
-      toFilename( "expected", "com.example.name_ref.Galdr_PublicAccessViaInterfaceNameRefSubSystem" );
+      toFilename( "com.example.name_ref.Galdr_PublicAccessViaInterfaceNameRefSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -264,9 +267,9 @@ public class SubSystemProcessorTest
   public void completeViaBaseClassSubSystem()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.CompleteViaBaseClassSubSystem" );
-    final String input2 = toFilename( "input", "com.example.other.CompleteBaseSubSystem" );
-    final String output = toFilename( "expected", "com.example.Galdr_CompleteViaBaseClassSubSystem" );
+    final String input1 = "input/" + toFilename( "com.example.CompleteViaBaseClassSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.other.CompleteBaseSubSystem" );
+    final String output = toFilename( "com.example.Galdr_CompleteViaBaseClassSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -275,9 +278,9 @@ public class SubSystemProcessorTest
   public void completeViaInterfaceSubSystem()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.CompleteViaInterfaceSubSystem" );
-    final String input2 = toFilename( "input", "com.example.other.CompleteInterfaceSubSystem" );
-    final String output = toFilename( "expected", "com.example.Galdr_CompleteViaInterfaceSubSystem" );
+    final String input1 = "input/" + toFilename( "com.example.CompleteViaInterfaceSubSystem" );
+    final String input2 = "input/" + toFilename( "com.example.other.CompleteInterfaceSubSystem" );
+    final String output = toFilename( "com.example.Galdr_CompleteViaInterfaceSubSystem" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -437,9 +440,10 @@ public class SubSystemProcessorTest
   public void unreachableComponentManagerRefSubSystem()
   {
     final String input1 =
-      toFilename( "bad_input", "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem" );
+      "bad_input/" + toFilename( "com.example.component_manager_ref.UnreachableComponentManagerRefSubSystem" );
     final String input2 =
-      toFilename( "bad_input", "com.example.component_manager_ref.other.BaseUnreachableComponentManagerRefSubSystem" );
+      "bad_input/" +
+      toFilename( "com.example.component_manager_ref.other.BaseUnreachableComponentManagerRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@ComponentManagerRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -447,9 +451,10 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableEntityProcessorSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.entity_processor.UnreachableEntityProcessorSubSystem" );
+    final String input1 =
+      "bad_input/" + toFilename( "com.example.entity_processor.UnreachableEntityProcessorSubSystem" );
     final String input2 =
-      toFilename( "bad_input", "com.example.entity_processor.other.BaseUnreachableEntityProcessorSubSystem" );
+      "bad_input/" + toFilename( "com.example.entity_processor.other.BaseUnreachableEntityProcessorSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@EntityProcessor target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -457,8 +462,8 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableNameRefSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.name_ref.UnreachableNameRefSubSystem" );
-    final String input2 = toFilename( "bad_input", "com.example.name_ref.other.BaseUnreachableNameRefSubSystem" );
+    final String input1 = "bad_input/" + toFilename( "com.example.name_ref.UnreachableNameRefSubSystem" );
+    final String input2 = "bad_input/" + toFilename( "com.example.name_ref.other.BaseUnreachableNameRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@NameRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -466,8 +471,9 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableOnActivateSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.on_activate.UnreachableOnActivateSubSystem" );
-    final String input2 = toFilename( "bad_input", "com.example.on_activate.other.BaseUnreachableOnActivateSubSystem" );
+    final String input1 = "bad_input/" + toFilename( "com.example.on_activate.UnreachableOnActivateSubSystem" );
+    final String input2 =
+      "bad_input/" + toFilename( "com.example.on_activate.other.BaseUnreachableOnActivateSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@OnActivate target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -475,9 +481,9 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableOnDeactivateSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.on_deactivate.UnreachableOnDeactivateSubSystem" );
+    final String input1 = "bad_input/" + toFilename( "com.example.on_deactivate.UnreachableOnDeactivateSubSystem" );
     final String input2 =
-      toFilename( "bad_input", "com.example.on_deactivate.other.BaseUnreachableOnDeactivateSubSystem" );
+      "bad_input/" + toFilename( "com.example.on_deactivate.other.BaseUnreachableOnDeactivateSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@OnDeactivate target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -485,8 +491,8 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableProcessorSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.processor.UnreachableProcessorSubSystem" );
-    final String input2 = toFilename( "bad_input", "com.example.processor.other.BaseUnreachableProcessorSubSystem" );
+    final String input1 = "bad_input/" + toFilename( "com.example.processor.UnreachableProcessorSubSystem" );
+    final String input2 = "bad_input/" + toFilename( "com.example.processor.other.BaseUnreachableProcessorSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@Processor target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }
@@ -494,8 +500,8 @@ public class SubSystemProcessorTest
   @Test
   public void unreachableWorldRefSubSystem()
   {
-    final String input1 = toFilename( "bad_input", "com.example.world_ref.UnreachableWorldRefSubSystem" );
-    final String input2 = toFilename( "bad_input", "com.example.world_ref.other.BaseUnreachableWorldRefSubSystem" );
+    final String input1 = "bad_input/" + toFilename( "com.example.world_ref.UnreachableWorldRefSubSystem" );
+    final String input2 = "bad_input/" + toFilename( "com.example.world_ref.other.BaseUnreachableWorldRefSubSystem" );
     assertFailedCompileResource( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                                  "@WorldRef target must not be package access if the method is in a different package from the type annotated with the @GaldrSubSystem annotation" );
   }

@@ -47,16 +47,16 @@ public class ApplicationProcessorTest
     throws Exception
   {
     assertSuccessfulCompile( "com.example.StaticInnerClassApplication",
-                             "expected/com/example/StaticInnerClassApplication_Galdr_BasicApplication.java" );
+                             "com/example/StaticInnerClassApplication_Galdr_BasicApplication.java" );
   }
 
   @Test
   public void completeViaBaseClassSubSystem()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.CompleteViaBaseClassApplication" );
-    final String input2 = toFilename( "input", "com.example.other.CompleteBaseApplication" );
-    final String output = toFilename( "expected", "com.example.Galdr_CompleteViaBaseClassApplication" );
+    final String input1 = "input/" + toFilename( "com.example.CompleteViaBaseClassApplication" );
+    final String input2 = "input/" + toFilename( "com.example.other.CompleteBaseApplication" );
+    final String output = toFilename( "com.example.Galdr_CompleteViaBaseClassApplication" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -65,9 +65,9 @@ public class ApplicationProcessorTest
   public void completeViaInterfaceSubSystem()
     throws Exception
   {
-    final String input1 = toFilename( "input", "com.example.CompleteViaInterfaceApplication" );
-    final String input2 = toFilename( "input", "com.example.other.CompleteInterfaceApplication" );
-    final String output = toFilename( "expected", "com.example.Galdr_CompleteViaInterfaceApplication" );
+    final String input1 = "input/" + toFilename( "com.example.CompleteViaInterfaceApplication" );
+    final String input2 = "input/" + toFilename( "com.example.other.CompleteInterfaceApplication" );
+    final String output = toFilename( "com.example.Galdr_CompleteViaInterfaceApplication" );
     assertSuccessfulCompile( Arrays.asList( fixture( input1 ), fixture( input2 ) ),
                              Collections.singletonList( output ) );
   }
@@ -165,6 +165,6 @@ public class ApplicationProcessorTest
   @Override
   protected Processor[] additionalProcessors()
   {
-    return new Processor[]{new SubSystemProcessor()};
+    return new Processor[]{ new SubSystemProcessor() };
   }
 }
