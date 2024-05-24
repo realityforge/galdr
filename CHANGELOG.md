@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-* Update the `org.realityforge.proton` artifacts to version `0.62`.
+* Update the `org.realityforge.proton` artifacts to version `0.63`.
 * Update the `org.realityforge.grim` artifacts to version `0.09`.
 
 ### [v0.05](https://github.com/realityforge/galdr/tree/v0.05) (2021-11-10) · [Full Changelog](https://github.com/spritz/spritz/compare/v0.04...v0.05)
